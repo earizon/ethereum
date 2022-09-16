@@ -332,234 +332,274 @@
                              ┌─ TheGraph Protocol Support
                              · ┌─ 0x Protocol Support
                              · ·
-  Chain Name/Chain ID  │Symb│││││ notes
-  ─────────────────────│────│─│─│─────────────────────────────────────────────────────
-  ethereum             |    | | |
-  └ mainnet/1          | ETH| |y|
-  └ testnet kovan/42   | KOV| | | Kovan only works with Parity Clients causing some troubles
-                       |    | | | https://medium.com/authereum/getting-ethereum-transaction-revert-reasons-the-easy-way-24203a4d1844
-  └ testnet görli/5    | GOR| |y|
-  └ testnet ropsten/3  | ROP| | | Ropsten deprecated by Ethereum fundation
-  └ testnet rinkeby/4  | RIN| | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  polygon Main./137    MATIC|Y|Y| type: L2 zk-rollup
-  └ Test.Mumbai/80001  MATIC| |Y| https://polygon.technology/
-                       |    | | | polygon: protocol+framework to build+
-                       |    | | | connect Ether. compatible Networks
-
-  ---------------------|----|-|-|-----------------------------------------------------
-  expanse net/2        | EXP| | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  thaichain/7          | TCH| | | thaishield audits verify your
-  └ 2.0 thaifi/17      | TFI| | | distributed systems work as intended.
-                       |    | | | our engineers fully review system’s
-                       |    | | | architecture and codebase, and then
-                       |    | | | write a thorough report with
-                       |    | | | actionable feedback for every issue.
-  --------------------------|-|-|-----------------------------------------------------
-  ubiq/8               | UBQ| | | built upon improved version of e.codebase,
-  └ testnet/9          |    | | | it offers enterprise-stable pow.
-                       |    | | | conservative upgrade schedule.
-  --------------------------|-|-|-----------------------------------------------------
-  arbitrum one/42161   |AETH|Y| | optimistic rollup.
-  └ test.rinkeby/421611|aRETH | | integrated with binance exchange
-                       |    | | | (but withdrawals not yet enabled
-                       |    | | |  as of 2021-11-26  )
-  └ on xdai/200        |XDAI| | |  (research project)
-  --------------------------|-|-|-----------------------------------------------------
-  Optimistic Eth./10   |OETH|Y|Y| type: l2 optimistic-rollup
-  └ testnet kova/69    | KOR| | | millisec tx,10-100x cheaper.
-  └ testnet goerly/420 | GOR| | | periodically submit l2 tx merkle root to
-                       |    | | | mainnet, storing N L2 tx 1 tx mainnet.
-                       |    | | | https://chainid.lin/?network=optimism
-                       |    | | | node: https://mainnet.optimism.io
-                       |    | | | expl: https://optimistic.etherscan.io
-                       |    | | | supported by infura.
-  --------------------------|-|-|-----------------------------------------------------
-  Fantom/??            |??? |?|Y| 
-  └ ???                |    | | | 
-  ---------------------|----|-|-|-----------------------------------------------------
-  xDAI Chain/100       |xDAI|Y| |  Aims at creating Stable Payments Fees tied to USD
-  ---------------------|----|-|-|-----------------------------------------------------
-  NEAR/???             |????|Y| | It runs in concert with Ether/Polka./Cosmos/
-                       |    | | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  CELO/???             |????|Y|Y|• https://celo.org
-                       |    | | |• PoS, mobile-1st platform for fin.dApps+crypto payments
-                       |    | | |• KickStart anounced that its platform will change to
-                       |    | | |  be based on the Celo blockchain in 2021-12.
-                       |    | | |• CELO founders/inverstors include Jack Dorsey (Twitter
-                       |    | | |  CEO), SocialCapital, CoinBase, Telekom, ...
-  ---------------------|----|-|-|-----------------------------------------------------
-  AVALANCHE/???        |????|Y|Y|
-  ---------------------|----|-|-|-----------------------------------------------------
-  StarkNet             |????|?| |• L2 stark rollup.
-                       |    | | |• Used by SORASE (Paris based company providing
-                       |    | | |  NFTs for "LaLiga", "Gerad Piqué", ...)
-                       |    | | |• Alpha state as of 2022-02-22
-  ---------------------|----|-|-|-----------------------------------------------------
-  POA/???              |????|Y| |
-  ---------------------|----|-|-|-----------------------------------------------------
-  MOONRIVER/???        |????|Y| |
-  ---------------------|----|-|-|-----------------------------------------------------
-  Fuse Mainnet/122     |FUSE|Y| |  "Open Source" Economy, create Branded wallets...
-  └ Sparknet/123       SPARK| | |  47 validators, ...
-  ---------------------|----|-|-|-----------------------------------------------------
-  palm Main./*1        |PALM| | | sidechain for selling&trading
-  └ Testnet/*2         |PALM| | | real-world and digi. assets NFTs.
-  *1:11297108109       |    | | | IBFT 2.0 poa consensus.
-  *2:11297108099       |    | | | (pseudo-centralized/consortium net).
-                       |    | | | automated mainnet bridge relay service.
-                       |    | | | Connect payment tokens (DAI, NFTs) with
-                       |    | | | bridging contracts deployed on both
-                       |    | | | networks. Fees collected from this
-                       |    | | | bridge are partially used to purchase
-                       |    | | | carbon offsets.
-                       |    | | | - 
-  ---------------------+----|-|-|-----------------------------------------------------
-  Metadium Main./11    |META| | | Self Sov. Identity with 2 Factor Authentication
-  └ Testnet/12         | KAL| | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  GoodData Main./32    |GooD| | |  NFTs/"Metaverse"
-  └ Testnet/33         |GooD| | |  AI and ML Optimize Rewards
-                       |    | | |  Region-aware distributed storage
-  ---------------------|----|-|-|-----------------------------------------------------
-  Telos EVM Main./40   |TLOS| | |  "The most scalable E.platform available today"
-  └ Testnet/41         |TLOS| | |  Fixed gas fee. Enviro.Friendly
-                       |    | | |  ESG compliance
-  ---------------------|----|-|-|-----------------------------------------------------
-  CoinEx SmartCh./52   | CET| | |  PoS based. Permission-free, low fess.
-  └ Testnet/53         |CETT| | |  Finance oriented
-  ---------------------|----|-|-|-----------------------------------------------------
-  Ontology Main./58    | ONG| | |  Focus:Decentralized IDentity. Customers include
-  └ Testnet/5851       | ONG| | |  Daimler Benz Mobility.
-                       |    | | |  App User base: 50% Asia, 7% USA.
-                       |    | | |  partnered with rOCKI, next-gen music [NFT]
-                       |    | | |  streaming service and NFT platform built on
-                       |    | | |  Binance Smart Chain (BSC) to use its DID solution
-                       |    | | |  to prevent badn actors impersonating artists.
-                       |    | | |  Multi-Virtual Machine supports.
-                       |    | | |  "Ont. has its own VM, and also supports Wasm, NeoVM.
-                       |    | | |  and EVM....  Devs can now use Ont.Bridge to convert
-                       |    | | |  Ont.Native OEP4 to ORC20 tokens, adding to MetaMask,
-                       |    | | |  and deploying dApps.
-  ---------------------|----|-|-|-----------------------------------------------------
-  GoChain Main./60     |  GO| | |  Proof of Reputation (PoR) web3 based public+private
-  └ Testnet/31337      |  GO| | |  1300 TX/sec.(10000x greener, 1000x cheaper)
-                       |    | | |  Run by Lenovo, RMIT university, Nicosia University,
-                       |    | | |  Pennsylvania State University, ...
-                       |    | | |  Quite active as of 2021-11 according to:
-                       |    | | |@[https://medium.com/gochain]
-                       |    | | |  Clientes include Fortune 500 companies,
-                       |    | | |  Compañía Nacional de Minería de Colombia,
-                       |    | | |  Services include:
-                       |    | | |  - Zeromint NFT Marketplace and Chainparency.
-  --------------------------|-|-|-----------------------------------------------------
-  OKExChain Main./65   | OKT| | |  Decentralized Exchange (DEX) oriented, running
-  └ Mainnet/66         | OKT| | |  "on top" Cosmos + EVM.
-  ---------------------|----|-|-|-----------------------------------------------------
-  POA Network Core/99  | POA| | |
-  └ Sokol/77           | SKL| | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  PrimusChain          |    | | |
-  └ Main./78           |PETH| | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  Meter Mainnet/82     | MTR| | |  "High performance infra" allowing S.C. to
-  └ Testnet/83         | MTR| | |  "travel" through heterogeneous blockchain networks.
-                       |    | | |  Partneting with ChainLink, Harmony, Poligy,
-                       |    | | |  Standard Tokenization Protocol, Oasis Foundation,
-                       |    | | |  ...
-                       |    | | |  100+ validators.
-  ---------------------|----|-|-|-----------------------------------------------------
-  Lightstreams         |    | | |
-  └ Mainnet/162        | PHT| | |  Built on Tendermint consensus ("Cosmos"). According
-  └ Testnet/163        | PHT| | |  to page: a $5.63 TX in E.MainNet becomes $0.0002 in
-                       |    | | |  lightstreams. $42.30 Uniswap reduces to $0.0016.
-                       |    | | |  x25 faster with install 3secs. settlement.
-                       |    | | |  Doesn't look to be very active. 1/2 post per year.
-  ---------------------|----|-|-|-----------------------------------------------------
-  BitTorrent Ch./199   | BTT| | |  Blokchain tokenizing BitTorrent Decentralized
-  └ Testnet/1028       | BTT| | |  file sharing protocol.
-  ---------------------|----|-|-|-----------------------------------------------------
-  Freight Trust        |    | | |  Focus on regulated/compliant SupplyChain.
-        Network/211    | 0xF| | |  EID X12, EDINT AS2/AS4,
-                       |    | | |  EDI EDIFACT, Custom/Imports,
-                       |    | | |  Custom/Exports, Freight Forwarders
-  ---------------------|----|-|-|-----------------------------------------------------
-  Energy Web Ch./246   | ???| | |  https://energyweb.org/
-                       |    | | |  "World’s first public, enterprise-grade
-                       |    | | |   blockchain tailored to the energy sector"
-                       |    | | |  46 projects in 21 countries
-                       |    | | |  with 41 partners as of 2021-11
-                       |    | | |  W3C DID is used as core Identity building block.
-                       |    | | |  Identity is provided to any customer, asset,
-                       |    | | |  utility or regulator.
-  ---------------------|----|-|-|-----------------------------------------------------
-  Theta                |    | | |  Specialized in peer-to-peer (real-time)video
-  └ Mainet    /361     TFUEL| | |  streaming/transcoding.
-  └ Testnet   /365     TFUEL| | |  streaming/transcoding.
-    Sap.Test. /363     TFUEL| | |  Compat. with EVM Constantinople plus
-    Amber Test/364     TFUEL| | |  a couple of key Istanbul features.
-                       |    | | |  Global partners including Google, Samsung,
-                       |    | | |  Binance, Blockchain.com, and Gumi.
-  ---------------------|----|-|-|-----------------------------------------------------
-  Acala Network/787    | ACA| | |  layer-1 with built-in liquidity and
-  └ Testnet/595        |mACA| | |  ready-made fin.apps + trustless
-                       |    | | |  exchange, decentralized stablecoin
-                       |    | | |  (aUSD), DOT Liquid Staking (LDOT),
-                       |    | | |  and EVM+. supported by Polkadot Substrate.
-  ---------------------|----|-|-|-----------------------------------------------------
-  Ambros Chain         |AMBR| | |  600+ PoA network designed for IoT.
-  └ MainNet/ 880       |AMBR| | |  13.848 Holders.
-  └ Testnet/8888       |AMBR| | |  Digital identities are given to devices,
-                       |    | | |  with all data about their condition and
-                       |    | | |  movement securely bundled and automatically
-                       |    | | |  relayed to your blockchain.
-  ---------------------|----|-|-|-----------------------------------------------------
-  Wanchain/888         | WAN| | |  https://www.wanchain.org/
-  └ Testnet/999        | WAN| | |  Finance oriented Public|Private-to-Public|Private
-  ---------------------|----|-|-|-----------------------------------------------------
-  Clover Main./1023    | CLV| | |  part of cross-blockhain (EVM, DOT/KSM+ parachains,
-  └ Testnet/1024       | CLV| | |  Solana) project.
-  ---------------------|----|-|-|-----------------------------------------------------
-  MathChain/1139       |MATH| | |  https://mathchain.org/en/
-  └ Testnet/1140       |MATH| | |  SmartWallet AppChain based on (Polkadot) Substrate
-                       |    | | |  Features: DID, SecretStore, EVM, Off-chain Worker.
-  ---------------------|----|-|-|-----------------------------------------------------
-  Ecoball Main./???    | ECO| | |  Finance Oriented. Claims to support 100.000 TX/s
-  └ Test.Espuma/???    | ECO| | |  using VPoS and smart-node selection with close-to-zero
-                       |    | | |  trading fees.
-                       |    | | |  25 validator pools and 245 delegators.
-  ---------------------|----|-|-|-----------------------------------------------------
-  QuarkChain           |    | | |  flexible, scalable, user-oriented
-  └ Mainnet            |    | | |  blockchain infrastructure by using
-    └ Root/100000      | QKC| | |  blockchain sharding technology.
-    └ Shards/*1        | QKC| | |
-  └ Devnet                       
-    └ Root/110000      | QKC| | |
-    └ Shards/*2        | QKC| | |
-  *1:100001..8         |    | | |
-  *2:100001..8         |    | | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  Harmony              |    | | |  2-second TX finality @ 1/1000 price.
-  └ Mainnet            |    | | |  Open platform for assets, collectibles,
-    └ Shards/*1        |  ON| | |E identity and governance.
-  └ Testnet            |    | | |  secure bridges offer cross-chain asset
-    └ Shards/*2        |  ON| | |E transfers with E.MainNet, Binance and
-    1666600000..3      |    | | |  3 other chains.
-    1666600000..3      |    | | |  daVinci NFT marketplace: April 2021.
-                       |    | | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  IoTeX Network        |    | | |@[https://iotex.io/]
-  └ Mainnet/4689       |IOTX| | |  9K+     DEVICES       200K+   COMMUNITY
-  └ Testnet/4690       |IOTX| | |  14,4M   TRANSACTIONS  39,000+ STAKERS
-                       |    | | |  """IEEE Blockchain& IoT Standards
-                       |    | | |   Working Group Appoints IoTeX Head of
-                       |    | | |   Cryptography as Vice Chair """
-                       |    | | |
-  ---------------------|----|-|-|-----------------------------------------------------
-  Binan.SmartCh./56    | BNB|Y|Y|   PoSA = Proof of Stake + Proof of Authority.
-  └ Testnet/97         |tBNB| | |   WARN: "Spam Chain". Very active <a href="https://www.techtimes.com/articles/268625/20211128/binance-smart-chain-becomes-most-followed-cryptocurrency-on-twitter.htm]">on Twitter an press</a>
+  Chain Name/Chain ID  │Symb│││││││ notes
+  ─────────────────────│────│─│─│─│─────────────────────────────────────────────────────
+  ethereum             |    | | | |
+  └ mainnet/1          | ETH| |y| |
+  └ testnet görli/5    | GOR| |y| | https://goerli.net/
+                       |    | | | | Consensus: Proof-of-Authority!
+                       |    | | | | 
+                       |    | | | | Goerli testnet will be merged with the Prater
+                       |    | | | | proof-of-stake beacon chain. This will mark
+                       |    | | | | the end of the permissioned PoA phase and
+                       |    | | | | everyone will be able to run a validator 
+                       |    | | | | for Goerli.
+                       |    | | | | Officially becoming proof-of-stake (PoS) as of
+                       |    | | | | 1:45 am UTC, Aug. 11.
+                       |    | | | | 
+  └ testnet Sepolia/?  | ???| |?|?| https://sepolia.dev
+                       |    | | | | Consensus: Proof of Stake !!! 
+                       |    | | | | RPC Endpoint: https://rpc.sepolia.dev 
+                       |    | | | | 
+                       |    | | | | Network/Chain ID: 11155111
+                       |    | | | | Genesis Hash: 0x25a5cc106..8993e6dd9
+                       |    | | | | Consensus Engine: Proof of Stake
+                       |    | | | | EVM Version: London
+                       |    | | | | 
+  └ testnet ropsten/3  | ROP| | | | Deprecated           by Q4    2022.
+  └ testnet rinkeby/4  | RIN| | | | Deprecated/Shut down by Q2/Q3 2023.
+                       |    | | | |*WARN:*
+                       |    | | | | Users and developers are encouraged to migrate ASAP 
+                       |    | | | | to Goerli or to test Ethereum in a post-merge context. !!!
+                       |    | | | | After The Merge, Rinkeby will not be a suitable testing
+                       |    | | | | environment for the Ethereum mainnet. Unplanned mainnet
+                       |    | | | | upgrades may no longer be applied to deprecated testnets.
+                       |    | | | |
+  └ testnet kovan/42   | KOV| | | | Kovan only works with Parity Clients causing some troubles
+                       |    | | | | https://medium.com/authereum/getting-ethereum-transaction-revert-reasons-the-easy-way-24203a4d1844
+                       |    | | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  polygon Main./137    MATIC|Y|Y|Y| type: L2 zk-rollup (previously known as MATIC Network)
+  └ Test.Mumbai/80001  MATIC| |Y| | https://polygon.technology/
+                       |    | | | | polygon: protocol+framework to build+
+                       |    | | | | connect Ether. compatible Networks
+                       |    | | | | NOTE: 
+                       |    | | | | Instead of providing just one or two 
+                       |    | | | | scaling solutions, Polygon is creating 
+                       |    | | | | an ecosystem that connects multiple 
+                       |    | | | | different scaling solutions, including 
+                       |    | | | | sidechains with different consensus 
+                       |    | | | | mechanisms and layer-2 options such as 
+                       |    | | | | Plasma, Optimistic Rollups, and 
+                       |    | | | | ZK-Rollups.
+                       |    | | | | It also includes an optional shared security model.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  expanse net/2        | EXP| | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  thaichain/7          | TCH| | | | thaishield audits verify your
+  └ 2.0 thaifi/17      | TFI| | | | distributed systems work as intended.
+                       |    | | | | our engineers fully review system’s
+                       |    | | | | architecture and codebase, and then
+                       |    | | | | write a thorough report with
+                       |    | | | | actionable feedback for every issue.
+  --------------------------|-|-|-|-----------------------------------------------------
+  ubiq/8               | UBQ| | | | built upon improved version of e.codebase,
+  └ testnet/9          |    | | | | it offers enterprise-stable pow.
+                       |    | | | | conservative upgrade schedule.
+  --------------------------|-|-|-|-----------------------------------------------------
+  arbitrum one/42161   |AETH|Y| |Y| optimistic rollup.
+  └ test.rinkeby/421611|aRETH | | | integrated with binance exchange
+                       |    | | | | (but withdrawals not yet enabled
+                       |    | | | |  as of 2021-11-26  )
+  └ on xdai/200        |XDAI| | | |  (research project)
+  --------------------------|-|-|-|-----------------------------------------------------
+  BNB Smart Chain      |    | | |Y| 
+                       |    | | | | 
+                       |    | | | | 
+  --------------------------|-|-|-|-----------------------------------------------------
+  Optimistic Eth./10   |OETH|Y|Y|Y| type: l2 optimistic-rollup
+  └ testnet kova/69    | KOR| | | | millisec tx,10-100x cheaper.
+  └ testnet goerly/420 | GOR| | | | periodically submit l2 tx merkle root to
+                       |    | | | | mainnet, storing N L2 tx 1 tx mainnet.
+                       |    | | | | https://chainid.lin/?network=optimism
+                       |    | | | | node: https://mainnet.optimism.io
+                       |    | | | | expl: https://optimistic.etherscan.io
+                       |    | | | | supported by infura.
+  --------------------------|-|-|-|-----------------------------------------------------
+  Fantom/??            |??? |?|Y|Y| 
+  └ ???                |    | | | | 
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  xDAI Chain/100       |xDAI|Y| | |  Aims at creating Stable Payments Fees tied to USD
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  NEAR/???             |????|Y| | | It runs in concert with Ether/Polka./Cosmos/
+                       |    | | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  CELO/???             |????|Y|Y| |• https://celo.org
+                       |    | | | |• PoS, mobile-1st platform for fin.dApps+crypto payments
+                       |    | | | |• KickStart anounced that its platform will change to
+                       |    | | | |  be based on the Celo blockchain in 2021-12.
+                       |    | | | |• CELO founders/inverstors include Jack Dorsey (Twitter
+                       |    | | | |  CEO), SocialCapital, CoinBase, Telekom, ...
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  AVALANCHE/???        |????|Y|Y|Y|
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  StarkNet             |????|?| | |• L2 stark rollup.
+                       |    | | | |• Used by SORASE (Paris based company providing
+                       |    | | | |  NFTs for "LaLiga", "Gerad Piqué", ...)
+                       |    | | | |• Alpha state as of 2022-02-22
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  POA/???              |????|Y| | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  MOONRIVER/???        |????|Y| | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Fuse Mainnet/122     |FUSE|Y| | |  "Open Source" Economy, create Branded wallets...
+  └ Sparknet/123       SPARK| | | |  47 validators, ...
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  palm Main./*1        |PALM| | |Y| sidechain for selling&trading
+  └ Testnet/*2         |PALM| | | | real-world and digi. assets NFTs.
+  *1:11297108109       |    | | | | IBFT 2.0 poa consensus.
+  *2:11297108099       |    | | | | (pseudo-centralized/consortium net).
+                       |    | | | | automated mainnet bridge relay service.
+                       |    | | | | Connect payment tokens (DAI, NFTs) with
+                       |    | | | | bridging contracts deployed on both
+                       |    | | | | networks. Fees collected from this
+                       |    | | | | bridge are partially used to purchase
+                       |    | | | | carbon offsets.
+                       |    | | | | - 
+  ---------------------+----|-|-|-|-----------------------------------------------------
+  Metadium Main./11    |META| | | | Self Sov. Identity with 2 Factor Authentication
+  └ Testnet/12         | KAL| | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  GoodData Main./32    |GooD| | | |  NFTs/"Metaverse"
+  └ Testnet/33         |GooD| | | |  AI and ML Optimize Rewards
+                       |    | | | |  Region-aware distributed storage
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Telos EVM Main./40   |TLOS| | | |  "The most scalable E.platform available today"
+  └ Testnet/41         |TLOS| | | |  Fixed gas fee. Enviro.Friendly
+                       |    | | | |  ESG compliance
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  CoinEx SmartCh./52   | CET| | | |  PoS based. Permission-free, low fess.
+  └ Testnet/53         |CETT| | | |  Finance oriented
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Ontology Main./58    | ONG| | | |  Focus:Decentralized IDentity. Customers include
+  └ Testnet/5851       | ONG| | | |  Daimler Benz Mobility.
+                       |    | | | |  App User base: 50% Asia, 7% USA.
+                       |    | | | |  partnered with rOCKI, next-gen music [NFT]
+                       |    | | | |  streaming service and NFT platform built on
+                       |    | | | |  Binance Smart Chain (BSC) to use its DID solution
+                       |    | | | |  to prevent badn actors impersonating artists.
+                       |    | | | |  Multi-Virtual Machine supports.
+                       |    | | | |  "Ont. has its own VM, and also supports Wasm, NeoVM.
+                       |    | | | |  and EVM....  Devs can now use Ont.Bridge to convert
+                       |    | | | |  Ont.Native OEP4 to ORC20 tokens, adding to MetaMask,
+                       |    | | | |  and deploying dApps.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  GoChain Main./60     |  GO| | | |  Proof of Reputation (PoR) web3 based public+private
+  └ Testnet/31337      |  GO| | | |  1300 TX/sec.(10000x greener, 1000x cheaper)
+                       |    | | | |  Run by Lenovo, RMIT university, Nicosia University,
+                       |    | | | |  Pennsylvania State University, ...
+                       |    | | | |  Quite active as of 2021-11 according to:
+                       |    | | | |@[https://medium.com/gochain]
+                       |    | | | |  Clientes include Fortune 500 companies,
+                       |    | | | |  Compañía Nacional de Minería de Colombia,
+                       |    | | | |  Services include:
+                       |    | | | |  - Zeromint NFT Marketplace and Chainparency.
+  --------------------------|-|-|-|-----------------------------------------------------
+  OKExChain Main./65   | OKT| | | |  Decentralized Exchange (DEX) oriented, running
+  └ Mainnet/66         | OKT| | | |  "on top" Cosmos + EVM.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  POA Network Core/99  | POA| | | |
+  └ Sokol/77           | SKL| | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  PrimusChain          |    | | | |
+  └ Main./78           |PETH| | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Meter Mainnet/82     | MTR| | | |  "High performance infra" allowing S.C. to
+  └ Testnet/83         | MTR| | | |  "travel" through heterogeneous blockchain networks.
+                       |    | | | |  Partneting with ChainLink, Harmony, Poligy,
+                       |    | | | |  Standard Tokenization Protocol, Oasis Foundation,
+                       |    | | | |  ...
+                       |    | | | |  100+ validators.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Lightstreams         |    | | | |
+  └ Mainnet/162        | PHT| | | |  Built on Tendermint consensus ("Cosmos"). According
+  └ Testnet/163        | PHT| | | |  to page: a $5.63 TX in E.MainNet becomes $0.0002 in
+                       |    | | | |  lightstreams. $42.30 Uniswap reduces to $0.0016.
+                       |    | | | |  x25 faster with install 3secs. settlement.
+                       |    | | | |  Doesn't look to be very active. 1/2 post per year.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  BitTorrent Ch./199   | BTT| | | |  Blokchain tokenizing BitTorrent Decentralized
+  └ Testnet/1028       | BTT| | | |  file sharing protocol.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Freight Trust        |    | | | |  Focus on regulated/compliant SupplyChain.
+        Network/211    | 0xF| | | |  EID X12, EDINT AS2/AS4,
+                       |    | | | |  EDI EDIFACT, Custom/Imports,
+                       |    | | | |  Custom/Exports, Freight Forwarders
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Energy Web Ch./246   | ???| | | |  https://energyweb.org/
+                       |    | | | |  "World’s first public, enterprise-grade
+                       |    | | | |   blockchain tailored to the energy sector"
+                       |    | | | |  46 projects in 21 countries
+                       |    | | | |  with 41 partners as of 2021-11
+                       |    | | | |  W3C DID is used as core Identity building block.
+                       |    | | | |  Identity is provided to any customer, asset,
+                       |    | | | |  utility or regulator.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Theta                |    | | | |  Specialized in peer-to-peer (real-time)video
+  └ Mainet    /361     TFUEL| | | |  streaming/transcoding.
+  └ Testnet   /365     TFUEL| | | |  streaming/transcoding.
+    Sap.Test. /363     TFUEL| | | |  Compat. with EVM Constantinople plus
+    Amber Test/364     TFUEL| | | |  a couple of key Istanbul features.
+                       |    | | | |  Global partners including Google, Samsung,
+                       |    | | | |  Binance, Blockchain.com, and Gumi.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Acala Network/787    | ACA| | | |  layer-1 with built-in liquidity and
+  └ Testnet/595        |mACA| | | |  ready-made fin.apps + trustless
+                       |    | | | |  exchange, decentralized stablecoin
+                       |    | | | |  (aUSD), DOT Liquid Staking (LDOT),
+                       |    | | | |  and EVM+. supported by Polkadot Substrate.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Ambros Chain         |AMBR| | | |  600+ PoA network designed for IoT.
+  └ MainNet/ 880       |AMBR| | | |  13.848 Holders.
+  └ Testnet/8888       |AMBR| | | |  Digital identities are given to devices,
+                       |    | | | |  with all data about their condition and
+                       |    | | | |  movement securely bundled and automatically
+                       |    | | | |  relayed to your blockchain.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Wanchain/888         | WAN| | | |  https://www.wanchain.org/
+  └ Testnet/999        | WAN| | | |  Finance oriented Public|Private-to-Public|Private
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Clover Main./1023    | CLV| | | |  part of cross-blockhain (EVM, DOT/KSM+ parachains,
+  └ Testnet/1024       | CLV| | | |  Solana) project.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  MathChain/1139       |MATH| | | |  https://mathchain.org/en/
+  └ Testnet/1140       |MATH| | | |  SmartWallet AppChain based on (Polkadot) Substrate
+                       |    | | | |  Features: DID, SecretStore, EVM, Off-chain Worker.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Ecoball Main./???    | ECO| | | |  Finance Oriented. Claims to support 100.000 TX/s
+  └ Test.Espuma/???    | ECO| | | |  using VPoS and smart-node selection with close-to-zero
+                       |    | | | |  trading fees.
+                       |    | | | |  25 validator pools and 245 delegators.
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  QuarkChain           |    | | | |  flexible, scalable, user-oriented
+  └ Mainnet            |    | | | |  blockchain infrastructure by using
+    └ Root/100000      | QKC| | | |  blockchain sharding technology.
+    └ Shards/*1        | QKC| | | |
+  └ Devnet                         
+    └ Root/110000      | QKC| | | |
+    └ Shards/*2        | QKC| | | |
+  *1:100001..8         |    | | | |
+  *2:100001..8         |    | | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Harmony              |    | | |Y|  2-second TX finality @ 1/1000 price.
+  └ Mainnet            |    | | | |  Open platform for assets, collectibles,
+    └ Shards/*1        |  ON| | | |E identity and governance.
+  └ Testnet            |    | | | |  secure bridges offer cross-chain asset
+    └ Shards/*2        |  ON| | | |E transfers with E.MainNet, Binance and
+    1666600000..3      |    | | | |  3 other chains.
+    1666600000..3      |    | | | |  daVinci NFT marketplace: April 2021.
+                       |    | | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  IoTeX Network        |    | | | |@[https://iotex.io/]
+  └ Mainnet/4689       |IOTX| | | |  9K+     DEVICES       200K+   COMMUNITY
+  └ Testnet/4690       |IOTX| | | |  14,4M   TRANSACTIONS  39,000+ STAKERS
+                       |    | | | |  """IEEE Blockchain& IoT Standards
+                       |    | | | |   Working Group Appoints IoTeX Head of
+                       |    | | | |   Cryptography as Vice Chair """
+                       |    | | | |
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  Binance SmartCh./56  | BNB|Y|Y| |   PoSA = Proof of Stake + Proof of Authority.
+  └ Testnet/97         |tBNB| | | |   WARN: "Spam Chain". Very active <a href="https://www.techtimes.com/articles/268625/20211128/binance-smart-chain-becomes-most-followed-cryptocurrency-on-twitter.htm]">on Twitter an press</a>
                                              Completely broken in Real World:
                                            @[https://github.com/binance-chain/bsc/issues/553]
 
@@ -570,7 +610,7 @@
 [[}]]
 
 
-● ETHEREUM WALLET COMPARISON  [[{wallet.101,20_QA.UX.WALLET,00_PM.WiP]]
+● ETHEREUM WALLET COMPARISON  [[{wallet.101,20_QA.UX.WALLET,01_PM.WiP]]
   ==========================
   Based on previous work from: https://github.com/shanefontaine/ethereum-wallet-comparison
   LECTURE: 1: yes/OK/supported, 0: no/KO/unsupported, p: In-progress
@@ -624,7 +664,7 @@
 [[}]]
 
 
-[[{standards,00_PM.ext_resource,01_doc_has.taxonomy,00_PM.TODO]]
+[[{standards,01_PM.ext_resource,02_doc_has.taxonomy,01_PM.TODO]]
 ● Related Taxonomies:
   - TokenTaxonomyFramework
   @[https://github.com/InterWorkAlliance/TokenTaxonomyFramework]
@@ -634,7 +674,7 @@
   - Economics  Taxonomy: @[https://economics.stackexchange.com/tags]
 [[}]]
 
-● EVM [[{10_EVM,00_PM.ext_resource]]
+● EVM [[{10_EVM,01_PM.ext_resource]]
  • External Refs:
   @[https://github.com/ethereum/yellowpaper]
   @[https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial]
@@ -751,7 +791,7 @@
           a partial path is prefixed with a flag for odd-cases.
           (See original post for more info)
 
-• EVM Accounts [[{12_solidity,10_EVM.101,01_doc_has.diagram]] #[evm_accounts_summary]
+• EVM Accounts [[{12_solidity,10_EVM.101,02_doc_has.diagram]] #[evm_accounts_summary]
 @[http://www.ethdocs.org/en/latest/contracts-and-transactions/account-types-gas-and-transactions.html]
   Account   ← same address space both for contract and normal accounts
   ┌─────────────────────────┐
@@ -811,7 +851,7 @@
   however, once mined, any subsequent submissions will be rejected.
 [[}]]
 
-• EVM Message Calls (CALL opcode) [[{10_EVM.101,20_QA.error_control,01_doc_has.diagram]]
+• EVM Message Calls (CALL opcode) [[{10_EVM.101,20_QA.error_control,02_doc_has.diagram]]
   - Contracts can user message calls to call other contracts or send Ether to
     non-contract accounts.
 
@@ -892,7 +932,7 @@
  • EVM OpCodes Summary [[{10_EVM.101,10_EVM.i/o,10_EVM.gas]]
    - Ethereum Virtual Machine Opcodes low level reference to EVM:
     @[https://ethervm.io/]
-   - EVM Illustrated [[{00_PM.TODO}]]
+   - EVM Illustrated [[{01_PM.TODO}]]
      @[https://takenobu-hs.github.io/downloads/ethereum_evm_illustrated.pdf]
 
      Opcodes:
@@ -909,7 +949,7 @@
       See notes on "function wrappers" for ABI implementation in 
      byte-code generated from Solidity sources.
 
-   - We could draw analogies between the architectural tiers of DApp [[{01_doc_has.comparative]]
+   - We could draw analogies between the architectural tiers of DApp [[{02_doc_has.comparative]]
      and Web App:
      - A contract is like a web service
      - A transaction is like a request.
@@ -1472,7 +1512,7 @@ REF: @[https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-sto
 
 [[}]]
 
-● EIP-191: Signed Data Standard (Multisignature TXs) [[{signature.multisignature,02_use_case.identity,standards.eip/erc.191,00_PM.TODO]]
+● EIP-191: Signed Data Standard (Multisignature TXs) [[{signature.multisignature,02_use_case.identity,standards.eip/erc.191,01_PM.TODO]]
 @[https://eips.ethereum.org/EIPS/eip-191]
 @[https://github.com/ethereum/EIPs/issues/191]
 - See also @[#eip-712]
@@ -1791,7 +1831,7 @@ Example code:
                        in internal storage.   78.125 times cheaper per byte !!
                                                FIX TX cost not included
 }}}
-● EVM: Calls vs TXs: [[{01_doc_has.comparative,101,10_EVM.101]]
+● EVM: Calls vs TXs: [[{02_doc_has.comparative,101,10_EVM.101]]
   Imagine a solidity code similar to:
 
     contract Voting {
@@ -2398,6 +2438,13 @@ The signed TX is then sent to the network.    |   hacked)
     RINKEBY
     TESTNET DEPLOYMENT: 0xe7410170f87102df0055eb195163a03b7f2bff4a
                         .test supported
+
+ • Simple ethers.js client using ENS:
+   const provider = new ethers.providers.JsonRpcProvider("https://...");
+   provider.lookupAddress(addr).then( (resolvedName) => {
+     return resolvedName ?? addr;
+   })
+
 [[}]]
 
 ###############################################################
@@ -2526,7 +2573,7 @@ The signed TX is then sent to the network.    |   hacked)
 @[https://blog.ethereum.org/2020/01/29/solidity-0.6-try-catch/]
 [[}]]
 
-● solc (Solidity Compiler) [[{101,12_solidity.solc,20_QA.formal_verification,20_QA.auditing,13_SLC.debugging,00_PM.WiP]]
+● solc (Solidity Compiler) [[{101,12_solidity.solc,20_QA.formal_verification,20_QA.auditing,13_SLC.debugging,01_PM.WiP]]
   • svm: Solidity compiler Version Manager, similar to Node nvm,..
   @[https://github.com/web3j/svm]
   $ svm install 0.6.2   ← install|uninstall|deactivate
@@ -2724,7 +2771,7 @@ The signed TX is then sent to the network.    |   hacked)
   @[https://contract-library.com/contracts/Ethereum/42A1CA0A79A9E7D83AEE9012D21920B02F9FC2C6]
 [[}]]
 
-● Solidity 101: [[{101,12_solidity.101,persistence.data_structure,20_QA,00_PM.WiP]]
+● Solidity 101: [[{101,12_solidity.101,persistence.data_structure,20_QA,01_PM.WiP]]
 (Initial version from @[https://learnxinyminutes.com/docs/solidity/]
  with "lot of extras")
 ● EVENT-STREAM ORIENTED:
@@ -3149,9 +3196,10 @@ ecrecover
  - check for non-empty strings)
    bytes(myTestedString)  .length & 0;         // alt 1, check bytes array length
                                                // (.length not(yet) for string)
-   keccak256(myTestedString)  != keccak256("") // alt 2, check  keccak256 [[}]]
+   keccak256(bytes(myTestedString))            // alt 2, check  keccak256 [[}]]
+                    !=keccak256((""));
 
- - Check white-space paddings: [[{00_PM.TODO}]]
+ - Check white-space paddings: [[{01_PM.TODO}]]
 
  - uint256 to/from Strings:
    // https://ethereum.stackexchange.com/questions/6591/conversion-of-uint-to-string
@@ -3281,7 +3329,7 @@ Note:
 this.confirmPurchase(...) # External call
 [[}]]
 
-● ERROR CONTROL [[{12_solidity.error_control,transaction,10_EVM.101,01_doc_has.diagram,13_SLC.debugging,10_EVM.implementation.besu,10_EVM.events,13_SLC.testing,transaction,dev_framework.web3j,20_QA.error_control]]
+● ERROR CONTROL [[{12_solidity.error_control,transaction,10_EVM.101,02_doc_has.diagram,13_SLC.debugging,10_EVM.implementation.besu,10_EVM.events,13_SLC.testing,transaction,dev_framework.web3j,20_QA.error_control]]
 @[https://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions]
 
   ERROR MANAGEMENT: 
@@ -3490,7 +3538,7 @@ this.confirmPurchase(...) # External call
     }
 [[}]]
 
-● Solidity Best Patterns [[{12_solidity.101,20_QA.error_control,01_doc_has.tutorial,00_PM.WiP]]
+● Solidity Best Patterns [[{12_solidity.101,20_QA.error_control,02_doc_has.tutorial,01_PM.WiP]]
   • Coding Convention List
     This section covers a series of recomendations in order to develop
     Solidity smart-contracts in order to improve the quality of code
@@ -3880,7 +3928,7 @@ contract Test {
 }
 [[}]]
 
-● QA: Static/Dyn. Code analysis [[{01_doc_has.comparative,security.101,12_solidity.qa]]
+● QA: Static/Dyn. Code analysis [[{02_doc_has.comparative,security.101,12_solidity.qa]]
   by QuillAudits, security Firm
   @[https://blog.quillhash.com/static-and-dynamic-analysis-of-smart-contracts-vulnerabilities/]
   @[https://audits.quillhash.com]
@@ -4019,7 +4067,7 @@ contract Test {
   @[https://arxiv.org/pdf/1807.07875.pdf]
 [[}]]
 
-● QA: FORMAL PROOFs [[{20_QA.formal_verification,12_solidity.qa,00_PM.WiP]]
+● QA: FORMAL PROOFs [[{20_QA.formal_verification,12_solidity.qa,01_PM.WiP]]
 • External Links
   • @[https://github.com/pirapira/eth-isabelle]
   • @[https://github.com/pirapira/ethereum-formal-verification-overview]
@@ -4161,7 +4209,7 @@ contract Test {
     @[https://github.com/dmuhs/PythX]
 [[}]]
 
-● Sec.Tool Index(consensys) [[{security.101,12_solidity.qa,security,00_PM.WiP]]
+● Sec.Tool Index(consensys) [[{security.101,12_solidity.qa,security,01_PM.WiP]]
 @[https://consensys.github.io/smart-contract-best-practices/security_tools/]
   • Visualization  @ma
     - @[https://github.com/ConsenSys/surya]: displays a number of visual outputs
@@ -4383,7 +4431,7 @@ contract Test {
 
 
 [[{tokens]]
-● Universal Token: [[{security.aaa,02_use_case.finance,00_PM.WiP]]
+● Universal Token: [[{security.aaa,02_use_case.finance,01_PM.WiP]]
 @[https://github.com/ConsenSys/UniversalToken] #[universal_token]
 - "A Unique Standard for Centralized and Decentralized Finance Use Cases"
 - Actively maintained as 2022-03-14
@@ -4666,7 +4714,7 @@ contract Test {
 
 [[tokens}]]
 
-● Checking Signatures On-Chain [[{12_solidity,signature.multisignature,00_PM.WiP,20_QA.UX]]
+● Checking Signatures On-Chain [[{12_solidity,signature.multisignature,01_PM.WiP,20_QA.UX]]
 - ECDSA signature == 65 byte array ( v (1), r (32), s (32) ).
   - web3.eth.sign (and others) can be used to insert extra signatures
     in a new transaction (other than the signed transaction itself)
@@ -4771,7 +4819,7 @@ contract Test {
    - Based on min/max thresholds.
 [[}]]
 
-● EIP 1056: Lightweight Identity [[{02_use_case.identity,standards.W3C_DID,00_PM.TODO]]
+● EIP 1056: Lightweight Identity [[{02_use_case.identity,standards.W3C_DID,01_PM.TODO]]
  -  WARN: Unstable, likely to change.
   """ ...As we have been developing identity systems for the last couple of
   years at uPort it has become apparent that the cost of identity
@@ -4784,7 +4832,7 @@ contract Test {
   off-chain as well as on-chain..."""
 [[}]]
 
-● ERC-725: Lightweight Identity [[{02_use_case.identity,standards.W3C_DID,00_PM.TODO]]
+● ERC-725: Lightweight Identity [[{02_use_case.identity,standards.W3C_DID,01_PM.TODO]]
 @[https://erc725alliance.org/]
 - Note: Current Identity Systems in Ethereum include
   (ref: https://w3c-ccg.github.io/did-method-registry/#the-registry)
@@ -4812,14 +4860,14 @@ contract Test {
   - ERC 735: associated standard to add|remove claims to an ERC-725 SC.
 [[}]]
 
-● ERC 780: Ethereum Claims Registry [[{02_use_case.identity,00_PM.backlog]]"
+● ERC 780: Ethereum Claims Registry [[{02_use_case.identity,01_PM.backlog]]"
 - proposal to allows persons, smart contracts, and machines to issue
   claims about each other, as well as self issued claims with the aim
   of providing a central point of reference for on-chain claims on
   Ethereum.
 [[}]]
 
-● EIP-1484: Digital Identity Aggregator [[{00_PM.backlog]]
+● EIP-1484: Digital Identity Aggregator [[{01_PM.backlog]]
   Identity management and aggregation framework.
   - Identities are represented via a singular Identity Registry SC.
     that can be associated to Ethereum addresses in a variety of
@@ -4908,7 +4956,7 @@ contract Test {
   WARN,WARN,WARN:  (Update 2019-12) Metamask management problems:
 @[https://metamask.github.io/metamask-docs/]
 
-  - [[{00_PM.risks]]
+  - [[{01_PM.risks]]
     REF: https://www.bitcoininsider.org/article/79962/updated-metamask-contributor-says-project-lacks-support-consensys
    """... A contributor of major Ethereum browser extension Metamask has
      reported that the MetaMask team is “totally overwhelmed” and not
@@ -4979,7 +5027,7 @@ contract Test {
          .catch(e => { ... })
    }
 
-● MetaMask Mobile [[{00_PM.TODO}]]
+● MetaMask Mobile [[{01_PM.TODO}]]
 @[https://mobile.metamask.io/]
 
 ● What's new MetaMask
@@ -5018,7 +5066,7 @@ contract Test {
       If you’re a developer that only relies on your own version of
       ethers or web3, you won’t need to take any action — just keep it
       up to date.
-      IF CHOOSING A NEW CONVENIENCE LIBRARY, WE  RECOMMEND ETHERS. [[{01_doc_has.comparative}]]
+      IF CHOOSING A NEW CONVENIENCE LIBRARY, WE  RECOMMEND ETHERS. [[{02_doc_has.comparative}]]
 
     - Cutting Edge Security:
       The (new) LavaMoat tool helps raise the bar of security for
@@ -5042,7 +5090,7 @@ contract Test {
       - great user experience in integrating with MetaMask.
 [[}]]
 
-● EIP-712 (Typed human-friendly signing): [[{20_QA.UX.wallet,wallet.metamask,wallet.lattice1,00_PM.TODO]]
+● EIP-712 (Typed human-friendly signing): [[{20_QA.UX.wallet,wallet.metamask,wallet.lattice1,01_PM.TODO]]
   "Ethereum typed structured data hashing and signing"
  @[https://eips.ethereum.org/EIPS/eip-712]
 - See also @[#eip-191]
@@ -5104,7 +5152,7 @@ contract Test {
 
 [[}]]
 
-● META-TRANSACTIONS [[{wallet.metamask,10_EVM.gas,transaction,00_PM.TODO]]
+● META-TRANSACTIONS [[{wallet.metamask,10_EVM.gas,transaction,01_PM.TODO]]
 @[https://defirate.com/meta-transactions/]
 - meta transactions allow users to interact with a public
   blockchain without paying a transaction fee:
@@ -5202,7 +5250,7 @@ contract Test {
       "bytes32",web3.utils.fromAscii( str01 ));
 [[}]]
 
-● web3.js vs eth.js Comparative: [[{01_doc_has.comparative,dev_framework.js.web3_js,dev_framework.js.eth js]]
+● web3.js vs eth.js Comparative: [[{02_doc_has.comparative,dev_framework.js.web3_js,dev_framework.js.eth js]]
 @[https://blog.infura.io/ethereum-javascript-libraries-web3-js-vs-ethers-js-part-i/]
 Ethereum JavaScript Libraries: web3.js vs. ethers.js (Part I)
 - Both libraries work!!
@@ -5550,7 +5598,7 @@ $ truffle deploy                          <- Deploy contract. It will deploy Mig
 [[}]]
 
 
-• Truffle Framework: Security: [[{security,20_QA,00_PM.TODO.NOW]]
+• Truffle Framework: Security: [[{security,20_QA,01_PM.TODO.NOW]]
 @[https://github.com/ConsenSys/truffle-security]
   - MythX Security Analysis Plugin for Truffle Framework
   - adds automated smart contract security analysis to the
@@ -5558,12 +5606,12 @@ $ truffle deploy                          <- Deploy contract. It will deploy Mig
   - Compatible with Truffle 4.0 or higher.
 [[}]]
 
-• Truffle Framework: IPFS/Filecoin: [[{scalability.offchain,infrastructure.storage.offchain,00_PM.TODO]]
+• Truffle Framework: IPFS/Filecoin: [[{scalability.offchain,infrastructure.storage.offchain,01_PM.TODO]]
 @[https://www.trufflesuite.com/blog/announcing-collaboration-with-filecoin]
 [[}]]
 
 
-• Truffle Framework: migrating to web3 v1.0 [[{00_PM.TODO}]]
+• Truffle Framework: migrating to web3 v1.0 [[{01_PM.TODO}]]
 @[https://medium.com/@adrianmcli/migrating-your-truffle-project-to-web3-v1-0-ed3a56f11a4]
  "... Unfortunately Truffle uses the 0.20.x version of Web3.js
       instead of vs v1.0+, providing a more easier to work with API (e.g.:
@@ -5605,7 +5653,7 @@ $ truffle deploy                          <- Deploy contract. It will deploy Mig
       Type result = contract.someMethod(param1, ...).send();
 
 • 'web3j' Wrapper command line client around web3j library:
-  $ web3j version|wallet|solidity ... [[{00_PM.TODO}]]
+  $ web3j version|wallet|solidity ... [[{01_PM.TODO}]]
 
 • Web3J (event) FILTERS: REF: https://docs.web3j.io/filters.html
   - Provide notifications of Ethereum-events
@@ -5733,7 +5781,7 @@ See Also:
 
 
 
-● Web3 GO [[{dev_framework.go,10_EVM.events,00_PM.WiP]]
+● Web3 GO [[{dev_framework.go,10_EVM.events,01_PM.WiP]]
 <span title>Web3 GOLang</span>
   ===================================================
 • ethclient package. Connecting to node (ws/http/ipc)
@@ -6064,17 +6112,17 @@ Nethereum UI wallet sample      Cross platform wallet example using Nethereum, X
                                 with the Raspberry PI and Xbox.
 [[}]]
 
-● web3.py [[{dev_framework.python.web3_py,00_PM.TODO]]
+● web3.py [[{dev_framework.python.web3_py,01_PM.TODO]]
 @[https://github.com/ethereum/web3.py]
 [[}]]
 
-● Brownie [[{dev_framework.python.brownie,13_SLC.testing,20_QA,00_PM.TODO]]
+● Brownie [[{dev_framework.python.brownie,13_SLC.testing,20_QA,01_PM.TODO]]
   @[https://eth-brownie.readthedocs.io/en/latest/]
   @[https://eth-brownie.readthedocs.io/en/stable/tests-hypothesis-property.html]
   @[https://github.com/HyperLink-Technology/brownie]
 - simple python framework for testing, deploying and interacting with SCs.
 
-- PROPERTY-BASED TESTING — Brownie v1.6.5 documentation [[{00_PM.TODO.now}]]
+- PROPERTY-BASED TESTING — Brownie v1.6.5 documentation [[{01_PM.TODO.now}]]
 
 - See Also:
   - Effective Smart Contract Testing with Brownie:
@@ -6083,8 +6131,8 @@ Nethereum UI wallet sample      Cross platform wallet example using Nethereum, X
 
 
 ● SCALABILITY SOLUTIONS: [[{101,scalability.zkp,privacy.zkp,scalability.layer2]] #[layer2_scalability_summary]
-                         [[dev_framework.remix,01_doc_has.diagram,layer2.rollup.optimistic]]
-                         [[,layer2.rollup.zk,00_PM.WiP]]
+                         [[dev_framework.remix,02_doc_has.diagram,layer2.rollup.optimistic]]
+                         [[,layer2.rollup.zk,01_PM.WiP]]
 
 • Layer 1 Scalability Solutions include:
   · DDBB (storage) Sharding.
@@ -6340,7 +6388,7 @@ epoch
   }
 [[}]]
 
-● Casper PoS (Ethereum 2) [[{scalability.consensus.ethereum2,01_doc_has.comparative]]
+● Casper PoS (Ethereum 2) [[{scalability.consensus.ethereum2,02_doc_has.comparative]]
 PoS: Proof-of-Stake:
 @[https://consensys.net/blog/blockchain-explained/what-is-ethereum-2/]
 - Reducing mining hardware requirements and scalates TX/s.
@@ -6412,7 +6460,7 @@ PoS: Proof-of-Stake:
     and smart contract execution.
 [[}]]
 
-● Scalability L2 polygon.Network [[{scalability.layer2.polygon,layer2.rollup.optimistic,00_PM.TODO]] #[polygon_summary]
+● Scalability L2 polygon.Network [[{scalability.layer2.polygon,layer2.rollup.optimistic,01_PM.TODO]] #[polygon_summary]
 - Scanner: @[https://polygonscan.com/]
 - Polygon solves pain points associated with Blockchains, like high gas
   fees and slow speeds, without sacrificing on security. This
@@ -6444,7 +6492,7 @@ PoS: Proof-of-Stake:
         checkpoints about network's state to bridge contract  ..."
 [[}]]
 
-● Scalability L2 Plasma.io [[{scalability.layer2,layer2.plasma,00_PM.TODO]]
+● Scalability L2 Plasma.io [[{scalability.layer2,layer2.plasma,01_PM.TODO]]
 @[https://plasma.io/]
 Authors: Joseph Poon and Vitalik Buterin
 - framework for incentivized and enforced execution of smart contracts which
@@ -6500,7 +6548,7 @@ _____________________________
 [[}]]
 
 
-● EEA: Enterprise Integration Layout [[{standards.eea,01_doc_has.diagram,integration]]
+● EEA: Enterprise Integration Layout [[{standards.eea,02_doc_has.diagram,integration]]
 REF: https://medium.com/@bibryam/enterprise-integration-for-ethereum-fa67a1577d43
 ┌─ APPLICATIONS ────────────────────────────────────────────────────────────────────────────
 │
@@ -6642,7 +6690,7 @@ Keep an eye out for the next article by Paul Lintilhac, which will give an expos
 Alethio’s recent data science initiatives: the Ponzi Model.
 [[}]]
 
-• Eventeum: [[{evm.events,integration.data,00_PM.low_code,00_PM.radar]]
+• Eventeum: [[{evm.events,integration.data,01_PM.low_code,01_PM.radar]]
 @[https://github.com/ConsenSys/eventeum]
 - Project status: Stall.  https://github.com/eventeum/eventeum/issues/176
 
@@ -6868,7 +6916,7 @@ required to handle duplicate messages gracefully, as each
 instance will broadcast the same events.
 [[}]]
 
-● Camel Connector [[{evm.events,integration.data,dev_framework.java,00_PM.TODO]]
+● Camel Connector [[{evm.events,integration.data,dev_framework.java,01_PM.TODO]]
 @[https://github.com/bibryam/camel-web3j]
 @[https://github.com/apache/camel/blob/main/components/camel-web3j/src/main/docs/web3j-component.adoc]
 @[https://medium.com/@bibryam/enterprise-integration-for-ethereum-fa67a1577d43]
@@ -6894,9 +6942,9 @@ instance will broadcast the same events.
       + "atBlock=10");                    ← at given block
 [[}]]
 
-● EXTERNAL STORAGE (IPFS,...) [[{scalability.offchain,01_doc_has.comparative,dev_framework.ipfs]]
+● EXTERNAL STORAGE (IPFS,...) [[{scalability.offchain,02_doc_has.comparative,dev_framework.ipfs]]
                               [[infrastructure.storage.offchain,privacy.offchain]]
-                              [[scalability.offchain,00_PM.TODO]]
+                              [[scalability.offchain,01_PM.TODO]]
 - TODO: Compare with alternative Storage "providers": IPFS , Maidsafe, Storj
 - IPFS is just a protocol like http. It is unmotivated (don't have tokens).
 - Eris is permissioned blockchain thing and use IPFS underneath.
@@ -6935,11 +6983,11 @@ humans) and contract accounts which are controlled by the code stored
 together with the account.
 [[}]]
 
-● Vue+Ethereum+IPFS DApp Starter: [[{00_PM.low_code,scalability.offchain,dev_framework.ipfs,20_QA.UX,00_PM.TODO]]
+● Vue+Ethereum+IPFS DApp Starter: [[{01_PM.low_code,scalability.offchain,dev_framework.ipfs,20_QA.UX,01_PM.TODO]]
 @[https://github.com/redacademy/vue-ethereum-ipfs] [[}]]
 
 ● External Inputs (Oracles): [[{101,integration.*,10_EVM.i/o.oracles,12_solidity]]
-                             [[02_use_case.finance,security,02_use_case.integrity,00_PM.WiP]]
+                             [[02_use_case.finance,security,02_use_case.integrity,01_PM.WiP]]
 - The evm and SmartContract by extension just have access to
   internal (current-state) blockchain data. Oracles are used when we
   need logic that depends of external-to-blockchain events, playing the
@@ -6974,7 +7022,7 @@ together with the account.
   data and APIs to smart contracts.
 [[}]]
 
-● GraphQL [[{integration.data,integration.graphql,architecture,00_PM.WiP]]
+● GraphQL [[{integration.data,integration.graphql,architecture,01_PM.WiP]]
 - Extracted from @[https://graphql.org/]
   """GraphQL is a  query language  for APIs and a runtime
      for fulfilling those queries with your existing data.
@@ -7131,7 +7179,7 @@ curl -X POST -H "Content-Type: application/json" \
 [[}]]
 
 ● TheGraph Protocol [[{integration.graphql,scalability.graph,10_EVM.events]]
-                    [[00_PM.low_code,dev_framework.the_graph,20_QA.UX,00_PM.TODO]]
+                    [[01_PM.low_code,dev_framework.the_graph,20_QA.UX,01_PM.TODO]]
 - "Before The Graph, teams had to develop and operate proprietary
   indexing servers. This required significant engineering and hardware
   resources and broke the important security properties required for
@@ -7510,7 +7558,7 @@ Note: Whenever the Ethereum network has been reseted
     wnode
 [[}]]
 
-● Geth Architecture: [[{evm.implementation.geth,architecture.geth,01_doc_has.diagram,00_PM.TODO]]
+● Geth Architecture: [[{evm.implementation.geth,architecture.geth,02_doc_has.diagram,01_PM.TODO]]
   REF: https://www.mycryptopedia.com/ethereum-geth-installing-and-running-a-node/
          ┌────────┐              ┌───────┐
          │JSON RPC│              │LevelDB│
@@ -7553,7 +7601,7 @@ Note: Whenever the Ethereum network has been reseted
       })
 [[}]]
 
-● Understanding Geth Code: [[{evm.implementation.geth,00_PM.TODO]]
+● Understanding Geth Code: [[{evm.implementation.geth,01_PM.TODO]]
  @[https://github.com/Agzs/geth-pbft-study/wiki/Blockchain-Structure]
 
   type BlockChain struct {
@@ -8041,7 +8089,7 @@ EOF
    enode://5d6d7cd20d6da4bb83a1d28cadb5d409b64edf314c0335df658c1a54e32c7c4a7ab7823d57c39b6a757556e68ff1df17c748b698544a55cb488b52479a92b60f@104.42.217.25:30303 (West US, Azure)
 [[}]]
 
-● EEA Summary [[{standards.eea,scalability.consensus,scalability.offchain,integration,00_PM.ext_resource]]
+● EEA Summary [[{standards.eea,scalability.consensus,scalability.offchain,integration,01_PM.ext_resource]]
 - External resources:
   - @[https://entethalliance.org/]
   - @[https://github.com/EntEthAlliance/]
@@ -8311,7 +8359,7 @@ A,B EVM → A,B EVM: contract code execution
 -@[https://github.com/ewasm/benchmarking]
 [[}]]
 
-• Caliper blockchain performance benchmark: [[{13_SLC.profiling,20_QA,00_PM.TODO]]
+• Caliper blockchain performance benchmark: [[{13_SLC.profiling,20_QA,01_PM.TODO]]
   @[https://github.com/hyperledger/caliper] with support for:
   - test different blockchain solutions with predefined use cases,
     and get a set of performance test results.
@@ -8325,7 +8373,7 @@ A,B EVM → A,B EVM: contract code execution
     - FISCO BCOS
 [[}]]
 
-• EEA enode management HowTo [[{standards.eea,devops.101,infrastructure.network,01_doc_has.diagram]]
+• EEA enode management HowTo [[{standards.eea,devops.101,infrastructure.network,02_doc_has.diagram]]
   Extracted from https://github.com/ethereum/devp2p/blob/master/rlpx.md#network-formation
   """ (P2P Network) NODE Identity:
      each node is expected to maintain a static  secp256k1 private key
@@ -8399,14 +8447,14 @@ A,B EVM → A,B EVM: contract code execution
     SENDING FUNDS TO THIS ADDRESS WILL LOCK THEM FOREVER!
 [[}]]
 
-• PUPPETH [[{devops,00_PM.low_code}]]
+• PUPPETH [[{devops,01_PM.low_code}]]
   - Easy Geth deployment of networks
   - (Integrated into Geth 1.9+)
   - Creates genesis block, bootnodes, signers, ethstats, faucet, 
     wallet, explorer and dashboard..
 
 
-● Clef wallet/signer middleware [[{wallet.cloud,security,01_doc_has.diagram,00_PM.TODO]]
+● Clef wallet/signer middleware [[{wallet.cloud,security,02_doc_has.diagram,01_PM.TODO]]
 @[https://github.com/ethereum/go-ethereum/blob/master/cmd/clef/tutorial.md]
 - Sign TX and data (data "==" swap/swarm), designed 
   as an (eventual) replacement for Geth's account management.
@@ -8458,7 +8506,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
 [[}]]
 
 
-● EthSigner wallet/signer middleware: [[{wallet.cloud,security,01_doc_has.diagram]]
+● EthSigner wallet/signer middleware: [[{wallet.cloud,security,02_doc_has.diagram]]
 REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
      @[https://docs.ethsigner.pegasys.tech/en/latest/]
 - used as signer middleware, replaces eth_sendTransaction 
@@ -8507,7 +8555,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
       for a balance update, network participants can validate that the correct
       update has happened without knowing the opening balance, the closing
       balance, or the transfer amount:
-      [[{01_doc_has.comparative]]
+      [[{02_doc_has.comparative]]
       Pedersen commitments and Folklore range proofs to process the typical  
       daily volume of payments for the SARB with full confidentiality and
       finality in less than two hours. These commitment schemes proved to be
@@ -8531,7 +8579,7 @@ scale.
 [[}]]
 
 ● Quorum [[{privacy.private_tx,privacy.private_tx.101]] #[eea_priv_tx_summary]
-         [[01_doc_has.diagram,implementation.quorum,devops,00_PM.low_code]]
+         [[02_doc_has.diagram,implementation.quorum,devops,01_PM.low_code]]
 @[https://consensys.net/quorum/]
 • Originally developed by JP Morgan as an extension to standard geth adding
   support for private transactions and later on adquired by Consensys
@@ -8649,7 +8697,7 @@ since secrets are more exposed to the rest of the network.
 [[}]]
 
 ● Baseline Protocol Summary [[{integration.enterprise_patterns,integration.data,dev_framework.baseline]]
-                            [[privacy.ZKP,standards.EIP/ERC,00_PM.backlog}]]
+                            [[privacy.ZKP,standards.EIP/ERC,01_PM.backlog}]]
 @[https://docs.baseline-protocol.org/]
 @[https://github.com/ethereum-oasis/baseline]
 @[https://github.com/eea-oasis/baseline]
@@ -8765,7 +8813,7 @@ _________________________
 Extracted from old gitter channel: 2019-03-27
 https://gitter.im/PegaSysEng/pantheon
 
-• BESU HIGH LEVEL COMPONENT ARCHITECTURE:  [[{01_doc_has.diagram]]
+• BESU HIGH LEVEL COMPONENT ARCHITECTURE:  [[{02_doc_has.diagram]]
 ┌─────────────────────────────────────────────────────────────────────────────────────────────┐
 │                              JSON RPC                                                       │
 └─────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -8831,7 +8879,7 @@ https://gitter.im/PegaSysEng/pantheon
 ·   specific protocol logic                           ·
 ·   (ethereum/mainnet/ProtocolSpec.java)              ·
 ·                                                     ·
-· ┌···················································┘         [[{01_doc_has.seq_diagram]]
+· ┌···················································┘         [[{02_doc_has.seq_diagram]]
 · ·                                                    ┌······· (UDP) PEER DISCOVERY  
 · └· Runner                                            ·        - Recursive, starting with  
 ·    └> Network Startup:                               ·          "well-known-set-of-boot-nodes"
@@ -8896,7 +8944,7 @@ https://gitter.im/PegaSysEng/pantheon
 
 [[}]]
 
-● BESU/EEA NODES GOVERNANCE [[{standards.eea,10_EVM.implementation.besu,security.governance,00_PM.TODO]]
+● BESU/EEA NODES GOVERNANCE [[{standards.eea,10_EVM.implementation.besu,security.governance,01_PM.TODO]]
 - Onchain Permissioning: (Las Update 2020-03-20)
 @[https://besu.hyperledger.org/en/stable/Concepts/Permissioning/Onchain-Permissioning/]
 
@@ -9164,7 +9212,7 @@ INPUTS:
       -  changes in gas costs to increase the security of the network.
          WARN : Use 21.1.2 or higher.   21.1.0 contains an outdated version  of Berlin upgrade.
       -  Mainnet Launcher "wizard"
-      -  Bonsai Tries (Early Access): new database format reducing  [[{01_doc_has.comparative]]
+      -  Bonsai Tries (Early Access): new database format reducing  [[{02_doc_has.comparative]]
          storage requirements and improving performance for "recent state"
          operations.
          NON-BONSAI TRIES                 BONSAI TRIES
@@ -9513,7 +9561,7 @@ RocksDB statistics (cache,  compression, ...)
 
 
 ● Kaleido (SaaS Besu)
-[[{infrastructure.cloud.SaaS,dev_framework.kaleido,security.governance,13_SLC.troubleshooting,00_PM.low_code]]
+[[{infrastructure.cloud.SaaS,dev_framework.kaleido,security.governance,13_SLC.troubleshooting,01_PM.low_code]]
 <span xsmall>External Links</span>
 -@[https://docs.kaleido.io/getting-started/about-kaleido/]
 -@[https://github.com/kaleido-io/]
@@ -9731,7 +9779,7 @@ truffle(development)> Greeter.deployed().then(function(contractInstance) {contra
                       )
 [[}]]
 
-● EthrDIDs"uPort++" [[{02_use_case.identity,standards.W3C_DID,architecture,00_PM.radar]]
+● EthrDIDs"uPort++" [[{02_use_case.identity,standards.W3C_DID,architecture,01_PM.radar]]
 @[https://medium.com/uport/goodbye-uport-dids-hello-ethr-dids-ea2e80256f54]
 @[https://github.com/uport-project/ethr-did-registry]
 - Goodbye uPort DIDs, Hello Ethr-DIDs
@@ -9741,7 +9789,7 @@ truffle(development)> Greeter.deployed().then(function(contractInstance) {contra
   and all verifications issued will be available
 [[}]]
 
-● EIP 648 [[{scalability.evm,standards.EIP/ERC.648,00_PM.TODO]]
+● EIP 648 [[{scalability.evm,standards.EIP/ERC.648,01_PM.TODO]]
 @[https://github.com/ethereum/EIPs/issues/648] (V. Buterin)
 • Introduce new type of transaction (following same general format as #232):
   [2, network_id, startgas, to, data, ranges]
@@ -9756,7 +9804,7 @@ truffle(development)> Greeter.deployed().then(function(contractInstance) {contra
   non-intrusive way where old-style transactions can continue to work.
 [[}]]
 
-● Hyperledger Avalon, Improving Performance Off-Chain [[{scalability.offchain,security,00_PM.radar]]
+● Hyperledger Avalon, Improving Performance Off-Chain [[{scalability.offchain,security,01_PM.radar]]
   @[https://www.infoq.com/news/2019/10/Hyperledger-Avalon-Blockchain/]
   - It aims to move blockchain processing off the main
     chain to dedicated computing resources, e.g. Intel SGX TEE.
@@ -9782,7 +9830,7 @@ truffle(development)> Greeter.deployed().then(function(contractInstance) {contra
     the Trusted Compute specification. He also holds several patents.
 [[}]]
 
-● AlphaWallet TokenScripts "Smart Tokens" [[{wallet.mobile,scalability.sidechain,privacy.offchain,00_PM.radar]]
+● AlphaWallet TokenScripts "Smart Tokens" [[{wallet.mobile,scalability.sidechain,privacy.offchain,01_PM.radar]]
     In short, it's like a SECURE FRONT-END FOR TOKENS.
   - AlphaWallet is a production-ready white-label wallet that is easy to
     customize. TokenScript is similar to web frameworks used by web apps,
@@ -10371,7 +10419,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
 
 
 
-● Non Classified / TODO: [[{00_PM.TODO]]
+● Non Classified / TODO: [[{01_PM.TODO]]
   • Mnemonic to Seed: [[{wallet.mnemonics}]]
   @[https://ethereum.stackexchange.com/questions/25484/could-address-reuse-leak-your-mnemonic-seed/25705#2570://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#from-mnemonic-to-seed]
 
@@ -10386,11 +10434,11 @@ we would need to connect to the same Swarm network to which the metadata file wa
        only the correct one will
        make the desired wallet available
 
-  • Azure offline signing: [[{wallet.cloud,signature.ecdsa_secp256k1,security,00_PM.TODO}>
+  • Azure offline signing: [[{wallet.cloud,signature.ecdsa_secp256k1,security,01_PM.TODO}>
    @[https://tomislav.tech/2018-02-05-ethereum-keyvault-signing-transactions/]
 
   • EthVM OOSS Blockchain Explorer focused mainly on Ethereum
-    [[{20_QA.auditing,integration.*,13_SLC.monitoring,00_PM.radar}]]
+    [[{20_QA.auditing,integration.*,13_SLC.monitoring,01_PM.radar}]]
     (although other networks and forks will be supported over time)
     under the SSPL license (a small variation of the GNU Affero License v3)
     and written in a mixture of different languages.
@@ -10405,7 +10453,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
  • Solidity Security Considerations [[{12_solidity,security.101}]]
 @[http://solidity.readthedocs.io/en/develop/security-considerations.html#security-considerations]
 
- • Ethereum Package Registry [[{20_QA.solidity,12_solidity,20_QA.UX,00_PM.radar}]]
+ • Ethereum Package Registry [[{20_QA.solidity,12_solidity,20_QA.UX,01_PM.radar}]]
   @[https://www.ethpm.com/]
   - A package index for Ethereum smart contract packages.
   - The Ethereum Package Registry is a package index for Ethereum smart contract
@@ -10518,7 +10566,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
     $ pip install legions
   [[}]]
 
- • ethereum-etl: [[{integration.data,dev_framework.python,10_EVM.events,00_PM.low_code]]
+ • ethereum-etl: [[{integration.data,dev_framework.python,10_EVM.events,01_PM.low_code]]
    WARN: See limitation in Github Project page.
    Export blocks and transactions (Schema, Reference):
    $ python export_blocks_and_transactions.py \
@@ -10550,7 +10598,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
    $   --output traces.csv
    [[}]]
 
- • Algorithmic stablecoins [[{02_use_case.finance.stablecoins,01_doc_has.comparative]]
+ • Algorithmic stablecoins [[{02_use_case.finance.stablecoins,02_doc_has.comparative]]
 REF: @[https://frax.finance/whitepaper/]
      @[https://github.com/FraxFinance/frax-truffle/blob/master/test/Frax-Tests.js]
 - Although there are many ways to categorise stablecoins, two distinct
@@ -10729,7 +10777,7 @@ REF: @[https://frax.finance/whitepaper/]
 
 
  • Hapi One: https://www.hapi.one [[{02_use_case.finance.compliance,02_use_case.finance.fraud]]
-                                  [[ standards,20_QA.auditing,00_PM.RADAR]]
+                                  [[ standards,20_QA.auditing,01_PM.RADAR]]
    - On-Chain Cybersecurity Cross-Chain Protocol and Oracle
      data -> ML -> Oracle -> DAO
    - Monitor for frauds, stolen-wallets, ...
@@ -10883,7 +10931,7 @@ REF: @[https://frax.finance/whitepaper/]
  • web3j: Different privateKey generated by Mnemonic comparing to other libraries
    web3j/web3jhttps://github.com/web3j/web3j/issues/919 
 
- • Introducing LUXOR - a spreadsheet for decentralized data. [[{00_PM.RADAR}]]
+ • Introducing LUXOR - a spreadsheet for decentralized data. [[{01_PM.RADAR}]]
    https://m.youtube.com/watch?v=DmFLWpV7nGQ
 
  • Understanding Diamonds on Ethereum - DEV @ma
@@ -11228,7 +11276,7 @@ REF: @[https://frax.finance/whitepaper/]
     https://etherbasics.com/the-basics/phases-of-ethereum/
     https://blog.ethereum.org/2015/03/03/ethereum-launch-process/
 
-  • blockapps Strato [architecture,integration.*,dev_framework.strato,00_PM.TODO]
+  • blockapps Strato [architecture,integration.*,dev_framework.strato,01_PM.TODO]
     C&P from https://docs.kaleido.io/kaleido-platform/protocol/ethereum/
     In order to address the enterprise unique needs for privacy,
     scalability, governance and deployment options, a number of companies
@@ -11267,7 +11315,7 @@ REF: @[https://frax.finance/whitepaper/]
 
   • https://polymath.network/
 
-  • Open Zepellin (OZ) Summary [dev_framework.zepellin,12_solidity,security.aaa,20_QA,00_PM.TODO]
+  • Open Zepellin (OZ) Summary [dev_framework.zepellin,12_solidity,security.aaa,20_QA,01_PM.TODO]
     WARN: upgradable contracts, the "core" of OZ, looks to be replaced by "Diamon Standard"
     @[https://github.com/OpenZeppelin/]
     - TODO: Summary of "important" libraries
@@ -11431,7 +11479,7 @@ REF: @[https://frax.finance/whitepaper/]
  • https://ethereum-magicians.org/t/in-one-swoop-the-eth2-0-devs-destroyed-staking/7379
 
 
- • Headlong [dev_framework.java,dev_framework.headlong,10_EVM.abi,dev_framework.web3j,01_doc_has.comparative]
+ • Headlong [dev_framework.java,dev_framework.headlong,10_EVM.abi,dev_framework.web3j,02_doc_has.comparative]
    @[https://github.com/esaulpaugh/headlong]
  - A Contract ABI and Recursive Length Prefix library in Java for use on the Ethereum network.
  - Contract ABI and Recursive Length Prefix made easy in Java (or Android).
@@ -11441,7 +11489,7 @@ REF: @[https://frax.finance/whitepaper/]
    ("f(uint,uint32[],bytes10,bytes)", openjdk 11.0.1)).
 
 
-  • Solidity RLP: [evm.rlp,12_solidity.persistence,00_PM.TODO]
+  • Solidity RLP: [evm.rlp,12_solidity.persistence,01_PM.TODO]
     - @[https://github.com/hamdiallam/solidity-rlp]
       Currently support for solidity v0.5.0
 
@@ -11505,7 +11553,7 @@ REF: @[https://frax.finance/whitepaper/]
     https://www.makeuseof.com/ways-reduce-ethereum-gas-fees/
 
 
-  • Inline Assembly [solidity,10_EVM,00_PM.TODO]
+  • Inline Assembly [solidity,10_EVM,01_PM.TODO]
     https://github.com/ethereum/solidity/blob/develop/docs/assembly.rst#opcodes
 
   • YUL: language used for inline assembly.
@@ -11610,7 +11658,7 @@ REF: @[https://frax.finance/whitepaper/]
    - Statically-sized memory arrays do NOT have a length field, but it
      might be added later. Do NOT rely on this.
 
-  • Proof of Auhority [consensus.PoA,00_PM.TODO]
+  • Proof of Auhority [consensus.PoA,01_PM.TODO]
   @[https://limechain.tech/blog/proof-of-authority-explained/]
     Proof of Authority is a variant of the Proof of Stake consensus
     mechanism where instead of tokens, network participants stake their
@@ -11622,7 +11670,7 @@ REF: @[https://frax.finance/whitepaper/]
     TO RESOLVE SOME OF THE ISSUES FOUND IN OTHER POW ALTERNATIVES, NAMELY
     PROOF-OF-STAKE.
 
-  • ethereumjs-vm [_PM.backlog]
+  • ethereumjs-vm [[{01_PM.backlog}]]
    @[https://github.com/ethereumjs/ethereumjs-vm]
 
   • https://blog.infura.io/ethereum-javascript-libraries-web3js-ethersjs-nov2021/ @ma
@@ -11641,7 +11689,7 @@ REF: @[https://frax.finance/whitepaper/]
 
   • https://notes.ethereum.org/@vbuterin/data_sharding_roadmap
 
-  • Cosmos and Tendermint: [comparative,scalability.layer2,layer2.Cosmos,layer2.Tendermint,00_PM.TODO]
+  • Cosmos and Tendermint: [comparative,scalability.layer2,layer2.Cosmos,layer2.Tendermint,01_PM.TODO]
     Cosmos is also building an ecosystem that relies on the Tendermint consensus
     mechanism that relies heavily upon Byzantine Fault Tolerance algorithms. The
     platform depends on validators that have similar roles as miners in the
@@ -11671,10 +11719,10 @@ REF: @[https://frax.finance/whitepaper/]
    availability oracles which include Eth1, Eth2, or even Bitcoin Cash or ETC —
    providing a near term scalable EVM-like chain in layer 2.
 
- • ProgPow: ASIC resistence: [security,00_PM.TODO]
+ • ProgPow: ASIC resistence: [security,01_PM.TODO]
  @[https://journalducoin.com/altcoins/ethereum-eth-bientot-resistant-aux-asic-grace-a-progpow/
 
- • Ethereum Data Service (EDS) [[{00_PM.RADAR}]]
+ • Ethereum Data Service (EDS) [[{01_PM.RADAR}]]
    - features:
      - Insert/Update/Delete of packed type data (shallow object)
      - Insert/Update/Delete for Deep Objects,
@@ -11706,7 +11754,7 @@ REF: @[https://frax.finance/whitepaper/]
     - Pointer to other Data.
 
 
-  • Running on kubernetes [implementation.quorum,infrastructure.cloud,devops.k8s,infrastructure.cloud,00_PM.TODO]
+  • Running on kubernetes [implementation.quorum,infrastructure.cloud,devops.k8s,infrastructure.cloud,01_PM.TODO]
    @[https://github.com/majd1239/Quarum-Maker-Kubernetes]
    See also: https://github.com/synechron-finlabs/quorum-maker/issues/75
 
@@ -11828,7 +11876,7 @@ REF: @[https://frax.finance/whitepaper/]
 
 [[}]]
 
-[[{00_PM.BACKLOG]]
+[[{01_PM.BACKLOG]]
   • Aragon OS: Advanced deployment [[{dev_framework.aragon,02_use_case.finance.DAO,security.governance}]]
   @[https://aragon.one/]
   @[https://blog.aragon.one/advanced-solidity-code-deployment-techniques-dc032665f434]
@@ -11966,7 +12014,7 @@ REF: @[https://frax.finance/whitepaper/]
    Research at Yale and Columbia to further their work on DeepSEA,
    a formally verified language that compiles to the EVM.
 
- • SandCastle_SQL [[{persistence.data_structure,20_QA.solidity,12_solidity.persistence,01_doc_has.diagram}]]
+ • SandCastle_SQL [[{persistence.data_structure,20_QA.solidity,12_solidity.persistence,02_doc_has.diagram}]]
   @[https://pegasys.tech/sandcastle-brings-sql-to-ethereum-smart-contracts/]
     WARN : Doesn't look to be continued.
 
@@ -11992,7 +12040,7 @@ REF: @[https://frax.finance/whitepaper/]
     Plasma, etc) under a single theory and virtual machine: the OVM.
 
 
-• Quorum-Maker: [[{devops,00_PM.low_code}]]
+• Quorum-Maker: [[{devops,01_PM.low_code}]]
 @[https://github.com/synechron-finlabs/quorum-maker]
 •  WARN:  Abandoned project. Hyperledger Bevel (by Accenture) looks to replace it.
 
@@ -12102,16 +12150,16 @@ REF: @[https://frax.finance/whitepaper/]
   -  ignore nonce errors(perfect while working with Metamask fox_face)
   -  much faster (60%) than Ganache
 
- • The Matter (500 TX/s) (Ethereum 2019 Grant) [[{scalability.zkp,00_PM.radar}]]
+ • The Matter (500 TX/s) (Ethereum 2019 Grant) [[{scalability.zkp,01_PM.radar}]]
    - @[https://thematter.io/]
    - Productionising ‘Plasma Ignis’ code, a SNARK-driven “roll up” that can
      support up to 500 transactions per second.
 
- • verifiable delay functions [[{101,scalability.consensus.ethereum2,consensus.PoS,00_PM.radar}]]
+ • verifiable delay functions [[{101,scalability.consensus.ethereum2,consensus.PoS,01_PM.radar}]]
   - core building block for proof stake block chains and
     secure lotteries.
 
- • Bulletproofs: short of non-interactive zero-knowledge proofs that [[{privacy.zkp,00_PM.radar}]]
+ • Bulletproofs: short of non-interactive zero-knowledge proofs that [[{privacy.zkp,01_PM.radar}]]
    require no trusted setup. A bulletproof can be used to convince a
    verifier that an encrypted plaintext is well formed. For example,
    prove that an encrypted number is in a given range, without revealing
@@ -12122,7 +12170,7 @@ REF: @[https://frax.finance/whitepaper/]
      and others and is used in enterprise blockchains like JP
      Morgan's quorum.
 
- • SuperSonic: zSNARK trustless setup: [[{privacy.zkp,scalability.zkp,00_PM.radar}]]
+ • SuperSonic: zSNARK trustless setup: [[{privacy.zkp,scalability.zkp,01_PM.radar}]]
    - Ben Fisch, Benedikt, and Alan Szepeniec also recently introduced
      SuperSonic, the first fully practical zero-knowledge SNARK that
      doesn't require a trusted setup.
@@ -12130,10 +12178,10 @@ REF: @[https://frax.finance/whitepaper/]
     - ... guest speaker Brecht Devos of Loopring for a presentation and
       Q+A about scaling with ZKPs and Loopring.
 
- • Homomorphic Hashing: [[{security,00_PM.radar}]]
+ • Homomorphic Hashing: [[{security,01_PM.radar}]]
  @[http://blog.notdot.net/2012/08/Damn-Cool-Algorithms-Homomorphic-Hashing]
 
- • Status: Wallet and IM https://status.im/ [[{wallet.mobile,00_PM.radar}]]
+ • Status: Wallet and IM https://status.im/ [[{wallet.mobile,01_PM.radar}]]
  @[https://github.com/status-im/status-react]
   - currently (20??-??) in alpha:
   - can be tested on Android and iPhone.
@@ -12153,7 +12201,7 @@ REF: @[https://frax.finance/whitepaper/]
       status-dev-cli add
          "{\"whisper-identity\": \"my-dapp\", \"dapp-url\": \"{DAPP_URL}\", \"name\": \"MyDAPP\"}" --ip {DEVICE_IP}
 
- • Augur Prediction Markets (Research project) [[{02_use_case.finance.prediction_markets,00_PM.radar}]]
+ • Augur Prediction Markets (Research project) [[{02_use_case.finance.prediction_markets,01_PM.radar}]]
  @[https://www.augur.net/]
   Markets for Anyone Anywhere on Anything
  - politics and elections prediction markets
@@ -12162,7 +12210,7 @@ REF: @[https://frax.finance/whitepaper/]
  - prediction markets on anything
  - ...
 
-• Zero Know. Range Pro. (ZKRP): [[{privacy.ZKP,02_use_case.*,00_PM.radar}]]
+• Zero Know. Range Pro. (ZKRP): [[{privacy.ZKP,02_use_case.*,01_PM.radar}]]
 @[https://github.com/ing-bank/zkrp]
  - ING Bank:
    ...Launched in 2017, zero-knowledge range proof (ZKRP) enabled numerical
@@ -12214,7 +12262,7 @@ REF: @[https://frax.finance/whitepaper/]
 - https://github.com/nomiclabs/truffle-flattener
 - https://github.com/RyuuGan/sol-merger
 
- • QA Mythril: detects integer underflows, owner-overwrite-to-Ether-withdrawal, ...  [[{12_solidity.qa,security,00_PM.backlog}]]
+ • QA Mythril: detects integer underflows, owner-overwrite-to-Ether-withdrawal, ...  [[{12_solidity.qa,security,01_PM.backlog}]]
   - https://github.com/ConsenSys/mythril-classic
   - Swiss army knife for smart contract security.
   - @[https://github.com/ConsenSys/mythril/wiki]
@@ -12285,7 +12333,7 @@ REF: @[https://frax.finance/whitepaper/]
    - deployedBytecode: deployed code (with no extra init code)
 
 
- • TextUI (Console Prototyping): [[{dev_framework.python.TextUI,00_PM.low_code]]
+ • TextUI (Console Prototyping): [[{dev_framework.python.TextUI,01_PM.low_code]]
   @[https://github.com/kayagoban/shadowlands]
   - rapid prototyping platform for Eth apps which breaks the paradigm
     that everything must be a web app.
@@ -12334,7 +12382,7 @@ REF: @[https://frax.finance/whitepaper/]
   - Whisper Alternative: "Message Contract" and "Telehash"
 [[}]]
 
-• EtherQuery [[{integration.data,scalability.offchain,00_PM.TODO,00_PM.low_code]]
+• EtherQuery [[{integration.data,scalability.offchain,01_PM.TODO,01_PM.low_code]]
 @[https://github.com/Arachnid/etherquery]
 Custom ethereum client that uploads blockchain data to BigQuery
 [[}]]
@@ -12348,7 +12396,7 @@ Custom ethereum client that uploads blockchain data to BigQuery
   architecture while still maintaining the isolation and security of our original
   architecture.  [[}]]
 
-  • Kaleido.io SaaS Ethereum/Quorum in AWS, Azure, ...  [[{00_PM.low_code,integration]]
+  • Kaleido.io SaaS Ethereum/Quorum in AWS, Azure, ...  [[{01_PM.low_code,integration]]
   @[https://kaleido.io/]:
   - Marketplace: @[https://marketplace.kaleido.io/]
     - Salesforce Integration    :
@@ -12484,5 +12532,11 @@ Custom ethereum client that uploads blockchain data to BigQuery
    devs of the Beacon Chain and the Merge (Ethereum). Sedge generates 
    docker-compose scripts for the entire on-premise validator setup 
    based on the chosen client. 
- 
+
+ • https://docs.opensea.io/reference/stream-api-overview
+   OpenSea Stream API (websocket-based) service enables to receive events as they occur,
+   ensuring our custom service has the most up-to-date details without the need to poll
+   for updates. 
+
+ • How to store NFT metadata and SVG image completely on-chain (ERC721/ERC1155)
 [[}]]
