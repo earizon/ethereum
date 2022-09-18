@@ -12539,4 +12539,24 @@ Custom ethereum client that uploads blockchain data to BigQuery
    for updates. 
 
  • How to store NFT metadata and SVG image completely on-chain (ERC721/ERC1155)
+
+
+ • Legally Binding Signatures EIP 5289       [[{use_case.legal,standards.eip/erc.5289}]],
+   https://eips.ethereum.org/EIPS/eip-5289
+    This EIP proposes a standard that allows smart contracts to be 
+   legally binding by providing IPFS links to legal documents and 
+   ensuring that the users of the smart contract have privity with the 
+   relevant legal documents.
+
+   To request that certain documents be signed, revert with the following reason:
+   string.concat("5289:", libraryAddress1, "-", documentId1OfAddress1, "-", documentId2OfAddress1 ",", libraryAddress2, "-", documentId1OfAddress2, ...)
+   
+   Revert example: "5289:1-1-2,hEl/0-7bA"
+
+   Signing a Document:
+     When a signature is requested by (revert captured by wallet), wallets
+   MUST call legalDocument and fetch the file off of IPFS, and render 
+   that file to the user. If the user agrees, the wallet MUST call 
+   signDocument. Using a form of account abstraction is RECOMMENDED.
+
 [[}]]
