@@ -1,0 +1,32 @@
+walletN N <-···-> 1 Id
+
+wallet1 -> address1 +-> Id Mapper -> Id
+wallet2 -> address2 ┘
+S.C.    -> address3 ┘
+
+- Identities are typed to simplify different taks:
+  type 1: Permanent Identity: Inmutable, representing a business, human, ... owning 
+    assets (FT, NFT representing rights or obligations).
+  - Identity never change, but associated private keys do,
+    making wallet management compatible with laws requiring password rotation.
+  - Batch processes, previously seriously limited by the "nonce" serialization problem 
+    dissapear. We can send "X" parallel TX with different nonce on each wallet.
+  - Security protection: 
+    - We just allow asset management delegation to SCs given a correct Id.
+    - A hacker convinces us that its fake SC is a real OpenSea operator, 
+      but attacker needs also convince the Identity operator that we trust.
+
+  type 2: Asset grouping: 
+  - asset-grouping (entaglement):
+     We wan to deal with a set of assets as a single entity.
+    For example, a car NFT as sum of car NFT pieces.
+    - We create a new identity as owner of the collection.
+    - We can transfer all assets by just changing de effective Id.
+  
+      NFT    car owned by Identity
+      piece1     owned by Identity 
+
+    - We can let an operator operate over our assets by just adding its 
+      address as a map.
+
+  type 3:  ???
