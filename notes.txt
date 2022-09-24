@@ -11876,6 +11876,44 @@ REF: @[https://frax.finance/whitepaper/]
 
 [[}]]
 
+● Using wallets to sign documents / forms offchain [[{wallet,02_use_case.legal,signature.multisignature,20_QA.UX]]
+REF: https://www.youtube.com/watch?v=vhUjCLYlnMM&ab_channel=ArturChmaro
+
+import { ethers } from "ethers";
+
+
+const signMessage = async ( { setError, message }) => {
+       try {
+   console.log( { message } );
+   if (!window.ethereum) {
+     throw new Error("No crypto wallet (plugin) found");
+   }
+   await window.ethereum.send("eth_requestAccounts");
+   const provider = new ethers.providers.Web3Provider(window.ethereum);
+   const signer = provider.getSigner();
+   const signature = await signer.signMessage(message);
+   const address = await signer.getAddress();
+
+   return { message, signature, address }
+       } catch (err) {
+   setError(err.message);
+      }
+  }
+);
+
+const verifyMessage = async ( { message, address, signature }) => {
+    try {
+      const singerAddr = await ethers.utils
+                               .verifyMessage(message,signature);
+      return (signerAddr == address );
+    } catch(err) {
+       console.log(err);
+       return false;
+    }
+});
+[[}]]
+
+
 [[{01_PM.BACKLOG]]
   • Aragon OS: Advanced deployment [[{dev_framework.aragon,02_use_case.finance.DAO,security.governance}]]
   @[https://aragon.one/]
