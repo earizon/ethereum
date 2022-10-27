@@ -1,0 +1,52 @@
+● NFT MARKETPLACE COMPARATIVES:
+  REF: https://www.journaldunet.com/media/publishers/1515923-le-guide-des-differentes-marketplaces-de-nft/
+
+│  NOM         │STA.│CATEGORY│NETWORKS  │TOKEN │  PAYMENT│ FEE│ NOTES
+│              │DATE│        │          │NATIVE│   METHOD│ %  │
+│──────────────┼────┼────────┼──────────┼──────┼─────────┼────┼──────────────────────────────
+│• OpenSea·····│2012│Collect.│Ethereum··│-·····│····· ETH│ 2,5│························
+│              │    │        │Polygon   │      │    MATIC│    │
+│              │    │        │Solana    │      │   SOL,CC│    │
+│• MagicEden···│2021│Collect.│Ethereum··│MAGIC │· SOL,ETH│ 2,0│························
+│              │    │        │Solana    │TICKET│       CC│    │
+│              │    │        │          │NFT   │       CC│    │
+│• LooksRare···│2021│Collect.│Ethereum··│LOOKS·│······ETH│ 2,0│························
+│• X2Y2        │2021│Collect.│Ethereum  │X2Y2  │      ETH│ 0,0│························
+│• Rarible·····│2020│Collect.│Ethereum··│RARI··│MATIC,ETH│ 2,0│························
+│              │    │        │Solana    │      │ SOL,FLOW│    │
+│              │    │        │Polygon   │      │   XTZ,CC│    │
+│              │    │        │InmutableX│      │         │    │
+│              │    │        │Flow      │      │         │    │
+│              │    │        │Tezos     │      │         │    │
+│• Coinbase NFT│2022│Collect.│Ethereum··│-·····│····· ETH│ 0,0│························
+│• Mintable ···│2018│Collect.│Ethereum··│- ····│····· ETH│[2,5│························
+│              │    │        │Ziliqa    │      │         │ 10]│
+│              │    │        │ImmutableX│      │         │    │
+│• Blur ·······│2022│Collect.│Ethereum ·│BLUR*1│····· ETH│ 0,0│ *1: Future·············
+│• Foundation  │2021│Art     │Ethereum  │-     │      ETH│ 5,0│
+│• SuperRare   │2018│Art     │Ethereum  │RARE  │      ETH│ 3,0│
+│• KnownOrigin │2018│Art     │Ethereum  │-     │      ETH│ 2,5│
+│• ArtBlocks   │2020│Art     │Ethereum  │-     │      ETH│10,0│
+│• Objkt       │2021│Art     │Tezos     │-     │      XTZ│ 2,5│
+│• FxHash      │2021│Art     │Tezos     │FXH *1│      XTZ│ 0,0│ *1: Future·············
+│• Viv3        │2021│Collect.│Flow      │-     │     FLOW│ 2,5│
+│• Sturdy      │2021│Collect.│Flow      │-     │     FLOW│  NO│
+│• ImmutableX  │2021│Gaming  │ImmutableX│IMX   │   ETH,CC│ 2,0│L2, increasing adopted by gaming
+│              │    │        │          │      │         │    │Fast-and-unexpensive TXs ("Gods
+│              │    │        │          │      │         │    │Unchained", "d'Immortal" ...)
+│              │    │        │          │      │         │    │Also used by GameStop for Collect.
+│• AtomicMarket│2020│Gaming  │Wax       │WAXP  │  WAXP,CC│  NO│························
+│  Focused on video.│        │          │      │         │    │
+│• EnjinX      │2019│Gaming  │Ethereum  │ENJ   │      ENJ│ 2,5│························
+│• The Demater.│2020│Wearable│Lukso,    │LYXE  │  ETH,BTC│  NO│ It proposes also "phygitals":
+│              │    │        │Ethereum  │      │  USDC,CC│    │ physics wearable with virt.clones.
+│              │    │        │          │      │      DAI│    │
+│• DressX ·····│2020│Wearable│Polygon ··│- ····│···· WETH│····│························
+│• Artisant ···│2020│Wearable│Ethereum  │-     │      ETH│ 5,0│························
+│• GameStop ···│2021│Gaming  │Loopring  │-     │     WETH│  NO│························
+│              │    │        │ImmutableX│-     │     WETH│  NO│
+│• Sudoswap ···│2021│Collect.│Ethereum  │SUDO  │      ETH│ 0,5│························
+└────────────────────────────────────────────────────────────────────────────────────────────
+ Collect.: Collectibles
+ CC: Credit Card
+ (F): "Future"
