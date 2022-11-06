@@ -1,8 +1,13 @@
-● Apropos:
-  For comments, requests and feedback feel free to open an issue or 
-  open a Pull-Request:
-@[https://github.com/earizon/ethereum/blob/master/notes.txt]
+●  Apropos:
+- Visit next Web site for a great experience:
+  https://earizon.github.io/txt_world_domination/viewer.html?payload=../ethereum/notes.txt
 
+- If you want to contribute to great gistory of this
+  document you can take the next flight to:
+@[https://www.github.com/earizon/ethereum]
+  Your commits and pull-request will be immortalized
+  in the Pantheon of the Unicode Gods.
+────────────────────────────────────────────────────────────────────────────────
 - Topics Acronyms:
   - PM  : Project Management
   - SLC : software life cycle
@@ -336,51 +341,59 @@
   ─────────────────────│────│─│─│─│─────────────────────────────────────────────────────
   ethereum             |    | | | |
   └ mainnet/1          | ETH| |y| |
-  └ testnet görli/5    | GOR| |y| | https://goerli.net/
-                       |    | | | | Consensus: Proof-of-Authority!
-                       |    | | | | 
+  └ testnet görli/5    | GOR| |y| | https://goerli.net/,  https://gitter.im/goerli/testnet
+    (Goerli)           |    | | | | Consensus: Proof-of-Stake (previously Proof-of-Authority!):
+                       |    | | | | Faucets" to request test ethers:
+                       |    | | | |  https://faucets.chain.link      OK <- 0.1 Eth/day
+                       |    | | | |  https://goerli-faucet.pk910.de/ OK <- PoW mint in browser!!
+                       |    | | | |  https://t.me/gethfaucet         doesn't loot to work
+                       |    | | | |  (https://faucet.goerli.mudit.blog/)
+                       |    | | | |  https://goerlifaucet.com/
+                       |    | | | |
                        |    | | | | Goerli testnet will be merged with the Prater
                        |    | | | | proof-of-stake beacon chain. This will mark
                        |    | | | | the end of the permissioned PoA phase and
-                       |    | | | | everyone will be able to run a validator 
+                       |    | | | | everyone will be able to run a validator
                        |    | | | | for Goerli.
                        |    | | | | Officially becoming proof-of-stake (PoS) as of
                        |    | | | | 1:45 am UTC, Aug. 11.
-                       |    | | | | 
-  └ testnet Sepolia/?  | ???| |?|?| https://sepolia.dev
-                       |    | | | | Consensus: Proof of Stake !!! 
-                       |    | | | | RPC Endpoint: https://rpc.sepolia.dev 
-                       |    | | | | 
+                       |    | | | |
+  └ testnet Sepolia/   | ???| |?|?| https://sepolia.dev
+      /11155111        |    | | | | Consensus: Proof of Stake !!!
+                       |    | | | | RPC Endpoint: https://rpc.sepolia.dev
+                       |    | | | |
                        |    | | | | Network/Chain ID: 11155111
                        |    | | | | Genesis Hash: 0x25a5cc106..8993e6dd9
                        |    | | | | Consensus Engine: Proof of Stake
                        |    | | | | EVM Version: London
-                       |    | | | | 
-  └ testnet ropsten/3  | ROP| | | | Deprecated           by Q4    2022.
+                       |    | | | |
+                       |    | | | | Over long-term, Ethereum team plans on ONLY [[{KEY-POINT]]
+                       |    | | | | MAINTAINING the Goerli and Sepolia testnet, [[}]]
+                       |    | | | | CLOSED, PERMISSIONED testnet (vs public Goerli), [[{02_doc_has.comparative}]]
+                       |    | | | | with validators passing capability tests before
+                       |    | | | | being allowed access to the network.
+ ----------------------+----+-+-+-+---------------------------------------------------------
   └ testnet rinkeby/4  | RIN| | | | Deprecated/Shut down by Q2/Q3 2023.
                        |    | | | |*WARN:*
-                       |    | | | | Users and developers are encouraged to migrate ASAP 
-                       |    | | | | to Goerli or to test Ethereum in a post-merge context. !!!
+                       |    | | | | Users and developers are encouraged to migrate ASAP
+                       |    | | | | to Goerli or to test Ethereum (Sepolia?) in a post-merge
+                       |    | | | | context. !!!
                        |    | | | | After The Merge, Rinkeby will not be a suitable testing
                        |    | | | | environment for the Ethereum mainnet. Unplanned mainnet
                        |    | | | | upgrades may no longer be applied to deprecated testnets.
-                       |    | | | |
-  └ testnet kovan/42   | KOV| | | | Kovan only works with Parity Clients causing some troubles
-                       |    | | | | https://medium.com/authereum/getting-ethereum-transaction-revert-reasons-the-easy-way-24203a4d1844
-                       |    | | | |
-  ---------------------|----|-|-|-|-----------------------------------------------------
+ ----------------------+----+-+-+-+---------------------------------------------------------
   polygon Main./137    MATIC|Y|Y|Y| type: L2 zk-rollup (previously known as MATIC Network)
   └ Test.Mumbai/80001  MATIC| |Y| | https://polygon.technology/
                        |    | | | | polygon: protocol+framework to build+
                        |    | | | | connect Ether. compatible Networks
-                       |    | | | | NOTE: 
-                       |    | | | | Instead of providing just one or two 
-                       |    | | | | scaling solutions, Polygon is creating 
-                       |    | | | | an ecosystem that connects multiple 
-                       |    | | | | different scaling solutions, including 
-                       |    | | | | sidechains with different consensus 
-                       |    | | | | mechanisms and layer-2 options such as 
-                       |    | | | | Plasma, Optimistic Rollups, and 
+                       |    | | | | NOTE:
+                       |    | | | | Instead of providing just one or two
+                       |    | | | | scaling solutions, Polygon is creating
+                       |    | | | | an ecosystem that connects multiple
+                       |    | | | | different scaling solutions, including
+                       |    | | | | sidechains with different consensus
+                       |    | | | | mechanisms and layer-2 options such as
+                       |    | | | | Plasma, Optimistic Rollups, and
                        |    | | | | ZK-Rollups.
                        |    | | | | It also includes an optional shared security model.
   ---------------------|----|-|-|-|-----------------------------------------------------
@@ -403,9 +416,9 @@
                        |    | | | |  as of 2021-11-26  )
   └ on xdai/200        |XDAI| | | |  (research project)
   --------------------------|-|-|-|-----------------------------------------------------
-  BNB Smart Chain      |    | | |Y| 
-                       |    | | | | 
-                       |    | | | | 
+  BNB Smart Chain      |    | | |Y|
+                       |    | | | |
+                       |    | | | |
   --------------------------|-|-|-|-----------------------------------------------------
   Optimistic Eth./10   |OETH|Y|Y|Y| type: l2 optimistic-rollup
   └ testnet kova/69    | KOR| | | | millisec tx,10-100x cheaper.
@@ -416,8 +429,8 @@
                        |    | | | | expl: https://optimistic.etherscan.io
                        |    | | | | supported by infura.
   --------------------------|-|-|-|-----------------------------------------------------
-  Fantom/??            |??? |?|Y|Y| 
-  └ ???                |    | | | | 
+  Fantom/??            |??? |?|Y|Y|
+  └ ???                |    | | | |
   ---------------------|----|-|-|-|-----------------------------------------------------
   xDAI Chain/100       |xDAI|Y| | |  Aims at creating Stable Payments Fees tied to USD
   ---------------------|----|-|-|-|-----------------------------------------------------
@@ -455,7 +468,7 @@
                        |    | | | | networks. Fees collected from this
                        |    | | | | bridge are partially used to purchase
                        |    | | | | carbon offsets.
-                       |    | | | | - 
+                       |    | | | | -
   ---------------------+----|-|-|-|-----------------------------------------------------
   Metadium Main./11    |META| | | | Self Sov. Identity with 2 Factor Authentication
   └ Testnet/12         | KAL| | | |
@@ -575,7 +588,7 @@
   └ Mainnet            |    | | | |  blockchain infrastructure by using
     └ Root/100000      | QKC| | | |  blockchain sharding technology.
     └ Shards/*1        | QKC| | | |
-  └ Devnet                         
+  └ Devnet
     └ Root/110000      | QKC| | | |
     └ Shards/*2        | QKC| | | |
   *1:100001..8         |    | | | |
@@ -626,15 +639,15 @@
                               | · | · | · | · | ┌····················· https://www.dapperlabs.com/
                               | · | · | · | · | · ┌------------------- https://wallet.coinbase.com/
                               | · | · | · | · | · | ┌················· https://status.im/
-                              | · | · | · | · | · | · ┌--------------- https://trustwallet.com/ 
+                              | · | · | · | · | · | · ┌--------------- https://trustwallet.com/
                               | · | · | · | · | · | · | ┌············· https://www.ledger.com/
                               | · | · | · | · | · | · | · ┌----------- https://squarelink.com
                               | · | · | · | · | · | · | · | ┌········· https://ethvault.xyz
                               | · | · | · | · | · | · | · | · ┌------- https://github.com/poanetwork/nifty-wallet
-                              | · | · | · | · | · | · | · | · | ┌····· https://bitski.com 
+                              | · | · | · | · | · | · | · | · | ┌····· https://bitski.com
                               | · | · | · | · | · | · | · | · | · ┌--- http://breadapp.com
                               | · | · | · | · | · | · | · | · | · | ┌· https://token.im/
-                              | · | · | · | · | · | · | · | · | · | · 
+                              | · | · | · | · | · | · | · | · | · | ·
  ENS Integration             |1|1|0|1|1|1|0|0|0|0|0|1|1|0|0|1|1|0|0|1|<- users can natively create an ENS name
  Browser Extension Required  |1|1|1|1|0|1|1|1|1|0|1|1|1|1|1|1|0|1|1|1|
  Supports all Mobile Browsers|1|1|1|1|0|1|1|1|1|0|1|1|1|0|1|1|0|1|1|1|
@@ -660,7 +673,7 @@
  Sandboxed Key Storage       |1|0|1|1|1|0|1|1|1|1|1|1|1|0|1|1|1|1|1|1|<- or iframes and not easily accessible
  Upgradeable/Modular S.C.    |1|1|0|1|1|1|1|0|0|1|0|0|0|0|0|0|0|0|0|0|<- SC-based User's contract is upgradeable/modular
  Batched Transactions        |1|0|0|0|0|1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|<- Send N TX as 1 (atomic) onchain TX [[architecture.batch,scalability.offchain,transaction.signature]]
- Open Sourced                |1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1| 
+ Open Sourced                |1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|
 [[}]]
 
 
@@ -680,7 +693,7 @@
   @[https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial]
   @[http://ethdocs.org/en/latest/contracts-and-transactions/developer-tools.html#the-evm]
 
- • Patricia tree [[{101,10_EVM.101,persistence.blockchain,,infrastructure.storage,infrastructure.network}]]
+ • Patricia tree [[{101.PATRICIA_TREE,10_EVM.101,persistence.blockchain,infrastructure.storage,infrastructure.network]]
 @[https://eth.wiki/en/fundamentals/patricia-tree]
   - cryptographically fully deterministic "key/value":
     A Patricia trie: cryptographycally protected (key,value) store with
@@ -700,7 +713,7 @@
       · trie-path : rlp(transactionIndex)
       · trie-value: rlp(receipt)?
 
-   
+
   - RLP NOTES: Recursive Length Prefix encoding. Tools exist to convert from/to JSON objects, ...
    @[https://eth.wiki/en/fundamentals/rlp] [TODO]
 
@@ -790,6 +803,7 @@
   - note: To differentiate among nibble 1 and nibble 01, both stored as "01",
           a partial path is prefixed with a flag for odd-cases.
           (See original post for more info)
+[[101.PATRICIA_TREE}]]
 
 • EVM Accounts [[{12_solidity,10_EVM.101,02_doc_has.diagram]] #[evm_accounts_summary]
 @[http://www.ethdocs.org/en/latest/contracts-and-transactions/account-types-gas-and-transactions.html]
@@ -944,20 +958,20 @@
    - To interact with a Smart Contract, you send it raw bytes.
    - It does some computation, possibly changing its own state,
      and then sends you raw bytes in return.
-   - Method calling does not actually exist. It is an "illusion" 
-     created by the ABI (sort of serialization format for RPC calls).  
-      See notes on "function wrappers" for ABI implementation in 
+   - Method calling does not actually exist. It is an "illusion"
+     created by the ABI (sort of serialization format for RPC calls).
+      See notes on "function wrappers" for ABI implementation in
      byte-code generated from Solidity sources.
 
    - We could draw analogies between the architectural tiers of DApp [[{02_doc_has.comparative]]
      and Web App:
      - A contract is like a web service
      - A transaction is like a request.
-     - The blockchain is like the backing database. 
+     - The blockchain is like the backing database.
      - ABI is the data-interchange format, like Protocol Buffer.
-     - CORE DIFFERENCE: A backing DDBB always works in a best-effort, 
-       working as slave of clients. A blockchain "imposes" its consensus 
-       rules to clients, that acts as slave of the blockchain and must 
+     - CORE DIFFERENCE: A backing DDBB always works in a best-effort,
+       working as slave of clients. A blockchain "imposes" its consensus
+       rules to clients, that acts as slave of the blockchain and must
        be ready to retry transactions at random.
  [[}]]
 
@@ -1563,7 +1577,7 @@ Example code:
 [[}]]
 
 
-● TX Gas Price [[{101,transaction,10_EVM.gas_price,10_EVM.events,privacy.zksnark,scalability.consensus}]]
+● TX Gas Price [[{101,transaction,10_EVM.gas_price,10_EVM.events,privacy.zksnark,scalability.consensus]]
 • REFs:
   @[https://github.com/ethereum/wiki/wiki/Design-Rationale#gas-and-fees]
   @[http://www.ethdocs.org/en/latest/contracts-and-transactions/account-types-gas-and-transactions.html?highlight=gas#what-is-gas]
@@ -1718,7 +1732,7 @@ Example code:
                and index the logs.
              • cost structure is kept  minimal t  prevent log spammin  .
 
-● Watch Out default gas price!!!
+● Watch Out default gas price!!!                                         [[{01_PM.RISK]]
 • Extracted from stack-overflow:
    Q: """ETH (to USD) price has gone from ~8 to ~90 USD in 6 months
                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1733,6 +1747,11 @@ Example code:
         They just recently made this post which explains something they
         call the Safe Gas Price:
       @[https://medium.com/@ethgasstation/the-safe-low-gas-price-fb44fdc85b91]
+[[}]]
+
+[[101}]]
+
+
 
 ● EIP 1559: [[{scalability,10_EVM.gas_price]]
   @[https://blog.ethereum.org/2020/06/16/eth1x-1559/]
@@ -2076,11 +2095,11 @@ The signed TX is then sent to the network.    |   hacked)
     │     → Choose a position in storage for the struct/s.
     │       → Write a function inisde the storage contract
     │         creating and returning the storage pointer.
-    │ 
+    │
     │ Identity: example of "orthogonal facet" (vs Tokenization, MarketPrice,...)
     │ ┌ e.g: ────────────────────────────────┐
     │ │ contract MyIdentityStorageContract { <·· Create one for each storage pattern
-    │ │   struct MyIdentityStorage {         <·· Struct reused by Facets. 
+    │ │   struct MyIdentityStorage {         <·· Struct reused by Facets.
     │ │     uint aVar;                       │
     │ │     bytes myBytes;                   │
     │ │     mapping(uint => bytes32) myMap;  │
@@ -2095,8 +2114,8 @@ The signed TX is then sent to the network.    |   hacked)
     │ │   }                                  │
     │ │ }                                    │
     │ └──────────────────────────────────────┘
-    │ KEYPOINT: 
-    │  For each contract/proxy/facet using the storage contract: 
+    │ KEYPOINT:
+    │  For each contract/proxy/facet using the storage contract:
     │  → inherit storage contract
     │    → call the function returning the storage pointer.
     │
@@ -2106,15 +2125,15 @@ The signed TX is then sent to the network.    |   hacked)
     │ │   constanct MyIdentityStorage         <·· Instantiate
     │ │     storage IDS = myIdentityStorage(); │  Storage
     │ │                                        │
-    │ │   constructor () {}                   <·· Constructor stop working when 
+    │ │   constructor () {}                   <·· Constructor stop working when
     │ │                                        │  using Diamond. It must be replaced
-    │ │                                        │  with 'init' function in diamondCut                                   
-    │ │                                        │  (or 'post init' function/s after 
+    │ │                                        │  with 'init' function in diamondCut
+    │ │                                        │  (or 'post init' function/s after
     │ │                                        │  different diamond 'pieces' are setup
     │ │                                        │  but before normal code use)
-    │ │   function ...(...) external {         │  
+    │ │   function ...(...) external {         │
     │ │     MS01.myMap[selector] = myData;    <·· Write to
-    │ │     MS01.aVar = uint(myData);          │      
+    │ │     MS01.aVar = uint(myData);          │
     │ │     ...                                │
     │ │     bytes32 data = IDS01.             <·· Read from
     │ │                     myMap[selector];   │
@@ -2142,34 +2161,34 @@ The signed TX is then sent to the network.    |   hacked)
      ·  ) external;
      ·
      ·  event DiamondCut(
-     ·      FacetCut[] _diamondCut, 
+     ·      FacetCut[] _diamondCut,
      ·      address _init,
      ·      bytes _calldata);
      }
-    
+
    • interface IDiamondLoupe {                   ● READ-ONLY INTROSPECTION
-     · 
+     ·
      ·  struct Facet {
      ·      address facetAddress;
      ·      bytes4[] functionSelectors;
      ·  }
      ·
-     ·  function 
+     ·  function
      ·    facets()
      ·    external view
      ·    returns (Facet[] memory facets_l);      <- ALL THE FACET ADDR.+FUNS. in diamon
      ·
      ·  function
-     ·    facetFunctionSelectors(address _facet) 
+     ·    facetFunctionSelectors(address _facet)
      ·    external view
      ·    returns (bytes4[] memory facetFun_l);   <- ALL fun.selectors used from _facet
      ·
-     ·  function 
+     ·  function
      ·    facetAddresses()
      ·    external view
      ·    returns (address[] memory facetAddr_l); <- ALL used facets
      ·
-     ·  function 
+     ·  function
      ·    facetAddress(bytes4 _funSelector)
      ·    external view
      ·    returns (address facetAddress_);        <- facet address implementing fun.
@@ -2218,12 +2237,12 @@ The signed TX is then sent to the network.    |   hacked)
     │ │}                    │ <···· facetA (read/write)···········─┘
     │ └─────────────────────┘                          │
     └──────────────────────────────────────────────────┘
-                                           ^^^^^^^^^^^^ 
+                                           ^^^^^^^^^^^^
     The read-only restriction of facetA contract to storageFacetB       is not
-    mandatory, but probably useful in order to let only facetX update 
-    the state of DiamonStorageFacetX. 
+    mandatory, but probably useful in order to let only facetX update
+    the state of DiamonStorageFacetX.
 
-● Diamon Tooling 
+● Diamon Tooling
 • MainNet diamon "loupe" inspector @[https://louper.dev/]
 • "Diamond Setter", (Python) tool to manage diamonds.
   by Joey Zacherl@VolleyFire (liquidity provider for decentralized exchanges),
@@ -2289,7 +2308,7 @@ The signed TX is then sent to the network.    |   hacked)
 
 • Issue open in OpenZepelling to use diamon standard:
 @[https://github.com/OpenZeppelin/openzeppelin-contracts/issues/2537]
-• EIP-2535 Awesome Diamons: 
+• EIP-2535 Awesome Diamons:
   https://bytemeta.vip/repo/mudgen/awesome-diamonds
   Curated list of external resources
 [[}]]
@@ -2514,8 +2533,6 @@ The signed TX is then sent to the network.    |   hacked)
 
     -  global variable  now  is deprecated
        block.timestamp should be used instead .
-
-    - NatSpec comments on variables only allowed for public state variables
 
     - Unicode string literals supported now.  unicode"Hello 😃"
 
@@ -2793,7 +2810,7 @@ The signed TX is then sent to the network.    |   hacked)
     (Some low level-EVM data can be directly extracted from the
     TX receipt, like the gas spent, hash, ...).
 
-● NATSPEC COMMENTS
+● NATSPEC COMMENTS                [[{20_QA.documentation.natspec]]
   /// @title Contract title
   /// @author Author name
   contract ... {
@@ -2804,6 +2821,10 @@ The signed TX is then sent to the network.    |   hacked)
     /// @return Description of the return value
     function ... { ...}
     }
+
+    - NatSpec comments on variables only allowed for public state variables (v0.7+)
+    - Natspec supports multiple return parameters in developer documentation.(v0.6+)
+            [[}]]
 
 ● import "filename";                          IMPORTS
   import * as symbolName from "filename";     NodeJS tooling (truffle,...) will also
@@ -3225,8 +3246,8 @@ ecrecover
 
 
  • STRING LIBRARIES:
-  WARN: String manipulation inside contracts is discouraged. It wastes lot of   [[{20_QA.101}]]
-         gas and is error-prone. Use them as last-resort.
+  WARN: String manipulation inside contracts is discouraged. It wastes lot of   [[{20_QA.101]]
+         gas and is error-prone. Use them as last-resort.  [[}]]
 
   - @[https://github.com/Arachnid/solidity-stringutils]
      toSlice     (string self)                           internal returns (slice)
@@ -3332,11 +3353,11 @@ this.confirmPurchase(...) # External call
 ● ERROR CONTROL [[{12_solidity.error_control,transaction,10_EVM.101,02_doc_has.diagram,13_SLC.debugging,10_EVM.implementation.besu,10_EVM.events,13_SLC.testing,transaction,dev_framework.web3j,20_QA.error_control]]
 @[https://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions]
 
-  ERROR MANAGEMENT: 
+  ERROR MANAGEMENT:
 
-  - When an error (revert/...) arises the EVM rollbacks any state-change in the 
+  - When an error (revert/...) arises the EVM rollbacks any state-change in the
     current call and all its sub/super-calls including any events emitted up
-    until the rollback since there is no safe way to continue execution while 
+    until the rollback since there is no safe way to continue execution while
     warrantying atomicity and reproducibility of results.
   - TX is still mined and TXReceipt status flaged with "fail" error, but
     the execution of the mined will not modify any state. TX will just consume
@@ -3523,19 +3544,32 @@ this.confirmPurchase(...) # External call
   #############################
   # try/catch (Solidity 0.8+) #
   #############################
-  - Example extracted from
-  @[https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/ERC1155.sol]
+  https://docs.soliditylang.org/en/v0.8.17/control-structures.html#try-catch
+  ...
+  function funA(...) public {
+    /*····*/try someContract.extFun01(token)        <··· EXTERNAL funct. call || new ContractName()
+            returns (uint v)                        <···  required if "success" block is interested in returned values
+   {                                                <··· start of "success" block. No errors in external call.
+                                                         WARN: Errors inside the expression are not caught!!!
+                                                         (e.g: complex expression with internal function calls)
 
-    try IERC1155Receiver(to).onERC1155Received(... )
-        returns (bytes4 response) {
-      if (response != IERC1155Receiver.onERC1155Received.selector) {
-          revert("ERC1155: ERC1155Receiver rejected tokens");
-      }
-    } catch Error(string memory reason) {
-        revert(reason);
-    } catch {
-        revert("ERC1155: transfer to non ERC1155Receiver implementer");
-    }
+
+    /*····*/} catch Error(string memory reason ) {  <··· caused by revert("reason") | require(false, "reason")
+    ...
+    return (0, false);
+    /*····*/} catch Panic(uint errorCode       ) {  <··· panic raised in extFun01 (div-by-zero/overflow/...)
+                                                         (error code can be used to determine kind-of-error)
+    ...
+    /*····*/} catch (bytes memory lowLevelData ) {  <··· alt 1: error signature does not match any other clause,
+    ...                                                  (error decoding the err-msg, no error data provided)
+    /*····*/} catch { ... }                         <··· alt 2: ignore returned data.
+    ...
+  }
+
+  WARN: If decoding-of-return-data fails, in the calling contract it is not caught in the catch clause.
+        If decoding-of-catch-Error(string memory reason) and there is a low-level catch clause, this
+        error is caught there.
+
 [[}]]
 
 ● Solidity Best Patterns [[{12_solidity.101,20_QA.error_control,02_doc_has.tutorial,01_PM.WiP]]
@@ -4431,7 +4465,7 @@ contract Test {
 
 
 [[{tokens]]
-● Universal Token: [[{security.aaa,02_use_case.finance,01_PM.WiP]]
+● Universal Token: [[{security.aaa,02_use_case.finance.universal_token,01_PM.WiP]]
 @[https://github.com/ConsenSys/UniversalToken] #[universal_token]
 - "A Unique Standard for Centralized and Decentralized Finance Use Cases"
 - Actively maintained as 2022-03-14
@@ -4444,7 +4478,7 @@ contract Test {
     - At (EVM) TX execution, 'ec-recover' is used to recover the
       signature of the TLS certificate signer and then compared
       to the list of signatures authorized by the contract.
-  -  Sort of multi-signature within 1 transaction. ← !!!   [[{20_QA.UX}]]
+  -  Sort of multi-signature within 1 transaction. ← !!!   [[{20_QA.UX]]
       signature of the investor (ethereum transaction signature)
     + signature of the issuer   (embedded certificate signature) [[}]]
 
@@ -4453,13 +4487,14 @@ contract Test {
       - loan             - ...             - Fund issuance
       - mortgage         - invoice         - ...
       - retail           - contract
+[[}]]
 
 - Delivery-vs-payment:
 @[https://github.com/ConsenSys/UniversalToken/blob/master/contracts/tools/DVP.md]
   Use-case: allow secure token transfers/exchanges between 2 stakeholders
   ("holder1" and "holder2" in secondary market assets transfers.
 
-[[}]]
+[[02_use_case.finance.universal_token}]]
 
 ● ERC-20 Fungible Token: [[{tokens.ERC20]]
   - REF:
@@ -4685,29 +4720,29 @@ contract Test {
 
   • ERC-1155 vs MarketPlaces&Exchanges: [[{02_USE_CASE.finance.liquidity_provision]]
                                         [[ 02_USE_CASE.finance.trading]]
-    - ERC-1155 is short of an standard for an accountancy book. 
-      It does not mandate any way to shell/buy the tokens reflected 
+    - ERC-1155 is short of an standard for an accountancy book.
+      It does not mandate any way to shell/buy the tokens reflected
       in the accountancy book. MarketPlaces and Exchanges will be,
-      in general, of any type and with no standard in mind. 
+      in general, of any type and with no standard in mind.
       An curated example of a real decentralized exchange supporting
       ERC-1155 "books" can be niftyswap:
-      C&P from https://github.com/0xsequence/niftyswap             
+      C&P from https://github.com/0xsequence/niftyswap
 
-      Implementation of the decentralized uniswap protocol                                         
+      Implementation of the decentralized uniswap protocol
        for ERC-1155 tokens. (Uniswap was designed for ERC-20 tokens)
      - Designed to favor ease of use.
      - Provide guaranteed access to liquidity on-chain.
-     
-     Context: 
-     - Most exchanges maintain an order book and facilitate matches 
+
+     Context:
+     - Most exchanges maintain an order book and facilitate matches
        between buyers and sellers.
      - Niftyswap smart contracts hold liquidity reserves of various
        tokens and trades are executed directly against these reserves.
-     
+
      - Prices are set automatically using the constant product
-       market maker mechanism, which keeps overall reserves in relative 
-       equilibrium: Reserves are pooled between a network of liquidity 
-       providers who supply the system with tokens in exchange for a 
+       market maker mechanism, which keeps overall reserves in relative
+       equilibrium: Reserves are pooled between a network of liquidity
+       providers who supply the system with tokens in exchange for a
        proportional share of transaction fees.
     [[}]]
 [[}]]
@@ -4764,60 +4799,6 @@ contract Test {
     SIGNATURE SCHEME DEPENDENT (e.g. ECDSA, multisig, BLS), etc.
 [[}]]
 
-
-● EIP-2981: NFT Royalty Payments [[{02_use_case.royalty,tokens.ERC1155,tokens.ERC721]]
-#[ERC_1155_summary]
-- Current state (no-standard):
-  Artist → MarketPlace: "Do you support royalty payments?"
-  Artist ← MarketPlace: "Yes we do, but if your NFT is sold
-                         on another marketplace then we cannot
-                         enforce this payment."
-  Artist → MarketPlace: "Don't you share royalty info with others?"
-  Artist ← MarketPlace: "No, we DO NOT"
-
-  """ It is believed that the NFT marketplace ecosystem will voluntarily
-      implement this royalty payment standard since NFT buyers
-      will assess the royalty payment as a factor when making NFT
-      purchasing decisions. """
-
-- Standard proposal designed to support ongoing funding of original
-  NFT-creator or rights-holder to receive some quantity in future
-  re-sales of its art-work.
-  interface IERC2981 is IERC165 {
-      function royaltyInfo( uint256 _tokenId, uint256 _salePrice)
-      external view returns (
-          address receiver,
-          uint256 royaltyAmount
-      );
-  }
-  NOTE: it's not restricted to any other standard appart of ERC-165.
-
-- ROYALTY PAYMENT MUST BE VOLUNTARY (by Marketplace), vs triggered by
-  "transferFrom()" like mechanism, since such transfer can just mean
-  movement to a different wallet of the same owner (vs new sale or
-  change of ownership).
-
-- Marketplaces → SC: royaltyInfo()?
-- Marketplaces ← SC: royalty payment information
-                     ===========================
-                     - royaltyAmount to pay for a given sale price.
-                       as a (calculated) percentage of _salePrice.
-                     - recipient address
-
- - royaltyInfo is not aware of _salePrice monetary-unit.
- - marketplaces MUST calculate final royalty price in the same monetary-unit
-   used by the _salePrice.
- - if the calculated royaltyAmount is zero, no further processing is expected.
- - calculus of percentage is left un-specified mut marketplaces SHOULD
-   implement it, with next restriction:
-   - It must be based on predictable variables (vs using block.timestamp,
-     block.number, ...) and must not make assumptions about the unit
-     of exchange.
-   - Examples:
-   - It can be a fixed inmutable percentage.for any future sale.
-   - Percentage drops linearly over time.
-   - Based on min/max thresholds.
-[[}]]
 
 ● EIP 1056: Lightweight Identity [[{02_use_case.identity,standards.W3C_DID,01_PM.TODO]]
  -  WARN: Unstable, likely to change.
@@ -5027,7 +5008,7 @@ contract Test {
          .catch(e => { ... })
    }
 
-● MetaMask Mobile [[{01_PM.TODO}]]
+● MetaMask Mobile [[{01_PM.TODO]]
 @[https://mobile.metamask.io/]
 
 ● What's new MetaMask
@@ -5037,7 +5018,7 @@ contract Test {
   - Unparalleled Privacy Control:
     select one or more accounts to associate with
     a website or create a new account just for that site .
-  - EIP-2255 (site) permissions system. [[{qa.UX]]
+  - EIP-2255 (site) permissions system. [[{20_QA.UX]]
        proposed standard interface for granting wallet security-sensitive
        asking "just once" in order to get permissions like:
        - "Reveal wallet address to a given site".
@@ -5087,7 +5068,7 @@ contract Test {
         - big touch screen interface and human-readable markup.
         - supports for NFTs.
         - "enhanced" smart contract interaction.
-      - great user experience in integrating with MetaMask.
+      - great user experience in integrating with MetaMask.  [[}]]
 [[}]]
 
 ● EIP-712 (Typed human-friendly signing): [[{20_QA.UX.wallet,wallet.metamask,wallet.lattice1,01_PM.TODO]]
@@ -5156,7 +5137,7 @@ contract Test {
 @[https://defirate.com/meta-transactions/]
 - meta transactions allow users to interact with a public
   blockchain without paying a transaction fee:
-  - Users no longer have to understand the inner workings  [[{qa.UX]]
+  - Users no longer have to understand the inner workings  [[{20_QA.UX]]
     of public blockchains and market dynamics for TX fees. [[}]]
 
 - At its core, they are NEARLY IDENTICAL TO REGULAR NETWORK TXS
@@ -5299,23 +5280,23 @@ Ethereum JavaScript Libraries: web3.js vs. ethers.js (Part I)
 
        and then use it in truffle tests:
          var ethers = require('ethers');
-       
+
        It is NOT compatible with "truffle develop" since only web3 would be injected.
    """
 
   - Looks to be more "proffesional".  C&P from:
-    https://docs.ethers.io/v5/api/providers/   
-     The default provider is the safest, easiest way to begin developing 
+    https://docs.ethers.io/v5/api/providers/
+     The default provider is the safest, easiest way to begin developing
      on Ethereum, and it is also robust enough for use in production.
-     
-     It creates a FallbackProvider connected to as many backend services 
-     as possible. When a request is made, it is sent to multiple backends 
-     simultaneously. As responses from each backend are returned, they are 
-     checked that they agree. Once a quorum has been reached (i.e. enough 
+
+     It creates a FallbackProvider connected to as many backend services
+     as possible. When a request is made, it is sent to multiple backends
+     simultaneously. As responses from each backend are returned, they are
+     checked that they agree. Once a quorum has been reached (i.e. enough
      of the backends agree), the response is provided to your application.
-     
-     This ensures that if a backend has become out-of-sync, or if it has 
-     been compromised that its responses are dropped in favor of responses 
+
+     This ensures that if a backend has become out-of-sync, or if it has
+     been compromised that its responses are dropped in favor of responses
      that match the majority.
   [[}]]
   - JS + TypeScript
@@ -5386,9 +5367,9 @@ Ethereum JavaScript Libraries: web3.js vs. ethers.js (Part I)
       ├─ abiV2.js
       ├─ cloning.js
       ├─ customoptions.js
-      ├─ deploy.js: Example code showing deploy timeout control
-      │             pre-flight gas-cost-estimation [[{10_EVM.gas}]]
-      │             .on("confirmation",...) block-depth confirmation number
+      ├─ deploy.js: Example code showing deploy timeout control    [[{10_EVM.gas]]
+      │             pre-flight gas-cost-estimation
+      │             .on("confirmation",...) block-depth confirmation number  [[}]]
       ├─ deprecated_keys.js
       ├─ linking.js: Examples linking lib-to-lib, selective-relink, lib-to-SC,
       │             triggering compilations from JS code,
@@ -5405,20 +5386,20 @@ $ truffle init
  (Next files will be created)
  + ./contracts/Migrations.sol              <- WARN: DON'T TOUCH THIS FILE
  + ./migrations/1_initial_migration.js     <- WARN: DON'T TOUCH THIS FILE
- + test/               
+ + test/
  + build/contracts/                        <- WARN: build/contracts/ MUST BE VERSIONED IN GIT.
                                               - Important compilation metadata is recorded here as JSON.
-                                              - On successful deployments ("migrations") the JSON is 
+                                              - On successful deployments ("migrations") the JSON is
                                                 updated (.network[$chainId]). Ej:
                                                 $ cat build/contracts/ERC20.json | jq ".networks"
                                                 {
                                                   "1": {                          <- ChainID (1 == "MainNet")
                                                     "events": {},                 <- Events emitted
-                                                    "links": {                    <- Info to any library linked during 
+                                                    "links": {                    <- Info to any library linked during
                                                       "somelinkedlib": "0x3c5..."    deployment
                                                     },
                                                     "address": "0x77f90...",      <- Deployed SC address. Needed by clients.
-                                                    "transactionhash": "0x603..." <- Can be used to find block number 
+                                                    "transactionhash": "0x603..." <- Can be used to find block number
                                                   }
                                                   "111": { ...  }                 <- Some testnet.
                                                 }
@@ -5611,13 +5592,14 @@ $ truffle deploy                          <- Deploy contract. It will deploy Mig
 [[}]]
 
 
-• Truffle Framework: migrating to web3 v1.0 [[{01_PM.TODO}]]
+• Truffle Framework: migrating to web3 v1.0 [[{01_PM.TODO]]
 @[https://medium.com/@adrianmcli/migrating-your-truffle-project-to-web3-v1-0-ed3a56f11a4]
  "... Unfortunately Truffle uses the 0.20.x version of Web3.js
       instead of vs v1.0+, providing a more easier to work with API (e.g.:
        PromiEvents
-[[dev_framework.js.truffle}]]
+[[}]]
 
+[[dev_framework.js.truffle}]]
 
 ● Web3J JAVA SDK: [[{dev_framework.java.web3j,10_EVM.events]]
   - https://docs.web3j.io/
@@ -5980,145 +5962,9 @@ See Also:
     (simulate TXs dropped from TX pool).
 [[}]]
 
-● C# [[{dev_framework.C#]]
-<span xsmall>Nethereum</span>
-@[https://nethereum.readthedocs.io/en/latest/]
-PRE-SETUP
-$  dotnet add package Nethereum.Web3
-
- Sending Ethers
-using System;
-using Nethereum.Web3;
-using Nethereum.Web3.Accounts;
-using Nethereum.Web3.Accounts.Managed;
-using Nethereum.Hex.HexTypes;
-using Nethereum.HdWallet;
-
-bool useSoftWallet = true // ← false => Use HW Wallet
-if (useSoftWallet) {
-  // Alt 1: Use  private key/Software wallet  to init web3 instance.
-  var account = new Account(
-      "0x... 32 bytes- private key in Hex format ");
-
-  var web3 = new Web3(account);
-} else {
-  // Alt 2: Use  HW Wallet  to init web3 instance
-  string Words = "ripple scissors kick mammal hire column oak again sun offer wealth tomorrow wagon turn fatal";
-                  string Password = "password";
-  var wallet = new Wallet(Words, Password);
-  var account = wallet.GetAccount(0);
-  var toAddress = "0x13f022d72158410433cbd66f5dd8bf6d2d129924";
-  var web3 = new Web3(account);
-}
-var toAddress = "0x13f022d72158410433cbd66f5dd8bf6d2d129924";
-
-var TXManager = web3.Eth.GetEtherTransferService();
-var TX = await TXManager
-    .TransferEtherAndWaitForReceiptAsync(
-       toAddress, Web3.Convert.ToWei(1));
- // alt: Specify gas amount
- // .TransferEtherAndWaitForReceiptAsync(
- //    toAddress, Web3.Convert.ToWei(1), 2);
-
-
-• C# Handling Events:
-@[https://nethereum.readthedocs.io/en/latest/nethereum-events-gettingstarted/]
-- Events ("emit" in solidity code) write data to the transaction receipt logs.
-
-...
-var  transactionReceipt = await transferHandler.SendRequestAndWaitForReceiptAsync(contractAddress, transfer);
-var transferEventOutput = transactionReceipt.DecodeAllEvents<TransferEventDTO>();
-
-Contract Filters and Event Logs
-
-- get all changes of the logs (providing a filter message)
-- or create filters and retrieve changes which apply to our filter message periodically.
-
-TO ACCESS THE LOGS:
- - CREATE A TRANSFER EVENT HANDLER FOR OUR CONTRACT ADDRESS
- - CREATE AN EVENT DEFINITION.(TransferEventDTO).
-
-var   transferEventHandle   = web3.Eth.GetEvent<TransferEventDTO>(contractAddress /* null to retreive all signature-matching-events from any contract */ );
-    ^^^^^^^^^^^^^^^^^^^^
-var emptyFilter01 =   transferEventHandle  .CreateFilterInput(); // By default from block cero to current block
-
-var allTransferEventsForContract = await   transferEventHandle  .GetAllChanges(emptyFilter01);
-
-var   fromToIndexFilterInput01  =   transferEventHandle  .CreateFilterInput<string, string>(account.Address, receiverAddress2);
-var       toIndexFilterInput01  =   transferEventHandle  .CreateFilterInput<string, string>(null, receiverAddress2);
-var   toManyIndexFilterInput01  =   transferEventHandle  .CreateFilterInput(null, new []{receiverAddress2, receiverAddress});
-var allEventsFromTo  = await   transferEventHandle  .GetAllChanges(  fromToIndexFilterInput01 );
-var allEventsTo      = await   transferEventHandle  .GetAllChanges(      toIndexFilterInput01 );
-var allEventsToMany  = await   transferEventHandle  .GetAllChanges(  toManyIndexFilterInput01 );
-
-var   fromToIndextFilterID  = await   transferEventHandle  .CreateFilterAsync(fromToIndexFilterInput01);
-var allNewEventsFromTo   = await   transferEventHandle  .GetFilterChanges(  fromToIndextFilterID );
-</pre>
-
-[[{}]]"dev_framework.C#,devops.C#">
-<span xsmall>Nuget packages</span>
-@[https://nethereum.readthedocs.io/en/latest/nugets/]
-- Standalone packages targeting Netstandard 1.1, net451, Netstandard 2.0, Netcoreapp 2.1
-  and where possible net351 to support Unity3d.
- (Nethereum.Portable deprecated)
-Windows:                                Windows/Mac/Linux users
-PM > Install-Package Nethereum.Web3     dotnet add package Nethereum.Web3
- Main Libraries
-Project Source                    Description
-Nethereum.Web3                    Web3-RPC, contract inter./deployment/TX, en/de-coding, event filters
-Nethereum.Unity
-Nethereum.Geth                    Geth support for Admin, Debug, Miner
-Nethereum.Quorum
-Nethereum.Parity                  Parity  non-generic RPC API support
- Core Libraries
-
-Project Source                  Description
-Nethereum.ABI                   Encoding/decoding of ABI Types, functions, events of Ethereum contracts
-Nethereum.EVM                   Ethereum Virtual Machine API
-Nethereum.Hex                   HexTypes for encoding and decoding String|BigInteger...
-Nethereum.RPC
-Nethereum.JsonRpc.Client
-Nethereum.JsonRpc.RpcClient
-Nethereum JsonRpc IpcClient
-Nethereum.RLP                   RLP encoding and decoding
-Nethereum.KeyStore              Keystore generation|en/de-cryption (Web3 Secret Storage definition)
-Nethereum.Signer                Nethereum signer library to sign and verify messages,
-                                RLP and transactions using an Ethereum account private key
-Nethereum.Contracts             Core library to interact via RPC with Smart contracts
-Nethereum.IntegrationTesting    Integration testing module
-Nethereum.HDWallet              Generates an HD tree of Ethereum compatible addresses from
-                                a randomly generated seed phrase (using BIP32 and BIP39)
-
- Smart contract API Libraries
-Project Source                  Description
-Nethereum.StandardTokenEIP20    Nethereum.StandardTokenEIP20 Service
-Nethereum.Uport                 Uport registry library
-Nethereum.ENS                   Ethereum Name service library
- Utilities
-Nethereum.Generator.Console     collection of cli utilities to interact with Ethereum/account management
- Training modules
-Project                         Description
-Nethereum.Workbooks             Xamarin Workbook tutorials including executable code
-Nethereum.Tutorials             Tutorials to run on VS Studio
- Code templates
-Source                          Description
-Keystore generator              Keystore file generator
-Faucet                          Web application template for an Ether faucet
-Nethereum Flappy                The source code files for the Unity3d game integrating with Ethereum
-Nethereum Game Sample           Sample game demonstrating how to integrate Nethereum with UrhoSharp's
-                                SamplyGame to build a cross-platform game interacting with Ethereum
-Nethereum UI wallet sample      Cross platform wallet example using Nethereum, Xamarin.Forms and MvvmCross,
-                                targeting: Android, iOS, Windows Mobile, Desktop (windows 10 uwp), IoT
-                                with the Raspberry PI and Xbox.
-[[}]]
-
-● web3.py [[{dev_framework.python.web3_py,01_PM.TODO]]
-@[https://github.com/ethereum/web3.py]
-[[}]]
-
 ● Brownie [[{dev_framework.python.brownie,13_SLC.testing,20_QA,01_PM.TODO]]
   @[https://eth-brownie.readthedocs.io/en/latest/]
-  @[https://eth-brownie.readthedocs.io/en/stable/tests-hypothesis-property.html]
+  @[https://eth-brownie.readthedocs.io/en/stable/tests-hypothesis-property.html]  [[{13_SLC.testing.property_based}]]
   @[https://github.com/HyperLink-Technology/brownie]
 - simple python framework for testing, deploying and interacting with SCs.
 
@@ -6128,7 +5974,6 @@ Nethereum UI wallet sample      Cross platform wallet example using Nethereum, X
   - Effective Smart Contract Testing with Brownie:
 @[https://medium.com/coinmonks/effective-smart-contract-testing-developer-revert-comments-c7a6f250df0f]
 [[}]]
-
 
 ● SCALABILITY SOLUTIONS: [[{101,scalability.zkp,privacy.zkp,scalability.layer2]] #[layer2_scalability_summary]
                          [[dev_framework.remix,02_doc_has.diagram,layer2.rollup.optimistic]]
@@ -6621,7 +6466,7 @@ REF: https://medium.com/@bibryam/enterprise-integration-for-ethereum-fa67a1577d4
    Standard RBAC in EEA/Quorum expected for mid/late 2019
 [[}]]
 
-● Alethio,Rakr (IA auditing) [[{qa.auditing,13_SLC.monitoring,security,integration.data,02_use_case.finance.fraud]]
+● Alethio,Rakr (IA auditing) [[{20_QA.auditing,13_SLC.monitoring,security,integration.data,02_use_case.finance.fraud]]
 @[https://aleth.io]
 @[https://media.consensys.net/alethio-lighting-up-the-blockchain-with-real-time-stats-a80bb30576db]
 @[https://media.consensys.net/using-machine-learning-to-understand-the-ethereum-blockchain-1778485d603a]
@@ -7931,22 +7776,22 @@ Available metrics (use geth monitor for full list)
 
   - Allow separated database into two parts:
     - Recent blocks, stored in fast key-val LevelDB, Ideal to put on SSD [[{devops.storage]]
-    - older "stuff", infrequent access. HDD should be "OK"  
+    - older "stuff", infrequent access. HDD should be "OK"
       Use --datadir.ancient to move outside chaindata ("SSD" disk)  [[}]]
     - Ex: A fresh fast sync at block 7.77M placed
       - 60GB of data into LevelDB
       - 79GB of data into the freezer
-  
+
   - GraphQL support (--graphql CLI flag): [[{integration.graphql]]
     - Support for flexible queries (INNER JOINS) in a single round trip.
     - Ex: find all the ENS domain registrations on the Görli testnet!
       STEP 1) Start Geth v1.9.0 on Görli with GraphQL enabled
       $ geth --goerli --graphql  ← should sync in 1-2 minutes tops
-  
+
       STEP 2) point browser to BUILT-IN GraphQL explorer http://localhost:8547
 
       STEP 3) sample query: find ENS HashRegistered events.
-              returns address-of-user doing the registration, 
+              returns address-of-user doing the registration,
               block number and timestamp:
       {
         logs(                                ← "SELECT FROM  logs INNER JOIN address ON ... "
@@ -7981,7 +7826,7 @@ Available metrics (use geth monitor for full list)
     - major features:
       - remove account management from "maybe insecure" Geth gateway.
       - Reusable by Geth, Parity, Trinity, Metamask, ...
-        - deliberately tiny external API via IPC or HTTP,           
+        - deliberately tiny external API via IPC or HTTP,
           designed to work with any interface: cli, web, Android, ..
         - Clef exposes an extended internal API solely via standard input/output.
           and JSON-RPC IO streams.
@@ -7999,7 +7844,7 @@ Available metrics (use geth monitor for full list)
     (pull based monitoring)          ( expva   -Go ecosystem friendly format)
                                      http://127.0.0.1:6060/debug/metrics/prometheus
                                      (prometheus friendly format)
-  
+
     $ geth ...              + "set of --metrics.influxdb subflags"
     (push based monitoring)   (server, ddbb, user/password, ...)
                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -8110,7 +7955,7 @@ EOF
 - [P]SMRT-050: If no contract size limit is specified in a genesis block,
      subsequent hard fork blockor network configuration, Enterprise Ethereum
      clients MUST enforce a size limit on smartcontracts of 24,576 bytes.
-  
+
   - Permissioning is the property of a system that ensures operations are
     executed by and accessible todesignated parties. For Enterprise Ethereum,
     permissioning refers to:
@@ -8122,7 +7967,7 @@ EOF
       contracts.Enterprise Ethereum provides a permissioned implementation
       of Ethereum supporting peer nodeconnectivity permissioning,
       account permissioning, and transaction type permission.
-  
+
   7.1.1 Nodes:
     [C] NODE-010:Enterprise Ethereum implementations MUST provide the ability
         to specify atstartup a list of static peer nodes to establish
@@ -8147,7 +7992,7 @@ EOF
 - EEA Net Protocol Sublayer: (enodes, ...) [[{10_EVM.implementation,devops,architecture]]
 - Nodes MUST be identified and advertised using the Ethereum enode URL format
   https://github.com/ethereum/wiki/wiki/enode-url-format  [[101]]
-- Implementations SHOULD use the DEVp2p Wire Protocol for messaging between 
+- Implementations SHOULD use the DEVp2p Wire Protocol for messaging between
   nodes to establish and maintain a communications channel for use by higher
   layer protocols.
   REF: https://github.com/ethereum/wiki/wiki/%C3%90%CE%9EVp2p-Wire-Protocol
@@ -8380,7 +8225,7 @@ A,B EVM → A,B EVM: contract code execution
      which is saved and restored between sessions.
      It is recommended that the private key can only be reset manually,
      for example, by deleting a file or database entry.
-  
+
      There are two kinds of connections which can be established.
      A node can connect to:
        ─ a known peer which has previously been connected to
@@ -8393,16 +8238,16 @@ A,B EVM → A,B EVM: contract code execution
   of the client or as the argument to suggestPeer(nodeURL) function
   in the JSRE.
 
-  C&P from https://github.com/ethereum/wiki/wiki/enode-url-format               
-                                                              
+  C&P from https://github.com/ethereum/wiki/wiki/enode-url-format
+
   enode://6f8516f6144...0 @10.3.58.6:30303?discport=30301
           └───────┬──···─┘  └───┬───┘                └─┬─┘
                   │          DNS NOT trusted         discovery
-                  │          Only IP allowed         UDP port     
-  64-bytes/128 hex-digits 
-  node ID of the secp256k1 
-  public key 
-  
+                  │          Only IP allowed         UDP port
+  64-bytes/128 hex-digits
+  node ID of the secp256k1
+  public key
+
 • GENERATE PRIVATE KEY AND ENODE ID:
 
   (REF:@[https://kobl.one/blog/create-full-ethereum-keypair-and-address/])
@@ -8417,32 +8262,32 @@ A,B EVM → A,B EVM: contract code execution
   STEP 2) Show associated public-key in enode format (64 bytes/128 hex digits)
   $ cat  nodePrivateKey | \
     openssl ec -noout -text  | \      <- Display info with public key *1
-    grep pub -A 5 | tail -n +2 | \    ┐┌ Convert public key to enode expected format 
+    grep pub -A 5 | tail -n +2 | \    ┐┌ Convert public key to enode expected format
     tr -d '\n[:space:]:' | \          ├┘ Output will be similar to:
-    sed 's/^04//'                     ┘  067......(128 hex-digits)......8e06 
+    sed 's/^04//'                     ┘  067......(128 hex-digits)......8e06
 
-   *1 Output will be similar to:                       
-      Private-Key: (256 bit)                           
-      priv:                                            
+   *1 Output will be similar to:
+      Private-Key: (256 bit)
+      priv:
           00:f4:16:f5:89:3d:60:86:8a:1d:77:4d:2f:74:3b:
           29:53:5b:b9:cb:f9:50:0e:38:39:24:c5:7a:a9:1b:
-          b7:d2:b4                                     
-      pub:                                             
+          b7:d2:b4
+      pub:
           04:06:74:34:d5:10:e3:e1:86:a0:39:58:3d:b7:27: <-  Uncompressed Pub. key length must be
           cd:8d:3d:ae:e9:fc:23:8a:6d:54:2e:ca:03:b0:b7:     0x04 prefix + 64 bytes long.
           bc:85:28:df:9b:4d:87:86:61:f3:50:c0:ea:3d:53:
           37:a5:83:1c:94:d8:4e:22:c5:ba:ff:ee:7a:55:e9:
-          cb:1f:80:8e:06                               
-      ASN1 OID: secp256k1                              
+          cb:1f:80:8e:06
+      ASN1 OID: secp256k1
 
   STEP 3) (Not needed for enode, but can be useful in other configs)
   $ cat   ${publicAddres} | \
-    keccak-256sum -x -l | \     Output will be similar to:  
+    keccak-256sum -x -l | \     Output will be similar to:
     tr -d ' -' | \              0bed7abd61247635c1973eb38474a2516ed1d884
     tail -c 41                  └─····20 bytes / 40 hex-digits········─┘
- 
+
     WARN!: if final address looks like
-    "0xdcc703c0E500B653Ca82273B7BFAd8045D85a470", it means 
+    "0xdcc703c0E500B653Ca82273B7BFAd8045D85a470", it means
     we hashed an empty public key.
     SENDING FUNDS TO THIS ADDRESS WILL LOCK THEM FOREVER!
 [[}]]
@@ -8450,13 +8295,13 @@ A,B EVM → A,B EVM: contract code execution
 • PUPPETH [[{devops,01_PM.low_code}]]
   - Easy Geth deployment of networks
   - (Integrated into Geth 1.9+)
-  - Creates genesis block, bootnodes, signers, ethstats, faucet, 
+  - Creates genesis block, bootnodes, signers, ethstats, faucet,
     wallet, explorer and dashboard..
 
 
 ● Clef wallet/signer middleware [[{wallet.cloud,security,02_doc_has.diagram,01_PM.TODO]]
 @[https://github.com/ethereum/go-ethereum/blob/master/cmd/clef/tutorial.md]
-- Sign TX and data (data "==" swap/swarm), designed 
+- Sign TX and data (data "==" swap/swarm), designed
   as an (eventual) replacement for Geth's account management.
 - DApps/Middleware can  send data/TX to Clef, which will
   then provide the user with context and asks for permission
@@ -8470,8 +8315,8 @@ A,B EVM → A,B EVM: contract code execution
   request via a passphrase entry, we can permit Clef to sign on our
   behalf by storing our passphrase in its encrypted database.
   This will only allow passwordless signing, but still needs
-  manual confirmation!                                       
-  - JS rule file: as requests arrive it decides to 
+  manual confirmation!
+  - JS rule file: as requests arrive it decides to
     auto-confirm, auto-reject, or forward to manual confirm.
     JS rules have access to full request and can also store
     arbitrary data in a key-value store for persistence. Ex:
@@ -8509,7 +8354,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
 ● EthSigner wallet/signer middleware: [[{wallet.cloud,security,02_doc_has.diagram]]
 REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
      @[https://docs.ethsigner.pegasys.tech/en/latest/]
-- used as signer middleware, replaces eth_sendTransaction 
+- used as signer middleware, replaces eth_sendTransaction
 - does NOT replace eth_signData (and alike).
 - hacks for eth_signData seem possible (based on blog posts),
   but even that doesn’t allow arbitrary data
@@ -8539,7 +8384,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
     like ring signatures, stealth addresses, mixing,
     or storage of private data off-chain.
 └ PRIVACY OF DATA:
-  keep transactions, balances, SCs, data encrypted 
+  keep transactions, balances, SCs, data encrypted
   on|off-chain, using cryptographic tools like ZKP
   and zk-SNARKS, Pedersen commitments, or off-chain
   privacy layers like TEEs.
@@ -8556,7 +8401,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
       update has happened without knowing the opening balance, the closing
       balance, or the transfer amount:
       [[{02_doc_has.comparative]]
-      Pedersen commitments and Folklore range proofs to process the typical  
+      Pedersen commitments and Folklore range proofs to process the typical
       daily volume of payments for the SARB with full confidentiality and
       finality in less than two hours. These commitment schemes proved to be
       much quicker to validate than the zero-knowledge proofs.
@@ -8859,18 +8704,18 @@ https://gitter.im/PegaSysEng/pantheon
     Initial                    Create                      Create                    Run Runner
     Bootstrap             ->   BesuController.java     ->  Runner.java           ->  instance!!
   ┌──────────────────────┐  ┌─────────────────────────┐   ┌───────────────────────┐
-  - Parse cli flags         It will collect all bck        RunnerBuilder.java 
-  - (cli/BesuCommand.java)  related config&services:       -> Runner.java                
-  - parse config file,      - chain+world state DBs 
+  - Parse cli flags         It will collect all bck        RunnerBuilder.java
+  - (cli/BesuCommand.java)  related config&services:       -> Runner.java
+  - parse config file,      - chain+world state DBs
   - load|generate node      - StorageProvider:           - Contains services for:
-    key-pair                  InMemory + RocksDB      ┌··- Network startup 
+    key-pair                  InMemory + RocksDB      ┌··- Network startup
   - parse genesis file      - Genesis Config File     ·  - Besu COntroller
                         ┌···- Node keypair            ·  - JSON RPC
                         ·   - ProtocolSchedule        ·  - WebSocket RPC
-┌···························  + ProtocolSpec          ·  - Plugable Metrics System 
+┌···························  + ProtocolSpec          ·  - Plugable Metrics System
 ·                       ·   · Synchronizer            ·    (Prometheus, ...)
 · ┌·····················┘   - Transaction Pool        ·  - Data directory
-· ·                         - Miner                   · 
+· ·                         - Miner                   ·
 · ·                                                   ·
 · └ Valid for a "bunch of blocks" in the chain        ·
 ·   (validators and proccessor applying to Byzantium, ·
@@ -8880,8 +8725,8 @@ https://gitter.im/PegaSysEng/pantheon
 ·   (ethereum/mainnet/ProtocolSpec.java)              ·
 ·                                                     ·
 · ┌···················································┘         [[{02_doc_has.seq_diagram]]
-· ·                                                    ┌······· (UDP) PEER DISCOVERY  
-· └· Runner                                            ·        - Recursive, starting with  
+· ·                                                    ┌······· (UDP) PEER DISCOVERY
+· └· Runner                                            ·        - Recursive, starting with
 ·    └> Network Startup:                               ·          "well-known-set-of-boot-nodes"
 ·       └> Discover Neighbords                         ·          NODE -> PEER: "PING"
 ·          └> Setup connections                        ·          NODE <- PEER: "PONG"
@@ -8892,23 +8737,23 @@ https://gitter.im/PegaSysEng/pantheon
 ·               . Encryption (ECIES based on node Pub/Priv keys)
 ·               . Compression
 ·               . Keep Alive
-·  
+·
 ·             > DEV-P2P Subprotocol
 ·               - Pluggable subprotocols handling extended consensus
 ·                 mechanisms such as Eth, Ibft, Istanbul64Protocol
-·               - Defines the set and appropiate ordering of messages 
+·               - Defines the set and appropiate ordering of messages
 ·                 on the network.
 ·               -  PROTOCOL MANAGE:
 ·                 "Acumulates the logic of different subprotocols"
 ·                 a) Processes incoming messages for their subprotocol
 ·                 b) Sends outbound messages to other nodes using this
 ·                    subprotocol
-· 
+·
 ·               - Example Sample Message Set for EthPV62:  [[{101]]
 ·                 [ STATUS , NEW_BLOCK_HASHES , TRANSACTIONS,
 ·                   GET_BLOCK_HEADERS, BLOCK_HEADERS, GET_BLOCK_BODIES,
 ·                   BLOCK_BODIES , NEW_BLOCK ]  [[}]]
-· 
+·
 └> SYNCHRONIZER: Manages the overall sync runtime
    - ChainDownloader Loop:
      1) Find best peer to sync from (best new data)
@@ -8923,7 +8768,7 @@ https://gitter.im/PegaSysEng/pantheon
   - "MUST TO" video explaining the general architecture :
   @[https://www.youtube.com/watch?v=OJfib9kTK7U]
 
- - REF: 
+ - REF:
    https://github.com/hyperledger/besu/blob/master/besu/src/main/java/org/hyperledger/besu/cli/BesuCommand.java
    https://github.com/hyperledger/besu/blob/master/besu/src/main/java/org/hyperledger/besu/controller/BesuController.java]
    https://github.com/hyperledger/besu/blob/master/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetProtocolSpecs.java
@@ -8931,7 +8776,7 @@ https://gitter.im/PegaSysEng/pantheon
  • Web3J(ava) Besu Private TX Extensions: [[{dev_framework.java.web3j]]
    https://github.com/web3j/web3j/blob/master/besu/src/test/java/org/web3j/protocol/besu/RequestTest.java
    https://github.com/web3j/web3j/blob/master/besu/src/test/java/org/web3j/protocol/besu/ResponseTest.java
-  
+
    - Extracted from Initial Pull Request:
    @[https://github.com/web3j/web3j/pull/767]
    ikirilov : ... propose we reconcile common calls for geth and Besu.
@@ -8975,7 +8820,7 @@ https://gitter.im/PegaSysEng/pantheon
   - ACCOUNTS that can submit transactions to the network.
   - NODES    that can join the network.
              TIP: All bootnodes must be on the nodes whitelist.
-  - ADMINS   accounts that are able to update the ACCOUNTS 
+  - ADMINS   accounts that are able to update the ACCOUNTS
              and NODES WHITELISTS
 
   WARN: On-chain ACCOUNT whitelist permissioning is incompatible  [[{privacy]]
@@ -9146,9 +8991,9 @@ Updated 2019-10-21
   [[}]]
 
   PENDING TX POOL [[{architecture.async]]
-  --tx-pool-max-size=integer                        # Max TX num.kept in pending TX pool. 
-                                                    # Default to 4096. 
-  --tx-pool-retention-hours=integer                 # Max hours to retain pending TX in TX pool.  
+  --tx-pool-max-size=integer                        # Max TX num.kept in pending TX pool.
+                                                    # Default to 4096.
+  --tx-pool-retention-hours=integer                 # Max hours to retain pending TX in TX pool.
                                                     # Default to 13h.
   [[}]]
 
@@ -9243,7 +9088,7 @@ INPUTS:
 
     BESU  -> (data) -> Besu 1.4+ -> feed to DDBBs, kafka, ...
     node     ^^^^^^    Plugin-API
-            Blocks, 
+            Blocks,
             Balances, TXs, SC,
             Logs,  ...
   └ future work: Besu will compartmentalize key supporting services, eventually
@@ -9273,7 +9118,7 @@ INPUTS:
 
 • EEA-Besu 1.2 Release: (2019-08)
   - improvements to our privacy groups
-  - new DApp for onchain permissioning management. 
+  - new DApp for onchain permissioning management.
   @[https://youtu.be/lwaZ4JhLhH0]
   - Account-level Permissioning
   - Improved Privacy Groups:
@@ -9289,7 +9134,7 @@ INPUTS:
 • EEA-Besu IBFT 2.0 BOOTSTRAP:
 
   PRE-SETUP)  [[{devops.troubleshooting.performance]]
-  - Linux: In MainNet and "large" nets increase max.number 
+  - Linux: In MainNet and "large" nets increase max.number
             of open files allowed: $ sudo ulimit ...    [TODO]
             to avoid the "Too many open files RocksDB exception". [}]]
 
@@ -9297,9 +9142,9 @@ INPUTS:
 
  STEP 01: BOOTSTRAP NODE CONFIGURATION)
  --------------------------------------
- (key / key.pub for each node can be generated 
+ (key / key.pub for each node can be generated
 
- INPUT               ->  BOOTSTRAP                        ->  OUTPUT 
+ INPUT               ->  BOOTSTRAP                        ->  OUTPUT
                          SCRIPT                               (INPUT TO NODE CONFIG)
  --------------------    --------------------------------     -------------------------
                                                               (Move to each new node)
@@ -9356,7 +9201,7 @@ INPUTS:
    localhost:8545
  -- Output must confirm 3 peers for node 1
    { ...  "result" : "0x3" }
-  (Check also logs confirming blocks being produced after 
+  (Check also logs confirming blocks being produced after
    cluster nodes are in sync -it can take a few minutes for big chains)
 
  - Add/Remove validators using the IBFT REST API:
@@ -9371,23 +9216,23 @@ INPUTS:
   curl -X POST --data \                  curl -X POST --data \                curl -X POST --data \
   '{"jsonrpc":"2.0",                      '{"jsonrpc":"2.0",                  '{"jsonrpc":"2.0",
     "method":"$METHOD",                     "method":"$METHOD",                 "method":"$METHOD",
-    "params":$PARAMS,                       "params":$PARAMS,                   "params":[], 
+    "params":$PARAMS,                       "params":$PARAMS,                   "params":[],
     "id":1}' $NODE_URL                      "id":1}' $NODE_URL                  "id":1}' $NODE_URL
-  
+
   - LISTS VALIDATORS @ BLOCK-HASH                   - LISTS VALIDATORS @ BLOCK NUMBER.
     - Returns list of validator addresses             - Returns list of validator addresses.
       METHOD="ibft_getValidatorsByBlockHash"            METHOD="ibft_getValidatorsByBlockNumber"
       PARAMS='["0x... 64 hex-digit block hash"]'        PARAMS='["latest"]' # N|earliest|latest
-      curl -X POST --data \                             curl -X POST --data \          |pending 
+      curl -X POST --data \                             curl -X POST --data \          |pending
       '{"jsonrpc":"2.0",                                '{"jsonrpc":"2.0",
          "method":"$METHOD",                              "method":"$METHOD", \
          "params":$PARAMS,                                "params":$PARAMS, \
          "id":1}' $NODE_URL                               "id":1}' $NODE_URL
-  
-  
+
+
   GET VALIDATOR METRICS FOR BLOCK-RANGE:
   ======================================
-  Returns: Block number of last-block-proposed-by-each-validator 
+  Returns: Block number of last-block-proposed-by-each-validator
            All validators present in the last-block in range
   Note: genesis block proposer has address 0x000...0.
   - Example
@@ -9559,226 +9404,6 @@ RocksDB statistics (cache,  compression, ...)
 
 [[}]]
 
-
-● Kaleido (SaaS Besu)
-[[{infrastructure.cloud.SaaS,dev_framework.kaleido,security.governance,13_SLC.troubleshooting,01_PM.low_code]]
-<span xsmall>External Links</span>
--@[https://docs.kaleido.io/getting-started/about-kaleido/]
--@[https://github.com/kaleido-io/]
-<span xsmall bgorange>Marketplace</span>
-@[https://marketplace.kaleido.io/]
-- Zero Knowledge Token Transfer
-- Token Swap: Easily and securely trade tokens with other members in your environment.
-- Document Store: Store, manage and share information from your own private document store
-- App2App Messaging
-  - Communicate securely and reliably with end-to-end encrypted messaging from Dapp to Dapp
-  - Identity and Access Management (IAM)
-    Integrate your existing enterprise identity management with your Dapp
-- Rotate signers
-  Scale IBFT consensus algorithm for broader participation
-- Token Explorer Dashboard
-- EthWallet
-  Simple and secure way to manage key ownership for signing transactions.
-- HD Wallet
-  Submit transactions anonymously, mask your identity + manage accounts]
-- IPFS File Store
-  Securely store data through a censorship resistant file sharing protocol
-- On-Chain Registry
-  Bind verified digital certificates to org Ethereum addresses via on-chain registry
-- Public Ethereum Tether
-  Pin state proofs from your private chain to public Ethereum networks
-- Connectors
-  - If This Then That (IFTTT)
-    - Automate workflows and exchange data to and from the chain with the IFTTT connector
-  - Zapier
-    - Automate workflows and exchange data to and from the chain with any Zapier app connection
-  - Salesforce
-    - Exchange chain data to and from your Salesforce CRM and applications
-- Middleware
-  - Event Streams:
-    Trigger business processes, and stream data to off-chain caching or analytics
-  - REST API Gateway
-    APIs for all your Smart Contracts, backed by reliable Kafka streaming
-- Partner Integrations
-  - QEDIT Private Asset Transfer
-    Keep sensitive transactional data off the blockchain with zero-knowledge proof cryptography.
-  - Openlaw
-    Create, store and execute legal agreements for blockchain assets
-  - Treum
-    Model business processes, track assets + build supply chains faster
-  - unchain.io
-    Interact with an Ethereum smart contract on Kaleido via a simple API
-  - Clause
-    Store audit trail events from your Smart Clauses (TM) on your Kaleido blockchain.
-  - Chainlink
-    Provide external data to Ethereum smart contracts via oracle network
-  - Rhombus
-    Connect your smart contract with real-world data
-
-- Developer Tools
-  - MythX: Premier security analysis service for Ethereum smart contracts
-  - Remix: Quickly and easily write, compile and debug smart contracts.
-  - OpenZepplin: Reduce the risk of vulnerabilities in your applications by
-    using standard, tested, community-based smart contract code.
-  - MetaMask: Run dApps right in your browser without running a full Ethereum node.
-  - Truffle: Truffle gets developers from idea to dapp as comfortably as possible
-
-- Cloud Configurations
-  - Amazon Web Services: Key Management backed by AWS KMS
-    Create and control the keys used to encrypt your data
-  - Log Streaming
-    View and monitor your Kaleido resources in AWS CloudWatch
-  - Backup your Ledger to AWS S3
-    Backup your Ledger Data and Transactions to AWS S3 blob storage
-
-- Federated Login:
-  -  Implement simple and secure user sign-up, sign-in, and access control
-
-- Private Networking
-  Leverage secure network connectivity for sensitive data sharing
-- Microsoft Azure
-  - Key Protection
-  - Key Management backed by Azure Key Vault
-  - Log Streaming
-    View and monitor your Kaleido resources in Azure Monitor
-  - Data Backup
-    -Backup your Ledger Data and Transactions to Azure blob storage
-
-- Protocols: Geth, Quorum, Besu
-
-• Kaleido Network Governance:
-  - Kaleido Account:
-@[https://docs.kaleido.io/using-kaleido/accounts-pricing]
-- parent resource used to manage "super user" actions
-  not related to the application:
-  - organizational identity
-  - shared administrators
-  - consortia collaborators
-  - uploaded certificates
-  - administrative bearer tokens
-  - current plan instance and billing orchestration.
-
-• Kaleido Services:
-@[https://docs.kaleido.io/kaleido-services/]
-- Public Eth. Tether
-- Ether pool
-- Block Explorer
-- HD Wallet
-- IPFS
-- ID Registry
-- Eth-Connect
-
-• Kaleido AWS Integration:
-@[https://docs.kaleido.io/aws-integrations/using-aws-integrations/]
-
-• Kaleido Troubleshooting:
-@[https://docs.kaleido.io/support/troubleshooting/]
-
-• Kaleido Developer Material:
-- @[https://docs.kaleido.io/developer-materials/api-101/]
-- @[https://console-eu.kaleido.io/]
-- @[https://github.com/kaleido-io/kaleido-js]   NodeJS example (Offline TX signing in Azure,...)
-
-• Kaleido Deploy in 10 minutes:
-@[https://medium.com/coinmonks/deploy-a-private-ethereum-blockchain-in-10-minutes-with-kaleido-73c21a26d5bb]
-
-• Kaleido + Truffle:
-@[https://medium.com/coinmonks/connecting-to-kaleido-private-ethereum-blockchain-with-truffle-7ae7cc6a3234]
-
- PRE-SETUP 1: Deploy a private Kaleido Blockchain instance:
-@[https://medium.com/coinmonks/deploy-a-private-ethereum-blockchain-in-10-minutes-with-kaleido-73c21a26d5bb]
-
- PRE-SETUP 2: Write down the publicpublic key from any wallet
-
- PRE-SETUP 3: Truffle Framework setup
-$ npm install -g -production windows-build-tools  (Windows OS only)
-$ npm install -g truffle
-$ npm install truffle-hdwallet-provider-privkey #
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-              allows to sign and exec TXs by providing
-              a private key that belongs to an existing
-              Ethereum wallet. (generated by MetaMask,...)
-
-$ cd ...
-$ mkdir trufflekaleido
-$ cd trufflekaleido
-
-$ truffle unbox webpack # ← simplex box
-
- Kaleido STEP 1: Ether Pool
-- paste your public key here to receive some ETH.
-
- Kaleido STEP 2: Edit/Create the contract
-$ "vim" .../contracts/hello.sol
-  |pragma solidity >=0.4.22 <0.6.0;
-  |contract Mortal {
-  |    address owner;
-  |    constructor() public { owner = msg.sender; }
-  |    function kill() public { if (msg.sender == owner) selfdestruct(msg.sender); }
-  |}
-  |
-  |contract Greeter is Mortal {
-  |    string greeting;
-  |    constructor(string memory _greeting) public { greeting = _greeting; }
-  |    function greet() public view returns (string memory) { return greeting; }
-  |}
-
- Kaleido STEP 3.1: create truffle migration script
-$ "vim" .../migrations/2_deploy_contracts.js
-  |var mortal = artifacts.require("./Mortal");
-  |var greeter = artifacts.require("./Greeter");
-  |module.exports = function(deployer) {
-  |deployer.deploy(greeter, 'Jack');
-  |};
-
- Kaleido STEP 3.2: Setup truffle-config.js
-var  HDWalletProvider = require("truffle-hdwallet-provider-privkey");
-const  privKeys = [${private_key_in_hex_format_with_NO_leading_0x}] ;
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-            Ex: ["65c2d64f53211d8328c6db8e8bc22341c0f0b8d22989f40f4efd0ed55e3e3d8b"];
-module.exports = {
-  networks: {
-    development: {
-      provider: function() {
-        return new   HDWalletProvide  (  privKeys , "http://kaleido_host:port");
-      },                                             ^^^^^^^^^^^^^^^^^^^^^^^^
-      network_id: '*',                               In the Kaleido interface select node then:
-      gas: 4700000                                 - [Connect Node] →   [VIEW DETAILS]     → input SECRET-KEY → [Submit]
-    },                                                              (under Native JSON/RPC)
-    ganache: { ...  },                             - Copy the CONNECTION-URL under "Auth Type -INURL" section.
-  },
-  mocha: { ... }
-  compilers: {...}
-}
-
-
- Kaleido STEP 4: compile and run
-$ truffle compile
-$ truffle migrate
-→ Running migration: 1_initial_migration.js
-→   Deploying Migrations...
-→   ... 0xbb56569292a0a5f47700f450dc8e166545308835b5fd8db7d09c00a306d83852
-→   Migrations: 0xcdd5665ec87da674dc58549f2fc0bb8c514661bb
-→ Saving artifacts...
-→ Running migration: 2_deploy_contracts.js
-→   Replacing Greeter...
-→   ... 0xa3447e50d0de2a86c0325e975478399d8abe931efa6458a9deb78b0b24a89d82
-→   Greeter: 0x96b9b7d5330021ed3e1ab2191482479def16c036
-
- Kaleido STEP 5: Testing the Contract
-$ truffle console --network development
-truffle(development)>
-truffle(development)> Greeter.deployed().then(function(contractInstance) {contractInstance.greet().then(function(v) {console.log(v)})})
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                      Greeter.deployed().then(
-                        function(contractInstance) {
-                           contractInstance.greet().then(
-                             function(v) {console.log(v)}
-                           )
-                        }
-                      )
-[[}]]
-
 ● EthrDIDs"uPort++" [[{02_use_case.identity,standards.W3C_DID,architecture,01_PM.radar]]
 @[https://medium.com/uport/goodbye-uport-dids-hello-ethr-dids-ea2e80256f54]
 @[https://github.com/uport-project/ethr-did-registry]
@@ -9925,12 +9550,12 @@ https://eips.ethereum.org/EIPS/eip-1820
 
 - HardHat Framework can be seen briefly as its Hardhat Runtime Environment  (HRE):
   const hardhat /*HRE*/ = require("hardhat")
-        └─────┴─ "==" 
+        └─────┴─ "=="
    {
-     /* core */           ┌ task: async function + metadata defining 
+     /* core */           ┌ task: async function + metadata defining
      config: ...,         v       "everything you can do in HardHat"
-     "tasks..." : task1, task2, ... 
-     "plugins..." : ...  
+     "tasks..." : task1, task2, ...
+     "plugins..." : ...
 
      /* others */
      artifacts : {
@@ -9952,25 +9577,25 @@ https://eips.ethereum.org/EIPS/eip-1820
   $ npm install --save-dev hardhat  <- PRESETUP: only local install is allowed to
                                        ensure reproducible builds.
 
-  $ npx hardhat --help 
+  $ npx hardhat --help
     Usage: hardhat [GLOBAL OPTIONS] <TASK> [TASK OPTIONS]
-   
-    GLOBAL                  │ AVAILABLE 
+
+    GLOBAL                  │ AVAILABLE
     OPTIONS:                │ TASKS:
     ---------------         │ ---------
     --config ...            │ check  ... whatever you need to check ...
     --emoji  yes|no         │ clean      Clears cache + artifacts
     --help                  │ compile    compile contracts/*, generate TS bindings
-    --max-memory ...        │ console 
+    --max-memory ...        │ console
     --network ...           │ flatten    Flattens, prints contracts and dependencies
     --show-stack-traces ... │ node       Starts a JSON-RPC test node @http://127.0.0.1:8545/
     --tsconfig ...          │ run        ... user-defined script after compiling ...
     --verbose  ...          │ typechain  Generate Typechain typings for Compiled contracts
     --version  ...          │ verify     Verifies contract on Etherscan  [[security]]
-                            │                                                                
+                            │
                             │ coverage   [[13_SLC.testing.coverage]]
      ^^^^^^^^^^             │ test       test/*js *ts [[13_SLC.testing]]
-     ENV.VARS: 
+     ENV.VARS:
      - HARDHAT_NETWORK           (overriden by --network flag)
      - HARDHAT_SHOW_STACK_TRACES
      - HARDHAT_VERBOSE
@@ -9982,7 +9607,7 @@ https://eips.ethereum.org/EIPS/eip-1820
   STEP 2) $ npx hardhat run scripts/deploy.ts
 [[}]]
 
-● DECONSTRUCTING A SOLIDITY SMART CONTRACT [[{10_EVM.debugging,12_solidity]]  
+● DECONSTRUCTING A SOLIDITY SMART CONTRACT [[{10_EVM.debugging,12_solidity]]
   Summary of OpenZepellin Posts:
 PART 1: https://blog.openzeppelin.com/deconstructing-a-solidity-contract-part-i-introduction-832efd2d7737/
 PART 2: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-ii-creation-vs-runtime-6b9d60ecb44c
@@ -9992,70 +9617,70 @@ PART 5: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-
 PART 6: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-vi-the-swarm-hash-70f069e22aef
 (By Alejandro Santander in collaboration with Leo Arias)
 ┌─ BasicToken.sol ─────────────────────────────────────────────────────────┐
-| pragma solidity ^0.4.24;                                                 |  
-|                                                                          |  
-| contract BasicToken {                                                    |  
-|   uint256 totalSupply_;                                                  |  
-|   mapping(address => uint256) balances;                                  |  
-|                                                                          |  
-|   constructor(uint256 _initialSupply) public {                           |  
-|     totalSupply_ = _initialSupply;                                       |  
-|     balances[msg.sender] = _initialSupply;                               |  
-|   }                                                                      |  
-|                                                                          |  
-|   function totalSupply() public view returns (uint256) {                 |  
-|     return totalSupply_;                                                 |  
-|   }                                                                      |  
-|                                                                          |  
-|   function transfer(address _to, uint256 _value) public returns (bool) { |  
-|     require(_to != address(0));                                          |  
-|     require(_value <= balances[msg.sender]);                             |  
-|     balances[msg.sender] = balances[msg.sender] – _value;                | 
-|     balances[_to] = balances[_to] + _value;                              |   
-|     return true;                                                         | 
-|   }                                                                      | 
-|                                                                          | 
-|   function balanceOf(address _owner) public view returns (uint256) {     | 
-|     return balances[_owner];                                             | 
-|   }                                                                      | 
-| }                                                                        | 
+| pragma solidity ^0.4.24;                                                 |
+|                                                                          |
+| contract BasicToken {                                                    |
+|   uint256 totalSupply_;                                                  |
+|   mapping(address => uint256) balances;                                  |
+|                                                                          |
+|   constructor(uint256 _initialSupply) public {                           |
+|     totalSupply_ = _initialSupply;                                       |
+|     balances[msg.sender] = _initialSupply;                               |
+|   }                                                                      |
+|                                                                          |
+|   function totalSupply() public view returns (uint256) {                 |
+|     return totalSupply_;                                                 |
+|   }                                                                      |
+|                                                                          |
+|   function transfer(address _to, uint256 _value) public returns (bool) { |
+|     require(_to != address(0));                                          |
+|     require(_value <= balances[msg.sender]);                             |
+|     balances[msg.sender] = balances[msg.sender] – _value;                |
+|     balances[_to] = balances[_to] + _value;                              |
+|     return true;                                                         |
+|   }                                                                      |
+|                                                                          |
+|   function balanceOf(address _owner) public view returns (uint256) {     |
+|     return balances[_owner];                                             |
+|   }                                                                      |
+| }                                                                        |
 └──────────────────────────────────────────────────────────────────────────┘
 
     BasicToken.asm (executed in the context of a new Contract TX):
-    KEYPOINT: When analyzing bytecode we can put attention to 
-    JUMP/JUMPI/JUMPDEST (code forks) as marks to split into logical units. 
+    KEYPOINT: When analyzing bytecode we can put attention to
+    JUMP/JUMPI/JUMPDEST (code forks) as marks to split into logical units.
     RETURN/REVERT/STOP: are also usefull.
     units:
     https://gists.rawgit.com/ajsantander/23c032ec7a722890feed94d93dff574a/raw/a453b28077e9669d5b51f2dc6d93b539a76834b8/BasicToken.svg
     ┌─ CONTRACT INITIALIZATION START { (~70 instructions ) ──────────────
     │   1) CREATE CONTRACT'S INITIAL STATE.
-    │   2) RETURN (to EVM) COPY OF RUNTIME BYTE-CODE  
+    │   2) RETURN (to EVM) COPY OF RUNTIME BYTE-CODE
     │      (EVM will store it as SC account.code)
-    │ ┌─ FREE SOLIDITY MEMORY POINTER ────── 
+    │ ┌─ FREE SOLIDITY MEMORY POINTER ──────
     │ │  SOLIDITY free-memory-pointer indicates where to store "stuff" with the
-    │ │  guarantee that no other Solidity (vs asm) code will overwrite it 
+    │ │  guarantee that no other Solidity (vs asm) code will overwrite it
     │ │  KEYPOINT: EVERY SINGLE FUNCTION IN SOLIDITY, WHEN COMPILED TO EVM BYTECODE,
     │ │            WILL INITIALIZE THIS POINTER.
     │ │      NOTE: MEM.[0x00, 0x40) reserved by Solidity to calculate hashes
-    │ │  HEAVELY USED BY MLOAD + MSTORE 
-    │ │000 PUSH1 80  <- MSTORE ARG1:(dec128) value to store 
+    │ │  HEAVELY USED BY MLOAD + MSTORE
+    │ │000 PUSH1 80  <- MSTORE ARG1:(dec128) value to store
     │ │                 ("SPOILER":0x80 == mem.pos. to place constructor args loaded from TX.data)
-    │ │002 PUSH1 40  <- MSTORE ARG2: (dec64) TARGET POSITION IN MEMORY        
+    │ │002 PUSH1 40  <- MSTORE ARG2: (dec64) TARGET POSITION IN MEMORY
     │ │004 MSTORE    <- STORE [0x80]@0x40 in MEM == mstore(0x40,0x80) (YULish CODE)
     │ └─────────────────────────────────────
     │ ┌─ NON-PAYABLE CHECK { ───────────────
-    │ │ bytecode for Solidity code "if(msg.value != 0) revert(); 
+    │ │ bytecode for Solidity code "if(msg.value != 0) revert();
     │ │ (injected by compiler -vs developer- when constructor|function is NOT payable.
     │ │ 005 CALLVALUE  <- push TX.value (in wei) to stack-top
     │ │ 006 DUP1       <- duplicate 1st element on stack
     │ │ 007 ISZERO     <- push "0x01" IF CURRENT TOP-OF-STACK-VALUE IS ZERO (JUMPI ARG1)
-    │ │ 008 PUSH2 0010 <- JUMPI ARG2: Where to jump to. 
-    >>> 011 JUMPI      <- JUMP(If) to ARG2 IF ARG1 != 0  
+    │ │ 008 PUSH2 0010 <- JUMPI ARG2: Where to jump to.
+    >>> 011 JUMPI      <- JUMP(If) to ARG2 IF ARG1 != 0
     │ │ 012 PUSH1 00   <- REVERT ARG1: Message Length
     │ │ 014 DUP1       <- REVERT ARG2: Message offset position in memory
     <<< 015 REVERT     <- REVERT
     │ └─ NON-PAYABLE CHECK } ───────────────
-    ┌── BYTECODE RETRIEVING CONSTRUCTOR PARAMETERS { ──────── 
+    ┌── BYTECODE RETRIEVING CONSTRUCTOR PARAMETERS { ────────
     │  param values are appended at the end of a contract's bytecode.
     >>>016 JUMPDEST   ┐
     │ ┌─ read whatever is in memory@0x40 { ─
@@ -10069,60 +9694,60 @@ PART 6: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-
     │  021 PUSH1 20   <- CODECOPY ARG2: number-of-bytes-to-copy (0x20==32)
     │  023 DUP1       <- KEEP A COPY.
     │  024 PUSH2 0217 <- CODECOPY ARG3: offset instruction number to copy from ARG: (x0217 = 535)
-    │  027 DUP4       
-    │  028 CODECOPY   <- CODECOPY OPCODE [535,567) -> MEMORY [0x80,0x80+32) 
+    │  027 DUP4
+    │  028 CODECOPY   <- CODECOPY OPCODE [535,567) -> MEMORY [0x80,0x80+32)
     │  028 CODECOPY      == copy latest 32 bytes of code -constructor paramets(uint256),
     │  028 CODECOPY         appended by solc as raw data at end-of-code into memory)
-    │  029 DUP2       
-    │  030 ADD        
+    │  029 DUP2
+    │  030 ADD
     │  031 PUSH1 40   <- MSTORE ARG2: VALUE TO STORE
     │  033 SWAP1      <- SETUP STACK: ARG1: 0x80, ARG2: 0x40
     │  034 DUP2       <- KEEP COPY (MSTORE WILL CONSUME STACK-TOP-2)
     │  035 MSTORE     <- memory[0x80:0x80+0x20) = unit256(0x40)
     │                    update free-memory-pointer by shifting 32 bytes forward
-    │  036 SWAP1      
+    │  036 SWAP1
     │  037 MLOAD      <- reads memory-value@0x40 (10000) into stack,
     │                    to be consumed in next cinstructions.
-    │                   (COMMON PATTERN: before function's body is executed, 
+    │                   (COMMON PATTERN: before function's body is executed,
     │                                    its parameters are loaded in the stack)
-    └── BYTECODE RETRIEVING CONSTRUCTOR PARAMETERS } ──────── 
+    └── BYTECODE RETRIEVING CONSTRUCTOR PARAMETERS } ────────
     ┌─ CONSTRUCTOR BODY BYTECODE { ─────────────   totalSupply_ = _initialSupply; (10000)
     │   (No jumps, so constructor execution follows)
     │                      ( SSTORE ARG1: VALUE TO STORE -10000- )
     │   038 PUSH1 00    ┐ <- SSTORE ARG2: DESTINATION SLOT IN STORAGE
     │   040 DUP2        | <- DUPLICATE ARG1, USED LATER; BUT CONSUMED BY SSTORE
-    │   041 DUP2        | <- DUPLICATE ARG2, USED LATER, BUT CONSUMED BY SSTORE 
-    │   042 SSTORE      ┘ <- STORE 10000 to SLOT 0@STORAGE, sstore(0x00 /*slot dest*/, 0x2710 /* value*/) 
+    │   041 DUP2        | <- DUPLICATE ARG2, USED LATER, BUT CONSUMED BY SSTORE
+    │   042 SSTORE      ┘ <- STORE 10000 to SLOT 0@STORAGE, sstore(0x00 /*slot dest*/, 0x2710 /* value*/)
     │ ┌─ balances[msg.sender] = totalSupply; { ───
     │ │ 043 CALLER      <- push msg.sender to memory@0x00
-    │ │ 044 DUP2        <- keep copy of ARG consumed by MSTORE 
+    │ │ 044 DUP2        <- keep copy of ARG consumed by MSTORE
     │ │ 045 MSTORE      <- memory[0x100?,0x100+0x20) = unit256(????)
     │ │ 046 PUSH1 01    <- MSTORE VALUE ARG 1: (1 == storage slot for 'balance' map)
-    │ │ 048 PUSH1 20    <- MSTORE VALUE ARG 2: DST MEM POSICION 
-    │ │ 050 MSTORE      <- memory[0x20,0x20+0x20) = uint256(01) 
-    │ │ 051 SWAP2         
-    │ │ 052 SWAP1         
-    │ │ 053 SWAP2         
+    │ │ 048 PUSH1 20    <- MSTORE VALUE ARG 2: DST MEM POSICION
+    │ │ 050 MSTORE      <- memory[0x20,0x20+0x20) = uint256(01)
+    │ │ 051 SWAP2
+    │ │ 052 SWAP1
+    │ │ 053 SWAP2
     │ │ 054 SHA3        <- final storage key for balances[msg.sender] == Keccak256(mem@[0x00,0x40))
-    │ │                                   [mapping slot value, msg.sender /*key*/] == ─┴─────────┘ 
+    │ │                                   [mapping slot value, msg.sender /*key*/] == ─┴─────────┘
     │ │ 055 SSTORE      <- 10000 /*totalSupply*/ -> STORAGE-SLOT SHA3[...]
     │ └─ balances[msg.sender] = totalSupply; } ───
     │   056 PUSH2 01d1  <- CODECOPY ARG1: number-of-bytes-to-copy (465 dec == Runtime code)
     │   059 DUP1        <- COPY ARG. Upon return, indicates the EVM how many bytes to copy as code
     │   060 PUSH2 0046  <- CODECOPY ARG2: start-copy-position (dec 70)
-    │   063 PUSH1 00    <- CODECOPY ARG3: DST MEMORY: 0x00 
+    │   063 PUSH1 00    <- CODECOPY ARG3: DST MEMORY: 0x00
     │   065 CODECOPY    <- memory[0x00,0x00+0x01d1) = address(this).code[0x46:0x46+0x01d1)
     │                      to be saved in blockchain as the contract's runtime code after return
-    │   066 PUSH1 00    <- 0x00 INDICATES "NO-ERROR" to EVM 
+    │   066 PUSH1 00    <- 0x00 INDICATES "NO-ERROR" to EVM
     <<< 068 RETURN      <- RETURN. Hands control over to EVM.
     │                      EVM will see that TX.to == 0x0 (contract creation), STACK-TOP = 0x00
-    │                      (no errors) and will finally store memory[0x00,0x01d1) as 
+    │                      (no errors) and will finally store memory[0x00,0x01d1) as
     │                      new contract's runtime code.
     XXX 069 STOP         STOP ("just in case", compiler safety, this code must never be reached)
     └─── CONTRACT INITIALIZATION   END } ─────────────────────────────────────
-       
+
     ┌─ RUNTIME CODE ─────────────────────
-    │  070 000 PUSH1 80  ··┐ Setup Solidity 
+    │  070 000 PUSH1 80  ··┐ Setup Solidity
     │  072 002 PUSH1 40    ├ Free-memory-pointer
     │  074 004 MSTORE    ··┘ memory[0x40:0x40+32] = (uint256) 80
     │  Short calldata stack -------------┐ if calldata is shorter than
@@ -10131,24 +9756,24 @@ PART 6: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-
     │  078 008 LT                        | calldata-size < 4 ?
     │  079 009 PUSH2 0056                |
     >>>082 012 JUMPI        -------------┘ JUMP TO 0x56 (86) to revert if that's is the case.
-    │  - Function Selector {-------------  <-- "How Solidity routes incoming transactions" 
+    │  - Function Selector {-------------  <-- "How Solidity routes incoming transactions"
                                            Extract first 4 bytes of calldata (function signature hash)
-    │  083 013 PUSH4 ffffffff            ┐ 
-    │  088 018 PUSH29 010(rep56          | <- push 29-byte-long 0x000000001000...00 
-    │  118 048 PUSH1 00                  | CALLDATALOAD ARG 1: 
+    │  083 013 PUSH4 ffffffff            ┐
+    │  088 018 PUSH29 010(rep56          | <- push 29-byte-long 0x000000001000...00
+    │  118 048 PUSH1 00                  | CALLDATALOAD ARG 1:
     │  120 050 CALLDATALOAD              | <- READ 32 bytes @ POS 00 (ARG 1)  YUL: calldataload(0)
     │                                    |    (== push entire calldata to the stack)
     │  121 051 DIV                       | <- DIV consumes stack-top-2 dividing calldata / weird 0x000000001000...000
     │                                    |    (filter-out non-funct.signature, push 0x00...0070a08231 to stack)
-    │  122 052 AND                       ┘ <- consumes stack-top-2 (func.id, ffffffff), to make sure that 
+    │  122 052 AND                       ┘ <- consumes stack-top-2 (func.id, ffffffff), to make sure that
                                               signature hash is exactly 8-bytes-long (Safety Solidity compiler measure)
-       
+
                                            "swith-case" for the different function (selectors)
     │  123 053 PUSH4 18160ddd            ┐ Matches "totalSupply()"? Jump to 91
     │  128 058 DUP2                      | <- DUP2 needed since EQ consumes stack, but we want to keep around
     │  129 059 EQ                        |
     │  130 060 PUSH2 005b                | 0x5b == 74 (jump to next case if no match)
-    >>>133 063 JUMPI                     ┘ 
+    >>>133 063 JUMPI                     ┘
     │  134 064 DUP1                      ┐ Matches "balanceOf(address)? Jump to 130
     │  135 065 PUSH4 70a08231            |
     │  140 070 EQ                        |
@@ -10163,10 +9788,10 @@ PART 6: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-
     │  157 087 PUSH1 00                  |
     │  159 089 DUP1                      |
     │  160 090 REVERT     }              ┘
-    │  FUNCTION WRAPPERS {                 "package" calldata -> func. body 
-                                           "package" func.body result -> user 
+    │  FUNCTION WRAPPERS {                 "package" calldata -> func. body
+                                           "package" func.body result -> user
                                            PACKING AND UNPACKING == "ETHEREUM’S ABI SPEC"
-                                            By the time a function body is executed, its 
+                                            By the time a function body is executed, its
                                            arguments should be sitting comfortably in the stack
 (or inn memory if the data is dynamic)
     │                                      totalSupply() func. wrapper
@@ -10189,7 +9814,7 @@ PART 6: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-
     │  183 113 PUSH1 40                  |  |┐ Read current Solidity free-memory-pointer
     │  185 115 DUP1                      |  ||
     │  186 116 MLOAD                     |  |┘
-    │  187 117 SWAP2                     |  |┐ copy value returned in stack by function-body in free-memory-space 
+    │  187 117 SWAP2                     |  |┐ copy value returned in stack by function-body in free-memory-space
     │  188 118 DUP3                      |  ||
     │  189 119 MSTORE                    |  |┘
     │  190 120 MLOAD                     |  |┐ loads mem.pointer(again),
@@ -10261,35 +9886,35 @@ PART 6: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-
     <<<314 244 RETURN    }        -------┘ ┘
 
     ┌─ totalSuppy()           FUN.BODY { ─
-    >>>315 245 JUMPDEST                    
-    │  316 246 PUSH1 00                   
-    │  318 248 SLOAD     <- load storage at pos.1 into stack              
+    >>>315 245 JUMPDEST
+    │  316 246 PUSH1 00
+    │  318 248 SLOAD     <- load storage at pos.1 into stack
     │  319 249 SWAP1     <- put return position ready for JUMP
-    >>>320 250 JUMP      <- return                 
+    >>>320 250 JUMP      <- return
     └─ totalSuppy()           FUN.BODY } ─
     ┌─ balanceOf(address)     FUN.BODY { ─
-    >>>321 251 JUMPDEST                  
+    >>>321 251 JUMPDEST
     │  322 252 PUSH20 0xff(20-bytes)     ┐ cast incoming calldata into the address type
-    │  343 273 AND                       ┘ <- mask 32-bytes stack input into 20-bytes 
+    │  343 273 AND                       ┘ <- mask 32-bytes stack input into 20-bytes
     │                                         REMEMBER: Ethereum-addresses are 20 bytes long
     │                                                   EVM-stack operates  in 32-byte words
     │                                      concatenate mapping position + key and  store in memory
-    │  344 274 PUSH1 00                  ┐┐ 
-    │  346 276 SWAP1                     || "upload" address from 
+    │  344 274 PUSH1 00                  ┐┐
+    │  346 276 SWAP1                     || "upload" address from
     │  347 277 DUP2                      || stack to memory
-    │  348 278 MSTORE                    |┘   to be placed   at 0x00 in memory 
-    │  349 279 PUSH1 01                  | <- balance slot 
+    │  348 278 MSTORE                    |┘   to be placed   at 0x00 in memory
+    │  349 279 PUSH1 01                  | <- balance slot
     │  351 281 PUSH1 20                  |    to be placed at 0x20
     │  353 283 MSTORE                    |    in memory
     │  354 284 PUSH1 40                  |
     │  356 286 SWAP1                     ┘
-    │  357 287 SHA3                      ┐ Calculate storage position and read it 
+    │  357 287 SHA3                      ┐ Calculate storage position and read it
     │  358 288 SLOAD                     | into the stack
-    │  359 289 SWAP1                     | <- "resurfaces" function wrapper's JUMPDEST 
+    │  359 289 SWAP1                     | <- "resurfaces" function wrapper's JUMPDEST
     >> 360 290 JUMP                      ┘ <- Call back function wrapper for Ethereum ABI post-processing
     └─ balanceOf(address)     FUN.BODY } ─
     ┌─ transfer(address,uint256)FUN.BODY{─
-    >> 361 291 JUMPDEST                  
+    >> 361 291 JUMPDEST
     │  362 292 PUSH1 00       ┐ require (_to != address(0))
     │  364 294 PUSH20 f(40rep)|
     │  385 315 DUP4           |
@@ -10367,7 +9992,7 @@ PART 6: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-
     XX 491 421 STOP           |
     └─ transfer(address,uint256)FUN.BODY}─
 
-    ┌─ METADATA HASH { ───────────  
+    ┌─ METADATA HASH { ───────────
     │  Unreachable code, introduced by the compiler as the hash of info like source code,
     │  compilation options,...). When CBOR-decoded it looks like:
     │  0xa165627a7a723058202c27c1ef4be478b21f663f0d0ecdd1c73638730ffebbff1...
@@ -10375,24 +10000,24 @@ PART 6: https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-
     │  It can also be inspected with Remix -> Compile tab > Details panel > Metadata section
     │  bzzr0:// indicating storage in SWARM PROTOCOL v0
     │  (or ipfs0:// indicating storage in IPFS ...)
-    │                               
-    │  492 422 log1                 <- NO JUMPDEST after an STOP. Clear indication that 
+    │
+    │  492 422 log1                 <- NO JUMPDEST after an STOP. Clear indication that
     │  493 ...                         this code is not reachable.
     │  501 431 INVALID              <- Just another hint indicating that this is not real
     │  502 432 INVALID                 bytecode but metadata.
     │  503 ...
-    │  534 464 INVALID 
-    └─ METADATA HASH } ───────────  
+    │  534 464 INVALID
+    └─ METADATA HASH } ───────────
     ┌ HARDCODED CONSTRUCTOR ARGS. AS 32 BYTES.
     │  equals 0x00..002710 (dec 10000)
-    │  535 STOP   
-    │  536 STOP   
-    │  552 STOP   
-    │  553 STOP   
-    │  554 ...    
-    │  564 STOP   
+    │  535 STOP
+    │  536 STOP
+    │  552 STOP
+    │  553 STOP
+    │  554 ...
+    │  564 STOP
     │  565 INVALID
-    │  566 LT     
+    │  566 LT
     └──────────────────────────────
 
 
@@ -10402,13 +10027,13 @@ opcodes can push/consume to/from EVM’s stack|memory|contract-storage
 "DIVIDE-AND-CONQUER" STRATEGY, PUT FOCUS ON  OPCODES:
 
 - JUMPI    : JUMP(If) second position in stack is NOT  "0".
-- JUMPDEST : Safety measure mark location as valid jump target. 
+- JUMPDEST : Safety measure mark location as valid jump target.
 - RETURN   : halts execution, returning data from portion-of-EVM's-memory
 - STOP     : completely halts execution of contract.
 
 - It can be use by wallets, Dapps (Etherscan, ..., SC-auditors, )
-  verify that the produced bytecode matches the contract’s bytecode, then fetch 
-  the contract’s JSON ABI and look at the NATSPEC documentation of the function 
+  verify that the produced bytecode matches the contract’s bytecode, then fetch
+  the contract’s JSON ABI and look at the NATSPEC documentation of the function
   being called.
 - bzzr://a6465fc1ce7ab1a92906ff7206b23d80a21bbd50b85b4bde6a91f8e6b2e3edde
 
@@ -10629,13 +10254,13 @@ REF: @[https://frax.finance/whitepaper/]
   Enterprise Ethereum Alliance Launches EthTrust Security Initiative to
   Advance Confidence in Ethereum as a Global Settlement Layer for
   Transactions of All Types
-  
+
   .. The Working Group’s mission will be to continue the advances begun
    by the Ethereum Trust Alliance (ETA), now part of the EEA, on the
    EthTrust project, that will :
     set standards for secure, smart contract transactions that are
     conducted within the Ethereum ecosystem.
-  
+
      Given that it only takes one small flaw in smart
     contract code to instantly lock up or lose tens of millions of
     dollars, the EthTrust project’s standard and registry aim to make
@@ -10659,7 +10284,7 @@ REF: @[https://frax.finance/whitepaper/]
  @[https://skale.network/whitepaper] <!-- @ma -->
   SKALE Network. An Ethereum Interoperable Elastic Blockchain Network
   SKALE: Standard Kit for Asyncronous Ledgers.
-  
+
   - SKALE is a modular framework that splits blockchain consensus (BC)
     under asynchronous networking model into a sequence of stages. It
     then applies provably secure algorithms at each stage, so that the
@@ -10673,7 +10298,7 @@ REF: @[https://frax.finance/whitepaper/]
    "fully decentralized protocol for automated liquidity provision on Ethereum".
     Uniswap is a good example of use-case when ethers are controlled by Smart Contracts
     (vs externally owned accounts).
-   
+
    - centralized vs de-centralized exchange:
      centralized exchange (Coinbase,...):
      - PRE-SETUP: register for an account.
@@ -10683,13 +10308,13 @@ REF: @[https://frax.finance/whitepaper/]
      - no registration required.
      - exchange operates as automated market maker offering various
        pairs of tokens to trade with prices set using mathematical formulas.
-   
+
    - Uniswap cryptocurrency:
      - high-risk "investment".
      - governance token to vote on proposed changes for the exchange.
      - if the exchange gets more popular, it will likely lead to more
        people wanting to buy the token.
-   
+
    - Implementation:
      - Exchange uses liquidity pools, "drawing" from them when users trade.
                      └──────┬─────┘
@@ -10749,7 +10374,7 @@ REF: @[https://frax.finance/whitepaper/]
    QuickSwap was quick to address the issues plaguing Ethereum-based DEXs,[[{10_EVM.GAS_PRICE,20_QA.UX]]
    by offering much lower transaction fees and almost instant block formation time. [[}]]
 
-   QuickSwap DES allows users to trade any ERC-20 tokens. 
+   QuickSwap DES allows users to trade any ERC-20 tokens.
    It is powered by the Polygon network, which provides several
    benefits not seen in other similar solutions.
 
@@ -10771,7 +10396,7 @@ REF: @[https://frax.finance/whitepaper/]
    protocol. They can also use QUICK tokens to stake  in the Dragon’s
    Lair to earn additional QUICK.
 
-• Reference Implementation: 
+• Reference Implementation:
   https://github.com/mudgen/quickswap-contracts/] By Nick Mudge ("Diamonds Standard")
 [[}]]
 
@@ -10838,7 +10463,7 @@ REF: @[https://frax.finance/whitepaper/]
     1+ NFTs using consecutive tokens ids.
 
   • Ethereum 2.0 delegators? [[{consensus.ethereum2]]
-    How Proof of Stake Addresses Scalability, Why Validator and 
+    How Proof of Stake Addresses Scalability, Why Validator and
     Delegator Economics Matter, and Why Yield Farming is a Thing.
     Join Konstantin Richter of Blockdaemon as he explores what it takes
     to operate nodes for blockchain networks as well as detail the
@@ -11018,7 +10643,6 @@ REF: @[https://frax.finance/whitepaper/]
  • Etherum Offline TX signature in with JS in Azure: [[{wallet}]]
    Snippet example from Kaleido examples:
    REFs:
-
    https://github.com/kaleido-io/kaleido-js/blob/master/deploy-transact/lib/azure-signing.js
    https://tomislav.tech/2018-01-31-ethereum-keyvault-generating-keys/
    https://tomislav.tech/2018-02-05-ethereum-keyvault-signing-transactions
@@ -11275,43 +10899,6 @@ REF: @[https://frax.finance/whitepaper/]
   • 101,TODO:
     https://etherbasics.com/the-basics/phases-of-ethereum/
     https://blog.ethereum.org/2015/03/03/ethereum-launch-process/
-
-  • blockapps Strato [architecture,integration.*,dev_framework.strato,01_PM.TODO]
-    C&P from https://docs.kaleido.io/kaleido-platform/protocol/ethereum/
-    In order to address the enterprise unique needs for privacy,
-    scalability, governance and deployment options, a number of companies
-    both big and small have worked independently to create versions of
-    Ethereum clients that support permissioned deployments. These include
-    Quorum by JPMorgan, Autonity by Clearmatics, Hyperledger Besu by
-    PegaSys (a team in ConsenSys), and Strato by BlockApps. For the last
-    couple of years these company have started working collaboratively
-    under the leadership of Enterprise Ethereum Alliance (EEA)
-    organization, where Kaleid has been an active contributor, to create
-    a robust Enterprise Ethereum technical specification.
-
-    EE Client   Modified From      Developer       License
-    Quorum      go-ethereum        JPMorgan Chase  LGPL
-    Besu        N/A                PegaSys         Apache 2.0
-    Autonity    go-ethereum        Clearmatics     LGPL
-    Strato      Haskell Ethereum   BlockApps   Closed-source ←---
-
-    - @[https://developers.blockapps.net/]
-    - @[https://github.com/blockapps]
-    - Strato Architecture:
-    @[https://github.com/blockapps/strato-getting-started]
-    - @[https://github.com://github.com/blockapps/strato-openshift]
-
-    - rapid deployment blockchain solution built for businesses:
-    - Integrate - Easily integrate with legacy web applications and databases using
-      a REST API
-    - Manage - Authenticate access to your APIs and protect your critical assets
-    - Search - Search millions of smart contracts in seconds using normal
-      easy-to-learn SQL queries
-    - Protect - Transact privately with network participants and configure user
-      visibility
-    - Upload - Upload existing business data to the blockchain to bootstrap a new
-      project
-    - Deploy - Host a STRATO node on Microsoft Azure, AWS, or Google Cloud Platform
 
   • https://polymath.network/
 
@@ -11620,7 +11207,7 @@ REF: @[https://frax.finance/whitepaper/]
            I}
         }
       }
-  
+
   Rules: Local solidity vars/value types  are directly read/write accesible.
          A single Yul identifier is not sufficient, since they do not
          necessarily occupy a single full storage slot. Their "address" is
@@ -11834,20 +11421,20 @@ REF: @[https://frax.finance/whitepaper/]
 [[}]]
 
 ● TX HASH vs TX Receipt: [[{101]]
-  - When a transaction is signed and sent for mining, an inmutable 
+  - When a transaction is signed and sent for mining, an inmutable
     TX-hash is created, that will be used as TX unique ID.
 
-  - When the transaction is finally mined, the TX receipt is created. 
+  - When the transaction is finally mined, the TX receipt is created.
     It includes the original txHash, plus TX mining information:
     receipt: {
       transactionHash  : '0xc9f5...32bytes', <- Inmutable hash created before mining
       cumulativeGasUsed: 28719,        <- Note
       gasUsed          : 28719,
-      status           : false,        <- The TX reverted. Note. It was mined, and 
+      status           : false,        <- The TX reverted. Note. It was mined, and
                                           ethers spent, but not with the expected
                                           "happy-path" behaviour.
       transactionIndex : 0,            <- order of TX in its block
-      blockNumber      : 440, 
+      blockNumber      : 440,
       blockHash        : '0x...32bytes...',
       from             : '0x05..20bytes address',
       to               : '0x40..20bytes address',
@@ -11855,9 +11442,9 @@ REF: @[https://frax.finance/whitepaper/]
                                           (empty when TX is reverted)
     }
 
-  - NOTE: When a new TX has not yet being mined it can be resend with 
+  - NOTE: When a new TX has not yet being mined it can be resend with
     same TX.nonce and different max-gas and gas-price generating a new TX-hash.
-    The first TX to be included will invalidate any concurrent one since 
+    The first TX to be included will invalidate any concurrent one since
     the TX.nonce will not be valid and discarded automatically by network nodes.
 [[}]]
 
@@ -11914,7 +11501,7 @@ const verifyMessage = async ( { message, address, signature }) => {
 [[}]]
 
 
-[[{01_PM.BACKLOG]]
+TODO/BACKLOG/UNORDERED [[{01_PM.TODO,01_PM.BACKLOG]]
   • Aragon OS: Advanced deployment [[{dev_framework.aragon,02_use_case.finance.DAO,security.governance}]]
   @[https://aragon.one/]
   @[https://blog.aragon.one/advanced-solidity-code-deployment-techniques-dc032665f434]
@@ -12248,7 +11835,7 @@ const verifyMessage = async ( { message, address, signature }) => {
  - prediction markets on anything
  - ...
 
-• Zero Know. Range Pro. (ZKRP): [[{privacy.ZKP,02_use_case.*,01_PM.radar}]]
+• Zero Know. Range Pro. (ZKRP): [[{privacy.ZKP,02_use_case.*,01_PM.radar]]
 @[https://github.com/ing-bank/zkrp]
  - ING Bank:
    ...Launched in 2017, zero-knowledge range proof (ZKRP) enabled numerical
@@ -12267,8 +11854,10 @@ const verifyMessage = async ( { message, address, signature }) => {
    code is open-source, which means that other interested parties in the
    development community are able to use, access and even contribute to
    the solution.
+[[}]]
 
- • Piet: parses *.sol, generates graphs of contracts and their relations [[{12_solidity,20_QA.solidity}]]
+ • Piet: parses *.sol: [[{12_solidity,20_QA.solidity,20_QA.documentation]]
+   generates graphs of contracts and their relations
    (inheritance structure,...).
    @[https://blog.slock.it/analyzing-solidity-smart-contracts-with-piet-6db33a733e79]
    @[https://github.com/slockit/piet]
@@ -12281,8 +11870,9 @@ const verifyMessage = async ( { message, address, signature }) => {
    - Can use web3 injected objects ("MetaMask") to interact with a live blockchain.
 
      Warning: Piet has not yet undergone in-depth testing and may contain serious bugs.
+[[}]]
 
-  • EWASM: [[{scalability.ewasm}]]
+  • EWASM: [[{scalability.ewasm]]
   @[https://ewasm.readthedocs.io/en/mkdocs/]
   Ethereum WebAssembly is a proposed redesign of the Ethereum smart
   contract execution layer using a deterministic subset of WebAssembly.
@@ -12292,24 +11882,27 @@ const verifyMessage = async ( { message, address, signature }) => {
   - The possibility to develop smart contracts in many traditional
     programming languages, such as C, C++, and Rust
   - Access to a vast developer community and the toolchain surrounding WebAssembly
+[[}]]
 
- • Flattening code [[{12_solidity}]]
+ • Flattening code [[{12_solidity]]
 @[https://stackoverflow.com/questions/50137954/verify-smart-contract-code-deployed-with-truffle]
 - https://github.com/BlockCatIO/solidity-flattener
 - https://github.com/nomiclabs/buidler
 - https://github.com/nomiclabs/truffle-flattener
 - https://github.com/RyuuGan/sol-merger
+[[}]]
 
- • QA Mythril: detects integer underflows, owner-overwrite-to-Ether-withdrawal, ...  [[{12_solidity.qa,security,01_PM.backlog}]]
+ • QA Mythril: detects integer underflows, owner-overwrite-to-Ether-withdrawal, ...  [[{12_solidity.qa,security,01_PM.backlog]]
   - https://github.com/ConsenSys/mythril-classic
   - Swiss army knife for smart contract security.
   - @[https://github.com/ConsenSys/mythril/wiki]
   - However, the analysis will NOT detect business
     logic issues.
   - It is NOT equivalent to formal verification.
+[[}]]
 
- • Security Best Practices [[{101,security,12_solidity.qa}]]
-  @[https://consensys.github.io/smart-contract-best-practices/]
+ • Security Best Practices [[{101,security,12_solidity.qa]]
+  @[https://consensys.github.io/smart-contract-best-practices/]  [[}]]
 
  • Example ussage of msg.data: Imagine we pass 2xuint256 as msg.data:
     To use them:
@@ -12324,7 +11917,6 @@ const verifyMessage = async ( { message, address, signature }) => {
             result  := add(op1, op2)
         }
      }
-
 
  • library of standards for security tokens ("Obligation to pay") on Ethereum. @ma
    suite of standard interfaces for:
@@ -12451,7 +12043,7 @@ Custom ethereum client that uploads blockchain data to BigQuery
    https://medium.com/coinmonks/data-structure-in-ethereum-episode-4-diving-by-examples-f6a4cbd8c329
 
  • Geth v1.9.0 ships a preliminary integration of Blockscout     @ma
-   into Puppeth.  Blockscout is a real, open source block explorer, 
+   into Puppeth.  Blockscout is a real, open source block explorer,
    courtesy of "POA Network team" filling a huge hole in our private
    network deployment tool!
    https://docs.blockscout.com/
@@ -12463,7 +12055,7 @@ Custom ethereum client that uploads blockchain data to BigQuery
  • https://eips.ethereum.org/EIPS/eip-2315 [[{10_EVM]]
    Simple Subroutines for the EVM (Already implemented in Quorum 21, Geth?, others?)
    - two new opcodes: RJUMPSUB and RETURNSUB.
-     together with other recent propoposals they provides 
+     together with other recent propoposals they provides
      A STATIC, COMPLETE, SAFE, AND EFFICIENT CONTROL-FLOW FACILITY.
    - Previously calls (RJUMSUB) were synthesized by fetching-and-pushing the
      return-address and subroutine-address on the data-stack and
@@ -12472,14 +12064,14 @@ Custom ethereum client that uploads blockchain data to BigQuery
      then and jumping back to it, causing cost gas and increasing program size. [[}]]
 
  • EIP-173: Contract Ownership Standard    [[{standards.eip/erc.191,security.governance]]
-   https://eips.ethereum.org/EIPS/eip-173 
-   - function transferOwnership(address _newOwner) external;	
+   https://eips.ethereum.org/EIPS/eip-173
+   - function transferOwnership(address _newOwner) external;
      └ event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
    - function owner() view external returns(address);
    [[}]]
 
- • Polygon Edge 
-   https://polygon.technology/solutions/polygon-edge/ 
+ • Polygon Edge
+   https://polygon.technology/solutions/polygon-edge/
 
  • ERC-4626, El Estándar Que Podría Impulsar la Nueva Ola de las DeFi
    https://decrypt-co.cdn.ampproject.org/c/s/decrypt.co/es/99721/conoce-el-erc-4626-el-estandar-que-podria-impulsar-la-nueva-ola-de-las-defi
@@ -12491,10 +12083,10 @@ Custom ethereum client that uploads blockchain data to BigQuery
    https://trufflesuite.com/blog/introducing-ganache-7/
 
  • use_case.identity, standards
-   https://forum.eid.as/t/european-digital-identity-architecture-and-reference-framework/216/2 
+   https://forum.eid.as/t/european-digital-identity-architecture-and-reference-framework/216/2
 
  • Ethereum 2.0 pide ayuda a la comunidad para la transición de Ethereum - Bolsamania.comh
-   ttps://www.bolsamania.com/noticias/criptodivisas/ethereum-20-pide-ayuda-a-la-comunidad-para-la-transicion-de-ethereum--8734838.html 
+   ttps://www.bolsamania.com/noticias/criptodivisas/ethereum-20-pide-ayuda-a-la-comunidad-para-la-transicion-de-ethereum--8734838.html
 
  • Solidity 0.8.10 Release Announcement | Solidity Blog
    https://blog.soliditylang.org/2021/11/09/solidity-0.8.10-release-announcement/ 
@@ -12502,12 +12094,12 @@ Custom ethereum client that uploads blockchain data to BigQuery
    although at the cost of a slight increase in code size.
    While previously any Yul variable had a fixed position on stack during its entir
    e lifetime, the new code transform drops this restriction and attempts to determ
-   ine a more optimal layout that (1) reduces the required amount of swapping and 
-   thereby reduces gas cost and (2) keeps overall stack usage as low as possible to 
+   ine a more optimal layout that (1) reduces the required amount of swapping and
+   thereby reduces gas cost and (2) keeps overall stack usage as low as possible to
    work against stack-too-deep errors.
 
  • komputing/KEthereum: Kotlin library for Ether
-   https://github.com/komputing/KEthereum 
+   https://github.com/komputing/KEthereum
 
  • use_case.identity.SSI, standards
    https://gataca.io/blog/the-verifier-universal-interface-vui-releases-its-first-official-draft-to-achieve-interoperability-between-id-wallets-and-verifier-components 
@@ -12520,29 +12112,29 @@ Custom ethereum client that uploads blockchain data to BigQuery
    https://consensys.net/blog/developers/how-to-monitor-your-eth2-validator-and-analyze-your-pl/
    https://cdn.consensys.net/uploads/2022/04/14055036/Merge-FeatureBlock-Become_A_Validator.png
 
- • execution-specs/arrow-glacier.md 
-   https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/arrow-glacier.md 
+ • execution-specs/arrow-glacier.md
+   https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/arrow-glacier.md
 
- • execution-specs/arrow-glacier.md 
-      EU, eIDAS, Wallets:The revision process of the #eIDAS regulation 
-   contains three main components for the technical process, which is 
-   done in parallel to the legislative process. In the following we 
-   provide you with a brief overview and further resources:1. The eIDAS 
-   Expert group, works on the architecture reference framework #ARF 
-   #toolbox as well as the revised identity framework. The group 
-   consists of representatives of all EU member states and is divided 
-   into four working groups. More info about the eIDAS expert 
-   group:https://lnkd.in/edi87tFP2. The #European Digital #Identity 
-   Reference #Wallet #EUDI will be based on the proposed framework and 
-   toolbox and a public tender provides the development, consultancy and 
-   support for the #EUDI. You can find the tender here: 
-   https://lnkd.in/eSZ6e-fY3. The Large scale #pilots will use the EUDI 
-   reference wallet as well as other suitable wallets to pilot different 
-   use cases. There will be three to four consortia, consisting of a 
-   minimum of three member states leading the consortia. Currently, 
-   these consortia are forming and prepare the application for the 
-   tender, which is due on 17.08.2022. More information about the LSP: 
-   https://lnkd.in/enrs5h5iFor further information about the whole 
+ • execution-specs/arrow-glacier.md
+      EU, eIDAS, Wallets:The revision process of the #eIDAS regulation
+   contains three main components for the technical process, which is
+   done in parallel to the legislative process. In the following we
+   provide you with a brief overview and further resources:1. The eIDAS
+   Expert group, works on the architecture reference framework #ARF
+   #toolbox as well as the revised identity framework. The group
+   consists of representatives of all EU member states and is divided
+   into four working groups. More info about the eIDAS expert
+   group:https://lnkd.in/edi87tFP2. The #European Digital #Identity
+   Reference #Wallet #EUDI will be based on the proposed framework and
+   toolbox and a public tender provides the development, consultancy and
+   support for the #EUDI. You can find the tender here:
+   https://lnkd.in/eSZ6e-fY3. The Large scale #pilots will use the EUDI
+   reference wallet as well as other suitable wallets to pilot different
+   use cases. There will be three to four consortia, consisting of a
+   minimum of three member states leading the consortia. Currently,
+   these consortia are forming and prepare the application for the
+   tender, which is due on 17.08.2022. More information about the LSP:
+   https://lnkd.in/enrs5h5iFor further information about the whole
    process you can also read our summary
  • Pulse https://www.linkedin.com/pulse/search-engines-web3-conor-svensson/ 
 
@@ -12550,14 +12142,14 @@ Custom ethereum client that uploads blockchain data to BigQuery
  • https://ethereum.stackexchange.com/questions/15364/ecrecover-from-geth-and-web3-eth-sign/16072#comment112406_16072
    OZ's ECDSA has a tool to generate these wrapped messages [[{signature.ecdsa_secp256k1.recovery]]
    as well as root out additional corner cases in ECDSA.
-   I wrote an article describing what I think is the right way to use 
-   web3's hashMessage() and sign(), Solidity's ecrecover(), and Open 
+   I wrote an article describing what I think is the right way to use
+   web3's hashMessage() and sign(), Solidity's ecrecover(), and Open
    Zeppelin's ECDSA lib.
    https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/cryptography/ECDSA.sol
    https://medium.com/@yaoshiang/ethereums-ecrecover-openzeppelin-s-ecdsa-and-web3-s-sign-8ff8d16595e1
    See also:
    - http://coders-errand.com/details-of-ecdsa-signatures/
-   - https://blog.ricmoo.com/verifying-messages-in-solidity-50a94f82b2ca  
+   - https://blog.ricmoo.com/verifying-messages-in-solidity-50a94f82b2ca
   [[}]]
 
  • [[{20_QA.error_control]]
@@ -12565,36 +12157,47 @@ Custom ethereum client that uploads blockchain data to BigQuery
    [[}]]
 
  • https://github.com/NethermindEth/sedge
-   A one click setup tool for PoS network/chain validators. 
-   Currently, Sedge is designed primarily for solo stakers and testnet 
-   devs of the Beacon Chain and the Merge (Ethereum). Sedge generates 
-   docker-compose scripts for the entire on-premise validator setup 
-   based on the chosen client. 
+   A one click setup tool for PoS network/chain validators.
+   Currently, Sedge is designed primarily for solo stakers and testnet
+   devs of the Beacon Chain and the Merge (Ethereum). Sedge generates
+   docker-compose scripts for the entire on-premise validator setup
+   based on the chosen client.
 
  • https://docs.opensea.io/reference/stream-api-overview
    OpenSea Stream API (websocket-based) service enables to receive events as they occur,
    ensuring our custom service has the most up-to-date details without the need to poll
-   for updates. 
+   for updates.
 
  • How to store NFT metadata and SVG image completely on-chain (ERC721/ERC1155)
 
-
- • Legally Binding Signatures EIP 5289       [[{use_case.legal,standards.eip/erc.5289}]],
+ • Legally Binding Signatures EIP 5289       [[{use_case.legal,standards.eip/erc.5289]],
    https://eips.ethereum.org/EIPS/eip-5289
-    This EIP proposes a standard that allows smart contracts to be 
-   legally binding by providing IPFS links to legal documents and 
-   ensuring that the users of the smart contract have privity with the 
+    This EIP proposes a standard that allows smart contracts to be
+   legally binding by providing IPFS links to legal documents and
+   ensuring that the users of the smart contract have privity with the
    relevant legal documents.
 
    To request that certain documents be signed, revert with the following reason:
    string.concat("5289:", libraryAddress1, "-", documentId1OfAddress1, "-", documentId2OfAddress1 ",", libraryAddress2, "-", documentId1OfAddress2, ...)
-   
+
    Revert example: "5289:1-1-2,hEl/0-7bA"
 
    Signing a Document:
      When a signature is requested by (revert captured by wallet), wallets
-   MUST call legalDocument and fetch the file off of IPFS, and render 
-   that file to the user. If the user agrees, the wallet MUST call 
+   MUST call legalDocument and fetch the file off of IPFS, and render
+   that file to the user. If the user agrees, the wallet MUST call
    signDocument. Using a form of account abstraction is RECOMMENDED.
-
 [[}]]
+
+● SAP Ethereum Integration:  [[{integration.SAP]]
+  https://github.com/KevinSmall/SapEthereumIntegration
+  https://blogs.sap.com/2020/08/21/sap-integration-with-ethereum-mainnet/
+
+  SAP ECC            AZURE             Ethereum Network      Other Clients
+
+   program ● <···>● Web API  ● <···> ● Smart Contract        many libraries
+   UI               - SC Access,       Business Logic +      /clients.
+                    - config,          Data Store.
+                    - keys
+  [[}]]
+[[01_PM.TODO,01_PM.BACKLOG}]]
