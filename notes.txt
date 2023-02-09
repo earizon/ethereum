@@ -384,17 +384,12 @@
  ----------------------+----+-+-+-+---------------------------------------------------------
   polygon Main./137    MATIC|Y|Y|Y| type: L2 zk-rollup (previously known as MATIC Network)
   └ Test.Mumbai/80001  MATIC| |Y| | https://polygon.technology/
-                       |    | | | | polygon: protocol+framework to build+
-                       |    | | | | connect Ether. compatible Networks
+                       |    | | | | gas-price real-time: https://polygonscan.com/gastracker
                        |    | | | | NOTE:
-                       |    | | | | Instead of providing just one or two
-                       |    | | | | scaling solutions, Polygon is creating
-                       |    | | | | an ecosystem that connects multiple
-                       |    | | | | different scaling solutions, including
-                       |    | | | | sidechains with different consensus
-                       |    | | | | mechanisms and layer-2 options such as
-                       |    | | | | Plasma, Optimistic Rollups, and
-                       |    | | | | ZK-Rollups.
+                       |    | | | | Instead of providing just one or two scaling solutions, Polygon is creating
+                       |    | | | | an ecosystem that connects multiple different scaling solutions, including
+                       |    | | | | sidechains with different consensus mechanisms and layer-2 options such as
+                       |    | | | | Plasma, Optimistic Rollups, and ZK-Rollups.
                        |    | | | | It also includes an optional shared security model.
   ---------------------|----|-|-|-|-----------------------------------------------------
   expanse net/2        | EXP| | | |
@@ -575,10 +570,6 @@
   Clover Main./1023    | CLV| | | |  part of cross-blockhain (EVM, DOT/KSM+ parachains,
   └ Testnet/1024       | CLV| | | |  Solana) project.
   ---------------------|----|-|-|-|-----------------------------------------------------
-  MathChain/1139       |MATH| | | |  https://mathchain.org/en/
-  └ Testnet/1140       |MATH| | | |  SmartWallet AppChain based on (Polkadot) Substrate
-                       |    | | | |  Features: DID, SecretStore, EVM, Off-chain Worker.
-  ---------------------|----|-|-|-|-----------------------------------------------------
   Ecoball Main./???    | ECO| | | |  Finance Oriented. Claims to support 100.000 TX/s
   └ Test.Espuma/???    | ECO| | | |  using VPoS and smart-node selection with close-to-zero
                        |    | | | |  trading fees.
@@ -618,13 +609,18 @@
 
   OTHERS Networks: @[https://chainid.network/]
     Diode , Flare , ThunderCore, Callisto, ...
+  ---------------------|----|-|-|-|-----------------------------------------------------
+  "DEAD" Networks/Projects:
+  - MathChain/1139,  https://mathchain.org/en/ (Dead SmartWallet AppChain based on (Polkadot) Substrate)
+
+
   -------------------------------------------------------------------------------------------------
 [[101.public_chains}]]
 [[}]]
 
 
-● ETHEREUM WALLET COMPARISON  [[{wallet.101,20_QA.UX.WALLET,01_PM.WiP]]
-  ==========================
+● ETHEREUM WALLET COMPARATIVE  [[{wallet.101,20_QA.UX.WALLET,01_PM.WiP]]
+  ===========================
   Based on previous work from: https://github.com/shanefontaine/ethereum-wallet-comparison
   LECTURE: 1: yes/OK/supported, 0: no/KO/unsupported, p: In-progress
                               ┌--------------------------------------- https://authereum.org
@@ -647,7 +643,11 @@
                               | · | · | · | · | · | · | · | · | ┌····· https://bitski.com
                               | · | · | · | · | · | · | · | · | · ┌--- http://breadapp.com
                               | · | · | · | · | · | · | · | · | · | ┌· https://token.im/
-                              | · | · | · | · | · | · | · | · | · | ·
+                              | · | · | · | · | · | · | · | · | · | ·  Venly wallet
+                              | · | · | · | · | · | · | · | · | · | ·  TODO: WalletConnect (OOSS protocol connecting dApps to mobile wallets
+                              | · | · | · | · | · | · | · | · | · | ·        using QR code scanning or deep linking), Fortmatic.
+                              | · | · | · | · | · | · | · | · | · | ·      - https://github.com/walleth, https://walleth.org/,
+                                                                             OOSS Android native wallet.
  ENS Integration             |1|1|0|1|1|1|0|0|0|0|0|1|1|0|0|1|1|0|0|1|<- users can natively create an ENS name
  Browser Extension Required  |1|1|1|1|0|1|1|1|1|0|1|1|1|1|1|1|0|1|1|1|
  Supports all Mobile Browsers|1|1|1|1|0|1|1|1|1|0|1|1|1|0|1|1|0|1|1|1|
@@ -675,7 +675,6 @@
  Batched Transactions        |1|0|0|0|0|1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|<- Send N TX as 1 (atomic) onchain TX [[architecture.batch,scalability.offchain,transaction.signature]]
  Open Sourced                |1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|
 [[}]]
-
 
 [[{standards,01_PM.ext_resource,02_doc_has.taxonomy,01_PM.TODO]]
 ● Related Taxonomies:
@@ -1526,15 +1525,44 @@ REF: @[https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-sto
 
 [[}]]
 
-● EIP-191: Signed Data Standard (Multisignature TXs) [[{signature.multisignature,02_use_case.identity,standards.eip/erc.191,01_PM.TODO]]
-@[https://eips.ethereum.org/EIPS/eip-191]
+SIGNATURE STANDARDS: [[{signature.standards,02_use_case.identity,standards.eip/erc.191]]
+● EIP-191: Signed Data Standard: [[{signature.standards.EIP191]]
+@[https://eips.ethereum.org/EIPS/eip-191]            [[ wallet.standards,02_use_case.legal,,20_QA.UX,01_PM.WiP]]
 @[https://github.com/ethereum/EIPs/issues/191]
-- See also @[#eip-712]
+@[https://medium.com/mycrypto/the-magic-of-digital-signatures-on-ethereum-98fe184dc9c7]
 
-  - Several multisignature wallet implementations have been created
+◆ (PRE EIP-191) "PERSONAL_SIGN" FORMAT:
+  - first implemented by Geth and is still the most common. (2020-10-02)
+
+  STEP 1)
+     ┌─ RLP encoded TXs never start with 0x19, so we used it now to make it clear it is NOT RLP TX data.
+   ┌─┴┐
+  "\x19Ethereum Signed Message:\n"   + length(message) + message <·· Non hashed version
+  "\x19Ethereum Signed Message:\n32" + Keccak256(message)        <·· hashed version
+  └─────────────┬─────────────────┘
+         message prefix
+
+  STEP 2) full message (including the prefix) is then hashed again, and
+          the output-data is signed.
+
+  PROS: works fine for proof-of-ownership.
+  CONS: Not enought for other use-cases. e.g:
+        user_A   -> contractX: signed_msg01
+        HACKER!! -> contractY: copy of signed_msg01 <·· replay attack!!!
+
+◆ EIP-191 SIGNED DATA STANDARD:
+  0x19 <1 byte version> <version specific data> <data to sign>
+       └┬─────────────┘
+        ▸ 0x00: Data with "intended validator", e.g.: The address of the contract. 
+                => Contract receiving the signature must re-calculate the hash
+                   and fail if it doesn't match its own address.
+        ▸ 0x01: Structured data, as defined in EIP-712.
+        ▸ 0x45: Regular signed messages, The current "personal_sign"
+
+  - Several multisignature wallet implementations have been created      [[{signature.multisignature]]
     which accepts presigned transactions (chunk of binary signed_data,
     along with signature (r, s and v) ).
-    interpretation of the signed_data has not been specified, leading to
+    Interpretation of the signed_data has not been specified, leading to
     several problems.
     - Standard Ethereum transactions can be submitted as signed_data.
     - An Ethereum transaction can be unpacked, into:
@@ -1549,31 +1577,146 @@ REF: @[https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-sto
     · Users A and B submites presigned transaction to X.
     · Attacker sends presigned transactions to Y (instead of X).
 
-Example code:
-@[https://github.com/0xsequence/erc-1155/blob/master/SPECIFICATIONS.md#meta-transactions]
+                                                                         [[}]]
 
-  • EIP-4361: Using EIP-191 for Offchain client Auth.: [[{20_QA.UX}]]
+- Related code:
+ @[https://github.com/0xsequence/erc-1155/blob/master/SPECIFICATIONS.md#meta-transactions]
+  NOTE: The byte version looks to be similar but-different to the one in 191:
+  0x00:Illegal,  0x01:EIP712, 0x02:EthSign, 0x03:WalletBytes 0x04:WalletBytes32
+[[signature.standards.EIP191}]]
+
+◆ EIP-4361: Using EIP-191 for Offchain client Auth.: [[{signature.standards.EIP4361,20_QA.UX,security.AAA,]]
   @[https://github.com/spruceid/EIPs/blob/eip-4361/EIPS/eip-4361.md]
   @[https://ethereum-magicians.org/t/eip-4361-sign-in-with-ethereum/7263/2]
 
-  - Scenario:
-    "https://service.org" wants to authenticate user through its Ethereum account:
-      0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+  - SCENARIO:
+    "https://service.org" wants to authenticate user through its Ethereum account 0xc02aaa39...
 
     ┌─ Example message to be signed ────────────────────────────────────────┐
     │ I accept the ServiceOrg Terms of Service: https://service.org/tos     │
     │                                                                       │
-    │ URI: https://service.org/login                                        │
-    │ Version: 1                                                            │
-    │ Chain ID: 1                                                           │
-    │ Nonce: 328917                                                         │
+    │       URI: https://service.org/login                                  │
+    │   Version: 1                                                          │
+    │  Chain ID: 1                                                          │
+    │     Nonce: 328917                                                     │
     │ Issued At: 2021─09─30T16:25:24Z                                       │
     │ Resources:                                                            │
-    │ ─ ipfs://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq/ │
-    │ ─ https://example.com/my─web2─claim.json                              │
+    │ - ipfs://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq/ │
+    │ - https://example.com/my_web2_claim.json                              │
     └───────────────────────────────────────────────────────────────────────┘
     - For EOAs              verification method in EIP-191  MUST be used.
     - For Contract Accounts verification method in EIP-1271 MUST be used.
+  [[signature.standards.EIP4361}]]
+
+◆ Related: Using wallets to sign documents / forms offchain [[{]]
+  REF: https://www.youtube.com/watch?v=vhUjCLYlnMM&ab_channel=ArturChmaro
+  import { ethers } from "ethers";
+  const signMessage = async ( { setError, message }) => {
+         try {
+     console.log( { message } );
+     if (!window.ethereum) { throw new Error("No crypto wallet found"); }
+     await window.ethereum.send("eth_requestAccounts");
+     const provider = new ethers.providers.Web3Provider(window.ethereum);
+     const signer = provider.getSigner();
+     const signature = await signer.signMessage(message);
+     const address = await signer.getAddress();
+     return { message, signature, address }
+         } catch (err) {
+     setError(err.message);
+        }
+    }
+  );
+
+  const verifyMessage = async ( ({ message, address, signature }) => {
+      try {
+    const singerAddr = await ethers.utils
+                       .verifyMessage(message, signature);
+    return (signerAddr == address );
+      } catch(err) {
+    console.log(err);
+    return false;
+      }
+  });    [[}]]
+
+◆ Related: Legally Binding Signatures EIP 5289 [[{signature.standards.EIP5289,use_case.legal,standards.eip/erc.5289]],
+@[https://eips.ethereum.org/EIPS/eip-5289]
+  proposed standard that allows smart contracts to be legally binding by
+  providing IPFS links to legal documents and ensuring that the users of
+  the smart contract have privity with the relevant legal documents.
+
+  To request that certain documents be signed, revert with the following reason:
+  string.concat("5289:", libraryAddress1, "-", documentId1OfAddress1,
+                "-", documentId2OfAddress1 ",", libraryAddress2, "-", documentId1OfAddress2, ...)
+
+   Revert example: "5289:1-1-2,hEl/0-7bA"
+
+   Signing a Document:
+     When a signature is requested by (revert captured by wallet), wallets
+   MUST call legalDocument and fetch the file off of IPFS, and render
+   that file to the user. If the user agrees, the wallet MUST call
+   signDocument. Using a form of account abstraction is RECOMMENDED.
+[[signature.standards.EIP5289}]]
+
+● EIP-712 (Typed human-friendly signing): [[{signature.standards.EIP712,20_QA.UX.wallet,wallet.metamask,wallet.lattice1,01_PM.TODO]] @[eip712]
+  "Ethereum typed structured data hashing and signing"
+ @[https://eips.ethereum.org/EIPS/eip-712]
+
+   BEFORE EIP-712                  AFTER EIP-712
+
+   ┌─ Wallet Display: ──────┐       ┌─ Wallet Display: ──────┐
+   │  signature required    │       │  signature required    │
+   ├────────────────────────┤       ├────────────────────────┤
+   │ Message:               │       │ Message:               │
+   │ 0x7123Af317dE20.....   │       │     to: 0x7123Af317d...│
+   │ ....234718a0fe01e...   │       │ amount:                │
+   │ ...a0fe0347117d        │       │   noce:                │
+   │                        │       │                        │
+   ├────────────────────────┤       ├────────────────────────┤
+   │ [Cancel]       [Sign]  │       │ [Cancel]       [Sign]  │
+   └────────────────────────┘       └────────────────────────┘
+
+  - Similar to OAuth / OpenID, a domain must also be specified. e.g:
+    ┌── Domain: ──────────────────────────────────┐
+    │              name: "Decentralised Exchange" │
+    │ verifyingContract: "0x24242...."            │
+    │           version: "1"                      │
+    │              salt: "f12da....."             │
+    └─────────────────────────────────────────────┘
+
+- How to implement EIP-712:
+@[https://medium.com/metamask/eip712-is-coming-what-to-expect-and-how-to-use-it-bb92fd1a7a26]
+
+- Related:
+  - Lattice 1 GridPlus Hardware Wallet:
+  @[https://blog.gridplus.io/latice1-firmware-v0-10-6-da18ec10f5b]
+
+  - 1st with Native EIP-712 Support for Use with Uniswap V3, Polygon, and More!
+
+ ... When Uniswap V3 launched, liquidity providers were unable to
+  migrate their positions because Uniswap uses a new message type
+  (EIP-712) which is not yet supported on legacy hardware wallets using
+  MetaMask and their assets were stuck. Not an issue for Lattice1
+  owners... Competitors have publicly shared that even when they do
+  support the feature, they will not be using their device's secure
+  enclave and will instead create hashes in your computer's web
+  browser. Never use your hardware wallet to blindly sign unknown
+  hashes.
+
+- Reference Implementation/Ussage @ 0xProject:
+  https://github.com/0xProject/0x-monorepo/blob/development/
+  ├─ contracts/utils/contracts/src/LibEIP712.sol
+  ├─ contracts/utils/contracts/test/TestLibEIP712.sol
+  ├─ contracts/coordinator/contracts/src/libs/LibEIP712CoordinatorDomain.sol
+  ├─ contracts/exchange─libs/contracts/src/LibEIP712ExchangeDomain.sol
+  ├─ contracts/exchange─libs/contracts/test/TestLibEIP712ExchangeDomain.sol
+  ├─ contracts/exchange─libs/contracts/test/TestLibOrder.sol
+  ├─ contracts/exchange─libs/contracts/test/TestLibZeroExTransaction.sol
+  ├─ contracts/zero─ex/contracts/src/fixins/FixinEIP712.sol
+  ├─ ...
+[[signature.standards.EIP712}]]
+[[signature.standards}]]
+
+
 [[}]]
 
 
@@ -1732,7 +1875,7 @@ Example code:
                and index the logs.
              • cost structure is kept  minimal t  prevent log spammin  .
 
-● Watch Out default gas price!!!                                         [[{01_PM.RISK]]
+● Watch Out default gas price!!!                                         [[{01_PM.RISKS]]
 • Extracted from stack-overflow:
    Q: """ETH (to USD) price has gone from ~8 to ~90 USD in 6 months
                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -3350,7 +3493,7 @@ Note:
 this.confirmPurchase(...) # External call
 [[}]]
 
-● ERROR CONTROL [[{12_solidity.error_control,transaction,10_EVM.101,02_doc_has.diagram,13_SLC.debugging,10_EVM.implementation.besu,10_EVM.events,13_SLC.testing,transaction,dev_framework.web3j,20_QA.error_control]]
+● ERROR CONTROL [[{12_solidity.error_control,transaction,10_EVM.101,02_doc_has.diagram,13_SLC.debugging,10_EVM.implementation.besu,10_EVM.events,13_SLC.testing,transaction,dev_framework.java.web3j,20_QA.error_control]]
 @[https://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions]
 
   ERROR MANAGEMENT:
@@ -4709,7 +4852,7 @@ contract Test {
         │   }
         │ }
 
-    ▸ STEP 3) Use remix+Metamask or truffle deployments or ... to deploy to
+    ▸ STEP 3) Use remix+Metamask|truffle|hardhat|... deployments or ... to deploy to
       Rinkeby | MainNet | Private Net | ...
 
     ▸ STEP 4) Use some existing or custom "marketplace" to see the tokens.
@@ -4800,64 +4943,6 @@ contract Test {
 [[}]]
 
 
-● EIP 1056: Lightweight Identity [[{02_use_case.identity,standards.W3C_DID,01_PM.TODO]]
- -  WARN: Unstable, likely to change.
-  """ ...As we have been developing identity systems for the last couple of
-  years at uPort it has become apparent that the cost of identity
-  creation is a large issue. The previous Identity proposal ERC-725
-  faces this exact issue. Our requirements when creating this ERC is
-  that identity creation should be free, and should be possible to do
-  in an offline environment (e.g. refugee scenario). However it must
-  also be possible to rotate keys without changing the primary
-  identifier of the identity. The identity system should be fit to use
-  off-chain as well as on-chain..."""
-[[}]]
-
-● ERC-725: Lightweight Identity [[{02_use_case.identity,standards.W3C_DID,01_PM.TODO]]
-@[https://erc725alliance.org/]
-- Note: Current Identity Systems in Ethereum include
-  (ref: https://w3c-ccg.github.io/did-method-registry/#the-registry)
-  · did:erc725:    PROVISIONAL  Ethereum    Markus Sabadello,
-                                            Fabian Vogelsteller
-                                            Peter Kolarov
-  · did:uport:     DEPRECATED   Ethereum    uPort
-  · did:ethr:      PROVISIONAL  Ethereum    uPort
-  · did:dom:       PROVISIONAL  Ethereum    Dominode
-  · did:jolo:      PROVISIONAL  Ethereum    Jolocom
-  · did:selfkey:   PROVISIONAL  Ethereum    SelfKey
-  · did:pistis:    PROVISIONAL  Ethereum    Andrea Taglia
-                                            Matteo Sinico
-  · did:vaultie:   PROVISIONAL  Ethereum    Vaultie Inc.
-  · did:gatc:      PROVISIONAL  Ethereum,   Gataca
-                                Fabric,
-                                Alastria
-  · did:signor:    PROVISIONAL  Ethereum
-                                Hashgraph   Cryptonics  Signor DID Method
-- What is ERC 725?
-  Proposed standard for self-sovereign identity (superseeded by EIP 1056?)
-  - Identity is described by a proxy-SC that can be controlled by
-    multiple keys and other smart contracts describing humans,
-    groups, objects and machines.
-  - ERC 735: associated standard to add|remove claims to an ERC-725 SC.
-[[}]]
-
-● ERC 780: Ethereum Claims Registry [[{02_use_case.identity,01_PM.backlog]]"
-- proposal to allows persons, smart contracts, and machines to issue
-  claims about each other, as well as self issued claims with the aim
-  of providing a central point of reference for on-chain claims on
-  Ethereum.
-[[}]]
-
-● EIP-1484: Digital Identity Aggregator [[{01_PM.backlog]]
-  Identity management and aggregation framework.
-  - Identities are represented via a singular Identity Registry SC.
-    that can be associated to Ethereum addresses in a variety of
-    meaningful ways.
-  - Enables arbitrarily complex identity-related functionality.
-  - They can natively support ERC-725 and ERC-1056 identities,
-    and can be fully powered by meta-transactions.
-[[}]]
-
 ● EVM/Solidity libraries: [[{12_solidity.101]]
 @[https://blog.aragon.one/library-driven-development-in-solidity-2bebcaf88736]
 - Library benefits:
@@ -4934,10 +5019,18 @@ contract Test {
  @[https://www.reddit.com/r/ethdev/comments/9jw839/long_list_of_ethereum_developer_tools_frameworks/]
 
 ● MetaMask Wallet Browser/Mobile wallet [[{wallet.metamask,dev_framework.js,security.aaa]]
+  https://github.com/MetaMask/test-dapp [[{01_PM.TODO.now}]]
+  - simple test dapp for use in MetaMask e2e tests and manual QA
+  - Test full functionallity of Wallet including:
+    - Basic Actions.
+    - Permissions Actions.
+    - En/De-crypt text.
+    - Eth/Personal Signature, ecRecover, Sign Typed Data V3/V4,
+
   WARN,WARN,WARN:  (Update 2019-12) Metamask management problems:
 @[https://metamask.github.io/metamask-docs/]
 
-  - [[{01_PM.risks]]
+  - [[{01_PM.RISKS]]
     REF: https://www.bitcoininsider.org/article/79962/updated-metamask-contributor-says-project-lacks-support-consensys
    """... A contributor of major Ethereum browser extension Metamask has
      reported that the MetaMask team is “totally overwhelmed” and not
@@ -5069,68 +5162,6 @@ contract Test {
         - supports for NFTs.
         - "enhanced" smart contract interaction.
       - great user experience in integrating with MetaMask.  [[}]]
-[[}]]
-
-● EIP-712 (Typed human-friendly signing): [[{20_QA.UX.wallet,wallet.metamask,wallet.lattice1,01_PM.TODO]]
-  "Ethereum typed structured data hashing and signing"
- @[https://eips.ethereum.org/EIPS/eip-712]
-- See also @[#eip-191]
-- Introduction by Koh Wei Jie:
-@[https://medium.com/metamask/eip712-is-coming-what-to-expect-and-how-to-use-it-bb92fd1a7a26]
-  Ethereum wallets like MetaMask will soon introduce the EIP712
-- It will ALLOWS WALLETS TO DISPLAY DATA IN SIGNING PROMPTS in
-  a structured and readable format.
-   USERS WILL NO LONGER NEED TO SIGN OFF ON INSCRUTABLE HEXADECIMAL
-  STRINGS, WHICH IS A PRACTICE THAT CAN BE CONFUSING AND INSECURE.
-
-- Related:
-  - Lattice 1 GridPlus Hardware Wallet:
-  @[https://blog.gridplus.io/latice1-firmware-v0-10-6-da18ec10f5b]
-
-  - 1st with Native EIP-712 Support for Use with Uniswap V3, Polygon, and More!
-
- ... When Uniswap V3 launched, liquidity providers were unable to
-  migrate their positions because Uniswap uses a new message type
-  (EIP712) which is not yet supported on legacy hardware wallets using
-  MetaMask and their assets were stuck. Not an issue for Lattice1
-  owners... Competitors have publicly shared that even when they do
-  support the feature, they will not be using their device's secure
-  enclave and will instead create hashes in your computer's web
-  browser. Never use your hardware wallet to blindly sign unknown
-  hashes.
-
-- Reference Implementation/Ussage @ 0xProject:
-  https://github.com/0xProject/0x-monorepo/blob/development/
-  ├─ contracts/utils/contracts/src/LibEIP712.sol
-  ├─ contracts/utils/contracts/test/TestLibEIP712.sol
-  ├─ contracts/coordinator/contracts/src/MixinCoordinatorApprovalVerifier.sol
-  ├─ contracts/coordinator/contracts/src/libs/LibEIP712CoordinatorDomain.sol
-  ├─ contracts/coordinator/contracts/src/libs/LibCoordinatorApproval.sol
-  ├─ contracts/coordinator/contracts/src/MixinSignatureValidator.sol
-  ├─ contracts/coordinator/contracts/src/Coordinator.sol
-  ├─ contracts/exchange─libs/contracts/src/LibZeroExTransaction.sol
-  ├─ contracts/exchange─libs/contracts/src/LibEIP712ExchangeDomain.sol
-  ├─ contracts/exchange─libs/contracts/src/LibOrder.sol
-  ├─ contracts/exchange─libs/contracts/test/TestLibEIP712ExchangeDomain.sol
-  ├─ contracts/exchange─libs/contracts/test/TestLibOrder.sol
-  ├─ contracts/exchange─libs/contracts/test/TestLibZeroExTransaction.sol
-  ├─ contracts/dev─utils/contracts/src/DevUtils.sol
-  ├─ contracts/exchange/contracts/src/interfaces/IExchangeCore.sol
-  ├─ contracts/exchange/contracts/src/interfaces/ISignatureValidator.sol
-  ├─ contracts/exchange/contracts/src/MixinTransactions.sol
-  ├─ contracts/exchange/contracts/src/MixinSignatureValidator.sol
-  ├─ contracts/exchange/contracts/src/MixinExchangeCore.sol
-  ├─ contracts/exchange/contracts/src/Exchange.sol
-  ├─ contracts/exchange/contracts/test/TestWrapperFunctions.sol
-  ├─ contracts/exchange/contracts/test/TestTransactions.sol
-  ├─ contracts/exchange/contracts/test/TestValidatorWallet.sol
-  ├─ contracts/zero─ex/contracts/src/fixins/FixinEIP712.sol
-  ├─ contracts/zero─ex/contracts/src/features/MetaTransactionsFeature.sol
-  ├─ contracts/zero─ex/contracts/src/features/ISignatureValidatorFeature.sol
-  ├─ contracts/zero─ex/contracts/src/features/SignatureValidatorFeature.sol
-  ├─ contracts/zero─ex/contracts/src/features/IMetaTransactionsFeature.sol
-  └─ contracts/exchange─forwarder/contracts/src/interfaces/IExchangeV2.sol
-
 [[}]]
 
 ● META-TRANSACTIONS [[{wallet.metamask,10_EVM.gas,transaction,01_PM.TODO]]
@@ -5270,19 +5301,6 @@ Ethereum JavaScript Libraries: web3.js vs. ethers.js (Part I)
 
 - Ethers.js: (Recomended by MetaMask for new WebApps)  [[{security.101]]
   - 2018:
-  - Compatible with Truffle according to:
-    https://ethereum.stackexchange.com/questions/50632/can-i-use-ether-js-with-truffle
-    """ ...
-       Truffle use Web3 by default and its injected inside as (hardcoded) global dependency.
-       You CAN install ether.js as dependency:
-         $ truffle init
-         $ npm install --save ethers
-
-       and then use it in truffle tests:
-         var ethers = require('ethers');
-
-       It is NOT compatible with "truffle develop" since only web3 would be injected.
-   """
 
   - Looks to be more "proffesional".  C&P from:
     https://docs.ethers.io/v5/api/providers/
@@ -5356,250 +5374,6 @@ Ethereum JavaScript Libraries: web3.js vs. ethers.js (Part I)
   -   Web3.js: extensive API ref, Short "Getting Started"
   - Ethers.js: extensive API ref, Good “Getting Started”  ← Winner
 [[}]]
-
-● Truffle Framework [[{dev_framework.js.truffle,12_solidity,13_SLC.testing,20_QA,13_SLC.debugging]]
-  - Truffle Framework Full Journey: @[https://www.truffleframework.com/]
-  - Truffle Framework Code reference:
-    - https://github.com/trufflesuite/truffle/tree/develop/packages
-    - https://github.com/trufflesuite/truffle/tree/next/packages/contract-tests/test
-      ├─ errors.js: Error control example for "Out of gas", "revert reason". [[{20_QA.error_control}]]
-      ├─ events.js: Example tests showing how to test for expected  future/past events [[{13_SLC.testing,10_EVM.events}]]
-      ├─ abiV2.js
-      ├─ cloning.js
-      ├─ customoptions.js
-      ├─ deploy.js: Example code showing deploy timeout control    [[{10_EVM.gas]]
-      │             pre-flight gas-cost-estimation
-      │             .on("confirmation",...) block-depth confirmation number  [[}]]
-      ├─ deprecated_keys.js
-      ├─ linking.js: Examples linking lib-to-lib, selective-relink, lib-to-SC,
-      │             triggering compilations from JS code,
-      ├─ methods.js
-      ├─ networkObject.js
-      ├─ networks.js
-      ├─ separation.js
-      └─ util.js
-
-
-$ mkdir fibonacci                          ● CREATE NEW BARE TRUFFLE PROJECT
-$ cd fibonacci
-$ truffle init
- (Next files will be created)
- + ./contracts/Migrations.sol              <- WARN: DON'T TOUCH THIS FILE
- + ./migrations/1_initial_migration.js     <- WARN: DON'T TOUCH THIS FILE
- + test/
- + build/contracts/                        <- WARN: build/contracts/ MUST BE VERSIONED IN GIT.
-                                              - Important compilation metadata is recorded here as JSON.
-                                              - On successful deployments ("migrations") the JSON is
-                                                updated (.network[$chainId]). Ej:
-                                                $ cat build/contracts/ERC20.json | jq ".networks"
-                                                {
-                                                  "1": {                          <- ChainID (1 == "MainNet")
-                                                    "events": {},                 <- Events emitted
-                                                    "links": {                    <- Info to any library linked during
-                                                      "somelinkedlib": "0x3c5..."    deployment
-                                                    },
-                                                    "address": "0x77f90...",      <- Deployed SC address. Needed by clients.
-                                                    "transactionhash": "0x603..." <- Can be used to find block number
-                                                  }
-                                                  "111": { ...  }                 <- Some testnet.
-                                                }
-
- + truffle-config.js                       <- Config remote Nodes and wallets used for
-     ...                                      testing and deployment. By default the test network
-     networks: {                              localhost:8545 is configured using existing wallets
-       development: {                         managed by node (probably ganache)
-         host: "127.0.0.1",
-         port: 8545,
-         network_id: "*"
-       }
-     }
-$ editor contracts/Fibonacci.sol                       Create alphabetically ORDERED deployment script
-$ editor migrations/2_deploy_contracts.js           <- to deploy the new S.C.
-  const LibA = artifacts.require('LibA')      ┌······· require: similar to node.js "require" but it reads
-  const B    = artifacts.require("Fibona..")  ·        *.json ABI (generated at compile time) as input and
-                         └──────┴─············┘        returns autogenerated JS proxy code in charge of
-
-UPDATE: 2022-07-25: artifacts.require is meant to be used in tests ONLY.
-        Use "truffle-contract" in production code like:
-        const contractBuilder = require("truffle-contract");
-        const JSON = require("ABI/MyContract.json");
-        const MyContract = contractBuilder(JSON);
-        const deployedInstance = MyContract.deployed()
-        ...
-
-  module.exports = function(      deployer, network, accounts injected by truffle at migrate-time
-        deployer,                 <- REF: https://github.com/trufflesuite
-                                            /truffle-deployer/blob/develop/index.js
-                                     Object with info about network, web3 (wallet) provider,
-                                     basePath (== options.basePath || process.cwd())
-        network,                  <- injected by truffle at migrate-time
-        accounts                  <- ("wallets") defined in truffle-config.js
-  ) {                                or retrieved from node
-    if (network == "test") {
-       deployer.deploy(LibA);     ← Deploy runs synchronously. Code waits until transaction has been mined
-                                    in blockchain.
-       deployer.link(library, A)  ← ☞ Link must be done before deployment
-                                    (Ignored if contract doesn't rely on the library)
-                                    @[https://github.com/trufflesuite/truffle/tree/master/packages/contract]
-       deployer.deploy(A)         ← Set "A".address after correct deployment
-       deployer.deploy(B,           overriding any previous one.
-              A.address,          ← First constructor argument of B (A instance)
-              { overwrite: true } ← Other options: gas, from
-          );
-       );
-    } else if (network == "prod") {
-       // Fetch A address from "somewhere"
-       deployer.deploy(
-           B, A.address,
-            { overwrite: false } );
-    }
-  };
-
-$ truffle compile                         <- Generates build/contracts/*.json, to be
-                                             used by JS code to genetare JS "proxy" objects.
-$ truffle migrate                         <- Migrate (deploy) to default net. in truffle-config.js
-$ editor test/TestFibonacci.js            <- test S.C. behaviour as seen by external JS clients
-                                             (front-end Dapps). Sort of "functional" tests.
-                                             test js code ussually deploy new S.C. isolated from
-                                             real ones, but any test is free to reuse already
-                                             deployed contracts, libraries, ...
-                                             The deployment JS code will mostly similar to the code
-                                             used in migrations/*js
-
-$ truffle test                            <- Execute tests.
-$ truffle deploy                          <- Deploy contract. It will deploy Migrations.sol
-                                             (if not yet done) to keep trace of deployments.
-• TRUFFLE: DEBUG MINED TX
-  NOTE: Trufle 5.1 introduces also debugging from JS tests:
-  PRESETUP) node defined in truffle-config.js up-and-running
-  $ truffle console
-  truffle(dev)> compile --all             <- Optional. Recompile all if needed.
-
-  truffle(dev)> migrate                   <- In case of error, check also node logs for related info
-  > ...                                      (TX hash can help to match errors in truffle console with
-  > migration: 1_initial_migration.js        node logs)
-  > ...
-  > migration: 2_deploy_contracts.js
-  > ...
-  truffle(dev)> Fibonacci.deployed()
-       .then(instance =>                  <- instance is a JS "proxy" to a deployed contract.
-          instance.generateFib(10))       <- automatically generates signed TX + JSON/RPC remote call
-  > { tx: '0xf47f...41c',
-  >   receipt:
-  >    { transactionHash: '0x1234....',   <- Use it to identify MINED transaction.
-  >      blockHash: ...,
-  >      logs: [...],
-  >      status: '0x01',
-  >      gasUsed: 298373,
-  >      ...
-  >    },
-  >   logs: [...]                         <- logs == "emitted events"
-  > }
-
-  truffle(dev)> debug   0x1234...         <- 0x1234... == receipt.transactionHash
-  > Gathering transaction data...
-  > Addresses affected:
-  >  0x33b217190... - Fibonacci
-  > ...
-  > Fibonacci.sol:                     ┌─ Debugger Commands───────────────────────────────────┐
-  > ...                                │ v) print vars:val  b)TOGGLE      BREAKPOINT          │
-  > 3: contract Fibonacci              │ n) step next       c)CONTINUE to BREAKPOINT          │
-  >    ^^^^^^^^^^^^^^^^^^              │ o) step over       +:˂expr˃) ADD  WATCH EXPRESSION   │
-  debug(dev:0xf4...)> n                │ i) step into       -:˂expr˃) DEL  WATCH EXPRESSION   │
-  > 8:   function generateFib ...      │ u) step out        :˂expr˃ ) EVAL       EXPRESSION   │
-  >      ^^^^^^^^^^^^^^^^^^^^^^^^^^    │                    ?       ) LIST WATCH EXPRESSION/S │
-  >                                    │                                                      │
-  (Move until reaching the for-loop)   │ ;)step  instruct.                          h) help   │
-  debug(dev:0xf4...)>  v               │ p)print instruct.                          q) quit   │
-  >         i: 0                       └──────────────────────────────────────────────────────┘
-  >         n: 10
-  > fibseries: []
-  debug(dev:0xf4...)>  +:{ i, fibseries } <- new watch expression shown after instruction
-  debug(dev:0xf4...)> n
-  > ...
-  > ...
-  > fibseries: [1, 1, 2, 3, ..., 55]
-
-• TRUFFLE RECIPES:
-  $ truffle compile --all     <- force recompile all of the contracts.
-  $ migrate --reset           <- Reset existing migrations/migration state.
-
-
-• Truffle Migrations Explained: [[{devops.smart_contract.migration]]
-  (Summary from Bernard Peh post: https://medium.com/@blockchain101/demystifying-truffle-migrate-21afbcdf3264)
-
-  - Migrations.sol instance is used to "bookmark" LAST SUCCESFUL MIGRATION:
-    ...
-    contract Migrations {                     ┌·· On truffle console value can be check like:
-      uint public last_completed_migration; <·┘   | Migrations.deployed().then( sc =>
-      ...                                         |   sc.last_completed_migration.call()
-                                                  |   .then(v => console.log(v) ) )
-      function setCompleted(uint completed) <···· Invoqued whenever a migration/*.js script
-      public {                                    is completed successfully.
-        last_completed_migration = completed;
-      }
-      ... (upgrade ) ...
-    }
-
-  1ST MIGRATION EXECUTION                            2ND UPGRADED METACOIN MIGRATION
-  migration SETUP:                                   migration SETUP:
-  └./migrations/1_initial_migration.js               └./migrations/1_initial_migration.js
-  └./migrations/2_deploy_contracts.js                └./migrations/2_deploy_contracts.js
-                └───────┬────────┘                   └./migrations/3_deploy_upgraded_metacoin.js
-                ┌───────┘                                          └───────────┬───────────────┘
-                │                                        ┌─────────────────────┘
-                ...                                      ...
-                deployer.deploy(ConvertLib);             // deployer.deploy(ConvertLib); ← Commented (Save gas)
-                deployer.link(ConvertLib, MetaCoin);     deployer.link(ConvertLib, MetaCoin);
-                deployer.deploy(MetaCoin);               deployer.deploy(MetaCoin);
-
-
-  (or --reset flag added)
-  $ truffle migrate                               $ truffle migrate
-  > Compiling ...                                 > ...
-  > ...                                           > last_completed_migration == 2 → start at migrations/3_*.js
-  > Running migration:  1_initial_migration.js    > (☞Migration and ConvertLib skipped)
-  >   Deploying Migrations...                     > Running migration:  3_deploy_upgraded_metacoin.js
-  >   ... 0x68fe0...   (deploy TXhash)            > Replacing MetaCoin...
-  >   Migrations: 0x213....(Contract address)     > ... 0xe9d0481...      (deploy TX hash )
-  > Saving successful migration to network...     > MetaCoin: 0xf55...    (Contract address)
-  >   ... 0xe2807...   (setCompleted() TXhash)    > Saving successful migration to network...
-  > Saving artifacts...                           > ... 0xcf8f9...         (setCompleted TX hash)
-  > Running migration:  2_deploy_contracts.js     > Saving artifacts...
-  >   Deploying ConvertLib...
-  >   ... 0xce792...       (deploy TXhash )
-  >   ConvertLib: 0x13e... (Contract address)
-  >   Linking ConvertLib to MetaCoin
-  >   Deploying MetaCoin...
-  >   ... 0x2fcab...       (deploy TXhash )
-  >   MetaCoin: 0x0d9...   (Contract address)
-  > Saving successful migration to network...
-  >   ... 0xe2807...       (setCompleted() TXhash)
-  > Saving artifacts...
-[[}]]
-
-
-• Truffle Framework: Security: [[{security,20_QA,01_PM.TODO.NOW]]
-@[https://github.com/ConsenSys/truffle-security]
-  - MythX Security Analysis Plugin for Truffle Framework
-  - adds automated smart contract security analysis to the
-    Truffle framework.
-  - Compatible with Truffle 4.0 or higher.
-[[}]]
-
-• Truffle Framework: IPFS/Filecoin: [[{scalability.offchain,infrastructure.storage.offchain,01_PM.TODO]]
-@[https://www.trufflesuite.com/blog/announcing-collaboration-with-filecoin]
-[[}]]
-
-
-• Truffle Framework: migrating to web3 v1.0 [[{01_PM.TODO]]
-@[https://medium.com/@adrianmcli/migrating-your-truffle-project-to-web3-v1-0-ed3a56f11a4]
- "... Unfortunately Truffle uses the 0.20.x version of Web3.js
-      instead of vs v1.0+, providing a more easier to work with API (e.g.:
-       PromiEvents
-[[}]]
-
-[[dev_framework.js.truffle}]]
 
 ● Web3J JAVA SDK: [[{dev_framework.java.web3j,10_EVM.events]]
   - https://docs.web3j.io/
@@ -5975,7 +5749,7 @@ See Also:
 @[https://medium.com/coinmonks/effective-smart-contract-testing-developer-revert-comments-c7a6f250df0f]
 [[}]]
 
-● SCALABILITY SOLUTIONS: [[{101,scalability.zkp,privacy.zkp,scalability.layer2]] #[layer2_scalability_summary]
+● SCALABILITY SOLUTIONS: [[{101,scalability.101,scalability.zkp,privacy.zkp,scalability.layer2]] #[layer2_scalability_summary]
                          [[dev_framework.remix,02_doc_has.diagram,layer2.rollup.optimistic]]
                          [[,layer2.rollup.zk,01_PM.WiP]]
 
@@ -6011,17 +5785,17 @@ See Also:
     · Crypto-economic      : "moving" owners custody locked funds in escrow
                              relative to the weight of their assets.
 
-• Layer 2 Rollups Scaling:
-  · "Children" networks protected by MainNet.
+• Layer 2 Rollups Scaling: "Children" networks protected by MainNet.
   · Many different methods exist to sync with MainNet,
-  • As of 2021, optimistic rollups (bundling L2-chain blocks) is the working solution.
-    In a near future zk-Rollups will "replace" them:
-    • optimistic-Rollups provide passive security while zk-Rollups
-      provide active security.
-    • optimistic-Rollups need to submit a "zipped" version of data
-      to L1 blockchain while zk-Roolups have to potential to send only a
-      proof of the full block allowing for theorical performance upgrades of
-      tens of thousands TX/s.
+  · As of 2021, optimistic rollups (bundling L2-chain blocks) is the working solution.
+    In a near future zk-Rollups will "replace" them.
+  └ L2 optimistic-Rollups provide passive security.
+    After
+    L2         zk-Rollups provide active  security.
+    L2 optimistic-Rollups need to submit a "zipped" version of data
+    to L1 blockchain while zk-Roolups have to potential to send only a
+    proof of the full block allowing for theorical performance upgrades of
+    tens of thousands TX/s.
     • zSNARKS provides also for enhanced privacy. (but scalability features
       are even more important).
     • optimistic-Roolups are more compatible with Layer 1 "MainChain".
@@ -6040,10 +5814,10 @@ See Also:
                                ├ Sign.Aggregation
                                │
                                │
-                               │      Merkle
-    ┌────────┐ Compression     │      Trees      ZKP ┌─────────┐
+                               │        Merkle
+    ┌────────┐ Compression     │        Trees    ZKP ┌─────────┐
     │  Data  │──────┴─────┬────┼───┬──────┴────┬──┴──│  Data   │
-    │On Chain│           Gas   │Acummulators   VC    │Off-Chain│
+    │On Chain│           Gas   │Acummulators   VC    │Off-Chain│ [[{02_use_case.identity}]]
     └────────┘         golfing │                     └─────────┘
                                ├  Rollback
                                ├  Slashing
@@ -6535,7 +6309,7 @@ Keep an eye out for the next article by Paul Lintilhac, which will give an expos
 Alethio’s recent data science initiatives: the Ponzi Model.
 [[}]]
 
-• Eventeum: [[{evm.events,integration.data,01_PM.low_code,01_PM.radar]]
+• Eventeum: [[{10_evm.events,integration.data,01_PM.low_code,01_PM.radar]]
 @[https://github.com/ConsenSys/eventeum]
 - Project status: Stall.  https://github.com/eventeum/eventeum/issues/176
 
@@ -6761,7 +6535,7 @@ required to handle duplicate messages gracefully, as each
 instance will broadcast the same events.
 [[}]]
 
-● Camel Connector [[{evm.events,integration.data,dev_framework.java,01_PM.TODO]]
+● Camel Connector [[{10_evm.events,integration.data,dev_framework.java,01_PM.TODO]]
 @[https://github.com/bibryam/camel-web3j]
 @[https://github.com/apache/camel/blob/main/components/camel-web3j/src/main/docs/web3j-component.adoc]
 @[https://medium.com/@bibryam/enterprise-integration-for-ethereum-fa67a1577d43]
@@ -7286,7 +7060,7 @@ Note: Whenever the Ethereum network has been reseted
 [[}]]
 
 
-● GETH [[{evm.implementation.geth,devops.network.bootstrap]]
+● GETH [[{10_evm.implementation.geth,devops.network.bootstrap]]
  • GETH SETUP NODE: REF:  https://github.com/ethereum/go-ethereum
     STEP 1) Create  genesis.json
     {
@@ -7341,7 +7115,7 @@ Note: Whenever the Ethereum network has been reseted
 
 • Basic Admin:
   ref: https://github.com/ethereum/go-ethereum/wiki/Managing-your-accounts
-  - Geth Key Handling: [[{evm.implementation.geth,security.secret_mng]]
+  - Geth Key Handling: [[{10_evm.implementation.geth,security.secret_mng]]
 
   (Geth) ACCOUNT "==" private key stored in file protected by password stored under:
                        $DATADIR/keystore/UTC--'created_at_UTC_ISO8601'-'address hex'
@@ -7403,7 +7177,7 @@ Note: Whenever the Ethereum network has been reseted
     wnode
 [[}]]
 
-● Geth Architecture: [[{evm.implementation.geth,architecture.geth,02_doc_has.diagram,01_PM.TODO]]
+● Geth Architecture: [[{10_evm.implementation.geth,architecture.geth,02_doc_has.diagram,01_PM.TODO]]
   REF: https://www.mycryptopedia.com/ethereum-geth-installing-and-running-a-node/
          ┌────────┐              ┌───────┐
          │JSON RPC│              │LevelDB│
@@ -7446,7 +7220,7 @@ Note: Whenever the Ethereum network has been reseted
       })
 [[}]]
 
-● Understanding Geth Code: [[{evm.implementation.geth,01_PM.TODO]]
+● Understanding Geth Code: [[{10_evm.implementation.geth,01_PM.TODO]]
  @[https://github.com/Agzs/geth-pbft-study/wiki/Blockchain-Structure]
 
   type BlockChain struct {
@@ -7608,7 +7382,7 @@ Note: Whenever the Ethereum network has been reseted
   }
 [[}]]
 
-• Geth (JS cli) Console: [[{evm.implementation.geth,devops.geth]]
+• Geth (JS cli) Console: [[{10_evm.implementation.geth,devops.geth]]
 @[https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console]
   $ geth attach \
         --preload "script1.js,..."     <- opt: preload CSV script list
@@ -7636,7 +7410,7 @@ Note: Whenever the Ethereum network has been reseted
     };
 [[}]]
 
-• GETH: Configuration Troubleshooting [[{evm.implementation.geth,13_SLC.troubleshooting]]
+• GETH: Configuration Troubleshooting [[{10_evm.implementation.geth,13_SLC.troubleshooting]]
   REF: @[https://web3js.readthedocs.io/en/1.0/index.html] Full 1.0 API
 
   console.dir(eth) does NOT work but all that needed is enter the object name in the prompt
@@ -7727,7 +7501,7 @@ REF: @[https://blog.ethereum.org/2019/07/10/geth-v1-9-0/]
   on VMs with real SSDs or actual physical hardware.
 [[}]]
 
-• GETH: Monitoring & Metrics [[{evm.implementation.geth,devops,13_SLC.monitoring]]
+• GETH: Monitoring & Metrics [[{10_evm.implementation.geth,devops,13_SLC.monitoring]]
 @[https://github.com/ethereum/go-ethereum/wiki/Metrics-and-Monitoring]
 
 > debug.metrics().p2p.InboundTraffic         > debug.metrics().chain.inserts
@@ -7768,7 +7542,7 @@ Available metrics (use geth monitor for full list)
         pauses: time spent in the garbage collector
 [[}]]
 
-• GETH What's new [[{evm.implementation.geth,devops,integration.graphql,10_EVM.i/o,13_SLC.monitoring]]
+• GETH What's new [[{10_evm.implementation.geth,devops,integration.graphql,10_EVM.i/o,13_SLC.monitoring]]
   - 1.9 Release Notes @[https://blog.ethereum.org/2019/07/10/geth-v1-9-0/]
   Release page      : @[https://github.com/ethereum/go-ethereum/releases/tag/v1.9.0]
 
@@ -7921,17 +7695,18 @@ ytmmfeJkH2yA2mkdudN16NXYsjSx1VO7IfGGwzp6wxbo1RNsheICksMVIgQxMXp49Cn7HCafw+Qz
 ORK/WHP+90D42xK/HPXEHqEc6At/W04i8edMBlqtybGimoo48Ik4sEilfyx+EY5SP3VEfjNeCur7
 x2crD2YKI/P3EJE0YVyQeSD/wziFozFKDgK4CP5+f/IepdDzJoen/ZNnj8/+D27JWX7VxQAA
 EOF
-    ) | base64 -d | gzip -d [[}]]
+    ) | base64 -d | gzip -d
+[[}]]
 
  - New list of pre-hardcoded boot nodes for Mainnet.
-   enode://d860a01f9722d78051619d1e2351aba3f43f943f6f00718d1b9baa4101932a1f5011f16bb2b1bb35db20d6fe28fa0bf09636d26a87d31de9ec6203eeedb1f666@18.138.108.67:30303 (Singapore, AWS)
-   enode://22a8232c3abc76a16ae9d6c3b164f98775fe226f0917b0ca871128a74a8e9630b458460865bab457221f1d448dd9791d24c4e5d88786180ac185df813a68d4de@3.209.45.79:30303 (Virginia, AWS)
-   enode://ca6de62fce278f96aea6ec5a2daadb877e51651247cb96ee310a318def462913b653963c155a0ef6c7d50048bba6e6cea881130857413d9f50a621546b590758@34.255.23.113:30303 (Ireland, AWS)
-   enode://279944d8dcd428dffaa7436f25ca0ca43ae19e7bcf94a8fb7d1641651f92d121e972ac2e8f381414b80cc8e5555811c2ec6e1a99bb009b3f53c4c69923e11bd8@35.158.244.151:30303 (Frankfurt, AWS)
-   enode://8499da03c47d637b20eee24eec3c356c9a2e6148d6fe25ca195c7949ab8ec2c03e3556126b0d7ed644675e78c4318b08691b7b57de10e5f0d40d05b09238fa0a@52.187.207.27:30303 Australia, Azure)
-   enode://103858bdb88756c71f15e9b5e09b56dc1be52f0a5021d46301dbbfb7e130029cc9d0d6f73f693bc29b665770fff7da4d34f3c6379fe12721b5d7a0bcb5ca1fc1@191.234.162.198:30303 (Brazil, Azure)
-   enode://715171f50508aba88aecd1250af392a45a330af91d7b90701c436b618c86aaa1589c9184561907bebbb56439b8f8787bc01f49a7c77276c58c1b09822d75e8e8@52.231.165.108:30303 (South Korea, Azure)
-   enode://5d6d7cd20d6da4bb83a1d28cadb5d409b64edf314c0335df658c1a54e32c7c4a7ab7823d57c39b6a757556e68ff1df17c748b698544a55cb488b52479a92b60f@104.42.217.25:30303 (West US, Azure)
+   enode://d860a01f9722d78051619d1e2351aba3f43f943f6f00718d1b9baa4101932a1f5011f16bb2b1bb35db20d6fe28fa0bf09636d26a87d31de9ec6203eeedb1f666@18.138.108.67:30303   (Singapore  , AWS  )
+   enode://22a8232c3abc76a16ae9d6c3b164f98775fe226f0917b0ca871128a74a8e9630b458460865bab457221f1d448dd9791d24c4e5d88786180ac185df813a68d4de@3.209.45.79:30303     (Virginia   , AWS  )
+   enode://ca6de62fce278f96aea6ec5a2daadb877e51651247cb96ee310a318def462913b653963c155a0ef6c7d50048bba6e6cea881130857413d9f50a621546b590758@34.255.23.113:30303   (Ireland    , AWS  )
+   enode://279944d8dcd428dffaa7436f25ca0ca43ae19e7bcf94a8fb7d1641651f92d121e972ac2e8f381414b80cc8e5555811c2ec6e1a99bb009b3f53c4c69923e11bd8@35.158.244.151:30303  (Frankfurt  , AWS  )
+   enode://8499da03c47d637b20eee24eec3c356c9a2e6148d6fe25ca195c7949ab8ec2c03e3556126b0d7ed644675e78c4318b08691b7b57de10e5f0d40d05b09238fa0a@52.187.207.27:30303   (Australia  , Azure)
+   enode://103858bdb88756c71f15e9b5e09b56dc1be52f0a5021d46301dbbfb7e130029cc9d0d6f73f693bc29b665770fff7da4d34f3c6379fe12721b5d7a0bcb5ca1fc1@191.234.162.198:30303 (Brazil     , Azure)
+   enode://715171f50508aba88aecd1250af392a45a330af91d7b90701c436b618c86aaa1589c9184561907bebbb56439b8f8787bc01f49a7c77276c58c1b09822d75e8e8@52.231.165.108:30303  (South Korea, Azure)
+   enode://5d6d7cd20d6da4bb83a1d28cadb5d409b64edf314c0335df658c1a54e32c7c4a7ab7823d57c39b6a757556e68ff1df17c748b698544a55cb488b52479a92b60f@104.42.217.25:30303   (West US    , Azure)
 [[}]]
 
 ● EEA Summary [[{standards.eea,scalability.consensus,scalability.offchain,integration,01_PM.ext_resource]]
@@ -9042,7 +8817,7 @@ INPUTS:
   - FilterCriteria : Filter applied from block to block)
 [[}]]
 
-● EEA-Besu What's new: [[{evm.implementation.besu]]
+● EEA-Besu What's new: [[{10_evm.implementation.besu]]
 • EEA-Quorum 21 (2021-03-09):
   REF:
   @[https://consensys.net/blog/quorum/consensys-quorum-21-1-0-features-enhanced-ethereum-mainnet-compatibility/]
@@ -9271,7 +9046,7 @@ print( ( 648 / (1024.*1024.) ) * 12      * 60       * 24)      ~  10.68 MBytes/d
 
 [[}]
 
-● EEA-Besu Monitoring Performance (Prometh.+Grafana) [[{evm.implementation.besu,13_SLC.profiling]]
+● EEA-Besu Monitoring Performance (Prometh.+Grafana) [[{10_evm.implementation.besu,13_SLC.profiling]]
 FROM @[https://gitter.im/PegaSysEng/pantheon] on 2019-05-29 20:01
 - Adrian Sutton@ajsutton
   We've just published a Grafana dashboard as an example for
@@ -9402,16 +9177,6 @@ Number of open file descriptors.
 Start time of the process since unix epoch in seconds.
 RocksDB statistics (cache,  compression, ...)
 
-[[}]]
-
-● EthrDIDs"uPort++" [[{02_use_case.identity,standards.W3C_DID,architecture,01_PM.radar]]
-@[https://medium.com/uport/goodbye-uport-dids-hello-ethr-dids-ea2e80256f54]
-@[https://github.com/uport-project/ethr-did-registry]
-- Goodbye uPort DIDs, Hello Ethr-DIDs
-  We have released a major app update that enables migrating all old uPort
-  identities created before September 2018, to the current DID architecture.
-  Not to worry though, your old Identity data will still be available to use
-  and all verifications issued will be available
 [[}]]
 
 ● EIP 648 [[{scalability.evm,standards.EIP/ERC.648,01_PM.TODO]]
@@ -9545,67 +9310,6 @@ https://eips.ethereum.org/EIPS/eip-1820
     - Superseed EIP-820 (universal registry)
 [[}]]
 
-●  HardHat https://hardhat.org/ (Truffle alternative) [[{dev_framework.js.hardhat]]
-- TypeScript support (Compile time vs runtime errors).
-
-- HardHat Framework can be seen briefly as its Hardhat Runtime Environment  (HRE):
-  const hardhat /*HRE*/ = require("hardhat")
-        └─────┴─ "=="
-   {
-     /* core */           ┌ task: async function + metadata defining
-     config: ...,         v       "everything you can do in HardHat"
-     "tasks..." : task1, task2, ...
-     "plugins..." : ...
-
-     /* others */
-     artifacts : {
-        readArtifact("contracts/A.sol:A"),
-     }
-
-   }
-
-- Export EIP-1193 compatible Ethereum provider.
-
-- Hardhat Runner: task runner designed around "tasks" and "plugins".
-  $ npx hardhat compile ···(translates to)··-> runing built-in-task "compile"
-
-  - plugins can override default task behaviour.
-
-- Hardhat for VS Code: adds advanced support for Solidity. [[{IDE,dev_framework.js}]]
-
-- Ussage:
-  $ npm install --save-dev hardhat  <- PRESETUP: only local install is allowed to
-                                       ensure reproducible builds.
-
-  $ npx hardhat --help
-    Usage: hardhat [GLOBAL OPTIONS] <TASK> [TASK OPTIONS]
-
-    GLOBAL                  │ AVAILABLE
-    OPTIONS:                │ TASKS:
-    ---------------         │ ---------
-    --config ...            │ check  ... whatever you need to check ...
-    --emoji  yes|no         │ clean      Clears cache + artifacts
-    --help                  │ compile    compile contracts/*, generate TS bindings
-    --max-memory ...        │ console
-    --network ...           │ flatten    Flattens, prints contracts and dependencies
-    --show-stack-traces ... │ node       Starts a JSON-RPC test node @http://127.0.0.1:8545/
-    --tsconfig ...          │ run        ... user-defined script after compiling ...
-    --verbose  ...          │ typechain  Generate Typechain typings for Compiled contracts
-    --version  ...          │ verify     Verifies contract on Etherscan  [[security]]
-                            │
-                            │ coverage   [[13_SLC.testing.coverage]]
-     ^^^^^^^^^^             │ test       test/*js *ts [[13_SLC.testing]]
-     ENV.VARS:
-     - HARDHAT_NETWORK           (overriden by --network flag)
-     - HARDHAT_SHOW_STACK_TRACES
-     - HARDHAT_VERBOSE
-     - HARDHAT_MAX_MEMORY
-
-• Compared to Truffle there is no migrations/* directory.
-  To deploy new contracts:
-  STEP 1) Create standard deployment script (js/ts) using ethers.js
-  STEP 2) $ npx hardhat run scripts/deploy.ts
-[[}]]
 
 ● DECONSTRUCTING A SOLIDITY SMART CONTRACT [[{10_EVM.debugging,12_solidity]]
   Summary of OpenZepellin Posts:
@@ -11066,7 +10770,7 @@ REF: @[https://frax.finance/whitepaper/]
  • https://ethereum-magicians.org/t/in-one-swoop-the-eth2-0-devs-destroyed-staking/7379
 
 
- • Headlong [dev_framework.java,dev_framework.headlong,10_EVM.abi,dev_framework.web3j,02_doc_has.comparative]
+ • Headlong [dev_framework.java,dev_framework.headlong,10_EVM.abi,dev_framework.java.web3j,02_doc_has.comparative]
    @[https://github.com/esaulpaugh/headlong]
  - A Contract ABI and Recursive Length Prefix library in Java for use on the Ethereum network.
  - Contract ABI and Recursive Length Prefix made easy in Java (or Android).
@@ -11463,43 +11167,92 @@ REF: @[https://frax.finance/whitepaper/]
 
 [[}]]
 
-● Using wallets to sign documents / forms offchain [[{wallet,02_use_case.legal,signature.multisignature,20_QA.UX]]
-REF: https://www.youtube.com/watch?v=vhUjCLYlnMM&ab_channel=ArturChmaro
+● EIP-4337: Account Abstraction using alt mempool: [[{]]
+  [[TRANSACTION.EIP/ERC.4337.ACCT_ABSTRACTION,WALLET.STANDARDS,SCALABILITY.OFFCHAIN]]
+  [[SIGNATURE.MULTISIGNATURE,STANDARDS.EIP/ERC.4337,PRIVACY.OFFCHAIN]]
+  (Vitalik Buterin, Yoav Weiss, Kristof Gazso, Namra Patel,
+    Dror Tirosh, Shahaf Nacson, Tjaden Hess).
+  Status: DRAFT (As of 2022-12)
+  Reference Implementation:
+  https://github.com/eth-infinitism/account-abstraction/tree/main/contracts
+  i
+  - Avoids changes in bottom-layer transaction type using a  higher-layer
+    pseudo-transaction object called a UserOperation into a separate
+    mempool.
+  - A special class of actor called "bundler" (miners or users that
+    can send TXs to miners through a bundle marketplace) package
+    up a set of these objects into a TX making a handleOps call to a
+    special contract, and that transaction then gets included in a block.
 
-import { ethers } from "ethers";
+  Motivation: (TODO)
+  - https://ethereum-magicians.org/t/implementing-account-abstraction-as-part-of-eth1-x/4020
+  - EIP-2938 (consensus layer proposal implementing the same goal).
+    As EVM allows execution of an arbitrarely complex TX, the *Account abstraction*
+    allows the TX authorization logic  to be opened up so that users could create accounts
+    with whatever authorization logic they want  (multisigs, future crypto. algorithms,
+    complex constructions such as ZK-SNARK verification) (vs current monolitic Authorizaton
+    policy: "ECDSA signature from EOA" ).
+    Use cases:
+    - Multisig social recovery (Currently, they require awkward constructions with a
+      separate account refilling small amounts of ETH to pay for transaction fees).
+    - Schnorr signatures, BLS signatures, other curves, quantum-proof algorithms, ....
+    - Privacy solutions with no need for "relayers" moving the verification of the proof
+      into authorization logic as a condition of fee-payment.
+    - On-chain DEXes where there’s often multiple TXs from many users trying to claim the
+      same arbitrage opportunity; currently, this leads to inefficiency because many failed
+      transactions are nevertheless published on chain, but with abstraction, it’s
+      theoretically possible to make sure failed transactions do not get included on chain
+      at all, improving gas efficiency.
+    - Decentralization: Allowing any bundler (think: miner) to participate in the process of
+      including account-abstracted user operations.
+    - Work with all activity happening over a public mempool: users do not need to know
+      the direct communication addresses (eg. IP, onion) of any specific actors.
+    - Avoid trust assumptions on bundlers:
+    - Atomic multi-operations.
+    - Pay tx fees with EIP-20 tokens, allow developers to pay fees for their users,
+      and EIP-3074-like sponsored transaction use cases more generally.
+    - Support aggregated signature (e.g. BLS).
 
+  SPECIFICATION:
+  - UserOperation: structure describing a TX to be sent on behalf of a
+    user. To avoid confusion, it is named "transaction".
+    - Like a TX, it contains “sender”, “to”, “calldata”, “maxFeePerGas”,
+      “maxPriorityFee”, “signature”, “nonce”. Extra fields include:
+      - Sender (vs sender): Account Contract sending a user operation.
+      - EntryPoint: Singleton contract executing bundles of UserOperations.
+        Bundlers/Clients whitelist supported entrypoint.
+        Heavily audited and formally verified, it will serve as a central
+        trust point for all EIP-4337 wallets while individual wallets will
+        need to verify 'validateUserOp' function and its “check signature,
+        increment nonce and pay fees” logic only).
+        NOTE: Entry point upgrading is encouraged (aka "DELEGATECALL")
+        << Entry-point >>:
+        │ struct UserOpsPerAggregator {
+        │     UserOperation[] userOps;
+        │     IAggregator aggregator;
+        │     bytes signature;
+        │ }
+        │ function handleOps(UserOperation[], address payable beneficiary);
+        │ function handleAggregatedOps(UserOpsPerAggregator[], address payable beneficiary  );
+        │ function simulateValidation(UserOperation, bool offChainSigCheck  )
+        │          └─··············─┴─  to be used by aggregators offchain grouping.
 
-const signMessage = async ( { setError, message }) => {
-       try {
-   console.log( { message } );
-   if (!window.ethereum) {
-     throw new Error("No crypto wallet (plugin) found");
-   }
-   await window.ethereum.send("eth_requestAccounts");
-   const provider = new ethers.providers.Web3Provider(window.ethereum);
-   const signer = provider.getSigner();
-   const signature = await signer.signMessage(message);
-   const address = await signer.getAddress();
-
-   return { message, signature, address }
-       } catch (err) {
-   setError(err.message);
-      }
-  }
-);
-
-const verifyMessage = async ( { message, address, signature }) => {
-    try {
-      const singerAddr = await ethers.utils
-                               .verifyMessage(message,signature);
-      return (signerAddr == address );
-    } catch(err) {
-       console.log(err);
-       return false;
-    }
-});
+      - Aggregator: helper contract trusted-by-wallets to validate an aggr.sign.
+        (off-chain optimization).  Bundlers MAY throttle down and ban aggregators.
+      - users package-up the action they want their wallet to take in an
+        ABI-encoded struct called a UserOperation.
+        <<IWallet>>>
+        │ function validateUserOp( <··· "verification loop"
+        │   UserOperation, ..., address aggregator ... ) external;
+        <<IAggregatedWallet>> is IWallet (Wallet supporting aggregated signature)
+        │  function getAggregator() view returns (address);
+        │  inherited 'validateUserOp' MUST verify the aggregator parameter is valid
+        <<IAggregator>>
+        │  function validateUserOpSignature(UserOperation, offChainSigCheck)
+        │  function aggregateSignatures(sigsForAggregation)
+        │  function validateSignatures(UserOperation[], signature)
+        │  function validateUserOpSignature()
 [[}]]
-
 
 TODO/BACKLOG/UNORDERED [[{01_PM.TODO,01_PM.BACKLOG]]
   • Aragon OS: Advanced deployment [[{dev_framework.aragon,02_use_case.finance.DAO,security.governance}]]
@@ -12170,25 +11923,6 @@ Custom ethereum client that uploads blockchain data to BigQuery
 
  • How to store NFT metadata and SVG image completely on-chain (ERC721/ERC1155)
 
- • Legally Binding Signatures EIP 5289       [[{use_case.legal,standards.eip/erc.5289]],
-   https://eips.ethereum.org/EIPS/eip-5289
-    This EIP proposes a standard that allows smart contracts to be
-   legally binding by providing IPFS links to legal documents and
-   ensuring that the users of the smart contract have privity with the
-   relevant legal documents.
-
-   To request that certain documents be signed, revert with the following reason:
-   string.concat("5289:", libraryAddress1, "-", documentId1OfAddress1, "-", documentId2OfAddress1 ",", libraryAddress2, "-", documentId1OfAddress2, ...)
-
-   Revert example: "5289:1-1-2,hEl/0-7bA"
-
-   Signing a Document:
-     When a signature is requested by (revert captured by wallet), wallets
-   MUST call legalDocument and fetch the file off of IPFS, and render
-   that file to the user. If the user agrees, the wallet MUST call
-   signDocument. Using a form of account abstraction is RECOMMENDED.
-[[}]]
-
 ● SAP Ethereum Integration:  [[{integration.SAP]]
   https://github.com/KevinSmall/SapEthereumIntegration
   https://blogs.sap.com/2020/08/21/sap-integration-with-ethereum-mainnet/
@@ -12200,4 +11934,19 @@ Custom ethereum client that uploads blockchain data to BigQuery
                     - config,          Data Store.
                     - keys
   [[}]]
+
+● https://docs.sedge.nethermind.io/  [[{DevOps,01_PM.LowCode]]
+  1-click setup tool for PoS network/chain validators !!!
 [[01_PM.TODO,01_PM.BACKLOG}]]
+
+● https://hop.exchange/whitepaper.pdf  [[{scalability.layer2]]
+  HopProtocol. move assets directly among L2 Rollups chains
+  skipping layer 1.
+  https://hop.exchange/
+  [[}]]
+
+● https://github.com/zkopru-network/zkopru
+ zkp, escalability, layer2:
+  https://docs.zkopru.network/getting-started
+
+[[}]]
