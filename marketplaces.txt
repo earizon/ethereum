@@ -1,5 +1,6 @@
 ● NFT MARKETPLACE COMPARATIVES:
   REF: https://www.journaldunet.com/media/publishers/1515923-le-guide-des-differentes-marketplaces-de-nft/
+       + other
 
 │  NOM         │STA.│CATEGORY│NETWORKS  │TOKEN │  PAYMENT│ FEE│ NOTES
 │              │DATE│        │          │NATIVE│   METHOD│ %  │
@@ -7,6 +8,13 @@
 │• OpenSea·····│2012│Collect.│Ethereum··│-·····│····· ETH│ 2,5│························
 │              │    │        │Polygon   │      │    MATIC│    │
 │              │    │        │Solana    │      │   SOL,CC│    │
+│• Rarible ····│2012│Collect.│Ethereum··│- RARI│···  TODO│ ?  │ "Truly" decentralized marketplace.
+│              │    │        │Polygon   │      │         │    │ (10x bigger than SuperRare|OpenSea as of 2020-09)
+│              │    │        │...       │      │         │    │ RARI token lets users vote on future evolution
+│              │    │        │...       │      │         │    │ of the company allowing for Collectibles,
+│              │    │        │...       │      │         │    │ yield farming, liquidity mining)
+│              │    │        │...       │      │         │    │
+│              │    │        │...       │      │         │    │
 │• MagicEden···│2021│Collect.│Ethereum··│MAGIC │· SOL,ETH│ 2,0│························
 │              │    │        │Solana    │TICKET│       CC│    │
 │              │    │        │          │NFT   │       CC│    │
@@ -46,6 +54,8 @@
 │• GameStop ···│2021│Gaming  │Loopring  │-     │     WETH│  NO│························
 │              │    │        │ImmutableX│-     │     WETH│  NO│
 │• Sudoswap ···│2021│Collect.│Ethereum  │SUDO  │      ETH│ 0,5│························
+│• Skyweaver···│    │Gaming  │          │      │         │ ?  │························
+│• Zora     ···│    │Art     │          │      │         │ ?  │························
 └────────────────────────────────────────────────────────────────────────────────────────────
  Collect.: Collectibles
  CC: Credit Card
@@ -126,3 +136,5 @@ Source: https://github.com/topics/nft-marketplace
    - Percentage drops linearly over time.
    - Based on min/max thresholds.
 [[}]]
+
+
