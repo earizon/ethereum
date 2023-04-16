@@ -1,6 +1,7 @@
 ## Apropos
-* Visit next Web site for a great experience
-  [this URL](https://earizon.github.io/txt_world_domination/viewer.html?payload=../ethereum/notes.txt)
+* Visit next URL to display the document:
+  [this URL](https://earizon.github.io/txt_world_domination/viewer.html?payload=../ethereum/notes.md)
+  (proper standard markup support is WiP)
 
 * If you want to contribute to great gistory of this document you can take the next flight to:
 @[https://www.github.com/earizon/ethereum]
