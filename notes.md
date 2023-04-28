@@ -878,7 +878,7 @@ It can be defined as follows:
 
 
 
-[[{10_EVM.101,20_QA.error_control,02_doc_has.diagram]]
+[[{10_EVM.101,02_QA.error_control,02_doc_has.diagram]]
 ## CALL Op. (Message Calls)
   - Contracts can user message calls to call other contracts or send Ether to
     non-contract accounts.
@@ -1345,7 +1345,7 @@ It can be defined as follows:
   - NOTE: Internally Ethereum nodes use bloom indexes/filters to implement topics and
           topic search in order to speed up search-by-topic.
 
-  - External clients must be able to restore current contract state [[{20_QA.BESTPATTERN]]
+  - External clients must be able to restore current contract state [[{02_QA.BESTPATTERN]]
     by just reading events.
   - Ethereum can return just a very limited information in each
     read-only query. (Up to 7 fields). That means that reports and
@@ -1481,7 +1481,7 @@ Extracted from https://github.com/ethereum/devp2p/blob/master/rlpx.md#network-fo
 
 [[10_EVM}]]
 
-[[{10_EVM,20_QA.UX]]
+[[{10_EVM,02_QA.UX]]
 # Ethereum Addresses
 - Issues:
     REF: @[https://ethereum.stackexchange.com/questions/267/why-dont-ethereum-addresses-have-checksums]
@@ -1536,7 +1536,7 @@ Extracted from https://github.com/ethereum/devp2p/blob/master/rlpx.md#network-fo
           but widely adopted -Metamask,...-)
 [[}]]
 
-[[{standards.eip/erc,20_QA.UX,01_PM.TODO.NOW]]
+[[{standards.eip/erc,02_QA.UX,01_PM.TODO.NOW]]
 # Ethereum Name Service
 @[https://ens.domains/]
 """No more long addresses: ENS eliminates the need to copy - and worse,
@@ -1873,7 +1873,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
 - Purpose: Isolate final Dapp users from gas payments.
 - meta transactions allow users to interact with a public
   blockchain without paying a transaction fee:
-  - Users no longer have to understand the inner workings  [[{20_QA.UX]]
+  - Users no longer have to understand the inner workings  [[{02_QA.UX]]
     of public blockchains and market dynamics for TX fees. [[}]]
 
 - At its core, they are NEARLY IDENTICAL TO REGULAR NETWORK TXS
@@ -1942,7 +1942,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
   supported by the Ethereum ecosystem thanks to EVM support for signature recovery during contract 
   execution.
 ## EIP-191: Signed Data Standard [[{signature.standards.EIP191]]
-            [[ wallet.standards,02_use_case.legal,,20_QA.UX,01_PM.WiP]]
+            [[ wallet.standards,02_use_case.legal,,02_QA.UX,01_PM.WiP]]
 @[https://eips.ethereum.org/EIPS/eip-191]
 @[https://github.com/ethereum/EIPs/issues/191]
 @[https://medium.com/mycrypto/the-magic-of-digital-signatures-on-ethereum-98fe184dc9c7]
@@ -2001,7 +2001,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
   0x00:Illegal,  0x01:EIP712, 0x02:EthSign, 0x03:WalletBytes 0x04:WalletBytes32
 [[signature.standards.EIP191}]]
 
-## EIP-4361: Using EIP-191 for Offchain client Auth: [[{signature.standards.EIP4361,20_QA.UX,security.AAA,]]
+## EIP-4361: Using EIP-191 for Offchain client Auth: [[{signature.standards.EIP4361,02_QA.UX,security.AAA,]]
   @[https://github.com/spruceid/EIPs/blob/eip-4361/EIPS/eip-4361.md]
   @[https://ethereum-magicians.org/t/eip-4361-sign-in-with-ethereum/7263/2]
 
@@ -2073,7 +2073,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
    signDocument. Using a form of account abstraction is RECOMMENDED.
 [[signature.standards.EIP5289}]]
 
-[[{signature.standards.EIP712,20_QA.UX.wallet,wallet.metamask,wallet.lattice1,01_PM.TODO]] @[eip712]
+[[{signature.standards.EIP712,02_QA.UX.wallet,wallet.metamask,wallet.lattice1,01_PM.TODO]] @[eip712]
 ## EIP-712 (Typed human-friendly signing)
   "Ethereum typed structured data hashing and signing"
  @[https://eips.ethereum.org/EIPS/eip-712]
@@ -2132,7 +2132,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
   ├─ ...
 [[signature.standards.EIP712}]]
 
-[[{12_solidity,signature.multisignature,01_PM.WiP,20_QA.UX]]
+[[{12_solidity,signature.multisignature,01_PM.WiP,02_QA.UX]]
 ## Checking Signatures On-Chain
 - ECDSA signature == 65 byte array ( v (1), r (32), s (32) ).
   - web3.eth.sign (and others) can be used to insert extra signatures
@@ -2152,7 +2152,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
 
 
 
-[[{signature.multisignature,20_QA.UX,01_PM.TODO]]
+[[{signature.multisignature,02_QA.UX,01_PM.TODO]]
 ## EIP-1271. Verify signatures comming from contracts
 @[https://github.com/ethereum/EIPs/issues/1271]
 - It should be implemented by contracts which desire to sign messages
@@ -2540,7 +2540,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
 
     - Unicode string literals supported now.  unicode"Hello 😃"
 
-    - state mutability of functions can now be restricted during inheritance    [[20_QA]]
+    - state mutability of functions can now be restricted during inheritance    [[02_QA]]
       with "pure" and "view".
 
     - structs and arrays containing mapping can only be used in storage.
@@ -2581,7 +2581,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
         - called whenever the call data is empty (with/without ether received).
 
   - New Features
-    - try/catch statement allows to react on failed external calls.     [[20_QA.error_control]]
+    - try/catch statement allows to react on failed external calls.     [[02_QA.error_control]]
     - "struct" and "enum" types can be declared at file level.
     - Array slices can be used for calldata arrays.
       e.g.: low-level way to decode function call payload
@@ -2597,10 +2597,13 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
    @[https://blog.ethereum.org/2020/01/29/solidity-0.6-try-catch/]
 [[}]]
 
-[[{101,12_solidity.solc,20_QA.formal_verification,20_QA.auditing,13_SLC.debugging,01_PM.WiP]]
+[[{101,12_solidity.solc,02_QA.formal_verification,02_QA.auditing,13_SLC.debugging,01_PM.WiP]]
 
 ## compiling: [[{]]
-* solc command line tool is the standard compiler for Solidity. 
+* solc command line tool is the standard compiler for Solidity for the EVM.
+  Note: alternative `solang` compiler exists compiling [[{SCALABILITY.EWASM]] 
+        to WebASM in Solana and Substrate.
+      @[https://github.com/hyperledger/solang]          [[}]]
 * It has been transpiled to Javascript (solcjs npm package) and widely use by JS 
   frameworks like Remix and Truffle.
 
@@ -2793,7 +2796,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
   the source code and comparing the resulting bytecode (bitwise) to
   what is deployed. If it matches, SUCCESS.
 
-* Don't use '^' versioning [[{20_qa.bestpattern]]
+* Don't use '^' versioning [[{02_QA.bestpattern]]
   Extracted from: @[https://ethereum.stackexchange.com/questions/74785/publish-and-verify-the-source-contract-code-in-ethscan-i-tried-it-but-it-keeps/74796]
    """ ...contract has ^ in pragma, so no one can be sure what
      compiler was used**. Its presence is a sign that the code hasn't
@@ -2809,7 +2812,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
   @[https://contract-library.com/contracts/Ethereum/42A1CA0A79A9E7D83AEE9012D21920B02F9FC2C6]
 [[}]]
 
-[[{12_solidity,persistence.data_structure,20_QA,01_PM.WiP]]
+[[{12_solidity,persistence.data_structure,02_QA,01_PM.WiP]]
 # Solidity 101
 (Initial version from @[https://learnxinyminutes.com/docs/solidity/]
  with "lot of extras")
@@ -2832,7 +2835,7 @@ REF: @[https://hackmd.io/@ethswarm/SyrP04XdI] (2020-04)
     (Some low level-EVM data can be directly extracted from the
     TX receipt, like the gas spent, hash, ...).
 
-[[{20_QA.documentation.natspec]]
+[[{02_QA.documentation.natspec]]
 ## NATSPEC COMMENTS
   /// @title Contract title
   /// @author Author name
@@ -3226,7 +3229,7 @@ ecrecover
    string memory bar = string(abi.encodePacked(foo));
 
 ### STRING LIBRARIES
-  WARN: String manipulation inside contracts is discouraged. It wastes lot of   [[{20_QA.101]]
+  WARN: String manipulation inside contracts is discouraged. It wastes lot of   [[{02_QA.101]]
          gas and is error-prone. Use them as last-resort.  [[}]]
 
   - @[https://github.com/Arachnid/solidity-stringutils]
@@ -3613,7 +3616,7 @@ this.confirmPurchase(...) # External call
 
   - Solution: @[#solidity_storage_patterns]
 
-## Sorted Linked List [[{101,persistence.data_structure,20_QA.solidity,12_solidity.persistence]]
+## Sorted Linked List [[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
 @[https://github.com/vittominacori/solidity-linked-list]
 * utility library for using sorted linked list data structures.
 * Well maintained as of 2022-01
@@ -3625,10 +3628,10 @@ this.confirmPurchase(...) # External call
   popFront  | popBack
 [[}]]
 
-## EnumerableSet [[{101,persistence.data_structure,20_QA.solidity,12_solidity.persistence,01_PM.TODO]]
+## EnumerableSet [[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence,01_PM.TODO]]
 @[https://docs.openzeppelin.com/contracts/2.x/api/utils#EnumerableSet] [[}]]
 
-## Iterable map (arachnid gist) [[{101,persistence.data_structure,20_QA,12_solidity.persistence]]
+## Iterable map (arachnid gist) [[{101,persistence.data_structure,02_QA,12_solidity.persistence]]
 @[https://gist.github.com/ethers/7e6d443818cbc9ad2c38efa7c0f363d1]
 library itmap {
     struct entry {
@@ -3703,7 +3706,7 @@ contract Test {
 }
 [[}]]
 
-[[{12_solidity.101,persistence.data_structure,20_QA.solidity,12_solidity.persistence]]
+[[{12_solidity.101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
 ## storage patterns
 @[https://ethereum.stackexchange.com/questions/13167/are-there-well-solved-and-simple-storage-patterns-for-solidity]
 Context:
@@ -3817,7 +3820,7 @@ contract EntityDDBB {        contract EntityDDBB {     contract EntityDDBB {    
    Source Code          @[https://bitbucket.org/rhitchens2/soliditycrud/src/83703dcaf4d0c4b0d6adc0377455c4f257aa29a7/contracts/?at=master]
 [[}]]
 
-[[{101,persistence.data_structure,20_QA.solidity,12_solidity.persistence]]
+[[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
 ## Composed-keys in maps
 @[https://ethereum.stackexchange.com/questions/69727/map-multikey-how-to]
 ## Alt1: create key like hash of N input composing keys
@@ -3847,7 +3850,7 @@ contract EntityDDBB {        contract EntityDDBB {     contract EntityDDBB {    
 
 [[{12_solidity.error_control,transaction,10_EVM.101,02_doc_has.diagram,13_SLC.debugging]]
 [[ 10_EVM.implementation.besu,10_EVM.events]]
-[[ 13_SLC.testing,transaction,dev_framework.java.web3j,20_QA.error_control]]
+[[ 13_SLC.testing,transaction,dev_framework.java.web3j,02_QA.error_control]]
 # SOLIDITY ERROR CONTROL  ("QA 101")
 @[https://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions]
 
@@ -4298,7 +4301,7 @@ TODO: "...In upcoming articles, we will discuss what is formal verification
   @[https://github.com/dmuhs/PythX]
 [[}]]
 
-## QA: FORMAL PROOFs [[{20_QA.formal_verification,12_solidity.qa,01_PM.WiP]]
+## QA: FORMAL PROOFs [[{02_QA.formal_verification,12_solidity.qa,01_PM.WiP]]
 * External Links
   @[https://github.com/pirapira/eth-isabelle]
   @[https://github.com/pirapira/ethereum-formal-verification-overview]
@@ -4392,7 +4395,7 @@ TODO: "...In upcoming articles, we will discuss what is formal verification
       @[http://www.cs.umd.edu/~aseem/solidetherplas.pdf]
 [[}]]
 
-## FP: (Py)Slither [[{security,20_QA,12_solidity,01_PM.TODO.now]]
+## FP: (Py)Slither [[{security,02_QA,12_solidity,01_PM.TODO.now]]
   @[https://github.com/crytic/slither]
   - Detects vulnerables with LOW FALSE POSITIVES.
   - Identifies where the error condition occurs in the source code
@@ -4415,7 +4418,7 @@ TODO: "...In upcoming articles, we will discuss what is formal verification
 [[}]]
 [[12_solidity.qa.code_analysis}]]
 
-[[{12_solidity.101,20_QA.error_control,02_doc_has.tutorial,01_PM.WiP]]
+[[{12_solidity.101,02_QA.error_control,02_doc_has.tutorial,01_PM.WiP]]
 # Solidity Best Patterns
 
 This section covers a series of recomendations in order to develop
@@ -4528,7 +4531,7 @@ NOTE: Most Solidity limitations are EVM limitations actually and such
 [[}]]
 [[}]]
 
-[[{standards.eip/erc.165,devops,12_solidity.101,architecture,20_QA.UX]]
+[[{standards.eip/erc.165,devops,12_solidity.101,architecture,02_QA.UX]]
 # EIP-165: Standard Interface Detection at Runtime
 
   - NOTE: EIP-1820 improves over this standard, but EIP-165 is not
@@ -4573,7 +4576,7 @@ NOTE: Most Solidity limitations are EVM limitations actually and such
   - See also:@[#eip_1820] Pseudo-introspection Registry Contract
 [[}]]
 
-[[{devops,standards.eip/erc.1820,12_solidity.101,architecture,20_QA.UX,01_PM.TODO.NOW]]
+[[{devops,standards.eip/erc.1820,12_solidity.101,architecture,02_QA.UX,01_PM.TODO.NOW]]
 # EIP-1820: EIP-165"++" 
 https://eips.ethereum.org/EIPS/eip-1820
     - Pseudo-introspection Registry Contract
@@ -5024,7 +5027,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
 
 
 [[{101,10_EVM,persistence.contract_state,persistence.data_structure]]
-[[ 20_QA.UX,20_QA.solidity,12_solidity.upgradable_contracts]]
+[[ 02_QA.UX,02_QA.solidity,12_solidity.upgradable_contracts]]
 [[ 13_SLC.troubleshooting,standards.eip/erc.2535]]
 # EIP-2535 Diamonds: Progressively upgradable Contracts
 @[https://eips.ethereum.org/EIPS/eip-2535]
@@ -5779,7 +5782,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
     to send a TLS CERTIFICATE GENERATED OFF-CHAIN:
     - At (EVM) TX execution, 'ec-recover' is used to recover the signature of the TLS
       certificate signer and then compared to the list of signatures authorized by the contract.
-      (Sort of multi-signature within 1 transaction) !!!          [[{20_QA.UX]]
+      (Sort of multi-signature within 1 transaction) !!!          [[{02_QA.UX]]
       + signature of the investor (ethereum transaction signature)
       + signature of the issuer   (embedded certificate signature) [[}]]
       NOTE: The 'ec-recover' pattern is the standard way to "zip" many off-chain 
@@ -5800,60 +5803,61 @@ we would need to connect to the same Swarm network to which the metadata file wa
 [[tokens}]]
 
 # Wallets ─────────────────────────────────────────────────────────
-## Wallet Comparative [[{wallet.101,20_QA.UX.WALLET,01_PM.WiP]]
+## Wallet Comparative [[{wallet.101,02_QA.UX.WALLET,01_PM.WiP]]
   Based on previous work from: https://github.com/shanefontaine/ethereum-wallet-comparison
   LECTURE: 1: yes/OK/supported, 0: no/KO/unsupported, p: In-progress
-                              ┌--------------------------------------- https://authereum.org
-                              | ┌····································· https://universallogin.io/
-                              | · ┌----------------------------------- https://www.portis.io/
-                              | · | ┌································· https://www.argent.xyz/
-                              | · | · ┌------------------------------- https://metamask.io/
-                              | · | · | ┌····························· https://abridged.github.io/splash/
-                              | · | · | · ┌--------------------------- https://safe.gnosis.io/
-                              | · | · | · | ┌························· https://magic.link/
-                              | · | · | · | · ┌----------------------- https://tor.us
-                              | · | · | · | · | ┌····················· https://www.dapperlabs.com/
-                              | · | · | · | · | · ┌------------------- https://wallet.coinbase.com/
-                              | · | · | · | · | · | ┌················· https://status.im/
-                              | · | · | · | · | · | · ┌--------------- https://trustwallet.com/
-                              | · | · | · | · | · | · | ┌············· https://www.ledger.com/
-                              | · | · | · | · | · | · | · ┌----------- https://squarelink.com
-                              | · | · | · | · | · | · | · | ┌········· https://ethvault.xyz
-                              | · | · | · | · | · | · | · | · ┌------- https://github.com/poanetwork/nifty-wallet
-                              | · | · | · | · | · | · | · | · | ┌····· https://bitski.com
-                              | · | · | · | · | · | · | · | · | · ┌--- http://breadapp.com
-                              | · | · | · | · | · | · | · | · | · | ┌· https://token.im/
-                              | · | · | · | · | · | · | · | · | · | ·  Venly wallet
-                              | · | · | · | · | · | · | · | · | · | ·  TODO: WalletConnect (OOSS protocol connecting dApps to mobile wallets
-                              | · | · | · | · | · | · | · | · | · | ·        using QR code scanning or deep linking), Fortmatic.
-                              | · | · | · | · | · | · | · | · | · | ·      - https://github.com/walleth, https://walleth.org/,
-                                                                             OOSS Android native wallet.
- ENS Integration             |1|1|0|1|1|1|0|0|0|0|0|1|1|0|0|1|1|0|0|1|<- users can natively create an ENS name
- Browser Extension Required  |1|1|1|1|0|1|1|1|1|0|1|1|1|1|1|1|0|1|1|1|
- Supports all Mobile Browsers|1|1|1|1|0|1|1|1|1|0|1|1|1|0|1|1|0|1|1|1|
- Integrates with Native Apps |1|1|1|1|0|1|1|1|1|0|0|0|0|0|1|1|0|1|0|1|
- No Phone Number Required    |1|1|1|0|1|1|1|0|1|0|0|1|1|1|1|1|1|1|1|1|
- Account Recovery            |1|1|1|1|1|1|0|1|1|1|1|0|1|0|1|1|1|1|1|1|
- No Seed Phrase Backup       |1|1|0|1|0|1|0|1|1|0|0|1|1|0|1|1|0|1|0|0|
- Non-custodial               |1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|0|1|1|<- no 3rd party needed
- Exportable Wallet           |1|1|1|0|1|1|1|1|1|0|0|0|1|1|1|1|1|0|1|1|
- Testnet Availability        |1|1|1|0|1|1|1|1|1|0|1|1|0|1|1|1|1|1|0|0|
- SC-based(vs EOAs) Accounts  |1|1|0|1|0|1|1|0|0|1|0|0|0|0|0|0|0|0|0|0|
- Pay Gas in Tokens           |1|1|0|0|0|p|1|0|0|0|0|0|0|0|0|0|0|0|0|0|<- vs just ethers
- Web2.0 Style Login          |1|0|1|1|0|1|0|1|1|1|0|1|0|0|1|1|0|1|0|0|<- familiar username/password [[security.AAA]]
- Purchase ETH/Tokens In App  |1|0|1|1|p|1|0|0|0|1|1|0|1|0|1|0|1|0|1|1|
- Web3 Provider Available     |1|0|1|0|1|0|0|1|0|1|1|0|1|0|1|1|1|1|0|1|
- Software Token 2FA          |1|0|1|0|0|p|0|1|0|0|0|0|0|0|1|0|0|0|0|0|
- Hardware Token 2FA          |1|0|0|0|0|p|0|0|0|0|0|0|0|0|0|0|0|0|0|0|
- Hardware Wallet Integration |1|0|0|0|1|p|0|0|0|1|0|0|0|1|0|0|1|0|0|1|
- Transaction Firewall        |1|0|0|1|0|p|0|0|0|0|0|0|0|0|0|0|0|0|0|0|<- TX check against "firewall" to prevent attacks [[security]]
- Off-chain Login             |1|0|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|<- no need for "TX-logins" in different devices
- No Mobile App Required      |1|0|1|0|1|1|1|1|1|1|0|0|0|1|1|1|1|1|0|0|
- No Hardware Required        |1|1|1|1|1|1|1|1|1|1|1|1|1|0|1|1|1|1|1|1|
- Sandboxed Key Storage       |1|0|1|1|1|0|1|1|1|1|1|1|1|0|1|1|1|1|1|1|<- or iframes and not easily accessible
- Upgradeable/Modular S.C.    |1|1|0|1|1|1|1|0|0|1|0|0|0|0|0|0|0|0|0|0|<- SC-based User's contract is upgradeable/modular
- Batched Transactions        |1|0|0|0|0|1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|<- Send N TX as 1 (atomic) onchain TX [[architecture.batch,scalability.offchain,transaction.signature]]
- Open Sourced                |1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|
+                              ┌----------------------------------------- https://airgap.it
+                              | ┌--------------------------------------- https://authereum.org
+                              | | ┌····································· https://universallogin.io/
+                              | | · ┌----------------------------------- https://www.portis.io/
+                              | | · | ┌································· https://www.argent.xyz/
+                              | | · | · ┌------------------------------- https://metamask.io/
+                              | | · | · | ┌····························· https://abridged.github.io/splash/
+                              | | · | · | · ┌--------------------------- https://safe.gnosis.io/
+                              | | · | · | · | ┌························· https://magic.link/
+                              | | · | · | · | · ┌----------------------- https://tor.us
+                              | | · | · | · | · | ┌····················· https://www.dapperlabs.com/
+                              | | · | · | · | · | · ┌------------------- https://wallet.coinbase.com/
+                              | | · | · | · | · | · | ┌················· https://status.im/
+                              | | · | · | · | · | · | · ┌--------------- https://trustwallet.com/
+                              | | · | · | · | · | · | · | ┌············· https://www.ledger.com/
+                              | | · | · | · | · | · | · | · ┌----------- https://squarelink.com
+                              | | · | · | · | · | · | · | · | ┌········· https://ethvault.xyz
+                              | | · | · | · | · | · | · | · | · ┌------- https://github.com/poanetwork/nifty-wallet
+                              | | · | · | · | · | · | · | · | · | ┌····· https://bitski.com
+                              | | · | · | · | · | · | · | · | · | · ┌--- http://breadapp.com
+                              | | · | · | · | · | · | · | · | · | · | ┌· https://token.im/
+                              | | · | · | · | · | · | · | · | · | · | ·  Venly wallet
+                              | | · | · | · | · | · | · | · | · | · | ·  TODO: WalletConnect (OOSS protocol connecting dApps to mobile wallets
+                              | | · | · | · | · | · | · | · | · | · | ·        using QR code scanning or deep linking), Fortmatic.
+                              | | · | · | · | · | · | · | · | · | · | ·      - https://github.com/walleth, https://walleth.org/,
+                                                                               OOSS Android native wallet.
+ ENS Integration             |?|1|1|0|1|1|1|0|0|0|0|0|1|1|0|0|1|1|0|0|1|<- users can natively create an ENS name
+ Browser Extension Required  |0|1|1|1|1|0|1|1|1|1|0|1|1|1|1|1|1|0|1|1|1|
+ Supports all Mobile Browsers|?|1|1|1|1|0|1|1|1|1|0|1|1|1|0|1|1|0|1|1|1|
+ Integrates with Native Apps |?|1|1|1|1|0|1|1|1|1|0|0|0|0|0|1|1|0|1|0|1|
+ No Phone Number Required    |?|1|1|1|0|1|1|1|0|1|0|0|1|1|1|1|1|1|1|1|1|
+ Account Recovery            |?|1|1|1|1|1|1|0|1|1|1|1|0|1|0|1|1|1|1|1|1|
+ No Seed Phrase Backup       |?|1|1|0|1|0|1|0|1|1|0|0|1|1|0|1|1|0|1|0|0|
+ Non-custodial               |1|1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|0|1|1|<- no 3rd party needed
+ Exportable Wallet           |?|1|1|1|0|1|1|1|1|1|0|0|0|1|1|1|1|1|0|1|1|
+ Testnet Availability        |0|1|1|1|0|1|1|1|1|1|0|1|1|0|1|1|1|1|1|0|0|
+ SC-based(vs EOAs) Accounts  |0|1|1|0|1|0|1|1|0|0|1|0|0|0|0|0|0|0|0|0|0|
+ Pay Gas in Tokens           |?|1|1|0|0|0|p|1|0|0|0|0|0|0|0|0|0|0|0|0|0|<- vs just ethers
+ Web2.0 Style Login          |?|1|0|1|1|0|1|0|1|1|1|0|1|0|0|1|1|0|1|0|0|<- familiar username/password [[security.AAA]]
+ Purchase ETH/Tokens In App  |?|1|0|1|1|p|1|0|0|0|1|1|0|1|0|1|0|1|0|1|1|
+ Web3 Provider Available     |?|1|0|1|0|1|0|0|1|0|1|1|0|1|0|1|1|1|1|0|1|
+ Software Token 2FA          |0|1|0|1|0|0|p|0|1|0|0|0|0|0|0|1|0|0|0|0|0|
+ Hardware Token 2FA          |1|1|0|0|0|0|p|0|0|0|0|0|0|0|0|0|0|0|0|0|0|
+ Hardware Wallet Integration |?|1|0|0|0|1|p|0|0|0|1|0|0|0|1|0|0|1|0|0|1|
+ Transaction Firewall        |?|1|0|0|1|0|p|0|0|0|0|0|0|0|0|0|0|0|0|0|0|<- TX check against "firewall" to prevent attacks [[security]]
+ Off-chain Login             |?|1|0|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|<- no need for "TX-logins" in different devices
+ No Mobile App Required      |0|1|0|1|0|1|1|1|1|1|1|0|0|0|1|1|1|1|1|0|0|
+ No Hardware Required        |0|1|1|1|1|1|1|1|1|1|1|1|1|1|0|1|1|1|1|1|1|
+ Sandboxed Key Storage       |1|1|0|1|1|1|0|1|1|1|1|1|1|1|0|1|1|1|1|1|1|<- or iframes and not easily accessible
+ Upgradeable/Modular S.C.    |0|1|1|0|1|1|1|1|0|0|1|0|0|0|0|0|0|0|0|0|0|<- SC-based User's contract is upgradeable/modular
+ Batched Transactions        |?|1|0|0|0|0|1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|<- Send N TX as 1 (atomic) onchain TX [[architecture.batch,scalability.offchain,transaction.signature]]
+ Open Sourced                |1|1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|
 [[}]]
 
 ## MetaMask Wallet [{wallet.metamask,dev_framework.js,security.aaa]]
@@ -5953,7 +5957,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
   - Unparalleled Privacy Control:
     select one or more accounts to associate with
     a website or create a new account just for that site .
-  - EIP-2255 (site) permissions system. [[{20_QA.UX]]
+  - EIP-2255 (site) permissions system. [[{02_QA.UX]]
        proposed standard interface for granting wallet security-sensitive
        asking "just once" in order to get permissions like:
        - "Reveal wallet address to a given site".
@@ -6006,7 +6010,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
       - great user experience in integrating with MetaMask.  [[}]]
 [[wallet.metamask}]]
 
-## LedgerHQ Hardware Wallet [[{wallet.hsm,20_QA.UX,security]]
+## LedgerHQ Hardware Wallet [[{wallet.hsm,02_QA.UX,security]]
 @[https://github.com/LedgerHQ]
 - LedgerJS examples: @[https://github.com/LedgerHQ/ledgerjs-examples]
 - High activity on Github, including (non-complete list):
@@ -6032,6 +6036,18 @@ we would need to connect to the same Swarm network to which the metadata file wa
   - ledgerctl          : Python Lib. to control Ledger devices
 
   - Does it support EIP-712(Typed human-friendly signing) ??
+[[}]]
+
+## AirGap Wallet [{wallet.airgap,security.aaa]]
+@[https://airgap.it]
+* airgap-vault 
+  The AirGap Vault is installed on a spare smartphone that has
+  no connection to any network, thus it is air gapped. 
+  This app handles the private key. 
+
+* airgap-wallet
+  The AirGap Wallet is installed on an everyday smartphone. 
+  This app has only access to public information. 
 [[}]]
 
 ## Mnemonic to Seed [[{wallet.mnemonics]]
@@ -6576,7 +6592,7 @@ private void sendTransferTokensTransaction(...)  {
 [[}]]
 [[dev_framework.go}]]
 
-# Brownie [[{dev_framework.python.brownie,13_SLC.testing,20_QA,01_PM.TODO]]
+# Brownie [[{dev_framework.python.brownie,13_SLC.testing,02_QA,01_PM.TODO]]
   @[https://eth-brownie.readthedocs.io/en/latest/]
   @[https://eth-brownie.readthedocs.io/en/stable/tests-hypothesis-property.html]  [[{13_SLC.testing.property_based}]]
   @[https://github.com/HyperLink-Technology/brownie]
@@ -7340,7 +7356,7 @@ here are two kinds of accounts in Ethereum which share the same address space
 humans) and contract accounts which are controlled by the code stored
 together with the account.
 
-[[{01_PM.low_code,scalability.offchain,dev_framework.ipfs,20_QA.UX,01_PM.TODO]]
+[[{01_PM.low_code,scalability.offchain,dev_framework.ipfs,02_QA.UX,01_PM.TODO]]
 ### Vue+Ethereum+IPFS DApp Starter
 @[https://github.com/redacademy/vue-ethereum-ipfs] [[}]]
 [[}]]
@@ -7535,7 +7551,7 @@ curl -X POST -H "Content-Type: application/json" \
 [[}]]
 
 [[{integration.protocol.thegraph,integration.graphql,scalability.graph,10_EVM.events]]
-[[01_PM.low_code,dev_framework.the_graph,20_QA.UX,01_PM.TODO]]
+[[01_PM.low_code,dev_framework.the_graph,02_QA.UX,01_PM.TODO]]
 ## TheGraph Protocol
 - "Before The Graph, teams had to develop and operate proprietary
   indexing servers. This required significant engineering and hardware
@@ -7797,7 +7813,7 @@ Note: Whenever the Ethereum network has been reseted
         current ethereum network.
 [[integration.protocol.thegraph}]]
 
-## Alethio [[{integration.data.alethio,20_QA.auditing,13_SLC.monitoring,security,02_use_case.finance.fraud]]
+## Alethio [[{integration.data.alethio,02_QA.auditing,13_SLC.monitoring,security,02_use_case.finance.fraud]]
 @[https://aleth.io]
 @[https://media.consensys.net/alethio-lighting-up-the-blockchain-with-real-time-stats-a80bb30576db]
 @[https://media.consensys.net/using-machine-learning-to-understand-the-ethereum-blockchain-1778485d603a]
@@ -8650,7 +8666,7 @@ scale.
 [[}]]
 
 # Radar [[{]]
-## TokenScripts [[{wallet.mobile,scalability.sidechain,privacy.offchain,01_PM.radar,20_QA.UX]]
+## TokenScripts [[{wallet.mobile,scalability.sidechain,privacy.offchain,01_PM.radar,02_QA.UX]]
     In short, it's like a SECURE FRONT-END FOR TOKENS.
   - AlphaWallet is a production-ready white-label wallet that is easy to
     customize. TokenScript is similar to web frameworks used by web apps,
@@ -8699,7 +8715,7 @@ scale.
 # Non Classified / Unordered / Backlog
 
 ## EthVM OOSS Blockchain Explorer focused mainly on Ethereum
-    [[{20_QA.auditing,integration,13_SLC.monitoring,01_PM.radar}]]
+    [[{02_QA.auditing,integration,13_SLC.monitoring,01_PM.radar}]]
     (although other networks and forks will be supported over time)
     under the SSPL license (a small variation of the GNU Affero License v3)
     and written in a mixture of different languages.
@@ -8715,7 +8731,7 @@ scale.
 ## Solidity Security Considerations 
 @[http://solidity.readthedocs.io/en/develop/security-considerations.html#security-considerations]
 
-[[{20_QA.solidity,12_solidity,20_QA.UX,01_PM.radar}]]
+[[{02_QA.solidity,12_solidity,02_QA.UX,01_PM.radar}]]
 ## Ethereum Package Registry
   @[https://www.ethpm.com/]
   - A package index for Ethereum smart contract packages.
@@ -8786,14 +8802,14 @@ scale.
      of it, use the vault key. After a delay the vault key can send the
      money to your hotwallet.
 
-[[{13_SLC.testing,20_QA,standards.EIP/ERC,10_EVM}]]
+[[{13_SLC.testing,02_QA,standards.EIP/ERC,10_EVM}]]
 ## Ephemeral Testnet YOLO 
    In preparation for the next network upgrade, Berlin, an ephemeral
    testnet called YOLO was launched with two new EIPs enabled: EIP-2315,
    which adds subroutines to the EVM, and EIP-2537, which introduces a
    new precompile for the BLS12-381 curve.
 
-[[{persistence.offchain_objects,,20_QA.UX,architecture,scalability.offchain}]]
+[[{persistence.offchain_objects,,02_QA.UX,architecture,scalability.offchain}]]
 ## OrbitDB 
   @[https://orbitdb.org/]
   - OrbitDB is a serverless, distributed, peer-to-peer database. OrbitDB
@@ -8814,7 +8830,7 @@ scale.
      library/package formats (EIP190), and wallet formats (EIP-85).
 
  [[{13_SLC,persistence.contract_state,security]]
-[[devops,12_solidity.troubleshooting,20_QA.UX]]
+[[devops,12_solidity.troubleshooting,02_QA.UX]]
 ## LEGIONS
   @[https://diligence.consensys.net/blog/2020/06/legions-a-tool-for-seekers/]
 " Tool to poke around Geth Nodes in the terminal."
@@ -8898,7 +8914,7 @@ REF: @[https://frax.finance/whitepaper/]
         https://frax.finance/whitepaper/   [[}]]
 
 
-[[{12_solidity,security,20_QA.auditing]]
+[[{12_solidity,security,02_QA.auditing]]
 ## EthTrust
    https://entethalliance.org/enterprise-ethereum-alliance-launches-ethtrust-security-initiative-to-advance-confidence-in-ethereum-as-a-global-settlement-layer-for-transactions-of-all-types/
 
@@ -9023,7 +9039,7 @@ REF: @[https://frax.finance/whitepaper/]
    A simple transaction on Uniswap now often costs more than the transaction itself,
    leaving a gap that needed filling.
 
-   QuickSwap was quick to address the issues plaguing Ethereum-based DEXs,[[{10_EVM.GAS_PRICE,20_QA.UX]]
+   QuickSwap was quick to address the issues plaguing Ethereum-based DEXs,[[{10_EVM.GAS_PRICE,02_QA.UX]]
    by offering much lower transaction fees and almost instant block formation time. [[}]]
 
    QuickSwap DES allows users to trade any ERC-20 tokens.
@@ -9054,7 +9070,7 @@ REF: @[https://frax.finance/whitepaper/]
 
 
 [[{02_use_case.finance.compliance,02_use_case.finance.fraud]]
-[[ standards,20_QA.auditing,01_PM.RADAR]]
+[[ standards,02_QA.auditing,01_PM.RADAR]]
 ## Hapi One: On-Chain X-Chain Protocol&Oracle
   https://www.hapi.one
    - On-Chain Cybersecurity Cross-Chain Protocol and Oracle
@@ -9062,7 +9078,7 @@ REF: @[https://frax.finance/whitepaper/]
    - Monitor for frauds, stolen-wallets, ...
    - Works on Polygon.Network (cross-chain Ethereum compatible networks) [[}]]
 
-[[{02_use_case.IoT.arduino,20_QA.UX]]
+[[{02_use_case.IoT.arduino,02_QA.UX]]
 ## FireFly IoT Wallet 
   @[https://firefly.city/]
   @[https://ethereum.stackexchange.com/questions/29524/sign-raw-transaction-offline-with-c-on-arduino]
@@ -9224,7 +9240,7 @@ https://starkware.co/stark/
 ## web3j: Different privateKey generated by Mnemonic comparing to other libraries
    web3j/web3jhttps://github.com/web3j/web3j/issues/919 
 
-[[{01_PM.RADAR,02_PM.UX.spreadsheet]]
+[[{01_PM.RADAR,02_QA.UX.spreadsheet]]
 ## Introducing LUXOR - a spreadsheet for decentralized data.
    https://m.youtube.com/watch?v=DmFLWpV7nGQ
 [[}]]
@@ -9384,7 +9400,7 @@ https://starkware.co/stark/
 ## Use golang to interact with Ethereum.
     https://www.programmersought.com/article/99731280412/
 
-## devops.deployment.smartcontract,20_QA.UX @ma
+## devops.deployment.smartcontract,02_QA.UX @ma
     A Buidler Plugin For Replicable Deployments And Tests
     · Created by Ronan Sandford (wighawag), a prominent smart contract developer and
       an author of the ERC-1155 standard
@@ -9489,7 +9505,7 @@ https://starkware.co/stark/
 
 ## https://polymath.network/
 
-## Open Zepellin (OZ) Summary [dev_framework.zepellin,12_solidity,security.aaa,20_QA,01_PM.TODO]
+## Open Zepellin (OZ) Summary [dev_framework.zepellin,12_solidity,security.aaa,02_QA,01_PM.TODO]
     WARN: upgradable contracts, the "core" of OZ, looks to be replaced by "Diamon Standard"
     @[https://github.com/OpenZeppelin/]
     - TODO: Summary of "important" libraries
@@ -10010,7 +10026,7 @@ https://starkware.co/stark/
 
 
 TODO/BACKLOG/UNORDERED [[{01_PM.TODO,01_PM.BACKLOG]]
-[[{20_QA.error_control,01_PM.TODO.NOW]]
+[[{02_QA.error_control,01_PM.TODO.NOW]]
 ## Error handling
  TODO: update existing info and details about 'error' keyword, try-catch limitations)
  https://medium.com/coinmonks/learn-solidity-lesson-26-error-handling-ccf350bc9374
@@ -10102,7 +10118,7 @@ TODO/BACKLOG/UNORDERED [[{01_PM.TODO,01_PM.BACKLOG]]
       of extended functionality  ..."
 [[}]]
 
-[[{20_QA.formal_verification,scalability.consensus.ethereum2]]
+[[{02_QA.formal_verification,scalability.consensus.ethereum2]]
 ## Formal Verification for Eth2.0 (Beacon Chain)
    """ ...With my colleague Joanne Fuller, PhD at ConsenSys, we are
     delighted to have released the first version of the formal
@@ -10153,13 +10169,13 @@ TODO/BACKLOG/UNORDERED [[{01_PM.TODO,01_PM.BACKLOG]]
    @[https://blog.nucypher.com/numerology-fast-ecc-arithmetic-on-chain-5eb438a735d4]
 [[}]]
 
-[[{20_QA.formal_verification}]]
+[[{02_QA.formal_verification}]]
 ## DeepSea
   @[https://certik.org/deepsea_blockchain.html]
    Research at Yale and Columbia to further their work on DeepSEA,
    a formally verified language that compiles to the EVM.
 
-[[{persistence.data_structure,20_QA.solidity,12_solidity.persistence,02_doc_has.diagram]]
+[[{persistence.data_structure,02_QA.solidity,12_solidity.persistence,02_doc_has.diagram]]
 ## SandCastle_SQL 
   @[https://pegasys.tech/sandcastle-brings-sql-to-ethereum-smart-contracts/]
     WARN : Doesn't look to be continued.
@@ -10285,7 +10301,7 @@ TODO/BACKLOG/UNORDERED [[{01_PM.TODO,01_PM.BACKLOG]]
  @[http://blog.notdot.net/2012/08/Damn-Cool-Algorithms-Homomorphic-Hashing]
 [[}]]
 
-[[{wallet.mobile,20_QA.UX,02_USE_CASE,01_PM.radar]]
+[[{wallet.mobile,02_QA.UX,02_USE_CASE,01_PM.radar]]
 ## Status: Wallet and IM https://status.im/ 
  @[https://github.com/status-im/status-react]
   - currently (20??-??) in alpha:
@@ -10340,7 +10356,7 @@ TODO/BACKLOG/UNORDERED [[{01_PM.TODO,01_PM.BACKLOG]]
    the solution.
 [[}]]
 
-[[{12_solidity,20_QA.solidity,20_QA.documentation]]
+[[{12_solidity,02_QA.solidity,02_QA.documentation]]
 ## Piet: parses \*.sol
    generates graphs of contracts and their relations
    (inheritance structure,...).
@@ -10562,7 +10578,7 @@ Custom ethereum client that uploads blockchain data to BigQuery
 [[{standards.eip/erc.191,security.governance]]
 ## EIP-173: Contract Ownership Standard
 -  https://eips.ethereum.org/EIPS/eip-173
-- function transferOwnership(address _newOwner) external;
+- function transferOwnership(address newOwner) external;
   └ event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 - function owner() view external returns(address);
    [[}]]
@@ -10655,7 +10671,7 @@ Custom ethereum client that uploads blockchain data to BigQuery
    - https://blog.ricmoo.com/verifying-messages-in-solidity-50a94f82b2ca
   [[}]]
 
-[[{12_solidity.101,12_solidity.troubleshooting,20_QA.error_control,01_pm.todo]]
+[[{12_solidity.101,12_solidity.troubleshooting,02_QA.error_control,01_pm.todo]]
 ## Bubbling up Custom Errors
    https://ethereum.stackexchange.com/questions/109457/how-to-bubble-up-a-custom-error-when-using-delegatecall custom_errors
 [[}]]
