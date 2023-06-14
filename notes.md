@@ -10768,14 +10768,22 @@ Requires: EIP-137 (ENS), EIP-165
 
 * Naive approach: add method directly to target contract. Shortcomings:
   * Each contract must maintain its own list of interface implementations.
-  * Modifying this list requires access controls, which the contract may not have previously required.
-  * Support for this must be designed in when the contract is written, and cannot be retrofitted afterwards.
+  * Modifying this list requires access controls, which the contract 
+    may not have previously required.
+  * Support for this must be designed in when the contract is 
+    written, and cannot be retrofitted afterwards.
   * Only one canonical list of interfaces can be supported.
-  Using ENS resolvers instead mitigates these shortcomings, making it possible for anyone
-  to associate interfaces with a name, even for contracts not previously built with this in mind.
+      Using ENS resolvers instead mitigates these shortcomings, making it 
+    possible for anyone to associate interfaces with a name, even for 
+    contracts not previously built with this in mind.
 
 * Teku: Java Implementation of Ethereum 2.0 Beacon Chain
   https://docs.teku.consensys.net/ 
   https://github.com/ConsenSys/teku
+
+## ERC-6551: The Game-Changing NFT Standard?  [[{]]
+* https://eips.ethereum.org/EIPS/eip-6551
+* https://www.bsc.news/post/erc-6551-the-game-changing-nft-standard
+[[}]]
 
 [[01_PM.TODO,01_PM.BACKLOG}]]
