@@ -1,4 +1,4 @@
-● NFT MARKETPLACE COMPARATIVES:
+# NFT MARKETPLACE COMPARATIVES:
   REF: https://www.journaldunet.com/media/publishers/1515923-le-guide-des-differentes-marketplaces-de-nft/
        + other
 
@@ -61,7 +61,7 @@
  CC: Credit Card
  (F): "Future"
 
-● ETHEREUM OOSS MarketPlaces (1155 Compliant)  [[{02_use_case.nft_marketplace,01_PM.WiP]]
+# ETHEREUM OOSS MarketPlaces (1155 Compliant)  [[{02_use_case.nft_marketplace,01_PM.WiP]]
   ===========================================
 Source: https://github.com/topics/nft-marketplace
 
@@ -83,7 +83,7 @@ Source: https://github.com/topics/nft-marketplace
 - https://github.com/yessGlory17/nft-marketplace
 [[}]]
 
-● EIP-2981: NFT Royalty Payments [[{02_use_case.royalty,tokens.ERC1155,tokens.ERC721]]
+# EIP-2981: NFT Royalty Payments [[{02_use_case.royalty,tokens.ERC1155,tokens.ERC721]]
 #[ERC_1155_summary]
 - Current state (no-standard):
   Artist → MarketPlace: "Do you support royalty payments?"
