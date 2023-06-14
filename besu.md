@@ -3,130 +3,7 @@
 * Consensys implementation of Ethereum nodes supporting pluglable architectures for 
   consensus, storage, ...
 
-## QBFT PoA Consensus (Permissioned Networks) [[{consensus.IBFT]]
-* Evolution built on BFT consensus principles.
-* written in Dafny by Roberto Saltini.
-* enabling formal verification of its correctness, based on work done
-  by Henrique Moniz, it fixes some potential issues in IBFT in 
-  certain configurations.
-* Official spec: @[https://entethalliance.github.io/client-spec/qbft_spec.html]
-[[}]]
 
-
-## IBFT Consensus (Permissioned Networks) [[{consensus.IBFT]]
-**WARN:** Replaced by newer QBFT consensus. QBFT is now the recomended consensus for private networks.
-- Consensus with TX finality -vs probabilistic-. When the TX is accepted we are sure
-  that all nodes will see it and no future reordering will happen (at the cost of
-  more centralization in validator nodes).
-
-@[https://github.com/ethereum/EIPs/issues/650]
-- IBFT: stands for Istambul Bizantine Fault Tolerant
-- Target banks and fin.instutions, replacing PoW
-  since validator scalability is not required.
-- Hash settlement finality and minimum latency.
-- Deeply inspired by Clique PoA @[https://github.com/ethereum/EIPs/issues/225]
-- also inspired by Hyperledger's SBFT, Tendermint, HydraChain, and NCCU BFT.
-
-```
-   ROUND                                        ROUND STATE
-  Consensus round. A round starts with         Consensus messages of a specific
-  the proposer creating a block proposal       sequence and round, including
-  and ends with a block commitment or          pre-prepare message, prepare message,
-  round change.                                and commit message.
-  
-   PROPOSAL                                  SEQUENCE
-  New block generation proposal which is    Sequence number of a proposal. A
-  undergoing consensus processing           sequence number should be greater than
-                                            all previous sequence numbers.
-                                            Currently each proposed block height is
-                                            its associated sequence number.
-  
-   BACKLOG                                   CONSENSUS PROOF:
-  The storage to keep future consensus      The commitment signatures of a block
-  messages due to the async nature of the   that can prove the block has gone
-  network.                                  through the consensus process.
-  
-   SNAPSHOT:
-  The validator voting state from last
-  epoch
-```
-
-  VALIDATION ROUND LOOP
-  [validators] → [validators]:  enter  validator.state NEW-ROUND
-  [validators] → [validators]:  pick one (round-robin by default or sticky) as
-                                the   PROPOSE
-    PROPOSE    →  PROPOSE    :  propose new block proposal
-    PROPOSE    →  network    :  broadast   block-proposal + PRE-PREPARE message
-  [validators] → [validators]:  enter  validator.state PRE-PREPARED
-  [validators] → network     :  broadcast   PREPARE message
-                                (make sure all validators are working on the
-                                 same sequence and the same round)
-  [validators] → [validators]:  wait for (2F + 1) PREPARE messages
-                                then enter  validator.state PREPARED
-  [validators] → network     :  broadcasts   COMMIT message .
-                                (inform peers that validator accepts proposed block
-                                and is going to insert the block to the chain)
-  [validators] → [validators]:  wait for (2F + 1) COMMIT messages
-                                enter  validator.state COMMITTED
-                                insert the block to the chain
-                                enter  validator.state FINAL-COMMITTED
-  [validators] → network     :  broadcasts   ROUND-CHANGE message
-  [validators] → [validators]:  wait for (2F + 1) ROUND-CHANGE messages
-                                then enter  validator.state NEW-ROUND
-
-
-  RUNNING ISTANBUL BFT VALIDATORS&AMP;NODES:
-  $ geth  --datadir "/eth" init "/eth/genesis.json"                   // ← Initialize the data folder as (PRE-SETUP)
-  $ geth --datadir "/eth" --mine --minerthreads 1 --syncmode "full"   // ← Start-up validators
-  $ geth --datadir "/eth"                                             // ← Start-up regular nodes
-
-  ISTANBUL OPTIONS:
-  --istanbul.requesttimeout value  round in milliseconds (default: 10000)
-  --istanbul.blockperiod    value  Default min.difference between two consecutive
-                                   block's timestamps in seconds (default: 1)
-
-  NODEKEY AND VALIDATO
-  To be a validator, a node needs to meet the following conditions:
-  - Its account (nodekey-derived) address MUST be listed in extraData's validators section
-  - validator nodekey is used as priv.key to sign consensus messages
-
-  Encoding:
-  Before encoding you need to define a toml file with vanity and validators fields
-  to define proposer vanity and validator set. Please refer to example.toml for
-  the example. The output would be a hex string which can be put into extraData
-  field directly.  Command:
-  $ istanbul encode --config ./config.toml
-
-  Decoding:
-  Use --extradata option to give the extraData hex string. The output would show
-  the following if presents: vanity, validator set, seal, and committed seal.
-  Command:
-  $ istanbul decode --extradata <EXTRA_DATA_HEX_STRING>
-  to define proposer vanity and validator set. Please refer to example.toml for
-  the example. The output would be a hex string which can be put into extraData
-  field directly.  Command:
-  $ istanbul encode --config ./config.toml
-
-  genesis.json
-  - config field is required, and the pbft subfield must present. Ex:
-  - See also genesis.json helper tools at:
-  @[https://github.com/getamis/Istanbul-tools]
-  {
-    "config": {
-      "chainId": 2016,
-      "istanbul": { "epoch": 30000, "policy" 0 }
-    },
-    "timestamp": "0x0",
-    "parentHash": "0x000...000",
-    "extraData": "0x0000...000f89af85494475...aad0312b84100000...0c0",
-    "gasLimit": "0x47e7c4",
-    "mixhash": "0x6374...6e6365",
-    "coinbase": "0x333...33333",
-    "nonce": "0x0",
-    "difficulity": "0x0",
-    "alloc": {}
-  }
-[[consensus.IBFT}]]
 ### High level component architecture [[{02_doc_has.diagram]]
 - External Resources
 * Chat     : @[https://chat.hyperledger.org/channel/besu]
@@ -185,8 +62,84 @@ https://gitter.im/PegaSysEng/pantheon
      └─ ddbb (run─time) RocksDB data   ( LOGS go to STDOUT )
         (--data-path)
 
-## Understanding codebase. [[{]]
-### STARTUP SEQUENCE
+## QBFT PoA Consensus (Permissioned Networks) [[{consensus.IBFT]]
+* Production ready in Besu 22.1.1+
+* Evolution built on BFT consensus principles.
+* written in Dafny by Roberto Saltini.
+* enabling formal verification of its correctness, based on work done
+  by Henrique Moniz, it fixes some potential issues in IBFT in 
+  certain configurations.
+* Official spec: @[https://entethalliance.github.io/client-spec/qbft_spec.html]
+
+* NODE Configuration:  
+https://besu.hyperledger.org/en/stable/private-networks/how-to/configure/consensus/qbft/
+[[}]]
+
+
+## IBFT Consensus (Permissioned Networks) [[{consensus.IBFT]]
+**WARN:** Replaced by newer QBFT consensus. QBFT is now the recomended consensus for private networks.
+- Consensus with TX finality -vs probabilistic-. When the TX is accepted we are sure
+  that all nodes will see it and no future reordering will happen (at the cost of
+  more centralization in validator nodes).
+
+@[https://github.com/ethereum/EIPs/issues/650]
+* IBFT: stands for Istambul Bizantine Fault Tolerant
+* Target banks and fin.instutions, replacing PoW
+  since validator scalability is not required.
+* Hash settlement finality and minimum latency.
+* Deeply inspired by Clique PoA @[https://github.com/ethereum/EIPs/issues/225]
+* also inspired by Hyperledger's SBFT, Tendermint, HydraChain, and NCCU BFT.
+
+```
+   ROUND                                        ROUND STATE
+  Consensus round. A round starts with         Consensus messages of a specific
+  the proposer creating a block proposal       sequence and round, including
+  and ends with a block commitment or          pre-prepare message, prepare message,
+  round change.                                and commit message.
+  
+   PROPOSAL                                  SEQUENCE
+  New block generation proposal which is    Sequence number of a proposal. A
+  undergoing consensus processing           sequence number should be greater than
+                                            all previous sequence numbers.
+                                            Currently each proposed block height is
+                                            its associated sequence number.
+  
+   BACKLOG                                   CONSENSUS PROOF:
+  The storage to keep future consensus      The commitment signatures of a block
+  messages due to the async nature of the   that can prove the block has gone
+  network.                                  through the consensus process.
+  
+   SNAPSHOT:
+  The validator voting state from last
+  epoch
+
+  VALIDATION ROUND LOOP
+  [validators] → [validators]:  enter  validator.state NEW-ROUND
+  [validators] → [validators]:  pick one (round-robin by default or sticky) as
+                                the   PROPOSE
+    PROPOSE    →  PROPOSE    :  propose new block proposal
+    PROPOSE    →  network    :  broadast   block-proposal + PRE-PREPARE message
+  [validators] → [validators]:  enter  validator.state PRE-PREPARED
+  [validators] → network     :  broadcast   PREPARE message
+                                (make sure all validators are working on the
+                                 same sequence and the same round)
+  [validators] → [validators]:  wait for (2F + 1) PREPARE messages
+                                then enter  validator.state PREPARED
+  [validators] → network     :  broadcasts   COMMIT message .
+                                (inform peers that validator accepts proposed block
+                                and is going to insert the block to the chain)
+  [validators] → [validators]:  wait for (2F + 1) COMMIT messages
+                                enter  validator.state COMMITTED
+                                insert the block to the chain
+                                enter  validator.state FINAL-COMMITTED
+  [validators] → network     :  broadcasts   ROUND-CHANGE message
+  [validators] → [validators]:  wait for (2F + 1) ROUND-CHANGE messages
+                                then enter  validator.state NEW-ROUND
+```
+[[consensus.IBFT}]]
+
+# Understanding Besu codebase [[{]]
+## STARTUP SEQUENCE
 @[https://github.com/hyperledger/besu]
 
     Initial                    Create                      Create                    Run Runner
@@ -485,89 +438,86 @@ INPUTS:
   - FilterCriteria : Filter applied from block to block)
 [[}]]
 
-[[{10_evm.implementation.besu]]
-## What's new
-### EEA-Quorum 21 (2021-03-09)
-  REF:
-  @[https://consensys.net/blog/quorum/consensys-quorum-21-1-0-features-enhanced-ethereum-mainnet-compatibility/]
-  - Enhanced compatibility between Besu and GoQuorum.
-  - lower infrastructure costs
-  - Besu mainnet Improvements for Network Upgrades, Database and Storage:
-    - Compatibility with MainNet Berlin Network Upgrade
-      (next planned MainNet hard fork)
-      -  addition of subroutines to the EVM.
-      -  introduction of  "transaction envelopes"  making it simpler for Ethereum
-         to support several different kinds of transactions
-      -  changes in gas costs to increase the security of the network.
-         WARN : Use 21.1.2 or higher.   21.1.0 contains an outdated version  of Berlin upgrade.
-      -  Mainnet Launcher "wizard"
-      -  Bonsai Tries (Early Access): new database format reducing  [[{02_doc_has.comparative]]
-         storage requirements and improving performance for "recent state"
-         operations.
-         NON-BONSAI TRIES                 BONSAI TRIES
-         - multi-trie key/val store     - single trie.
-                                        - one set of indexed leafs
-                                        - N diffs that can be used
-                                          to move the trie forward
-                                          or backwards.
-                                        --------------------------
-                                        - reduce chain head count and
-                                          state read and write amplification
-                                          from 10x-20x levels to 1x-2x for
-                                          non-committed access.
+## What's new [[{10_evm.implementation.besu,01_PM]]
+### Besu 22.10.0 (2022-10-02) [[{ $besu22.10 ]]
+* Big Improvements for Performance on Mainnet 
+  * For the Stakers: 
+    - tuned performance (specifically target attestations)
+* Big Improvements for Resiliency on Mainnet 
+  snapshots incorporated (--Xbonsai-use-snapshots=true) .
+  allowing for a much more robust rollback/forward&retry mechanism
+[[$besu22.10}]]
+### Besu 22.4.2 (2022-10-02)
+* Help to test Mainnet PoS ("The Merge").
+### Besu 22.1.2 [[{12_SOLIDITY.TROUBLESHOOTING]]
+* new API methods: trace_rawTransaction, trace_get, trace_callMany
+* added revertReason to trace APIs including:    
+  trace_transaction
+  trace_get
+  trace_call
+  trace_callMany
+  trace_rawTransaction
+[[}]]
 
-                                        - Note: only full sync currently supported.
-         [[}]]
+### Besu 22.1.1
+* QBFT production ready.
+### Besu 22.1.0
+* Add --ec-curve to export/export-address public-key subcommands
 
-  -  New monitoring API detects nodes non initiating or receiving TX
-     for a period-of-time and stops+hibernates them to reduce infra. cost.
+### EEA-Quorum 21 (2021-03-09) [[{ $quorum21 ]]
+REF:
+@[https://consensys.net/blog/quorum/consensys-quorum-21-1-0-features-enhanced-ethereum-mainnet-compatibility/]
+* Enhanced compatibility Besu <··> GoQuorum.
+* Compatibility with MainNet Berlin Network Upgrade
+  -  introduction of  "transaction envelopes"  making it simpler for Ethereum
+     to support several different kinds of transactions
+  -  changes in gas costs to increase the security of the network.
+* Bonsai Tries (Early Access): new database format reducing                      [[{scalability.node_storage]]
+  storage requirements and improving performance for "recent state" ops.
+  1. NON-BONSAI TRIES:
+    - multi-trie key/val store
+  2.     BONSAI TRIES: (single trie).
+    - one set of indexed leafs
+    - N diffs that can be used to move the trie forward or backwards:
+      - REDUCE CHAIN HEAD COUNT AND STATE READ AND WRITE AMPLIFICATION <··!!!!
+        FROM 10X-20X LEVELS TO 1X-2X FOR NON-COMMITTED ACCESS.
+  WARN:only full sync currently supported.  [[}]]
 
-  -  Multi-Tenancy in GoQuorum/Tessera nodes.             [[{governance.multitenant]]
-     Allows multiple private states(MPS) for different tenants
-     using the same GoQuorum node, with each tenant having
-     its own private state(s).                            [[}]]
+-  New monitoring API detects nodes non initiating or receiving TX              [[{INFRASTRUCTURE.CLOUD.cost]]
+   for a period-of-time and stops+hibernates them to reduce infra. cost.        [[}]]
 
-### EEA-Besu 1.4
-  └ Plugin API  allows to fetch data from running Besu node:
+-  Multi-Tenancy in GoQuorum/Tessera nodes                                      [[{governance.multitenant,infrastructure.cloud.cost]]
+   Allows multiple private states(MPS) for different tenants
+   using the same GoQuorum node, with each tenant having
+   its own private state(s).                                                    [[}]]
+[[$quorum21}]]
+
+### EEA-Besu 1.4 [[{ $Besu1.4 ]]
+* Plugin API  allows to fetch data from running node
 
     BESU  -> (data) -> Besu 1.4+ -> feed to DDBBs, kafka, ...
     node     ^^^^^^    Plugin-API
             Blocks,
-            Balances, TXs, SC,
-            Logs,  ...
-  └ future work: Besu will compartmentalize key supporting services, eventually
-                 allowing them to be swapped via a plugin.
-                 Ex: PegaSys Plus 1st release, made DDBB swappable to support
-                     encryption at rest.
+            Balances, TXs, SC, Logs,  ...
 
-  └ privacy use in a multi-tenacy environment; [[{governance.multitenant]]
+    Ex: PegaSys Plus 1st release, made DDBB swappable to support encryption at rest.
+
+* privacy use in a MULTITENACY environment                     [[{governance.multitenant]]
   @[https://pegasys.tech/increase-adoption-and-cut-costs-with-multi-tenancy-on-hyperledger-besu/]
-    (many clients re-using the same Ethereum client node
-     whilst maintaining the privacy and confidentiality )
-    with support for authenticated API access and allowing hosts who
-    standup the infrastructure custom control on who to grant access to,
-    at various levels of granularity depending on the
-    users need,   coupled with Tessera private TX manage  .
-    - By using   JWT tokens , a user identity is tied to a privacy
-      identity, validating every API call to ensure the user
-      is part of the privacy group before any data is revealed.
-    (WiP for EthSigner and PegaSys Orchestrate multi-tenancy)   [[}]]
-  └ Early access to flexible privacy groups allowing addition and
-    removal of privacy group members.
-  └ New tracing APIs
-  └ Event Streaming Improvements
-  └ Advanced Key Management
-  └ Flexible privacy calls
-  └ End to end encryption with TLS links between PegaSys suite products
+  A single Ethereum node can be shared by N clients whilst maintaining privacy/confidentiality.
+  - BY USING JWT TOKENS, A USER IDENTITY IS TIED TO A PRIVACY IDENTITY,
+    VALIDATING EVERY API CALL TO ENSURE THE USER IS PART OF THE PRIVACY
+    GROUP BEFORE ANY DATA IS REVEALED.
+    WiP for EthSigner and PegaSys Orchestrate multi-tenancy.   [[}]]
+  - Early access: flexible privacy groups allowing addition/removal of members.
+[[$Besu1.4}]]
 
-### EEA-Besu 1.2 Release: (2019-08)
-  - improvements to our privacy groups
-  - Account-level Permissioning
-  - Improved Privacy Groups:
+### EEA-Besu 1.2 Release: (2019-08) [[{ $besu1.2 ]]
   - EthSigner for External Key Management
     Hashicorp KeyVault and Azure Key Vault
-  - New GraphQL Interface:
   - Support for UPnP (dynamic inbound connections in routers)
+  ...
+[[$besu1.2}]]
 [[}]]
 
 ## DevOps [[{standards.eea,10_EVM.implementation.besu,devops.besu]]
@@ -608,7 +558,7 @@ INPUTS:
       "timestamp": "0x58ee40ba",                                  ^
       "gasLimit": "0x47b760",                                     ·
       "difficulty": "0x1",                                        ·
-      "mixHash": "0x-- 32 bytes   ^1 --",                         ·
+      "mixHash": "0x-- 32 bytes ¹  --",                           ·
       "coinbase": "0x00...20bytes..00",                           ·
       "alloc": {                                                  ·
          "40 hex-digits account01.": {                            ·
@@ -626,7 +576,7 @@ INPUTS:
      }                         4+ validators needed in IBFT 2.0 to really
    }                           be BFT
   }
-   ^1 :0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365
+   ¹ :0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365
 
 
  STEP 02: Start the Network (Example script)
@@ -872,5 +822,19 @@ RocksDB statistics (cache,  compression, ...)
 
 [[}]]
 
+# zkEVM [[{zkEVM]]
+@[https://consensys.net/blog/research-development/consensys-zkevm-is-ready-for-public-testnet/]
+## zkEVM Ready for Testnet 2023-03
+* ConsenSys will open permissonless access to its zkEVM rollup testnet 
+  on March 28th, 2023. 
+* Recursion-friendly, lattice-based zkSNARK prover. 
+  Verifiable on Ethereum mainnet. 
+  """ our prover, built with award winning in-house zkSNARK libraries,
+      delivers ultra-low gas fees.  """
+* FAST FINALITY, HIGH THROUGHPUT, AND THE SECURITY OF ETHEREUM SETTLEMENT.
+* Existing apps can be migrated with little/none effort.
+
+""" you do not need to be an expert in zero-knowledge technology to use it """
+[[zkEVM}]]
 
 [[10_EVM.implementation.besu}]]
