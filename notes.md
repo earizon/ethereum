@@ -6889,9 +6889,46 @@ private void sendTransferTokensTransaction(...)  {
         checkpoints about network's state to bridge contract  ..."
 [[}]]
 
-# ─────────────────────────────────────────────────────────────────
 [[{standards.eea,02_doc_has.diagram,integration]]
-# Enterprise Integration
+# Enterprise Integration ──────────────────────────────────────────
+[[{PM.low_code,standards.openapi,integration,architecture.api,QA.documentation]]
+[[dev_framework.java.web3j,infrastructure.network]]
+## Web3j OpenAPI: Low Code ABI to OpenAPI Service
+@[https://github.com/web3j/web3j-openapi]
+* client and server generator from Solidity smart contracts.
+  allows to interact with the Ethereum blockchain via simple
+  and intuitive HTTP requests.
+* Embeds a Swagger-UI out of the box.
+
+### workflow:
+
+```
+   Solidity SC ··> |solc| ··> ABI ··> |Web3j-OpenAPI| ··> REST server
+```
+
+### How-to:
+
+  ```
+  $ curl -L get.epirus.io | sh 
+
+  $ epirus openapi new
+
+  $ epirus login                                        # <·· Alt 1.
+  $ epirus run rinkeby|ropsten
+
+  $ export WEB3J_ENDPOINT=<link_to_your_Ethereum_node>  # <·· Alt 2.
+  $ export WEB3J_PRIVATE_KEY=<your_private_key>
+  $ export WEB3J_OPENAPI_HOST=localhost
+  $ export WEB3J_OPENAPI_PORT=9090 
+
+
+  ```
+
+
+[[}]]
+
+
+
 ## EEA Reference Integration [[{integration.eea]]
 REF: https://medium.com/@bibryam/enterprise-integration-for-ethereum-fa67a1577d43
 ┌─ APPLICATIONS ────────────────────────────────────────────────────────────────────────────
