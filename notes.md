@@ -9,15 +9,17 @@
   in the Pantheon of the Unicode Gods.
 
 ## topics Acronyms
-  - PM  : Project Management
-  - SLC : software life cycle
-  - QA  : Quality Assurance. Everything realated to removing errors,
-          passing unit/functional/acceptance tests, Service Level Agreements (SLAs), ...
-  - 101 : (pronounced ONE-oh-ONE). Slang term for the most basic knowledge in
-          some subject. @[https://en.wikipedia.org/wiki/101_(slang)]
-  - EVM : Ethereum Virtual Machine.
+
+- PM  : Project Management
+- SLC : software life cycle
+- QA  : Quality Assurance. Everything realated to removing errors,
+        passing unit/functional/acceptance tests, Service Level Agreements (SLAs), ...
+- 101 : (pronounced ONE-oh-ONE). Slang term for the most basic knowledge in
+        some subject. @[https://en.wikipedia.org/wiki/101_(slang)]
+- EVM : Ethereum Virtual Machine.
 
 ## External Links
+
 - @[https://github.com/ethereum/wiki/wiki/White-Paper]
 - @[https://ethereum.github.io/yellowpaper/paper.pdf]
 - @[https://solidity.readthedocs.io/]
@@ -46,77 +48,71 @@
 @[https://github.com/pirapira?utf8=%E2%9C%93&tab=repositories&q=&type=source]
 
 ## Related Taxonomies: [[{standards,01_PM.ext_resource,02_doc_has.taxonomy,01_PM.WiP]]
-  - TokenTaxonomyFramework
+
+- TokenTaxonomyFramework
   @[https://github.com/InterWorkAlliance/TokenTaxonomyFramework]
   @[https://interwork.org/real-world-tokens-a-seven-step-journey-into-the-ttf/]
-
-  - Laws/Legal Taxonomy: @[https://law.stackexchange.com/tags]
-  - Economics  Taxonomy: @[https://economics.stackexchange.com/tags]
+- Laws/Legal Taxonomy: @[https://law.stackexchange.com/tags]
+- Economics  Taxonomy: @[https://economics.stackexchange.com/tags]
 [[}]]
 
 
-
 ## Who is Who [[{]]
-  (Forcibly incomplete but still quite pertinent list of core developers and companies)
-  - See also:
+(Forcibly incomplete but still quite pertinent list of core developers and companies)
+- See also:
   @[https://medium.com/ethex-market/who-are-the-core-devs-of-ethereum-part-i-beb342aaaff0]
+- Vitalik Buterin, Ethereum White-Paper
+  · @[https://github.com/vbuterin]
+  · @[https://github.com/vbuterin/diagrams]
+  · Many, many contributions
 
-  - Vitalik Buterin, Ethereum White-Paper
-    · @[https://github.com/vbuterin]
-    · @[https://github.com/vbuterin/diagrams]
-    · Many, many contributions
-
-  - Gavin Wood: Ethereum Co-Founder
-    Ethereum Yellow Paper
+- Gavin Wood: Ethereum Co-Founder
+  Ethereum Yellow Paper
   @[http://gavwood.com/]
   @[https://en.wikipedia.org/wiki/Gavin_Wood]
    founder of Parity Technologies
 
-  - Joseph Lubin:
-    @[https://en.wikipedia.org/wiki/Joseph_Lubin_(entrepreneur)]
-    founder of ConsenSys.
+- Joseph Lubin:
+  @[https://en.wikipedia.org/wiki/Joseph_Lubin_(entrepreneur)]
+  founder of ConsenSys.
 
-  - Shahan Khatchadourian
-    - Pegasys Eng. Co-founder
-    - Created Hyperledger Besu
+- Shahan Khatchadourian
+  - Pegasys Eng. Co-founder
+  - Created Hyperledger Besu
 
   Co-founder@PegaSys
 
-  - Anthony Diorio
-    @[https://anthonydiiorio.ca/]
-    In 2013, Anthony Diiorio funded, and along with Charles Hoskinson, Mihai Alisie, and Vitalik Buterin,
-    co-founded the smart contract platform Ethereum.
-  - Loredana Cirstea:
-    Author of dType, seth.io, Pipeline remix plugin, ...
-    @[https://github.com/loredanacirstea/articles]
-    @[https://github.com/loredanacirstea?utf8=%E2%9C%93&tab=repositories&q=&type=source&language=]
-    @[https://medium.com/@loredana.cirstea/dtype-decentralized-type-system-functional-programming-on-ethereum-4f7666377c9f]
-    @[https://www.youtube.com/watch?v=GZg4L2o0Nyw&feature=youtu.be]
+- Anthony Diorio
+  @[https://anthonydiiorio.ca/]
+  In 2013, Anthony Diiorio funded, and along with Charles Hoskinson, Mihai Alisie, and Vitalik Buterin,
+  co-founded the smart contract platform Ethereum.
+- Loredana Cirstea:
+  Author of dType, seth.io, Pipeline remix plugin, ...
+  @[https://github.com/loredanacirstea/articles]
+  @[https://github.com/loredanacirstea?utf8=%E2%9C%93&tab=repositories&q=&type=source&language=]
+  @[https://medium.com/@loredana.cirstea/dtype-decentralized-type-system-functional-programming-on-ethereum-4f7666377c9f]
+  @[https://www.youtube.com/watch?v=GZg4L2o0Nyw&feature=youtu.be]
 
-  - Nick Johnson "Arachnid":
-    @[http://blog.notdot.net/]
-    @[http://blog.notdot.net/tag/damn-cool-algorithms]
-      - Arachnid Labs ("string utils")
-    - Core developer on go-ethereum,
-    - lead developer of ENS
+- Nick Johnson "Arachnid":
+  @[http://blog.notdot.net/]
+  @[http://blog.notdot.net/tag/damn-cool-algorithms]
+    - Arachnid Labs ("string utils")
+  - Core developer on go-ethereum,
+  - lead developer of ENS
 
-  - Ronan Sandford (wighawag), prominent smart contract developer:
-    - author of ERC-1155 standard
-    - working on diamonds standards support in buidler-deploy.
+- Ronan Sandford (wighawag), prominent smart contract developer:
+  - author of ERC-1155 standard
+  - working on diamonds standards support in buidler-deploy.
 
-  - Raul Jordan, Prysmatic labs: Sharding Protocol
-    minimal sharding protocol implementation.
+- Raul Jordan, Prysmatic labs: Sharding Protocol
+  minimal sharding protocol implementation.
 
-  - Yoav Weiss (@yoavw)            EIP-4337 contributors.
-    Kristof Gazso (@kristofgazso)
-    Namra Patel (@namrapatel) 
-    Dror Tirosh (@drortirosh)
-    Shahaf Nacson (@shahafn)
-    Tjaden Hess (@tjade273)
-    
-
-
-  - Rob Hitchens:
+- Yoav Weiss (@yoavw)            EIP-4337 contributors.
+  Kristof Gazso (@kristofgazso)
+  Namra Patel (@namrapatel) 
+  Dror Tirosh (@drortirosh)
+  Shahaf Nacson (@shahafn)
+- Rob Hitchens:
   @[https://medium.com/@robhitchens]
   @[https://about.me/hitchens]
     Distributed Applications Architect and Mentor in Calgary, Alberta, Canada
@@ -129,51 +125,50 @@
     - Author of Solidity CRUD:
     @[https://medium.com/@robhitchens/solidity-crud-part-1-824ffa69509a]
 
-  - Nick Mudge: Designed the Diamon Standard (EIP 2535) for proxy-contracts
+- Nick Mudge: Designed the Diamon Standard (EIP 2535) for proxy-contracts
 
-  - Anjan Roy @[https://github.com/itzmeanjan]
-    Lead Blockchain Engineer @ Polygon ("Matic Network").
+- Anjan Roy @[https://github.com/itzmeanjan]
+  Lead Blockchain Engineer @ Polygon ("Matic Network").
 
+- DApps and Solidity Development:
+  - Manuel Araoz: @[https://maraoz.com/]:
+    CTO&co-founder at Zeppelin.
+  - Luis Cuende: @[http://blog.aragon.one/author/luis/]
+    CEO and cofounder of Aragon One
 
-  - DApps and Solidity Development:
-    - Manuel Araoz: @[https://maraoz.com/]:
-      CTO&co-founder at Zeppelin.
-    - Luis Cuende: @[http://blog.aragon.one/author/luis/]
-      CEO and cofounder of Aragon One
+  - b9lab: Quality Blockchain Education for everyone
+  @[https://www.b9lab.com/]
+    - Xavier Lepretre, senior consultant at B9Lab
 
-    - b9lab: Quality Blockchain Education for everyone
-    @[https://www.b9lab.com/]
-      - Xavier Lepretre, senior consultant at B9Lab
+  - Steve Marx @[https://ethereum.stackexchange.com/users/19510/smarx]
+    and Tood Proebsting:
+    Authors of @[https://programtheblockchain.com/] with great
+    tutorials about Payment Channels:
+    @[https://programtheblockchain.com/posts/2018/12/10/introduction-to-ethereum-payment-channels-video/]
+    @[https://programtheblockchain.com/posts/2018/02/23/writing-a-simple-payment-channel/]:
+    @[https://programtheblockchain.com/posts/2018/03/02/building-long-lived-payment-channels]
 
-    - Steve Marx @[https://ethereum.stackexchange.com/users/19510/smarx]
-      and Tood Proebsting:
-      Authors of @[https://programtheblockchain.com/] with great
-      tutorials about Payment Channels:
-      @[https://programtheblockchain.com/posts/2018/12/10/introduction-to-ethereum-payment-channels-video/]
-      @[https://programtheblockchain.com/posts/2018/02/23/writing-a-simple-payment-channel/]:
-      @[https://programtheblockchain.com/posts/2018/03/02/building-long-lived-payment-channels]
+  - Péter Szilágyi, @[https://github.com/karalabe]
+    Core Puppeth developer @[https://www.youtube.com/watch?v=T5RcjYPTG9g]
 
-    - Péter Szilágyi, @[https://github.com/karalabe]
-      Core Puppeth developer @[https://www.youtube.com/watch?v=T5RcjYPTG9g]
+- Paul Lintilhac: Quantitative Developer at ConsenSys, Alethio developer
 
-  - Paul Lintilhac: Quantitative Developer at ConsenSys, Alethio developer
+- Hudson Jameson (@Souptacular)
+@[https://hudsonjameson.com/]
 
-  - Hudson Jameson (@Souptacular)
-  @[https://hudsonjameson.com/]
+- Nick Savers (@nicksavers)
 
-  - Nick Savers (@nicksavers)
+- Martin Becze (@wanderer)
 
-  - Martin Becze (@wanderer)
+- Greg Colvin (@gcolvin)
 
-  - Greg Colvin (@gcolvin)
+- Alex Beregszaszi (@axic)
 
-  - Alex Beregszaszi (@axic)
-
-  StackExchange Top users:
-  - "Afri" Ethereum FAQ answers on Stackoverflow
-    (hidden user from the Parity Team)
-    Lastest activity: 2018-08-21
-  @[https://ethereum.stackexchange.com/users/87/afri]
+StackExchange Top users:
+- "Afri" Ethereum FAQ answers on Stackoverflow
+  (hidden user from the Parity Team)
+  Lastest activity: 2018-08-21
+@[https://ethereum.stackexchange.com/users/87/afri]
 [[}]]
 
 ## Who-is-who(Companies) [[{]]
@@ -206,11 +201,11 @@
   which anybody can innovate a new business model, app or service as long as they meet the
   terms of those policies.
 
-  - https://pegasys.tech/: Consensys Company with 55+ team dedicated
-    to enterprise grade blockchain at ConsenSys.
-    focused on privacy, permissioning, scalability, and other
-    features to make Ethereum production-ready.
-    Developers of Pantheon
+- https://pegasys.tech/: Consensys Company with 55+ team dedicated
+  to enterprise grade blockchain at ConsenSys.
+  focused on privacy, permissioning, scalability, and other
+  features to make Ethereum production-ready.
+  Developers of Pantheon
 
 - NomiClabs (Argentina)
 @[https://nomiclabs.io/]
@@ -232,6 +227,7 @@
 @[https://ethereum.github.io/yellowpaper/paper.pdf]
 @[https://en.wikipedia.org/wiki/Ethereum#Milestones]
 
+  ```
   Name/Code Name     1st Block  Release     Public Ethereum    Network        Notes
                         Number  date        Network Version    Block Reward
   Frontier                   0  2015-07-30
@@ -273,13 +269,14 @@
                                                                            About 1hour after Shanghai upgrade activation, some 285
                                                                           withdrawals in epoch 194,408 had been processed, for about
                                                                           5,413 ETH (~10M$ worth).
+  ```
 
-  ^1 Byzantium hardfork == """ Ethereum for the masses """.
+* ^1 Byzantium hardfork == """ Ethereum for the masses """.
    @[https://www.infoq.com/news/2017/08/Ethereum-HardFork]
     - It  increases anonymity through Zero-knowledge zk-snark proofs ,
     - It includes more predictable gas charges which were becoming
       difficult to calculate with the increased number of ICOs.
-  ^2 Metropolis Part 2,Constantinople: (Aka "Ethereum 2.0"):
+* ^2 Metropolis Part 2,Constantinople: (Aka "Ethereum 2.0"):
      - It lays the fundations of PoS(Casper consensus): According to
  @[https://www.trustnodes.com/2019/06/15/ethereum-2-0-planned-for-launch-on-the-3rd-of-january-2020]
      ...Phase zero of ethereum 2.0, which enables Proof of Stake (PoS),
@@ -302,8 +299,7 @@
                                hasn’t suffered major issues for a
                                healthy amount of time."""
 
-
-  ^3 Serenity: Ethereum 2.0 "last phase", switch to proof of stake
+* ^3 Serenity: Ethereum 2.0 "last phase", switch to proof of stake
      - huge upgrades on the scalability side (sards, ...)
      - Ethereum 2.0 phases
        - REF: @[https://medium.com/alethio/ethereum-2-0-terms-demystified-8398357429d7]
@@ -324,7 +320,6 @@
          - ability to make transactions within execution environments.
          - ability to run and interact with smart contracts.
          - cross-shard communication.
-
      Due to the advances in (optimistic/zk)+Rollups chains it's quite
      possible that Ethereum 2 ends up being Ethereum 1.5
      (Ethereum 1 + Sharding) + zk-Rollups as explained by Vitalik in:
@@ -344,13 +339,11 @@
         IT SEEMS VERY PLAUSIBLE TO ME THAT WHEN PHASE 2 FINALLY COMES,
         ESSENTIALLY NO ONE WILL CARE ABOUT IT.
      """
-
-  ^4 Original Constantinople network upgrade was postponed and two
+* ^4 Original Constantinople network upgrade was postponed and two
      protocol upgrades will need to occur on the same block number in
      order to fix issues on various Ethereum test networks (Ropsten,...)
 
-
-  REFs:
+* REFs:
   - 2018-06-16: Casper and sharding merger confirmed
   @[https://www.trustnodes.com/2018/06/16/casper-sharding-merger-confirmed-constantinople-back-table]
   - 2019-02-22: scheduled upgrade at block number 7,280,000,  predicted on 2019-02-28
@@ -369,6 +362,7 @@
        - side-chains: simpler/more centrilized/less robuts.
                       Sort of "zipping" many offchain TXs into a single onchain TX.
 
+  ```
                              ┌─ TheGraph Protocol Support
                              · ┌─ 0x Protocol Support
                              · ·
@@ -638,59 +632,62 @@
                        |    | | | |
   ---------------------|----|-|-|-|-----------------------------------------------------
   Binance SmartCh./56  | BNB|Y|Y| |   PoSA = Proof of Stake + Proof of Authority.
-  └ Testnet/97         |tBNB| | | |   WARN: "Spam Chain". Very active <a href="https://www.techtimes.com/articles/268625/20211128/binance-smart-chain-becomes-most-followed-cryptocurrency-on-twitter.htm]">on Twitter an press</a>
+  └ Testnet/97         |tBNB| | | |   WARN: "Spam Chain". Very active @ [on Twitter an press](https://www.techtimes.com/articles/268625/20211128/binance-smart-chain-becomes-most-followed-cryptocurrency-on-twitter.htm)
                                              Completely broken in Real World:
                                            @[https://github.com/binance-chain/bsc/issues/553]
+  ```
 
-  OTHERS Networks: @[https://chainid.network/]
+* OTHERS Networks: @[https://chainid.network/]
+  ```
     Diode , Flare , ThunderCore, Callisto, ...
   ---------------------|----|-|-|-|-----------------------------------------------------
   "DEAD" Networks/Projects:
   - MathChain/1139,  https://mathchain.org/en/ (Dead SmartWallet AppChain based on (Polkadot) Substrate)
+  ```
 [[101.public_chains}]]
 [[101.networks}]]
 
-# EVM ───────────────────────────────────────────────────────────── [[{10_EVM,01_PM.ext_resource]]
+# EVM                                                               [[{10_EVM,01_PM.ext_resource]]
 ## External Refs
-  @[https://github.com/ethereum/yellowpaper]
-  @[https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial]
-  @[http://ethdocs.org/en/latest/contracts-and-transactions/developer-tools.html#the-evm]
+* @[https://github.com/ethereum/yellowpaper]
+* @[https://github.com/ethereum/wiki/wiki/Ethereum-Development-Tutorial]
+* @[http://ethdocs.org/en/latest/contracts-and-transactions/developer-tools.html#the-evm]
 
 [[{101.PATRICIA_TREE,10_EVM.101,persistence.blockchain,infrastructure.storage,infrastructure.network]]
 ## Patricia tree
 @[https://eth.wiki/en/fundamentals/patricia-tree]
-  - cryptographically fully deterministic "key/value":
-    A Patricia trie: cryptographycally protected (key,value) store with
-    O(log(n)) inserts/lookups/deletes.
-    Much easier to understand and code than alternatives (red-black tries).
+- cryptographically fully deterministic "key/value":
+  A Patricia trie: cryptographycally protected (key,value) store with
+  O(log(n)) inserts/lookups/deletes.
+  Much easier to understand and code than alternatives (red-black tries).
 
-  - Ethereum use Merkle Patricia Tries (with roots hashed stored in block-header) for:
-    ✓ root-of-state:  ^1
-      · trie-path : keccak256(ethereumAddress)
-      · trie-value: rlp(ethereumAccount) ← nonce, balance,root-of-contract-storage, codeHash
-                                                          └───────────┬──────────┘
-    ✓ root-of-transactions:                                 trie-path : keccak256(position-of-variable)
-      · trie-path : rlp(transactionIndex)                   trie-value: rlp-encoding of storage value
-      · trie-value: rlp(transaction)?
+- Ethereum use Merkle Patricia Tries (with roots hashed stored in block-header) for:
+  ✓ root-of-state:  ^1
+    · trie-path : keccak256(ethereumAddress)
+    · trie-value: rlp(ethereumAccount) ← nonce, balance,root-of-contract-storage, codeHash
+                                                        └───────────┬──────────┘
+  ✓ root-of-transactions:                                 trie-path : keccak256(position-of-variable)
+    · trie-path : rlp(transactionIndex)                   trie-value: rlp-encoding of storage value
+    · trie-value: rlp(transaction)?
 
-    ✓ root-of-receipts:
-      · trie-path : rlp(transactionIndex)
-      · trie-value: rlp(receipt)?
+  ✓ root-of-receipts:
+    · trie-path : rlp(transactionIndex)
+    · trie-value: rlp(receipt)?
 
 
-  - Recursive Length Prefix (RLP) serialization encoding. Tools exist to convert from/to JSON objects, ... [[{01_PM.TODO.101]]
-    used on the execution layer everywhere across the consensus layer except the peer
-    discovery protocol.
-   @[https://eth.wiki/en/fundamentals/rlp]
+- Recursive Length Prefix (RLP) serialization encoding. Tools exist to convert from/to JSON objects, ... [[{01_PM.TODO.101]]
+  used on the execution layer everywhere across the consensus layer except the peer
+  discovery protocol.
+ @[https://eth.wiki/en/fundamentals/rlp]
 
-  - Simple serialize (SSZ): Serialization method used on the Beacon Chain, replacing RLP
-    SSZ is designed to be deterministic and also to Merkleize efficiently. SSZ can be
-    thought of as having two components:
-    - a serialization scheme and
-    - a Merkleization scheme designed to work efficiently with the serialized data structure
-    [[}]]
+- Simple serialize (SSZ): Serialization method used on the Beacon Chain, replacing RLP
+  SSZ is designed to be deterministic and also to Merkleize efficiently. SSZ can be
+  thought of as having two components:
+  - a serialization scheme and
+  - a Merkleization scheme designed to work efficiently with the serialized data structure
+  [[}]]
 
-  ^1: EVM state :
+- ^1: EVM state :
     @[https://blog.ethereum.org/2019/12/30/eth1x-files-state-of-stateless-ethereum/]
     - 400 million nodes in the state trie. Of these, about 3,000 (but as
       many as 6,000) need to be added or modified every 15 seconds.
@@ -708,6 +705,7 @@
 ## RADIX-TRIE: [[{ $radix-trie ]]
 - BASIC BUILDING BLOCK OF PATRICIA TIRE:
 
+  ```
   ┌──────────────────────────────────────────────────┐
   │ PRE─SETUP) CHOOSE AN ORDERED ALPHABET.           │
   │ (Hex digits "nibles" in Ethereum implementation) │
@@ -734,8 +732,10 @@
                   provide a proof that the trie has a given value
                   and nobody can provide a false proof for non
                   existing key-values pairs.
+  ```
 
 * To fetch the value of key "dog" in trie
+  ```
     STEP 1) dog → (to alphabet) → 646F67 ······························┐
     STEP 2) Walk over trie path:                                       ·
      0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F                                   ·
@@ -754,30 +754,32 @@
     [?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,value] node[0][6][4][6][F][6][7] ←┘
                                      └─┬─┘
      ?: hash-of-pointed-node         dog value!!!
+  ```
 
+**PROBLEM**: radix tries are inefficient:  
+  A bytes32 needs 64 chars long or over a kilobyte of extra space
+  to store one level per character.  
+  Each lookup/delete will take the full 64 steps.  
+**SOLUTION**: PATRICIA TRIE TO THE RESCUE.
 
-  PROBLEM: radix tries are inefficient:
-    a bytes32 needs 64 chars long or over a kilobyte of extra space
-    to store one level per character.
-    each lookup/delete will take the full 64 steps.
-  SOLUTION: PATRICIA TRIE TO THE RESCUE.
+### PATRICIA TRIE:
+- Most nodes in the radix-trie will be "empty" (no value) in
+  a 64 chars path. Forcing them to have empty values in every index + "target"
+  index is a waste.  
+  Patricia Trie node extension add next structures:
+- encodedPath: "partial path" shortcut to skip ahead using compact encoding.  
+  Then the Patricia Trie node wil be one of :
+  ```
+  - NULL               node: (represented as "empty string")
+  - branch    A        node: [ v0, ...,vF, vt ]
+  - extension A 2-item node: [ encodedPath, key ]   ← key: used for next db-lookup
+  - leaf      A 2-item node: [ encodedPath, value ] ← a flag in 1st nible of encoded
+                                                      path marks node as being a leaf.
+  ```
 
-  - PATRICIA TRIE:
-    - Most nodes in the radix-trie will be "empty" (no value) in
-      a 64 chars path. Forcing them to have empty values in every index + "target"
-      index is a waste.
-    Patricia Trie node extension add next structures:
-    - encodedPath: "partial path" shortcut to skip ahead using compact encoding.
-    Then the Patricia Trie node wil be one of :
-    - NULL               node: (represented as "empty string")
-    - branch    A        node: [ v0, ...,vF, vt ]
-    - extension A 2-item node: [ encodedPath, key ]   ← key: used for next db-lookup
-    - leaf      A 2-item node: [ encodedPath, value ] ← a flag in 1st nible of encoded
-                                                        path marks node as being a leaf.
-
-  - note: To differentiate among nibble 1 and nibble 01, both stored as "01",
-          a partial path is prefixed with a flag for odd-cases.
-          (See original post for more info) [[$radix-trie}]]
+- note: To differentiate among nibble 1 and nibble 01, both stored as "01",
+        a partial path is prefixed with a flag for odd-cases.
+        (See original post for more info) [[$radix-trie}]]
 [[101.PATRICIA_TREE}]]
 
 [[{12_solidity,10_EVM.101,02_doc_has.diagram]]
