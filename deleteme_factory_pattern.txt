@@ -1,0 +1,84 @@
+# FACTORY PATTERN:
+
+https://blog.logrocket.com/cloning-solidity-smart-contracts-factory-pattern/
+
+- Useful to save gas on repeated/similar deployments.
+- Deploy multitenant apps.
+
+
+  contract FoundationFactory {
+      ...
+      function build(string key1, string key2) public {
+        MyContract foundation = new MyContract(...)   // <··· gas cost for CREATE opcode ("new") is ~32000 Gwei
+      }
+
+      function get(string key1, string key2)
+      public view returns (address) { ...  }
+  }
+
+# CLONE FACTORY PATTERN: (avoid CREATE "new")
+  1) deploy only one instance of MyContract.
+  2) have other instances of MyContract contract behave as proxies,
+     delegating calls to the first one.
+
+  Each instance of MyContract will have its own state and simply
+  uses the instance of the MyContract contract set as a library.
+
+  eip-1167 provides this mechanism:
+  """ minimal bytecode implementation
+    that delegates all calls to a known, fixed address to simply and
+    cheaply clone contract functionality in an immutable way."""
+
+  The clone factory contract is a REFERENCE IMPLEMENTATION of eip-1167.
+
+  $ npm install @optionality.io/clone-factory
+
+
+  // SPDX-License-Identifier: MIT
+  pragma solidity >0.4.23 <0.9.0;
+  import "./MyContract.sol";
+  import "@optionality.io/clone-factory/contracts/CloneFactory.sol";
+  import "zeppelin-solidity/contracts/ownership/Ownable.sol";
+
+  contract FoundationFactory is Ownable, CloneFactory {
+
+    address public libraryAddress;
+
+    event MyContractCreated(address newMyContract);
+
+    function MyContractFactory(address _libraryAddress) public {
+      libraryAddress = _libraryAddress;
+    }
+
+    function setLibraryAddress(address _libraryAddress) public onlyOwner {
+      libraryAddress = _libraryAddress;
+    }
+
+    function createMyContract(string _name) public onlyOwner {
+      address clone = createClone(libraryAddress);
+      Foundation(clone).init(_name);
+      FoundationCreated(clone);
+    }
+  }
+
+  WARM:
+  - Ensure master contract is not self-destructed (all clones stop working)
+  - Ensure that master contract is preinitialized in constructor.
+    It is the only time the master contract constructor is called
+    is during the master contract’s creation
+
+  Deploying (truffle example):
+  const FoundationFactoryContract = artifacts.require("FoundationFactory");
+  module.exports = function(deployer) {
+   deployer.deploy(FoundationFactoryContract);
+  }
+
+  Deploying (Hardhat): When using Hardhat, ethers.getContractFactory method
+  avoids the need to create a factory contract ourself.
+  const hre = require("hardhat");
+  async function main() {
+    const MyContract = await hre.ethers.getContractFactory("MyContract");
+    const myContract = await MyContract.deploy();
+    await myContract.deployed();
+    console.log("MyContract contract deployed to: ", foundation.address);
+  }

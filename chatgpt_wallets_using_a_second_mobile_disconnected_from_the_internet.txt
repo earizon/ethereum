@@ -1,0 +1,72 @@
+Q: Is there any ethereum wallet that allows to use a second mobile phone, disconnected from the internet, as a secure vault?
+
+A:  Yes, there are Ethereum wallets that allow you to use a second mobile phone as a secure vault. One example of such a wallet is the Gnosis Safe wallet.
+
+  The Gnosis Safe wallet allows you to use a second mobile phone as a "hardware wallet" by using the Gnosis Safe Multisig hardware wallet feature. This feature enables you to use a second mobile phone, disconnected from the internet, as a secure vault by setting up a multisig wallet where one of the required signatures is stored on the second phone.
+
+  To set up this feature, you will need to download the Gnosis Safe app on both your main mobile phone and your second mobile phone. You will then need to create a new multisig wallet on the Gnosis Safe app on your main mobile phone, and add the address of your second mobile phone as a signer.
+
+  Once the multisig wallet is set up, you can use your main mobile phone to initiate transactions, but you will need to confirm the transaction on both your main mobile phone and your second mobile phone to complete the transaction.
+
+  Using a second mobile phone as a secure vault can provide an added layer of security to your Ethereum wallet, as it makes it more difficult for attackers to gain access to your wallet even if they manage to compromise your main mobile phone.
+
+Q: Is there any other alternative, other than Gnosis
+  Yes, there are other Ethereum wallets that allow you to use a second mobile phone as a secure vault. One example is the Argent wallet.
+
+  The Argent wallet allows you to use a second mobile phone as a "guardian device" by setting it up as a trusted device that can approve transactions on your wallet. To set up this feature, you will need to download the Argent app on both your main mobile phone and your second mobile phone.
+
+  Once both devices are set up, you can designate your second mobile phone as a guardian device by going to the Security section of the Argent app on your main mobile phone and adding your second mobile phone as a trusted device. Once your second mobile phone is added, you can set it up to approve transactions by requiring a confirmation on both devices.
+
+  When you initiate a transaction on your main mobile phone, you will receive a notification on your second mobile phone asking you to confirm the transaction. Once you confirm the transaction on both devices, the transaction will be executed.
+
+  Using a second mobile phone as a guardian device can provide an added layer of security to your Ethereum wallet, as it makes it more difficult for attackers to gain access to your wallet even if they manage to compromise your main mobile phone.
+
+Q: Can you list 5 more wallets with this same feature?
+      Trustology: Trustology is a crypto wallet that offers
+     institutional-grade security for individuals and businesses. It
+     allows you to use a second mobile device as a "trusted signer" by
+     setting up a multi-party computation (MPC) process. This means that
+     transactions require approval from both your main mobile device and
+     your trusted signer device.
+
+      Secrypto: Secrypto is a mobile wallet that offers a feature
+     called "Multi-Device Authentication". This feature allows you to add
+     multiple devices to your wallet and require approval from all devices
+     before a transaction can be executed.
+
+      ZenGo: ZenGo is a non-custodial wallet that offers a feature
+     called "Guardians". This feature allows you to add trusted devices to
+     your wallet that can approve transactions. Guardians can be other
+     mobile devices or hardware wallets.
+
+      MyEtherWallet: MyEtherWallet (MEW) is a web-based wallet that
+     allows you to connect multiple devices to your wallet. You can add a
+     second mobile device to your MEW account and use it as a "watch-only"
+     device that can monitor your wallet activity and receive
+     notifications for any incoming transactions.
+
+      Exodus: Exodus is a desktop and mobile wallet that offers a
+      feature called "Multi-Device Sync". This feature allows you to
+      connect multiple devices to your Exodus wallet and synchronize your
+      account data across all devices. You can add a second mobile device
+      to your Exodus account and use it as a backup device that can approve
+      transactions.
+
+A: What about AirGap. Does this wallet offer that same feature?
+  ....
+  AirGap's approach to this feature is slightly different
+  .. using a technique called "air-gapping", which means that
+  your private keys are stored on a separate device that is
+  completely offline, ensuring that your private keys are never
+  exposed to the internet.
+
+  Once you approve the transaction on your second mobile phone
+  (QR connected, Internet disconnected), the signed transaction is
+  sent back to your main mobile phone, which then broadcasts the
+  transaction to the Ethereum network.
+
+    AirGap's approach provides a high level of security by keeping
+  your private keys completely offline on a second mobile phone that is
+  not connected to the internet. HOWEVER, IT ALSO REQUIRES YOU TO
+  MANUALLY TRANSFER SIGNED TRANSACTIONS FROM YOUR SECOND MOBILE PHONE
+  TO YOUR MAIN MOBILE PHONE, WHICH CAN BE SOMEWHAT CUMBERSOME.

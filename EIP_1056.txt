@@ -1,0 +1,143 @@
+EIP-1056: Ethereum Lightweight Identity ("oudates" proposal ERC-725)
+Author  Pelle Braendgaard, Joel Torstensson
+https://eips.ethereum.org/EIPS/eip-1056.
+Status  Stagnant  [[risk]]
+Discussions-To:  https://github.com/ethereum/EIPs/issues/1056
+
+registry for creating/updating key+attribute management of lightweight blockchain identities.
+
+- Identity can have unlimited number of delegates and attributes associated with it.
+- Identity creation:
+  - as simple as creating a regular key-pair ethereum account.
+  - no gas costs (offchain).
+  - All ethereum accounts are valid identities.
+  - Fully DID compliant.
+  - ALLOW KEY-ROTATION WITHOUT CHANGING PRIMARY IDENTIFIER OF THE IDENTITY. [[regulation.compliance]]
+    - default identityOwner: "whoever controls the ethereum account for the initial address"
+      ownership can be updated to a new key pair account /  a new multisig account / ...
+  - Can be used off/on-chain.
+
+- IDENTIFIER   : ethereum address uniquely identifying an identity.
+-   DELEGATE   : ethereum address that is delegated for a specific time to
+                 perform some sort of function on behalf of an identity.
+- DELEGATE-TYPE: (Purpose of the delegate, eg  did-jwt, raiden, ...)
+                 determined by a protocol or application higher up.
+-     attribute: piece of data associated with the identity
+
+EthereumDIDRegistry: <··· contract DEPLOYED ONCE that can be commonly used by everyone.
+-------------------       NOTE: deployed @ '0xdca7ef03e98e0dc2b855be647c39abe984fcf21b' on Mainnet/Ropsten/Rinkeby/Kovan.
+· identityOwner(address identity)                   <··· current identity owner
+  view returns(address);
+
+· changeOwner           (address identity,               <··· Update identity owner
+                         address newOwner)
+
+· changeOwnerSigned     (address identity,               <··· Update identity owner using raw signature
+                         uint8 sigV, bytes32 sigR, bytes32 sigS,
+                         address newOwner)
+
+· validDelegate         (address identity,               <··· returns true if:
+                         bytes32 delegateType,                - delegate is a delegate for identity
+                         address delegate)                    - delegateType match registered delegateType
+  view returns(bool);
+─── DELEGATE MANAGEMENT ───────────────────────────────
+· addDelegate          (address identity,               <··· Adds new delegate (with given type).
+                        bytes32 delegateType,
+                        address delegate,
+                        uint secsValidity);                  <··· after "secs" it will not be a valid delegate anymore.
+
+· addDelegateSigned    (address identity,              <··· Same as addDelegate with raw signature.
+                        uint8 sigV, bytes32 sigR, bytes32 sigS,
+                        bytes32 delegateType,
+                        address delegate,
+                        uint validity)
+
+· revokeDelegate       (address identity,
+                        bytes32 delegateType,
+                        address delegate)
+
+· revokeDelegateSigned (address identity,
+                        uint8 sigV, bytes32 sigR, bytes32 sigS,
+                        bytes32 delegateType,
+                        address delegate)
+─── ATTRIBUTE MANAGEMENT ───────────────────────────────
+Attribute: Simple data about the identity that can only be managed by the owner of the identity.
+· setAttribute         (address identity,            <···  Sets an attribute with the given name and value,
+                        bytes32 name,
+                        bytes value,
+                        uint secsValidity)
+setAttributeSigned     (address identity,            <···  Same as setAttribute with raw signature.
+                        uint8 sigV, bytes32 sigR, bytes32 sigS,
+                        bytes32 name,
+                        bytes value,
+                        uint secsValidity)
+
+revokeAttribute        (address identity,
+                        bytes32 name,
+                        bytes value)
+revokeAttributeSigned  (address identity,
+                        uint8 sigV, bytes32 sigR, bytes32 sigS,
+                        bytes32 name,
+                        bytes value)
+
+─── EVENTS ────────────────────────────────────────────────
+event DIDOwnerChanged(                              <··· MUST be triggered when changeOwner/changeOwnerSigned
+  address indexed identity,                               was successfully called.
+  address owner,
+  uint previousChange
+);
+
+event DIDDelegateChanged(                           <··· MUST be triggered when a change to a delegate
+  address indexed identity,                              was successfully made.
+  bytes32 delegateType,
+  address delegate,
+  uint validTo,
+  uint previousChange
+);
+
+event DIDAttributeChanged(                          <··· MUST be triggered when a change to an attribute
+  address indexed identity,                              was successfully made.
+  bytes32 name,
+  bytes value,
+  uint validTo,
+  uint previousChange                               <··· Improve performance. (in "block" unit)
+);                                                       const history = []
+                                                         previousChange = await didReg.changed(identity)
+                                                         while (previousChange) {
+                                                           const filter = await didReg.allEvents(
+                                                                          {topics: [identity],
+                                                                           fromBlock: previousChange, toBlock: previousChange})
+                                                           const events = await getLogs(filter)
+                                                           previousChange = undefined
+                                                           for (let event of events) {
+                                                             history.unshift(event)
+                                                             previousChange = event.args.previousChange
+                                                           }
+                                                         }
+─── BUILDING A DID-DOCUMENT FOR AN IDENTITY ─────
+- primary owner key should be looked up using identityOwner(identity).
+  This should be the first of the publicKeys listed.
+- Iterate through the DIDDelegateChanged events to build a list of
+  additional keys and authentication sections as needed.
+  WARN: The list of delegateTypes to include is still to be determined.
+- Iterate through DIDAttributeChanged events for service entries,
+  encryption public keys and other public names.
+  WARN: The attribute names are still to be determined.
+
+RAW SIGNATURES:
+- Since each Ethereum TX has to be funded, there is a growing trend of
+  on-chain transactions that are authenticated via an externally created
+  signature (vs actual transaction founding originator).
+  This allows 3rd party funding services or receiver pays without any
+  fundamental changes to the underlying Ethereum architecture.
+- We propose a way of a Smart Contract or regular key pair delegating
+  signing for various purposes to externally managed key pairs.
+- This allows a smart contract to be represented both on-chain as well
+  as off-chain or in payment channels through temporary or permanent delegates.
+
+─── BACKWARDS COMPATIBILITY ─────────────────────
+Implementation
+ethr-did-registry (EthereumDIDRegistry contract implementation)
+ethr-did-resolver (DID compatible resolver)
+ethr-did (javascript library for using the identity)
+

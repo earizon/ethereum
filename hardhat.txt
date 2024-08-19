@@ -1,0 +1,73 @@
+#  HardHat Summary [[{dev_framework.js.hardhat,13_SLC.testing,]]
+ - https://hardhat.org/.
+ - It looks to be much better managed/supported than Truffle.
+
+             HARDHAT                                                    TRUFFLE
+   ---------------------------------------------------        ---------------------------------------------------
+   $ npm install --save-dev hardhat
+   added 300 packages, and audited 301 packages in 30s
+   61 packages are looking for funding
+     run `npm fund` for details
+
+   found 0 vulnerabilities
+
+   (Truffle alternative).
+- TypeScript support (Compile time vs runtime errors).
+
+        ┌─────┬─ "==" /*HRE*/ HardHat Framework can be seen briefly as its Hardhat Runtime Environment  (HRE):
+  const hardhat  = require("hardhat")
+   {
+     /* core */           ┌ task: async function + metadata defining
+     config: ...,         v       "everything you can do in HardHat"
+     "tasks..." : task1, task2, ...
+     "plugins..." : ...
+
+     /* others */
+     artifacts : {
+        readArtifact("contracts/A.sol:A"),
+     }
+
+   }
+
+- Export EIP-1193 compatible Ethereum provider.
+
+- Hardhat Runner: task runner designed around "tasks" and "plugins".
+  $ npx hardhat compile ···(translates to)··-> runing built-in-task "compile"
+
+  - plugins can override default task behaviour.
+
+- Hardhat for VS Code: adds advanced support for Solidity. [[{IDE,dev_framework.js}]]
+
+- Ussage:
+  $ npm install --save-dev hardhat  <- PRESETUP: only local install is allowed to
+                                       ensure reproducible builds.
+
+  $ npx hardhat --help
+    Usage: hardhat [GLOBAL OPTIONS] <TASK> [TASK OPTIONS]
+
+    GLOBAL                  │ AVAILABLE
+    OPTIONS:                │ TASKS:
+    ---------------         │ ---------
+    --config ...            │ check  ... whatever you need to check ...
+    --emoji  yes|no         │ clean      Clears cache + artifacts
+    --help                  │ compile    compile contracts/*, generate TS bindings
+    --max-memory ...        │ console
+    --network ...           │ flatten    Flattens, prints contracts and dependencies
+    --show-stack-traces ... │ node       Starts a JSON-RPC test node @http://127.0.0.1:8545/
+    --tsconfig ...          │ run        ... user-defined script after compiling ...
+    --verbose  ...          │ typechain  Generate Typechain typings for Compiled contracts
+    --version  ...          │ verify     Verifies contract on Etherscan  [[security]]
+                            │
+                            │ coverage   [[13_SLC.testing.coverage]]
+     ^^^^^^^^^^             │ test       test/*js *ts [[13_SLC.testing]]
+     ENV.VARS:
+     - HARDHAT_NETWORK           (overriden by --network flag)
+     - HARDHAT_SHOW_STACK_TRACES
+     - HARDHAT_VERBOSE
+     - HARDHAT_MAX_MEMORY
+
+* Compared to Truffle there is no migrations/* directory.
+  To deploy new contracts:
+  STEP 1) Create standard deployment script (js/ts) using ethers.js
+  STEP 2) $ npx hardhat run scripts/deploy.ts
+[[}]]

@@ -1,0 +1,132 @@
+# C# [[{dev_framework.C#]]
+<span xsmall>Nethereum</span>
+<https://nethereum.readthedocs.io/en/latest/>
+PRE-SETUP
+$  dotnet add package Nethereum.Web3
+
+ Sending Ethers
+using System;
+using Nethereum.Web3;
+using Nethereum.Web3.Accounts;
+using Nethereum.Web3.Accounts.Managed;
+using Nethereum.Hex.HexTypes;
+using Nethereum.HdWallet;
+
+bool useSoftWallet = true // ← false => Use HW Wallet
+if (useSoftWallet) {
+  // Alt 1: Use  private key/Software wallet  to init web3 instance.
+  var account = new Account(
+      "0x... 32 bytes- private key in Hex format ");
+
+  var web3 = new Web3(account);
+} else {
+  // Alt 2: Use  HW Wallet  to init web3 instance
+  string Words = "ripple scissors kick mammal hire column oak again sun offer wealth tomorrow wagon turn fatal";
+                  string Password = "password";
+  var wallet = new Wallet(Words, Password);
+  var account = wallet.GetAccount(0);
+  var toAddress = "0x13f022d72158410433cbd66f5dd8bf6d2d129924";
+  var web3 = new Web3(account);
+}
+var toAddress = "0x13f022d72158410433cbd66f5dd8bf6d2d129924";
+
+var TXManager = web3.Eth.GetEtherTransferService();
+var TX = await TXManager
+    .TransferEtherAndWaitForReceiptAsync(
+       toAddress, Web3.Convert.ToWei(1));
+ // alt: Specify gas amount
+ // .TransferEtherAndWaitForReceiptAsync(
+ //    toAddress, Web3.Convert.ToWei(1), 2);
+
+
+## C# Handling Events:
+<https://nethereum.readthedocs.io/en/latest/nethereum-events-gettingstarted/>
+- Events ("emit" in solidity code) write data to the transaction receipt logs.
+
+...
+var  transactionReceipt = await transferHandler.SendRequestAndWaitForReceiptAsync(contractAddress, transfer);
+var transferEventOutput = transactionReceipt.DecodeAllEvents<TransferEventDTO>();
+
+Contract Filters and Event Logs
+
+- get all changes of the logs (providing a filter message)
+- or create filters and retrieve changes which apply to our filter message periodically.
+
+TO ACCESS THE LOGS:
+ - CREATE A TRANSFER EVENT HANDLER FOR OUR CONTRACT ADDRESS
+ - CREATE AN EVENT DEFINITION.(TransferEventDTO).
+
+var   transferEventHandle   = web3.Eth.GetEvent<TransferEventDTO>(contractAddress /* null to retreive all signature-matching-events from any contract */ );
+    ^^^^^^^^^^^^^^^^^^^^
+var emptyFilter01 =   transferEventHandle  .CreateFilterInput(); // By default from block cero to current block
+
+var allTransferEventsForContract = await   transferEventHandle  .GetAllChanges(emptyFilter01);
+
+var   fromToIndexFilterInput01  =   transferEventHandle  .CreateFilterInput<string, string>(account.Address, receiverAddress2);
+var       toIndexFilterInput01  =   transferEventHandle  .CreateFilterInput<string, string>(null, receiverAddress2);
+var   toManyIndexFilterInput01  =   transferEventHandle  .CreateFilterInput(null, new []{receiverAddress2, receiverAddress});
+var allEventsFromTo  = await   transferEventHandle  .GetAllChanges(  fromToIndexFilterInput01 );
+var allEventsTo      = await   transferEventHandle  .GetAllChanges(      toIndexFilterInput01 );
+var allEventsToMany  = await   transferEventHandle  .GetAllChanges(  toManyIndexFilterInput01 );
+
+var   fromToIndextFilterID  = await   transferEventHandle  .CreateFilterAsync(fromToIndexFilterInput01);
+var allNewEventsFromTo   = await   transferEventHandle  .GetFilterChanges(  fromToIndextFilterID );
+</pre>
+
+# Nuget packages [[{dev_framework.C#,devops.C#]]
+<https://nethereum.readthedocs.io/en/latest/nugets/>
+- Standalone packages targeting Netstandard 1.1, net451, Netstandard 2.0, Netcoreapp 2.1
+  and where possible net351 to support Unity3d.
+ (Nethereum.Portable deprecated)
+Windows:                                Windows/Mac/Linux users
+PM > Install-Package Nethereum.Web3     dotnet add package Nethereum.Web3
+ Main Libraries
+Project Source                    Description
+Nethereum.Web3                    Web3-RPC, contract inter./deployment/TX, en/de-coding, event filters
+Nethereum.Unity
+Nethereum.Geth                    Geth support for Admin, Debug, Miner
+Nethereum.Quorum
+Nethereum.Parity                  Parity  non-generic RPC API support
+ Core Libraries
+
+Project Source                  Description
+Nethereum.ABI                   Encoding/decoding of ABI Types, functions, events of Ethereum contracts
+Nethereum.EVM                   Ethereum Virtual Machine API
+Nethereum.Hex                   HexTypes for encoding and decoding String|BigInteger...
+Nethereum.RPC
+Nethereum.JsonRpc.Client
+Nethereum.JsonRpc.RpcClient
+Nethereum JsonRpc IpcClient
+Nethereum.RLP                   RLP encoding and decoding
+Nethereum.KeyStore              Keystore generation|en/de-cryption (Web3 Secret Storage definition)
+Nethereum.Signer                Nethereum signer library to sign and verify messages,
+                                RLP and transactions using an Ethereum account private key
+Nethereum.Contracts             Core library to interact via RPC with Smart contracts
+Nethereum.IntegrationTesting    Integration testing module
+Nethereum.HDWallet              Generates an HD tree of Ethereum compatible addresses from
+                                a randomly generated seed phrase (using BIP32 and BIP39)
+
+ Smart contract API Libraries
+Project Source                  Description
+Nethereum.StandardTokenEIP20    Nethereum.StandardTokenEIP20 Service
+Nethereum.Uport                 Uport registry library
+Nethereum.ENS                   Ethereum Name service library
+ Utilities
+Nethereum.Generator.Console     collection of cli utilities to interact with Ethereum/account management
+ Training modules
+Project                         Description
+Nethereum.Workbooks             Xamarin Workbook tutorials including executable code
+Nethereum.Tutorials             Tutorials to run on VS Studio
+ Code templates
+Source                          Description
+Keystore generator              Keystore file generator
+Faucet                          Web application template for an Ether faucet
+Nethereum Flappy                The source code files for the Unity3d game integrating with Ethereum
+Nethereum Game Sample           Sample game demonstrating how to integrate Nethereum with UrhoSharp's
+                                SamplyGame to build a cross-platform game interacting with Ethereum
+Nethereum UI wallet sample      Cross platform wallet example using Nethereum, Xamarin.Forms and MvvmCross,
+                                targeting: Android, iOS, Windows Mobile, Desktop (windows 10 uwp), IoT
+                                with the Raspberry PI and Xbox.
+[[}]]
+
+[[}]]

@@ -1,0 +1,444 @@
+  [[TRANSACTION.EIP/ERC.4337.ACCT_ABSTRACTION,WALLET.STANDARDS,SCALABILITY.OFFCHAIN]]
+  [[SIGNATURE.MULTISIGNATURE,STANDARDS.EIP/ERC.4337,PRIVACY.OFFCHAIN]]
+# EIP-4337:
+  (Vitalik Buterin, Yoav Weiss, Kristof Gazso, Namra Patel,
+    Dror Tirosh, Shahaf Nacson, Tjaden Hess).
+  https://eips.ethereum.org/EIPS/eip-4337
+  Status: DRAFT (As of 2022-12)
+  Reference Implementation:
+  <https://github.com/eth-infinitism/account-abstraction/tree/main/contracts>
+  Discussion link:
+  <https://ethereum-magicians.org/t/erc-4337-account-abstraction-via-entry-point-contract-specification/7160>
+
+## Context:
+* Ethereum (standard) Mempool is an "staging"/"buffer"/"waiting" area for
+  received transactions in normal or mining node while being added to a block,
+  also referred with other terms (TX-POOL in Geth, , TX-QUEUE in OpenEthereum, ...)
+* being able to query the mempool (feature offered node implementations) can be
+  useful for trading, analying gas prices, adjust TX price, simulate pending TXs, ...
+* EIP-4337 (Account Abstraction) using alternative separate mempool, allows to pack
+  "many" UserOperations (pseudo-transaction) into a single final standard
+  transaction, AVOIDING CHANGES IN BOTTOM-LAYER (EVM)
+  **WARN:** Existing smart-contract based accounts will NOT be compatible.
+
+* KEY-GOALS:
+  * allow users to use SMART CONTRACT WALLETS CONTAINING ARBITRARY VERIFICATION LOGIC
+    (in entrypoint::handleOps, see later)
+  * Remove any need for users to also have EOAs / funds.
+  * Ussability for newcommers: (REF: https://beincrypto.com/learn/erc-4337/)
+    - Ussing EOAs:
+      create account > store private key > Purchase Funds > Transfer Funds
+      > Initiate Transaction > Pay GasFees > Wait For TX > TX confirmed
+    - Ussing 4337 SC Wallets:
+      - mobile hardware as efficient as a hardware wallet.
+      - Multiple Account Recovery options.
+      - "Clean UX" (Seed phrases, ... invisible to users)
+      - relay system decentralized, more secure and censorship-resistant.
+
+    - """ ERC-4337 is expected to bring in something called
+          "Group-Access" wallets. if you lose your seed phrase,
+           you can reach out to previously designated guardian
+           contracts or accounts to help retrieve access.  """
+    - Wallet code and session keys can be used to create pre-approved TXs.
+    - Subscription services.
+    - Multi-Factor Authentication: We can set, for example Face ID on a
+      mobile to authenticate certain transactions/scenarios.
+    - Set up custom spending, for example 30 USDT max/month.
+
+
+  Source: Messari (Signature Aggregators not included to reduce complexity)
+
+  STAGE 1: USEROPERATION CREATION    STAGE 2: BUNDLER PROCESSING
+  ┌─Users and Dapps ──────────┐      ┌─ Alternative Mempool ─┐
+  │ ┌ UserOperation ────────┐ │   ┌────>• UserOp1 • UserOp2  │
+  │ │ • UserOp Instructions ├─────┘  │  • UserOp3 • UserOp4  │
+  │ │ • Paymaster(Optional) │ │      │  • ...        │       │
+  │ └───────────────────────┘ │      └──^────────────│───────┘
+  └───────────────────────────┘         │            │
+                                        │     ┌──────v──┐
+                                        └─────┤         │
+                                              │ Bundler │
+                                   ┌──────────┤         ├────────────────┐
+                                   │          └─────────┘                │
+                                   │                                     │
+ Bundler Incentives:               │ ┌ Off-Chain Bundler Marketplace ──┐ │
+ • Bundlers have the flexibility   │ │                                 │ │
+   to order TXs in optimal confi-  └───>• UserOp         ┌─ Bundle ──┐<──┘
+   gurations, as well as insert      │  • UserOp         │ • UserOp  │ │
+   their own TXs to achieve some     │  • UserOp         │ • UserOp  │ │
+   desired optima configuration.     │  • ...            └─────┬─────┘ │
+                                     └─────────────────────────│───────┘
+                    STAGE 3: EntryPoint                        │
+                    ┌─────────┐                                │
+      ┌── Signed ───┤ Bundler <────────────────────────────────┘
+      │   TX        └─────────┘
+      │
+      v
+   ┌─ EntryPoint ("Singleton") ─┐ (Already deployed in MainNet,...)
+   │  Contract                  │
+   │• It's responsible for:     │
+   │  • Validating the UserOp   │
+   │  • Executing  the UserOp   │
+   └─┬──────────────────────────┘
+     v
+     Stage 4: Execute Instructions: handleOps + validateUserOp + ExecuteUserOp
+     │
+     │    Alternative 1. Paymaster     When present, it pays the gas-fees
+     ├··> ┌─ Paymaster (Optional) ──┐  (otherwise, it is the Bundler who pays them,
+     ·    │  • ETH Balance          │  that will be compensated when the userOperation
+     ·    └─────────────────────────┘  is handled, validated and executed by the EntryPoint
+     ·
+     ·
+     ·    Alternative 2. SC (User) Wallet
+     └··> ┌─ Smart Contract Wallet ─────────────────────────┐
+          │ • ETH Balance                                   │
+          │ • Jpegs                                         │
+          │ <<IWallet>>                                     │
+          │ • function validateUserOp(...)                  │
+          │ Wallet-specificic:                              │
+          │ • function nonce() ...                          │
+          │ • functionexecFromEntryPoint(dest,val,calldata) │
+          │                                                 │
+          └─────────────────────────────────────────────────┘
+
+
+* EIP-4337 use-cases can include:
+  - Multisignature social recovery (vs current awkward non-standard
+    constructions which also needs "refilling ETH").
+  - Atomic multi-operations.
+  - Schnorr signatures, aggreagated signatures (eg. Boneh-Lynn-Shacham BLS),
+    quantum-proof algorithms, ....
+  - ...
+
+## EIP-4337 SPECIFICATION:
+* UserOperation: structure describing a TX to be sent **ON BEHALF OF A USER.**
+```
+  UserOperation (It is sent ABI-encoded to handleOps)
+  =============
+  · sender          ─┐
+  · to               │
+  · callData         │
+  · callGasLimit     ├ Standard in normal ethereum TXs
+  · maxFeePerGas     │ To prevent replay attacks (cross-chain + multi-EntryPoint implementations),
+  · maxPriorityFee   │ it should use on chainid and **also EntryPoint address**.
+  · signature        │
+                     │
+  · nonce           ─┘
+  · initCode         <·· (needed if and only if the account is not yet on-chain and needs to be created)
+  · Sender (vs sender)   <··· Account Contract sending a user operation.
+  · EntryPoint           <··· Singleton contract executing bundles of UserOperations.
+  · verificationGasLimic ·· amount of gas to allocate for the verification step
+  · preVerificationGas   ·· amount of gas to pay for to compensate the bundler for
+                            pre-verification execution and calldata
+  · maxFeePerGas            Maximum fee per gas.
+  · maxPriorityFeePerGas    Maximum priority fee per gas
+  · paymasterAndData        Address of PAYMASTER SPONSORING THE TRANSACTION, followed by extra data
+                            to send to the paymaster (empty for self-sponsored transaction)
+
+  << Entry-point >>  <··· shared singleton heavily audited and formally verified trust point
+  ──────────────────
+  · struct UserOpsPerAggregator {
+        UserOperation[] userOps
+        IAggregator aggregator;
+        bytes signature;
+    }
+  · handleOps          (UserOperation[]       , address payable beneficiary );
+    KEY-POINT: It can map to arbitrarely complex EVM code like            [[{02_doc_has.comparative]]
+    multisigs, future signature algorithms, ZK-SNARK verification, ...)
+    (vs current monolitic Authorizaton policy: "ECDSA signature from EOA")[[}]]
+  · handleAggregatedOps(UserOpsPerAggregator[], address payable beneficiary );
+    HANDLE BATCH of userOps of multiple aggregators
+    (and also requests without any aggregator)
+    It performs the same logic below as handleOps,
+    but it must transfer the correct aggregator to
+    each userOp, and also must call validateSignatures
+    on each aggregator after doing all the per-account
+    validation.
+  · function simulateValidation (UserOperation         , bool offChainSigCheck  )
+             └─··············─┘
+           to be used by aggregators offchain grouping.
+           If an account uses an aggregator (returns it from validateUserOp),
+           then its address is returned by simulateValidation() reverting with
+           ValidationResultWithAggregator instead of ValidationResult
+
+  · error ValidationResult(ReturnInfo returnInfo,
+          StakeInfo senderInfo, StakeInfo factoryInfo, StakeInfo paymasterInfo);
+  · error ValidationResultWithAggregation(ReturnInfo returnInfo,
+          StakeInfo senderInfo, StakeInfo factoryInfo, StakeInfo paymasterInfo,
+          AggregatorStakeInfo aggregatorInfo);
+
+  · struct ReturnInfo {         struct StakeInfo {          struct AggregatorStakeInfo {
+      uint256 preOpGas;           uint256 stake;                address actualAggregator;
+      uint256 prefund;            uint256 unstakeDelaySec;      StakeInfo stakeInfo;
+      bool sigFailed;           }                           }
+      uint48 validAfter;
+      uint48 validUntil;
+      bytes paymasterContext;
+    }
+
+  Aggregator SC: helper contract trusted-by-wallets to validate an aggregated signature
+  =============  (off-chain optimization).
+  · Bundlers MAY throttle down and ban aggregators according to allow/deny list.
+
+The core interface required for an account to have is:
+
+
+  <<IAccount>>>  <·· (sort of <<IWallet>>) Deployed SC trusted-by-wallets
+  ============
+  · function validateUserOp (    <··· "verification loop"
+       UserOperation calldata userOp,
+       bytes32 userOpHash, /** hash over ["userOp minus signature", entryPoint, chainId]
+       uint256 missingAccountFunds
+    )
+    external
+    returns (
+      uint256 validationData <··· It MUST be packed of either:
+    );                            [authorizer, validUntil, validAfter]
+                                   ^^^^^^^^^^
+                                   := 0: valid sig |
+                                      1: wrong sig |
+                                      address-of-authorizer-contract (aggregated signature)
+
+    · It MUST validate the caller is a trusted EntryPoint.
+    · If account does NOT support signature aggregation, it MUST validate signature is a valid signature
+      of the userOpHash, and SHOULD return SIG_VALIDATION_FAILED (and not revert) on signature mismatch.
+      · Any other error should revert.
+    · MUST pay the entryPoint (caller) at least the “missingAccountFunds” (which might be zero,
+      in case current account’s deposit is high enough)
+    · The account MAY pay more than this minimum, to cover future transactions (it can always issue
+      "paymaster".withdrawTo(...) to retrieve it back).
+        validUntil is 6-byte timestamp value, or zero for “infinite”. The UserOp is valid only up to this time.
+        validAfter is 6-byte timestamp. The UserOp is valid only after this time.
+    · Accounts working with aggregated signature, should return its signature aggregator address
+      in the “sigAuthorizer” return value of validateUserOp. It MAY ignore the signature field
+
+  1) 4337 compliant Wallets will first verify 'validateUserOp' function
+     and its "check signature, increment nonce and pay fees" logic only.
+  2) 4337 compliant Wallets will then make use of it "offchain" (invoking
+     trusted read-only node).
+
+   <<IAggregatedWallet>>  <··· Deployed SC trusted-by-wallets supporting aggregated signature
+   =====================
+   · getAggregator() view returns (address);
+
+   <<IAggregator>>  <··· Notice tht all functions are view-only
+   ===============
+   · Utility functions to be invoked (optionally) by bundlers.
+     Bundlers are free to replace such call by a native (Rust/C/... library vs EVM)
+     library to perform the same validation and aggregation logic.
+     · validateUserOpSignature  (UserOperation, offChainSigCheck) view returns (bytes sigForUserOp);
+       (Invoked by bundlers to validate the UserOperation's signature)
+     · aggregateSignatures      (UserOperation[]         userOps) view returns (bytes aggregatesSignature);
+       It MUST aggregate all UserOp signature into a single value.
+
+   · Normative functions used at TX execution runtime by handleOps():
+     · validateSignatures       (UserOperation[] userOps, signature) view external
+       - To be called on-chain by handleOps().
+       - It MUST validate the aggregated signature matches for all
+         UserOperations in the array and revert otherwise.
+     · validateUserOpSignature()
+
+   USING SIGNATURE AGGREGATORS:
+   1) bundler should accept/deny the aggregator (validate its stake info, allow/deny lists, ...)
+   2) bundler MUST verify the userOp using aggregator.validateUserOpSignature()
+   NOTE: Signature aggregator SHOULD stake just like a paymaster,
+         unless it is exempt due to not accessing global storage.
+
+  ┌─ (Decentralized) BUNDLER (there can be "many") ──────────────────────────┐
+  │ · "special" class-of-actor, miners or group-of-users+bundle marketplace  │
+  │                                                                          │
+  │ · package up N UserOperations into a single "handleOps(...)" standard TX │
+  │   call to a special contract.                                            │
+  │   Example implementation:                                                │
+  │ <https://github.com/Vid201/aa-bundler>                                  │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+# UserOperation "Journey":
+
+  actor         Wallet
+  participant   "UserOperation" as UO  high-layer pseudo-transaction
+  participant   Mempool
+  actor         Bundler
+  participant   Block
+  participant   "EntryPoint Contract" as EPC
+  participant   Aggregator
+
+  note over Wallet, Aggreator: Bundler: block builders( or user+bundle-marketplace sending TXs to block builders) calling EntryPoint.handleOps(UO[],...)
+
+  note over Wallet, Aggreator: PRE-SETUP
+  Bundler    -> Mempool   : Monitor for UserOperations
+
+  note over Wallet, Aggreator: UserOperation "Journey"
+  Wallet     -> +UO       : Create new UserOperation
+  Wallet     -> Mempool   : Send UserOperation
+  Bundler    -> Bundler   : Collect UserOperations
+  Bundler    -> EPC       : handleOps(UO[])
+  EPC        -> EPC       : Verify handleOps Transaction
+  EPC        -> Block     : Include handleOps in Block
+  Block      -> Block     : Add to Blockchain
+  Aggregator -> Aggregator: Validate Aggregated Signature
+  Bundler    -> Aggregator: Whitelist supported Aggregator
+  Client     -> Aggregator: Whitelist supported Aggregator
+
+
+
+Entry-Point alt 1: non-paymaster case
+- handleOps VERIFICATION LOOP for each UserOperation:
+  1. Create the account if it does not yet exist, using the initcode provided in UserOperation.
+    Fail if account does not exist or
+            initcode is empty      or
+            does not deploy a contract at the "sender" address.
+  1. Call validateUserOp on the account, passing in the UserOperation, the required fee and aggregator
+    (if there is one).
+    - The account should verify the operation's signature, and pay the fee if the account considers
+      the operation valid.
+    - If any validateUserOp call fails, handleOps must skip execution of at least that operation,
+      and may revert entirely.
+  1. Validate the account’s deposit in the entryPoint is high enough to cover the max possible cost
+    (cover the already-done verification and max execution gas)
+
+- handleOps EXECUTION LOOP:
+  1. Call the account with the UserOperation’s calldata.
+     IT'S UP TO THE ACCOUNT TO CHOOSE HOW TO PARSE THE CALLDATA;
+     an expected workflow is for the account to have an execute function
+     that parses the remaining calldata as a series of one or more calls
+     that the account should make.
+     - Before accepting a UserOperation, bundlers should use an RPC method
+       to locally call the 'simulateValidation' function of the entry point,
+       to verify that the signature is correct and the operation actually
+       pays fees;
+     - A node/bundler SHOULD drop (not add to the mempool) a UserOperation
+       that fails the validation.
+
+
+Entry-Point alt 2: paymaster extension case (paymaster != address(0))
+paymaster: sponsor of transactions for other users,
+           allow final users to pay fees with ERC-20 tokens, ...
+ zero address, the entry point implements a different flow:
+
+- verification loop:
+  - validateUserOp (as in alt 1)
+    NOTE: It is called with missingAccountFunds=0 (reflecting that
+          account's deposit is not used for payment for this userOp)
+  - 'handleOps' execution also must check that the paymaster has enough ETH
+    deposited with the entry point to pay for the operation and then:
+    - call 'validatePaymasterUserOp' on paymaster to verify that it is willing to pay for op.
+      If result returns a “context”, then handleOps must call 'postOp'
+      on paymaster after making the main execution call.
+      It must guarantee the execution of postOp, by making the main execution
+      inside an inner call context, and if the inner call context reverts
+      attempting to call postOp again in an outer call context.
+
+  - Maliciously crafted paymasters can DoS the system.
+  - To prevent this, we use a reputation system:
+    - paymaster must either limit its storage usage, or have a stake.
+
+    <<paymaster>>
+    · function validatePaymasterUserOp
+        (UserOperation calldata userOp, bytes32 userOpHash, uint256 maxCost)
+        external returns (bytes memory context, uint256 validationData);
+
+    · function postOp
+          (PostOpMode mode, bytes calldata context, uint256 actualGasCost)
+          external;
+
+    · enum PostOpMode {
+          opSucceeded, // user op succeeded
+          opReverted, // user op reverted. still has to pay for gas.
+          postOpReverted // user op succeeded, but caused postOp to revert
+      }
+
+      // add a paymaster stake (must be called by the paymaster)
+    · function addStake(uint32 _unstakeDelaySec) external payable
+
+      // unlock the stake (must wait unstakeDelay before can withdraw)
+    · function unlockStake() external
+
+      // withdraw the unlocked stake
+    · function withdrawStake(address payable withdrawAddress) external
+
+  - paymaster must also have a "paymaster-deposit" (for paying gas fees), separate from
+    the stake (which is locked):
+    "paymaster deposit" == "entry point" will charge UserOperation gas-fees.
+      It must implement the following interface:
+      · function balanceOf(address account) public view returns (uint256)
+      · function depositTo(address account) public payable
+      · function withdrawTo(address payable withdrawAddress, uint256 withdrawAmount) external
+
+
+### Client behavior upon receiving a UserOperation:
+1) run some basic sanity checks:
+  - sender is an existing contract OR initCode is not empty (but not both)
+  - verificationGasLimit is sufficiently low (<= MAX_VERIFICATION_GAS)
+  - preVerificationGas is sufficiently high
+  - sender doesn’t have another UserOperation already present in the pool
+    (or it replaces existing entry)
+  - ...
+   (See original doc for more info)
+
+2) run first 'op' simulation: Abort on failure.
+3) add 'op' to the pool.
+4) run second simulation during bundling (to make sure
+   UserOperation is still valid)
+
+### Simulation Rationale
+- There are 3 special contracts that interact with the account:
+  - the factory (initCode) that deploys the contract.
+  - the paymaster that can pay for the gas.
+  - signature aggregator (described later)
+
+- Storage associated with an address:
+
+### Bundling
+During bundling, the client should make extra checks. (see original doc)
+
+REPUTATION RATIONALE:
+- throttle down (or completely ban for a period of time) an entity that causes
+  invalidation of large number of UserOperations in the mempool.
+
+# SPECIFICATION.
+- entity = address explicitly referenced by the UserOperation:
+           sender, factory, paymaster and aggregator.
+
+- Clients maintain two mappings with a value for staked entities:
+  - opsSeen    : Map[Address, int]
+  - opsIncluded: Map[Address, int]
+
+- THE MAIN CHALLENGE WITH A PURELY SMART CONTRACT WALLET BASED
+  ACCOUNT ABSTRACTION SYSTEM IS DOS SAFETY.
+  - Q: how can a block builder including an operation make sure that it will actually pay fees,
+       without having to first execute the entire operation?
+     - Requiring the block builder to execute the entire operation opens a DoS attack vector,
+       as an attacker could easily send many operations that pretend to pay a fee but then revert
+       at the last moment after a long execution.
+     - nodes in the P2P network need to check if an operation will pay a fee before they
+       are willing to forward it.
+
+FIRST-TIME ACCOUNT CREATION:
+- IT IS AN IMPORTANT DESIGN GOAL TO REPLICATE THE KEY PROPERTY OF
+  EOAS THAT USERS DO NOT NEED TO PERFORM SOME CUSTOM ACTION OR RELY ON
+  AN EXISTING USER TO CREATE THEIR WALLET; THEY CAN SIMPLY GENERATE AN
+  ADDRESS LOCALLY AND IMMEDIATELY START ACCEPTING FUNDS.
+  - wallet creation itself is done by a “factory” contract, with wallet-specific data.
+
+# RPC methods (eth namespace)
+* eth_sendUserOperation: submits User Operation object to the User Operation pool of the client.
+* eth_estimateUserOperationGas:
+
+# RPC methods (debug Namespace)
+* debug_bundler_clearState:
+* debug_bundler_dumpMempool:
+* debug_bundler_sendBundleNow:
+* debug_bundler_setBundlingMode:
+* debug_bundler_setReputation
+* debug_bundler_dumpReputation
+
+
+Backwards Compatibility:A
+- This EIP does not change the consensus layer.
+- UNFORTUNATELY IT IS NOT EASILY COMPATIBLE WITH PRE-ERC-4337 ACCOUNTS
+  BECAUSE THOSE ACCOUNTS DO NOT HAVE A VALIDATEUSEROP FUNCTION.
+  - If the account has a function for authorizing a trusted op submitter,
+    then this could be fixed by creating an ERC-4337 compatible account
+    that re-implements the verification logic as a wrapper and setting it
+    to be the original account’s trusted op submitter.

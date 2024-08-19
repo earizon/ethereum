@@ -1,0 +1,143 @@
+## Open Zepellin (OZ) Summary [dev_framework.zepellin,12_solidity,security.aaa,02_QA,01_PM.TODO]
+    WARN: upgradable contracts, the "core" of OZ, looks to be replaced by "Diamon Standard"
+    @[https://github.com/OpenZeppelin/]
+    - TODO: Summary of "important" libraries
+
+    - OZ 2.0 API:
+    @[https://openzeppelin.org/api/docs/access_Roles.html]         [aaa]
+
+    - Roadmap:
+      @[https://medium.com/zeppelin-blog/zeppelin-framework-proposal-and-development-roadmap-fdfa9a3a32ab#.xk3bv3cw8]
+
+    - O.Zepelling RBAC:                                            [aaa]
+    @[https://openzeppelin.org/api/docs/ownership_rbac_RBAC.html]
+
+    - Upgradable Contracts                                         [qa]
+      To be replaced with Diamon standard:
+      https://github.com/OpenZeppelin/openzeppelin-contracts/issues/2537
+
+    - @[https://blog.zeppelinos.org/getting-started-with-zeppelinos/]
+    - @[https://paulrberg.com/post/2018/12/30/upgradeable-smart-contracts/]
+
+    - ZeppelinOS "zos" is a command line tool to makes writing upgradeable
+      contracts extremely easy, abstracting away the complexities of
+      upgradeability.
+    -  It is based on proxy libraries as explained at:
+      @[https://blog.zeppelin.solutions/proxy-libraries-in-solidity-79fbe4b970fd]
+
+    WARN: Upgradeability can NOT be applied to already-deployed contracts.
+
+    $ npm install --global zos      ← ZOS install
+
+                                      ZOS ussage
+    $ mkdir zos-demo && cd zos-demo   ==========
+    $ npm init -y
+    $ zos init zos-demo             ← create  zos.json  config.file
+                                      makes ZOS aware of your smart contract
+                                      architecture.
+                                      Can (Must) be added to git.
+
+    $ npm install --save zos-lib    ← "contracts" folder will be created
+
+    $ vim contracts/CounterContract.sol
+     pragma solidity ^0.4.21;
+     import "zos-lib/contracts/migrations/Migratable.sol";
+
+     ┌───────────────────────────────────────────────────────
+     │ contract CounterContract is Migratable {
+     │
+     │   uint256 public counter;
+     │
+     │   // initialize replaces constructor in upgradable contract
+     │   // guaranting that the new contract version can only be initialized once.
+     │
+     │   function   initialize (uint256 _counter)
+     │     // isInitializer takes the name of contract and version ID
+     │      isInitializer("CounterContract", "0")  public {
+     │     counter = _counter;
+     │   }
+     │
+     │   function increment() public { counter += 1; }
+     │ }
+     └───────────────────────────────────────────────────────
+
+        WARN : If using a constructor in an upgradeable smart contract,
+               everything set in there will be ignored.
+
+      ###############
+      # ZOS Testing #
+      ###############
+      ("npm install --save ganache-cli" if not already done)
+      $ npx ganache-cli --port 9545
+
+      $ zos add CounterContract  # ← STEP 1: Add smart contract to zos
+      $ zos push --network local # ← STEP 2: push it to the local network
+
+      $ zos create CounterContract \ ← create&>initialize upgradeable instance
+            --init   initialize  \
+            --args 42 \              ← must match the   initialize  method.
+            --network local
+      → ...
+      → ...   CounterContract proxy: <address>   ← address to use for instance
+      → ...                                       (save somewhere safely!)
+
+    $ truffle console --network=local  ← enter truffle interactive console
+      > counterContract = CounterContract.deployed()    # Alt 1
+      > counterContract = CounterContract.at("address") # Alt 2
+      > counterContract.increment()                     # Call public method
+      > counterContract.counter().then(counter => counter.toNumber())
+      → 43
+      truffle> .exit
+
+    ################################
+    # Upgrading deployed contracts #
+    ################################
+
+    $ vim  contracts/CounterContract.sol
+
+      contract CounterContract is Migratable {
+        uint256 public counter;
+   +    mapping(uint256 => address) public history; //   ^1
+        ...
+
+   +    function incrementByTwo() public {
+   +      counter += 2;
+   +      history[counter] = msg.sender;
+   +    }
+      }
+      ^1 WARN :
+         When writing new versions of your contract, you must preserve
+         all variables that appear in previous versions of your smart contract
+         in the same order.
+         You should only make additive changes
+
+  $ zos push --network local                    # ← Push new version.
+  $ zos update CounterContract --network local  # ← update CounterContract to new version
+
+
+      Test new version  #
+    $ truffle console --network=local
+       > counterContract = CounterContract.deployed() # alt 1
+       > counterContract = CounterContract.at("address")
+       > counterContract.incrementByTwo()
+       > counterContract.counter().then(counter => counter.toNumber())
+       → 45
+       truffle counterContract.history(45)
+       → 0x....
+
+     WARN:  When reseting Ganache dev network restart all over,
+            deleting also zos.local.json. This isn't a problem
+            for non-dev. networks :D)
+
+  - ZOS TODO:
+  @[https://blog.zeppelinos.org/getting-started-with-zeppelinos/]
+  @[https://docs.zeppelinos.org/docs/advanced.html#deploying-to-mainnet]
+  @[https://docs.zeppelinos.org/docs/basil.html]  (Advanced Tutorial)
+  @[https://docs.zeppelinos.org/docs/crafty.html] (Advanced example -Crafty)
+
+  - Realted External Links:
+  @[https://hackernoon.com/how-to-make-smart-contracts-upgradable-2612e771d5a2]
+  @[https://blog.colony.io/writing-upgradeable-contracts-in-solidity-6743f0eecc88]
+  @[https://blog.indorse.io/ethereum-upgradeable-smart-contract-strategies-456350d0557c]
+
+

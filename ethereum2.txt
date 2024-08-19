@@ -1,0 +1,140 @@
+# Ethereum 2 (Serenity) [[{consensus.ethereum2,scalability.101,scalability.consensus.ethereum2]]
+## Serenity/Eth v2.0 nomenclature
+- REF: @[https://medium.com/alethio/ethereum-2-0-terms-demystified-8398357429d7] 2019-08-13
+
+ BEACON CHAIN                       │ SHARDS
+ - one chain to rule them all       │ - 1024 of them
+ - proof-of-stake chain             │ - semi independent chains
+ - includes beacon blocks           │ - include shard blocks
+ - consensus layer for "everything" │ - periodically the state of the shard blocks
+ - manages validators               │   is recorded on the beacon chain through
+ - applies rewards and penalties    │   crosslinks
+ - serves as an anchor point for the│ - once a block on the beacon chain is finalised,
+  shards through cross-links        │   the shard blocks referenced in the included
+                                    │   crosslinks are considered finalised
+                                    │ - each shard has a committee of validators
+                                    │   attesting blocks
+                                      ^
+                           @[https://blog.ethereum.org/2020/03/27/sharding-consensus/]
+ CROSSLINKS                    │ SLOT                            │ EPOCH
+ - summary of the shard's state│ period of time in which a block │ a number of slots(64 "now")
+ - only reference of the shards│ proposer propose a block for    │ after which validators are
+   in the beacon chain         │  attestation                    │ reshuffled in committees
+                               │ - slots might be empty          │
+                               │ - slots are filled with attested│
+                               │   blocks                        │
+
+ VALIDATORS                                    │ BLOCK PROPOSERS
+ - users that have deposited 32th in the       │ - random validators chosen by the beacon
+   validator deposit contract and run a        │   chain to propose blocks for
+   validator node                              │   validation/attestation
+ - they can be inactive (don’t run as an       │ - there will be one block proposer per slot
+   actual validator yet), active (validating), │   for the beacon chain and one proposer
+   pending (opted into becoming a validator    │   per slot for each of the shards
+   but stuck in the entry queue) and exiting
+   (no longer want to validate and stuck in
+   the exit queue)
+
+ ATTESTATIONS               │ COMMITTEES                        │ ETH2 OR BETH
+ - votes in regards to the  │ ─ random groups of validators     │ ─ base currency of beacon chain
+   validity of a shard block│   chosen by the beacon chain to   │ ─ will be obtained initially
+   or beacon                │   attest the validity of blocks   │   from rewards and by locking
+                            │   (beacon+shard)                  │   ETH1 in the validator deposit
+                            │ ─ target of minimum 128 validators│   contract
+                            │   per committee                   │
+
+
+- VALIDATOR DEPOSIT CONTRACT
+  - smart contract on the POW chain
+    (in our case, the Ethereum Mainnet)
+  - once ETH1 funds are locked in this
+    smart contract, and event log is emitted
+    that should be read by the beacon chain
+    and the same amount of ETH2 should be
+    allocated to the account, now considered
+    a validator
+  - this mechanism might change in the future
+  - until phase 2 ends the transfer of ETH1
+    to ETH2 is a one way street, can’t get
+    ETH1 back, but there is an escape hatch
+    to sell your stake once transfers
+    between validators become possible
+
+## Casper PoS Consensus [[{scalability.consensus.ethereum2,02_doc_has.comparative]]
+- PoS stands for Proof-of-Stake.
+@[https://consensys.net/blog/blockchain-explained/what-is-ethereum-2/]
+- Reducing mining hardware requirements and scalates TX/s.
+- Consensus continues to have eventual transaction finality.
+  (mined transactions can appear and dissapear and we need to wait
+  for N blocks to have statistical confirmation).
+
+-  PoW             PoS
+   miners       →  validators
+   electricity  →  stake
+
+"MINING":
+ validator → deposit SC : commit 32 ETH as "skin in the game"
+             ^1           into the official deposit contract
+ ...
+ network → network      : randomnly select new validator
+                          to propose and attest to blocks
+ validator → network    : correctly propose and attest to blocks
+ network → validator    : reward
+
+ ^1  Ethereum Foundation Eth2 deposit contract:
+     https://github.com/ethereum/eth2.0-specs/tree/dev/deposit_contract
+
+- if a validator fails to stay online and execute their share of
+  computational responsibilities, block reward will moderately decrease
+  as to incentivize validators to stay online.
+
+ - Byzantine validators trying to compromise the network
+   (i.e. validate incorrect data history), will be punished
+   with some/all of their 32 staked ETH.
+
+ - In order for the beacon chain to launch its genesis block,
+   at least 524,288 ETH must be staked on the network, divided
+   among a minimum of 16,384 validators (these numbers were decided
+   upon to ensure sufficient security and decentralization).
+ - Staking rewards will not be distributed until this threshold
+   is reached, which is partially why some altruistic behavior is
+   needed among the early participants in phase 0.
+
+   WARN: beacon chain will not be particularly useful to the majority
+         of Ethereum users in  Phase 0 ;
+         - it will be unable to process transactions, execute smart
+           contracts, or host dapps.
+           This is by design , ensuring Proof of Stake undergoes
+           considerable testing as a live, functioning network before
+           dapps and users begin transacting by the millions on a
+           daily basis.
+
+  Phase 0:
+  - Original Ethereum 1.0 blockchain will continue to run
+    in parallel and receive upgrades during Phase 0.
+
+  Phase 1:
+  - Implementation of shard chains.
+  - Ethereum will be partitioned into 64 separate (shard) chains,
+    coordinated by a beacon chain.
+
+  Phase 1.5:
+  - merging of the original PoW Ethereum with PoS chain.
+    It will be brought into Ethereum 2.0 and exist as one
+    of the 64 shard chains alongside the beacon chain
+    with no break in continuity or data history.
+    - ETH holders will not have to undergo any sort of
+      token transfer or swap between Ethereum 1.0 and 2.0.
+
+  Phase 2:
+  - currently (2020-05) less defined.
+    Enable ether accounts, transactions, transfers and withdrawals,
+    and smart contract execution.
+[[scalability.consensus.ethereum2}]]
+
+[[consensus.ethereum2}]]
+
+## Ethereum 2 knowledge base 
+
+* <https://consensys.net/knowledge-base/ethereum-2/>
+

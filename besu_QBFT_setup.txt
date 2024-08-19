@@ -1,0 +1,204 @@
+https://besu.hyperledger.org/en/stable/private-networks/how-to/configure/consensus/qbft/#configure-the-mining-beneficiary-on-an-existing-network-deployment
+## Configure QBFT consensus
+
+* validators == approved accounts validating transactions and blocks.
+
+* TIP: `--security-module`can be used to         [[{SECURITY.SECRET_MNG]]
+  let plugins securely store a validator’s key.  [[}]]
+
+### Genesis file
+
+The genesis file differs depending on the VALIDATOR MANAGEMENT METHOD you intend to use.
+
+- transitions (do not confuse with transactions) can be used to change blockperiodseconds
+  or VALIDATOR MANAGEMENT METHOD.
+
+{
+"config": {
+    "chainid": 1337,
+    "berlinBlock": 0,
+    "qbft": {
+        "epochlength": 30000,        <··· After epochlenght blocks all votes are reseted
+                                          Recomendation: Do NOT change after genesis.
+        "blockperiodseconds": 5,     <··· Minimum block time, in seconds.
+        "requesttimeoutseconds": 10  <··· timeout for each consensus round before ound change
+    }
+},
+"nonce": "0x0",
+"timestamp": "0x5b3d92d7",
+"extraData": "0xf87aa00000000000000000000000000000000000000000000000000000000000000000f8549464a702e6263b7297a96638cac6ae65e6541f4169943923390ad55e90c237593b3b0e401f3b08a0318594aefdb9a738c9f433e5b6b212a6d62f6370c2f69294c7eeb9a4e00ce683cf93039b212648e01c6c6b78c080c0",
+"gasLimit": "0x29b92700",
+"difficulty": "0x1",            <··· constant in QBFT
+"mixHash": "0x63746963616c2062797a616e74696e65206661756c7420746f6c6572616e6365",
+            └···········  constant for Istanbul block identification ········┘
+"coinbase": "0x0000000000000000000000000000000000000000",
+"alloc": {
+    "64d9be4177f418bcf4e56adad85f33e3a64efe22": {
+        "balance": "0x446c3b15f9926687d2c40534fdb564000000000000"
+    },
+    "9f66f8a0f0a6537e4a36aa1799673ea7ae97a166": {
+        "balance": "0x446c3b15f9926687d2c40534fdb564000000000000"
+    },
+    "a7f25969fb6f3d5ac09a88862c90b5ff664557a7": {
+        "balance": "0x446c3b15f9926687d2c40534fdb564000000000000"
+    },
+    "f4bbfd32c11c9d63e9b4c77bb225810f840342df": {
+        "balance": "0x446c3b15f9926687d2c40534fdb564000000000000"
+    }
+},
+"number": "0x0",
+"gasUsed": "0x0",
+"parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+}
+### extraData: RLP encoded extra data including: [[{]]
+  - 32 bytes of vanity data.
+  - If using:
+    - Block header validator selection: list of validator addresses.
+    - Contract validator selection, no validators.
+      In this case, the list of validators is configured in
+      the alloc property’s storage section.
+  - Any validator votes. No vote is included in the genesis block.
+  - The round the block was created on. The round in the genesis block is 0.
+  - A list of seals of the validators (signed block hashes).
+    No seals are included in the genesis block.
+  Formally put:
+  If using block header validator selection:
+  extraData == RLP([32 bytes Vanity, List<Validators>, No Vote, Round=Int(0), 0 Seals]).
+  If using contract validator selection:
+  extraData == RLP([32 bytes Vanity,     0 Validators, No Vote, Round=Int(0), 0 Seals]).
+
+  KEY-POINT: To generate thte extraData RLP:
+  STEP 1)
+    $ cat << EOF > initial_validator_list_in_ascending_order.json
+      [ "0x4592c8e45706cc08b8f44b11e43cba0cfc5892cb",
+        "0x06e23768a0f59cf365e18c2e0c89e151bcdedc70",
+        "0xc5327f96ee02d7bcbc1bf1236b8c15148971e1de",
+        "0xab5e7f4061c605820d3744227eed91ff8e2c8908"  ]
+         └───────────────────┬────────────────────┘
+         $ besu public-key export-address # Execute on each validator node.
+  NOTE: For the Accelerator we execute next automated bash script:
+        (moving first to .../BesuDevNetwork/ibft_dockerized_network directory)
+```
+    #!/bin/bash
+
+    BESU_VERSION=22.1.3
+
+    JSON_ABSOLUTE_PATH=/tmp/initial_validator_list_in_ascending_order.json.gitignore
+    (
+    echo "["
+    cat ./config/nodes/validator{1,2,3,4}/address | \
+       sort | \
+       sed 's/^/"/' | \
+       sed 's/$/",/' | \
+       tr -d '\n'
+    echo "]"
+    ) | sed "s/,\]$/\]/" > ${JSON_ABSOLUTE_PATH}
+
+    docker run --rm -it \
+      -v ${JSON_ABSOLUTE_PATH}:/INPUT.json \
+      hyperledger/besu:${BESU_VERSION:-22.1.3} \
+      rlp encode --from=/INPUT.json --type=QBFT_EXTRA_DATA
+```
+
+  STEP 2)
+    $ besu rlp encode \
+      --from=initial_validator_list_in_ascending_order.json \
+      --type=QBFT_EXTRA_DATA
+[[}]]
+
+Warning
+NOTE: restarting all validators resets request `timeoutseconds` to its genesis value.
+- Once blockperiodseconds is over, the time from proposing a block
+  to adding the block is small (usually around one second) even in
+  networks with geographically dispersed validators.
+
+Tune block timeout:
+- Set blockperiodseconds to desired block time
+  Set requesttimeoutseconds =  2 x blockperiodseconds
+- Reduce   requesttimeoutseconds until you start to see round changes occurring.
+- Increase requesttimeoutseconds to the value where round changes are no longer occurring.
+
+Optional QBFT params:
+- blockreward      : 0x or dec. Optional reward amount in Wei to reward the beneficiary. Def to 0.
+- miningbeneficiary: beneficiary of blockreward. Defs. to validator proposing new block.
+- validatorcontractaddress: Required if using a contract validator selection.
+                    It must match address in alloc section.
+
+Optional non-QBFT params:
+-     messageQueueLimit    :- Def. 1000. Increase for large network with limited resources.
+-     duplicateMessageLimit:- Def. 100. Increase to reduce the number of retransmissions.
+                              ~  2 or 3 # validators is usually enough.
+-       futureMessagesLimit: buffer holding messages for a future chain height.
+                             Def 1000. For large networks, increasing it might be useful.
+- futureMessagesMaxDistance: Def. 10. Max. height from the current chain height for buffering
+                             messages in the future messages buffer. The default is 10.
+
+## Adding/Remove validators using Block header validator:
+   Existing validators propose&vote to add/remove validators using QBFT JSON-RPC API methods.
+
+1. Block header validator selection How-to:
+   PRESETUP: --rpc-http-enabled and/or  --rpc-ws-enabled
+             --rpc-http-api=...,QBFT or --rpc-ws-api=...,QBFT
+
+    qbft_getPendingVotes  qbft_proposeValidatorVote  qbft_discardValidatorVote
+    qbft_getSignerMetrics  (view validator metrics for a specified block range)
+
+2. Propose new validator: (proposals get added to new blocks until validated/discarded)
+   requires >50% of nodes validating the TX.
+   $ JSON_DATA=$(cat << EOF
+   {
+     \"jsonrpc\": \"2.0\",
+     \"method\": \"qbft_proposeValidatorVote\",
+     \"params\": [
+       \"0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73\",
+       true                                         <··· Put to false to propose removal
+     ],
+     \"id\": 1
+   }
+   EOF
+   )
+   $ curl -X POST --data "${JSON_DATA}" https://...
+
+   { "jsonrpc": "2.0",
+     "method": "qbft_getValidatorsByBlockNumber",   <··· Monitor proposal status
+     "params": [ "latest" ],
+     "id": 1 }
+
+   { "jsonrpc": "2.0",
+     "method": "qbft_discardValidatorVote",         <··· Discard proposal
+     "params": [
+       "0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73"
+     ],
+     "id": 1 }
+
+## Adding/Remove validators using custom SC:
+* The SC logic can be arbitrary and based on organizational requirements.
+* Refer to official documentation for more info.
+   NOTE: `transitions` (vs transactions) can be used to swap between Alt 1 and Alt 2.
+
+## Configure new `blockperiodseconds`:
+1. Stop all nodes in the network.
+2. modify genesis.json like:
+   {
+     "config": {
+       ...
+ +     "transitions": {
+ +       "qbft": [
+ +         {
+ +           "block": <FutureBlockNumber>,
+ +           "blockperiodseconds": <NewValue>
+ +         }
+ +       ]
+ +     }
+ +   },
+ +   ...
+   }
+3. Restart all nodes.
+4. verify changes after the transition block by calling:
+   { "jsonrpc": "2.0",
+     "method": "qbft_getValidatorsByBlockNumber",   <··· Monitor proposal status
+     "params": [ "latest" ],
+     "id": 1 }
+
+NOTE: Check oficial document to see how to create transitions to update block rewards and
+      switch validator method

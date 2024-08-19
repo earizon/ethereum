@@ -1,0 +1,92 @@
+# Web3JS DApp API [[{dev_framework.js.web3_js]]
+- Ussage Ex. (works on browser/browser js console, web3.js v1+):
+
+ const ctr = new web3.eth.Contract(abiDef, ctrAddress) // ← Create local JS "proxy"
+ const txId = await ctr.methods.playGame().\           // ← playGame transparently creates
+              send({from: sendingAccount               //   JSON-RPC, signs and sends.
+                    value: amountInWei })              //   JSON-RPC, signs and sends.
+
+@[https://github.com/ethereum/wiki/wiki/JavaScript-API]
+- See also web3 alternatives: etherlime, ethers(recomended by MetaMask)
+@[https://medium.com/limechain/etherlime-framework-8cbb270944d6]
+  eth_accounts                                eth_getTransactionCount
+  eth_blockNumber                             eth_getTransactionReceipt
+  eth_call                                    eth_hashrate
+  eth_coinbase                                eth_mining
+  eth_compileSolidity                         eth_newBlockFilter
+  eth_estimateGas                             eth_newFilter (includes log/event filters)
+  eth_gasPrice                                eth_sendTransaction
+  eth_getBalance                              eth_sendRawTransaction
+  eth_getBlockByNumber                        eth_sign
+  eth_getBlockByHash                          eth_syncing
+  eth_getCode (only supports block "latest")  eth_uninstallFilter
+  eth_getCompilers                            net_listening
+  eth_getFilterChanges                        net_peerCount
+  eth_getFilterLogs                           net_version
+  eth_getLogs                                 miner_start
+  eth_getStorageAt                            miner_stop
+  eth_getTransactionByHash                    rpc_modules
+  eth_getTransactionByBlockHashAndIndex       web3_clientVersion
+  eth_getTransactionByBlockNumberAndIndex     web3_sha3
+
+### Web3JS Recipe: Calc. keccak256/sha3 of N-inputs
+   keccak256(abi.encodePacked(str1, addr1,...))   ←  Solidity (Which version is
+   keccak256(string1, address1,...            )   ←  Solidity  the correct one?)
+
+   web3.utils.soliditySha3(                       ←  Web3.js, Alt 1 : Easiest way
+       { type: 'string',  value: myString01     },
+       { type: 'bytes32', value: myBytes32value },
+       ...
+   )
+
+   web3.sha3(                                     ←  Web3.js Alt 2 : Manual hard way
+      web3.utils.toHex("test1") + "0A...20 bytes.."   ← 1st arg: ensure input is equal
+                                                        to the tightly packed
+      └───────┬───────────────┘     └──────┬──────┘     args in Solidity keccak256
+     tightly pack string to Hex     Don't  pack address
+                                    or hex strings (Remove 0x)
+      ,
+      {encoding:"hex"} );                             ← 2nd argument. Encode like hex input
+
+### Web3JS Recipe: Convert Input string to ABI representation
+   web3.eth.abi.encodeParameter(
+      "bytes32",web3.utils.fromAscii( str01 ));
+
+## web3.js vs eth.js [[{dev_framework.js.web3_js,02_doc_has.comparative,dev_framework.js.eth js]]
+@[https://blog.infura.io/ethereum-javascript-libraries-web3-js-vs-ethers-js-part-i/]
+Ethereum JavaScript Libraries: web3.js vs. ethers.js (Part I)
+- Both libraries work!!
+
+- Web3.js:
+  - 2015
+  - Ethereum Foundation Community.
+  - It has a good API reference.
+  - GLP v3
+  - Support remote JSON-RPC.
+  - current (2020-06) version: 1.2.9
+  - 6 core modules:
+    - web3: main class. "Core functionality"
+    - web3-eth: API to interact with SC/EOA/nodes,
+                mined blocks/TXs. Ex:
+      - web3.eth.getBalance
+      - web3.eth.signTransaction
+      - web3.eth.sendSignedTransaction
+      - ...
+    - web3-shh: Whisper protocol. Broadcast messages
+               for low-level asynch. communication.Ex:
+      - web3.shh.post      : posts whisper msg to Net.
+      - web3.shh.subscribe : creates subscription
+      - ...
+    - web3-bzz: Swarm decentralized storage API. Ex:
+      - web3.bzz.upload   :   Upload files|folders to Swarm
+      - Web3.bzz.download : Download files|folders from "
+    - web3-net: Fetch Net. properties of node.
+        - web3.???.net.getID       : return network ID
+        - web3.???.net.getPeerCount: returns peer number
+               └─┴─ := eth|shh|bzz
+    - web3-utils: Ex:
+      - web3.utils.toWei
+      - web3.utils.hexToNumberString
+      - web3.utils.isAddress  ← check if string is a valid address.
+
+

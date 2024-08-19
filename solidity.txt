@@ -1,0 +1,3210 @@
+# SOLIDITY LANGUAGE
+
+## Solidity. External Links
+  <https://remix.ethereum.org/#>   Online IDE
+  <https://solidity.readthedocs.io/en/latest/solidity-in-depth.html>
+  <https://solidity.readthedocs.io/en/develop/>
+  <https://github.com/ethereum/solidity/blob/develop/docs/grammar.txt> EBNF Grammar Summary
+  <https://ethfiddle.com/>
+  <https://github.com/ConsenSys/smart-contract-best-practices'>
+
+[[{12_solidity]]
+## Solidity: What's New
+### 0.8 [[{]]
+- Solidity 0.8 Breaking changes
+<https://github.com/ethereum/solidity/blob/develop/docs/080-breaking-changes.rst>
+
+- Silent Changes of the Semantics
+  - Arithmetic operations revert on underflow and overflow.
+    You can use  unchecked { ... }  to go back to previous wrapping behaviour.
+    (better readability of code with slight increase of gas costs)
+    No need anymore to import "SafeMath".
+
+  - ABI coder v2 is activated by default. :
+    (pragma experimental ABIEncoderV2" not-needed/redundant)
+    - supports for more types and better sanity checks on inputs.
+    -  some fun. calls are more expensive
+
+  - internal checks (failing assertions,div-by-zero, overflow,...) 
+    translate to revert (vs invalid) opcode, saving gas on errors  while  
+    allowing static analysis tools to distinguish them from 
+    invalid-input-reverts (failing "require").
+
+  - If a byte array in storage is accessed whose length is encoded 
+    incorrectly, a panic is caused.  A contract cannot get into this 
+    situation unless inline assembly is used to modify the raw 
+    representation of storage byte arrays.
+
+  - constants 'variables' values used in array length expressions 
+    as intermediate expressions properly rounded.
+    (previously, arbitrary precision used in all branches of the evaluation tree).
+
+  - "byte" removed in favor of "bytes1".
+
+- New Restrictions
+  - removed ambiguous syntax "here and there".
+  - Address literals have the type "address" (vs "address 
+    payable"). Use explicit conversion. Ex:
+    payable(0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF).
+
+  - explicit type conversions only allowed fo  at most one change 
+    in sign, width or type-category.  multiple changes will require 
+    multiple conversions . 
+   Ex: uint16(int8) →  uint16(uint8(int8))
+       ^lenght^sign
+
+  - call options can only be given once:
+    c.f{gas: 10000}{value: 1}() →  c.f{gas: 10000, value: 1}()
+
+  - enum  max length 256 members. (allows to assume uint8)
+
+  - global vars 'tx.origin' and 'msg.sender' have type "address"`
+   (vs payable address)
+    Ex: msg.sender.transfer(x) → payable(msg.sender).transfer(x)
+[[}]]
+
+### 0.7.0 [[{]]
+* <https://github.com/ethereum/solidity/blob/develop/docs/070-breaking-changes.rst>
+- Silent Changes of the Semantics
+  - Exponentiation and shifts of literals by non-literals (e.g. 1 << x or 2 ** x)
+    will always use either the type uint256 or int256
+
+  - Ether and gas is now specified using a new syntax:
+    x.f{gas: 10000, value: 2 ether}(arg1, arg2) vs x.f.gas(10000).value(2 ether)(arg1, arg2)
+
+  -  global variable  now  is deprecated
+     block.timestamp should be used instead .
+
+  - Unicode string literals supported now.  unicode"Hello 😃"
+
+  - state mutability of functions can now be restricted during inheritance    [[02_QA]]
+    with "pure" and "view".
+
+  - structs and arrays containing mapping can only be used in storage.
+    (Previously, mapping members   silently skipped in memory )
+
+  - Assignments to structs or arrays in storage does not work if they contain mappings.
+    (Previously, mapping members   silently skipped during the copy operation )
+
+  - Visibility (public/external) not needed in constructors anymore.
+     To prevent a contract from being created, mark it as  abstract .
+
+  - using A for B must be repeated in all derived contracts of B.
+
+- Solidity 0.6 Breaking changes
+   <https://github.com/ethereum/solidity/blob/develop/docs/060-breaking-changes.rst>
+
+- Breaking changes:
+  - Explicitness Requirements:
+    - only functions marked as virtual can be overridden.
+    - "override" must be used in implementing children.
+
+  - Member-access to ".length" in arrays is always read-only (including storage ones).
+    No possible to resize storage arrays by assigning a new value to their length.
+    Use "push()/pop()" or "push(value)" instead.
+    push(value) for dynamic storage arrays returns nothing (new length previously)
+    This prevents storage collisions of gigantic storage arrays.
+
+  - "abstract" keyword can be used to mark contracts as abstract.
+    - This avoids creating such contracts with "new" operator.
+    - not possible to generate bytecode for them during compilation.
+
+  - Libraries have to implement all their functions, not only the internal ones.
+
+  - unnamed "fallback function" split up into:
+    - fallback function marked with "fallback" keyword.
+      - called when no other function matches
+      - can be payable or not.
+    - receive  function marked with "receive " keyword. implicitly "payable".
+      - called whenever the call data is empty (with/without ether received).
+
+- New Features
+  - try/catch statement allows to react on failed external calls.     [[02_QA.error_control]]
+  - "struct" and "enum" types can be declared at file level.
+  - Array slices can be used for calldata arrays.
+    e.g.: low-level way to decode function call payload
+          abi.decode(msg.data [4:] , (uint, uint))" [TODO]
+  - Natspec supports multiple return parameters in developer documentation.
+  - "address" → "address payable" conversion thanks to: payable(myaddress)
+  - compiler now appends the `IPFS <https://ipfs.io/>`_ hash of the metadata file to the
+      end of the bytecode by default (previously swarm hash by default)
+[[}]]
+
+### 0.6.0
+- try-catch added: WARN: Ussage is quite different to standard languages.
+  <https://blog.ethereum.org/2020/01/29/solidity-0.6-try-catch/>
+  [[{02_qa.error_control}]]
+[[}]]
+
+[[{101,12_solidity.solc,02_QA.formal_verification,02_QA.auditing,13_SLC.debugging,01_PM.WiP]]
+## compiling: [[{]]
+* solc command line tool is the standard compiler for Solidity for the EVM.
+  Note: alternative `solang` compiler exists compiling [[{SCALABILITY.EWASM]] 
+        to WebASM in Solana and Substrate.
+      <https://github.com/hyperledger/solang>          [[}]]
+* It has been transpiled to Javascript (solcjs npm package) and widely use by JS 
+  frameworks like Remix and Truffle.
+
+### svm: solc (Solidity compiler) Version Manager [[{]]
+
+* Similar to Node nvm, it allows to installdifferent (solc) compiler versions in parallel
+  and switch among them. <https://github.com/web3j/svm>
+  ```
+  |$ svm install 0.6.2   ← install|uninstall|deactivate
+  |$ svm use     0.6.2     use|current
+  |                        ls|ls-remote
+  |                        alias|unalias           
+  ```
+[[}]]
+
+* solc generates two related outputs
+  1. bytecode        : wrapper code necessary to init+deploy the contract
+  2. deployedBytecode: deployed code (bytecode "minus" init code)
+
+  <https://docs.soliditylang.org/en/latest/using-the-compiler.html>
+  ```
+  |$ solc  \
+  |  --base-path ...              ← default: ./
+  |  --include-path ...           ← default: ./
+  |  github.com/.../lib1/=./lib1/ ← (Opt) (src)input path redirect
+  |  -o outputDirectory \
+  |  --bin --ast-compact-json \
+  |
+  |  --optimize                 ← Don't forget before deploying
+  |                               opcode is executed ~200 times.
+  |                          --optimize-runs=$N
+  |                           ┌───────────────┘
+  |                           N=1:    deploy -expensive/exec. +expensive
+  |                           N=1000: deploy +expensive/exec. -expensive
+  |                           Affected tunning:
+  |                           • size of binary search in 'dispatch'
+  |                           • storage of constants (strings,..)
+  |  --asm sourceFile.sol
+  ```
+[[}]]
+
+## solc linking [[{]]
+* Replace bytecode placeholders (__$...34 chars...$__) with
+  with actual library addresses, where the 34 chars is the
+  keccak256("fully-qualified-library-name").<br/>
+  (bytecode will end with some extra metadata:
+   // placeholder -> fq-library-name as a hint )
+  ```
+  | $ export LIB_MATH="0x...hex-address-of-deployed-lib..."
+  | $ export LIB_HEAP="0x...hex-address-of-deployed-lib..."
+  | $ solc --libraries \
+  |   "file.sol:Math=${LIB_MATH} file.sol:Heap=${LIB_HEAP}"
+  |   ...
+  ```
+- Using JSON as (STDIN) input:  RECOMENDED FOR AUTOMATED BUILDS
+  ```
+  $ solc --standard-json ... ← return JSON-output on  STDOUT.
+                               Always success. Errors are
+                               reported through JSON-output
+  (go to offical doc for more details)
+  ```
+[[}]]
+
+## solc '--evm-version' flag: [[{]]
+
+  ```
+  | '--evm-version' flag (== settings.evmVersion JSON) affects the compiler
+  | output in different ways:
+  |  ────────────────────────────────────────────────────────────
+  |  homestead  · (oldest version)
+  |  ────────────────────────────────────────────────────────────
+  |  tangerine  · Gas cost for access to other accounts
+  |    Whistle    increased, relevant for gas estimation and the
+  |               optimizer.
+  |             · All gas sent by default for external calls,
+  |               previously a certain amount had to be retained.
+  |  ────────────────────────────────────────────────────────────
+  |  spurious   · Gas cost for the exp opcode increased,
+  |    Dragon     relevant for gas estimation and the optimizer.
+  |  ────────────────────────────────────────────────────────────
+  |  byzantium  · Opcodes returndatacopy, returndatasize and
+  |               staticcall are available in assembly.
+  |             · The staticcall opcode is used when calling
+  |               non-library view or pure functions, which
+  |               prevents the functions from modifying state at
+  |               the EVM level, i.e., even applies when you use
+  |               invalid type conversions.
+  |             · It is possible to access dynamic data returned
+  |               from function calls.
+  |  ────────────────────────────────────────────────────────────
+  |  constan-   · Opcodes create2`, extcodehash, shl, shr and
+  |   tinople     sar are available in assembly.
+  |             · Shifting operators use shifting opcodes and
+  |               thus need less gas.
+  |  ────────────────────────────────────────────────────────────
+  |  petersburg · compiler behaves the same way as with constantinople.
+  |  ────────────────────────────────────────────────────────────
+  |  istanbul   · Opcodes chainid and selfbalance are available in assembly.
+  |  ────────────────────────────────────────────────────────────
+  |  berlin     · Gas costs for SLOAD, * CALL, BALANCE, EXT * and
+  |               SELFDESTRUCT increased. The compiler assumes cold
+  |               gas costs for such operations. This is relevant
+  |               for gas estimation and the optimizer.
+  |  ────────────────────────────────────────────────────────────
+  |  london     · (default as of 2022-01)
+  |             · The block’s base fee (EIP-3198 and EIP-1559)
+  |               can be accessed via the global block.basefee or
+  |               basefee() in inline assembly.
+  |  ────────────────────────────────────────────────────────────
+  |
+  |- JSON-INPUT:
+  |  {
+  |    "language": "Solidity",  ← "Solidity" | "Yul".
+  |    "sources": {
+  |      "myFile.sol": {
+  |        "keccak256": "0x123...",  ← Optional: used to verify retrieved content
+  |        "urls": [...]             ← Ordered list of bzzr://, ipfs://, FileSystem paths
+  |      },                            (only FS allowed to commandline interface)
+  |      "destructible": {
+  |        "keccak256": "0x234...",  ← Optional
+  |        "content": "... "         ← Inline contract source code
+  |      }
+  |    },
+  |    {                      ←  Optional "settings":
+  |      "stopAfter": "parsing",
+  |      "remappings": [ ":g=/dir" ],
+  |      "optimizer": {...}   ← active?, runs over opcodes,
+  |        "details": {...},  ← peephole,inliner,jumpdestRemover,orderLiterals,
+  |                             deduplicate,cse,constantOptimizer,yul/yulDetails
+  |      "evmVersion": "byzantium",
+  |      "viaIR": true,  ← highly EXPERIMENTAL. compile through Yul
+  |      "debug": {
+  |        "revertStrings": "default",   ←  "strip"  : removes all keeping side-effects
+  |                                         "debug"  : injects compiler-generated reverts.
+  |                                                    (ABI encoders V1 and V2)
+  |                                         "verboseDebug":  appends further information
+  |        "debugInfo": ["location", "snippet"] // extra debug info to include in ASM/YUL
+  |      },
+  |      "metadata": {
+  |        "useLiteralContent": true,
+  |        "bytecodeHash": "ipfs"
+  |      },
+  |      "libraries": {  ← needed for linkin libraries.
+  |        "myFile.sol": { "MyLib": "0x123123..." }
+  |      },                   Enable abi output for all contracts. Compiler output
+  |      "outputSelection": { types include:
+  |        "*": {             abi, ast, devdoc, userdoc, metadata, ir/irOptimized(Yul),
+  |          "*": [ "abi" ] ← storageLayout(Slots/offsets/types of contract's vars),
+  |        }                   evm.assembly, evm.bytecode.*, evm.methodIdentifiers
+  |      }                      ,10_EVM.gasEstimates, ewasm.wast, ewasm.wasm
+  |    "modelChecker":{...} ← experimental/subject to changes (Formal Probes)
+  |    }
+  |  }
+  |
+  |- JSON-OUTPUT
+  |  {
+  |    "errors": [ { ... } ],
+  |    "sources":   {...} // file-level outputs.
+  |    "contracts": {...} // detailed contract-level output
+  |  }
+  ```
+[[}]]
+
+## solc Troubleshooting
+
+
+* CONTEXT
+  ```
+  | Next code compiles "OK" for A and B:
+  | SOLC INPUT              →   SOLC OUTPUT
+  | ==========                  ==============
+  | pragma solidity ^0.4.8;     A.bin  6060604...
+  | contract A {                B.bin  6060604...
+  |   uint public a1;
+  | }
+  |
+  | contract B  is A  {
+  |   uint8 public b1;
+  | }
+  |
+  | • Problem:  Now we add constructor to parent A contract. An B output is empty.
+  |
+  | • SOLUTION:
+  |   B does NOT implements all mehtods of declared interfaces or base clases.
+  |   solc compiler consider the class abstract and does not generate any
+  |   bin. B will need to provide parent A constructor with a parameter:
+  |   contract B is A {
+  |     uint8 public b1;
+  |     constructor(address _a) A(_a) { ... }
+  |   }
+  ```
+
+* Source upgrade
+  * <https://docs.soliditylang.org/en/latest/using-the-compiler.html#solidity-upgrade>
+  solidity-upgrade semi-automatically upgrade contract source code
+
+## solc Source Code Verification
+
+1. PRE-SETUP) Anotate the solc compiler version used as well as compiler flags
+   <#solc_summary>
+1. Go to some online service like
+  <https://etherscan.io/verifyContract>
+
+* Source code verification works by compiling the code you claim is
+  the source code and comparing the resulting bytecode (bitwise) to
+  what is deployed. If it matches, SUCCESS.
+
+* Don't use '^' versioning [[{02_QA.bestpattern]]
+  Extracted from: <https://ethereum.stackexchange.com/questions/74785/publish-and-verify-the-source-contract-code-in-ethscan-i-tried-it-but-it-keeps/74796>
+>  """ ...contract has ^ in pragma, so no one can be sure what
+>    compiler was used**. Its presence is a sign that the code hasn't
+>    received an appropriate critical review.
+>    ...  If you can inspect the machine that compiled it, and the
+>    compiler (solc, truffle, remix) you might be able to piece together
+>    what version was used...""" [[}]]
+
+* Decompiling mainnet Contracts
+
+* <https://www.contract-library.com/>
+  Decompiles most smart contracts deployed on the mainnet to a high
+  level representation. Show also source code when available
+  <https://contract-library.com/contracts/Ethereum/42A1CA0A79A9E7D83AEE9012D21920B02F9FC2C6>
+[[}]]
+
+[[{12_solidity,persistence.data_structure,02_QA,01_PM.WiP]]
+
+# Solidity 101
+
+(Initial version from <https://learnxinyminutes.com/docs/solidity/>
+ with "lot of extras")
+
+## EVENT-STREAM (Reactive) oriented programming
+- Clients "outside" the ethereum network send
+   signed TXs  to the network. Eventually  those TXs will be
+  accepted ("mined") by the consensus and the modified state
+  eventually propagated back with the propagation on new
+  accepted ("mined") blocks.
+  Each TXs can also create new inmutable logs that are also
+  propagated back with the new mined block propagation.
+  (See "events" topic for related info)
+
+  
+- First Important different when compared with standard languages:<br/>
+  A function invoqued "outside" the network (from a new
+  signed TX pending to be mined) can return values, but
+  those values will be ignored (except, maybe by the
+  debugger during the development phase). Events are used
+  to inform the client about application-layer data.
+  (Some low level-EVM data can be directly extracted from the
+  TX receipt, like the gas spent, hash, ...).
+
+[[{02_QA.documentation.natspec]]
+## NATSPEC COMMENTS
+
+  ```
+  /// @title Contract title
+  /// @author Author name
+  contract ... {
+
+    /// @notice information about what function does;
+    /// @dev Function documentation for developer
+    /// @param someParam Some description of what the param does
+    /// @return Description of the return value
+    function ... { ...}
+    }
+
+    - NatSpec comments on variables only allowed for public state variables (v0.7+)
+    - Natspec supports multiple return parameters in developer documentation.(v0.6+)
+            [[}]]
+  ```
+
+## IMPORTS
+  ```
+  import * as symbolName from "filename";     NodeJS tooling (truffle,...) will also
+  import {symbol1 as alias, symbol2}          import from "node_modules/"
+         from ""filename"";
+  import ""filename"" as symbolName;
+  ```
+
+## FALLBACK FUNCTION 
+
+* called when no other function matches
+  ```
+  event EventFallback(address from, int256 amount);
+  ...
+  function () payable {
+    if (! this.owner.send(amount)) { throw ; }
+    EventFallback(msg.sender, receiver, amount);
+  };
+
+  event EventFallback(address from, int256 amount);
+  ...
+  function () payable {
+    if (! this.owner.send(amount)) { throw ; }
+    EventFallback(msg.sender, receiver, amount);
+  };
+  ```
+
+## DATA TYPES / STORAGE
+
+* NOTE: In Solidity/Ethereum, contract data structures like maps/arrays can and
+  ussually are automatically  persisted to permanent storage (on each
+  potential node in the 1000's of nodes network!!!). Temporal storage
+  in memory/calldata must be indicated explicetely.  [[{]]
+
+  ```
+  | //no doubles or floats (Risky in the Accountancy World)
+  | //Minimal support for strings, it use is discouraged.
+  |   uint public constant z        All non-explicitely assigned values return zero.
+  |                                 WARN : 'private' members are still visible/readable
+  |                                        to anyone except the Solidity-compiler.
+  |   uint public constant a = 8; ← 32 bytes (256bits), alt. uint256
+  |                                 or (u)int(8,16,24,...,248,256)
+  |                                 internal visibility by default.
+  |                                 'public' automatically creates getter (NOT setter)
+  |   uint immutable x;           ← immutable: Init@constructor, constant from there on.
+  |   uint256 c = a + b;
+  |   assert(c >= a);             ← overflow check ("SafeMath") integrated in Solc 0.8+
+  |   bool b = true;              ← boolean, alt(type inferred): var b = true;
+  |   address payable owner;      ← 20 byte Ethereum addresses (arithmetic not allowed)
+  |                                 Mark as 'payable' to allow sending ethers.
+  |   this;                       ← address of current contract
+  |                                 WARN: this.func1() call func. externally.
+  |                                            func1() call func. internally (faster)
+  |   owner.transfer("balance");  ← reverts on failure
+  |   if (owner.send) {}          ← low-level send allows to capture failure..
+  |                                 Make sure to update/decrease internal contract balances
+  |                                 BEFORE attempting a send, to avoid recursive drains.
+  |   owner.balance;              ← check balance for owner
+  |   byte1 a;                    ← byte2, byte3, ... bytes32
+  | 
+  |   bytes m;                    ←  same as byte[] array (but packed tightly in calldata)
+  |                                  More expensive than byte1-byte32, so use those when possible
+  | 
+  |   string n = "hello";         ← stored in UTF8, internally same as bytes, BUT does
+  |                                 NOT allow length/index/push access (202?)
+  |                                 string utility functions  could be added
+  |                                 prefer bytes32 hash of string when possible
+  |                                 · use bytes(myString).length / bytes(myString)[7] = 'x' to
+  |                                   access the low-byte-representation of myString
+  |                                 WARN:  string[] arrays not allowed.
+  | 
+  |   var f = someFunction;       ← assign function to variable.
+  |       f(22);                    ← call func.
+  | 
+  |   (x, y) = (2, 7);            ← Destructuring/Tuples: assign/swap multiple values
+  | 
+  |   enum State {                ← ENUMS
+  |      Created,
+  |      Locked,
+  |      Inactive
+  |   };
+  |   State public s0 = State.Created;
+  |   state = State.Created;
+  |   uint8  i_8_0 = uint8(State.Created);  ← enums can be explicitly converted to ints
+  |   uint16 i16_0 = uint16(State.Created); ← enums can be explicitly converted to ints
+  |   State s2 = State(i_8_0)               ← uintXX → enum using enum constructor
+  |                                           Will raise an assert exception if
+  |                                           u1 is outside the State bounds.
+  ```
+[[}]]
+
+## DATA LOCATIONS: Memory, Calldata, Storage
+
+* Memory  : intermediate operations in EVM "RAM".
+* calldata: optimized read-only input data in EVM "RAM".
+* storage : internal state in persistente (and expensive) storage.
+  Logs "Solidity events" are also persistents as storage but 
+  are not part of EVM accesible data. They are still accesible
+  to clients.
+
+[[{10_EVM,persistence.contract_state,12_solidity,13_SLC.troubleshooting,13_SLC.debugging]]
+## Solidity to 'storage' address mapping
+
+REF: <https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-storage>
+  ```
+  contract BlockVoting {
+    Period[] dynArray01;        ← Idx 0x00..32bytes/64 hex-digits ...00
+                                      - array length stored in next available slot
+                                      - array data allocated at a slot number:
+                                        hash of n(keccak256(n))
+    uint public voteThreshold;  ← Idx 0x00..32bytes/64 hex-digits ...01
+    mapping(uint8   => bool)    ← Idx 0x00..32bytes/64 hex─digits ...02  ←·············┐
+      public map01;                   - slots are unused,                              ·
+                                      - value for each key located at keccak256(n, p)←─┤
+                                                                                ^  ^   ·
+                                                                left padded to 32 bytes·
+    uint8[] dynArray01;         ← Idx 0x00..32bytes/64 hex-digits ...                  ·
+    ...                                                                                ·
+    constructor () public {           $ truffle> compile                               ·
+         voteThreshold = 10;          $ truffle> BlockVoting.new()                     ·
+         dynArray01.push(20);                    .then(item => instance = item;)       ·
+         dynArray01.push(30);         $ truffle> web3.eth                              ·
+         dynArray01.push(56);                    .getStorageAt(instance.address, 0)    ·
+         map01[1] =  5;  ←······┐     '0x0a' (== 10)$                                  ·
+                                · ┌····················································┘
+                                · ├ $ truffle(dev)> n = '00..32bytes/64 hex-digits ...02'
+                                · ├ $ truffle(dev)> p = 'x0..32bytes/64 hex-digits ...01'
+                                · ├ $ truffle(dev)> hash01 = web3.sha3(n + p, {encoding: 'hex'})
+                                · │ 0xaca3b76ed4968740c3180dd7fa37f4aa229a2c758a848f53920e9ccb4c4bb74e
+                                · └ $ truffle(dev)> web3.eth.getStorageAt( instance.address, hash01)
+                                └ '0x05'                                                    ...
+    }
+  }
+  ```
+
+- NOTE: This can be used to pre-fill a hardcoded smart-contract
+  with given status in genesis.json block:
+  ```
+  | "alloc": {
+  |   "0x0000000000000000000000000000000000000020": {
+  |     "code": "0x6060604...6",
+  |     "storage": {
+  |       "0x0000000000000000000000000000000000000000000000000000000000000001": "0x02", ← Assign voteThreshold = 02
+  |       "0x29ecdbdf95c7f6ceec92d6150c697aa14abeb0f8595dd58d808842ea237d8494": "0x01", ← dynArray01(1)
+  |       "0x6aa118c6537572d8b515a9f9154be55a3377a8de7991cd23bf6e5ceb368688e3": "0x01", ← dynArray01(1)
+  |       ....
+  |       "0xaca3b76ed4968740c3180dd7fa37f4aa229a2c758a848f53920e9ccb4c4bb74e": "0x01"  ← Assign canVote[...]=0x01
+  |       "0xd188ba2dc293670542c1befaf7678b0859e5354a0727d1188b2afb6f47fe24d1": "0x01"  ← Assign canVote[...]=0x01
+  |     },
+  |     "balance": "0"
+  |   },
+  |   ...
+  | }
+  ```
+[[}]]
+
+## Predefined constants (at Tx runtime)
+  ```
+  | msg.sender; ← address of sender (or contract calling our contract)
+  | msg.value;  ← weis provided to this contract. function should be "payable"
+  | msg.data;   ← bytes, complete call data, used for example for multi-signatures
+  |               in a single (expensive) transaction.
+  | msg.gas;    ← remaining gas
+  |
+  | tx.origin;  ← signer of TX sent to blockchain
+  | tx.gasprice;← gas price of the transaction
+  |
+  | block.timestamp ← aprox UNIX-current time  (alias: 'now')
+  |                   WARN: Can be manipulated by miners
+  | block.number;
+  | block.difficulty;
+  | block.blockhash(1); ← bytes32, only works for most recent 256 blocks
+  | block.gasLimit();
+  ```
+
+## 'remove' function 
+
+- "Common" pattern used to remove storage/code from
+  current/future blocks (help to thin clients). (Alternatively, de-activate)
+  ```
+  | function remove() {
+  |   require(msg.sender != creator,""); // creator registered in constructor
+  |   selfdestruct(creator);
+  | }
+  ```
+
+## external calls max-gas setup
+
+- Use when calling non-trusted Contracts:
+  ```
+  | NonTrustedContract  // <·· External contract can potentially waste all gas.
+  |  .someMethod {
+  |     gas:gasleft()   // <·· Safe calling. [[{01_PM.TODO.now]}]
+  |   }.(...);          //     What about other gas quantities
+  ```
+    
+## Currency units:
+  ```
+  |    wei : basic unit in solidity code, APIs, ...
+  |   gwei =  1^9  weis ,  gas prices . Ex. web3j default gas price is 22 gwei
+  |                       alias: shannon|nanoether|nano
+  |  szabo =  1^3  gweis, alias: |microether|micro
+  | finney = 10^6  gweis, micropayments, alias: |milliether|milli
+  |  ether =  1^9  gweis, main unit
+  | kether =  1^3  ethers, alias: (grand|einstein)
+  | mether =  1^6  ethers
+  | gether =  1^9  ethers
+  | tether =  1^12 ethers
+  ```
+
+## Time units
+  ```
+  second : unit-of-time, minutes, days [[{12_SOLIDITY.date_time}]]
+  ```
+
+
+[[{12_solidity,10_EVM.events,scalability.solidity,integration.enterprise_patterns]]
+## Retrieving events quickly
+
+Imagine the COMMON PROBLEM:
+1. A given contract emits a given event sparsely, with
+  an average of 1 event each 10.000 blocks.
+1. We want to retrieve all events.
+1. By default the client needs to query from block-zero
+   to latest block. This can means query-times of more than
+   a minute even in dedicated hardware.
+
+SOLUTION :
+- Save as contract state the block when an event has been
+  emitted.
+  The on the event add the information for the previous
+  block where such event was emitted.
+- On client code run backward from last-to-first even
+  using the state to retrieve the latest block, and then
+  the event information to "jump" to the previous block.
+
+* SOLIDITY:
+
+  ```
+  | contract MyContract {
+  |    uint   previousBlock = 0;
+  | 
+  |    event MyEvent01(address indexed A,..., uint   previousBlock );
+  |    //                                            └──────┬─────┘
+  |    //               pointer to last event block helpsi ←┘
+  |    //               external clients(etherjs,web3j,...)
+  |    //               search quickly.
+  | 
+  |    function ....(...) ... {
+  |      emit REC(msg.sender,... ,   previousBlock );
+  |      lastBlockDREC = block.number;
+  |    }
+  | }
+  ```
+
+* CLIENT-SIDE (javascript pseudo-code example)
+  ```
+  | /**
+  |  * Run events backward, from last to first 
+  |  **/
+  |  async function getFilters(LAST_BLOCK) {
+  |    var LAST_BLOCK = await CONTRACT.  previousBlock ()
+  |    while ( LAST_BLOCK > 0 ) {
+  |      value = await CONTRACT.getFilter(/*1st block=*/LAST_BLOCK, LAST_BLOCK)
+  |      console.log(value.toString());
+  |       LAST_BLOCK = value.previousBlock
+  |    }
+  |  }
+  |  getFilters(LAST_BLOCK)
+  ```
+[[}]]
+
+
+## SOLIDITY GLOBALS [[{12_solidity.101]]
+
+* GLOBAL METHODS:
+
+  ```
+  | block.blockhash(uint blockNumber)
+  |   returns (bytes32):
+  |   hash of the given block - only works for 256 most
+  |   recent blocks excluding current
+  | 
+  |  GLOBAL VARS:
+  |   msg.sender (address)    : sender of the message (current call)
+  |   tx.origin (address)     : sender of the transaction
+  |                             (full call chain)
+  ```
+
+* msg.sender vs tx.origin:
+<https://ethereum.stackexchange.com/questions/1891/whats-the-difference-between-msg-sender-and-tx-origin>
+
+- With msg.sender the owner can be a contract.
+- With tx.origin the owner can never be a contract.
+  In a simple call chain A→B→C→D,  inside D msg.sender will be C, and tx.origin will be A.
+
+- msg.sender is preferred for the flexibility it provides.
+  Furthermore, for Serenity, even though it's a while out, Vitalik
+  recommends avoiding tx.origin: How do I make my DAPP "Serenity-Proof?"
+- Carefully consider if you really ever need to use tx.origin.
+  Remember, you may not be the only user of your contract.
+  Other people may want to use your contract and want to interact
+   with it via a contract they've been written.
+
+  ```
+  block.coinbase (address): current block miner’s address
+  block.difficulty (uint) : current block difficulty
+  block.gaslimit (uint)   : current block gaslimit
+  block.number (uint)     : current block number
+  block.timestamp (uint)  : current block timestamp
+  ```
+
+* <https://ethereum.stackexchange.com/questions/7853/is-the-block-timestamp-value-in-solidity-seconds-or-milliseconds>
+  ```
+  msg.data (bytes)        : complete calldata
+  msg.gas (uint)          : remaining gas
+  msg.sig (bytes4)        : first four bytes of the calldata
+                            (i.e. function identifier)
+  msg.value (uint)        : number of wei sent with the message
+  now (uint)              : current block timestamp
+                            (alias for block.timestamp)
+  tx.gasprice (uint)      : gas price of the transaction
+  ```
+
+## GLOBAL Math. and Crypto Functs
+  ```
+  | addmod(uint x, uint y, uint k)
+  |   returns (uint): // compute (x + y) % k 
+  | mulmod(uint x, uint y, uint k)
+  |   returns (uint): // compute (x * y) % k 
+  | keccak256(...) (deprecated alias: sha3(...) )
+  |   returns (bytes32): compute Ethereum-SHA-3 hash
+  |                 of the (tightly packed) arguments
+  |   - See also 
+  |     <https://ethereum.stackexchange.com/questions/10173/different-hash-values-for-keccak256-functions">
+  | sha256(...)
+  |   returns (bytes32): compute SHA-256 hash of the
+  |                       (tightly packed) arguments
+  | ripemd160(...)
+  |   returns (bytes20): compute RIPEMD-160 hash of
+  |   the (tightly packed) arguments
+  | ecrecover
+  |   (bytes32 hash, uint8 v, bytes32 r, bytes32 s)
+  |   returns (address):
+  |     recover the address associated with the public key
+  |     from elliptic curve signature or return zero on error
+  ```
+[[}]]
+
+
+[[{101,12_solidity.strings]]
+## Solidity String Manipulation
+
+- Can be used as keys for mappings
+- Concatenating strings str01, str02, str03, ...:
+  ```
+  string memory result = string(abi.encodePacked(str01, str02, str03, ...);
+  ```
+- uint256 ("Big Number") to string:
+  ```
+  function uint2str(uint256 i) public pure returns (string memory uintAsString) {
+     if (i == 0) { return "0"; }
+     uint256 strLen;
+     uint256 j;
+     for (j = i; j != 0; j /= 10 ) { strLen++; }
+     bytes memory bstr = new bytes(strLen);
+     uint256 strPosition = strLen;
+     for (j = i; j != 0; j /= 10 ) {
+       strPosition -= 1;
+       bstr[strPosition] = bytes1 ( uint8 ( 48 + ( j % 10 ) ) );
+     }
+     return string(bstr);
+   }
+  ```
+
+- Comparing strings:
+  ```
+  keccak256(      "string1" ) == keccak256("string2")  ← keccak256("...") translates to keccak256(bytes("..."))
+   ^^^^
+   remember: sha3 is an alias for keccak256
+   WARN :  Ethereum SHA3 != SHA3-NIST standard
+   SHA3 Solidity  5f16f4c7f149ac4f9510d9cf8cf384038ad348b3bcdc01915f95de12df9d1b02
+   Keccak-256     5f16f4c7f149ac4f9510d9cf8cf384038ad348b3bcdc01915f95de12df9d1b02
+   SHA3-256-NIST  7f5979fb78f082e8b1c676635db8795c4ac6faba03525fb708cb5fd68fd40c5e
+  ```
+
+- check for non-empty strings)
+  ```
+  bytes(myTestedString)  .length & 0;         // alt 1, check bytes array length
+                                              // (.length not(yet) for string)
+  keccak256(bytes(myTestedString))            // alt 2, check  keccak256 
+                   !=keccak256((""));
+  ```
+
+- Check white-space paddings: [[{01_PM.TODO}]]
+
+- uint256 to/from Strings:
+  ```
+  // https://ethereum.stackexchange.com/questions/6591/conversion-of-uint-to-string
+  function uint2str(uint i) internal pure returns (string memory uintAsString) {
+    if (i == 0) {    return "0"; }
+      uint j = i;
+      uint len;
+      while (j != 0) { // calculate decimals
+          len++;
+          j /= 10;
+      }
+      bytes memory bstr = new bytes(len);
+      uint k = len - 1;
+      while (i != 0) {
+          bstr[k--] = byte(uint8(48 + i % 10));
+          i /= 10;
+      }
+      return string(bstr);
+  }
+  ```
+- bytes32 to/from Strings:
+  ```
+  bytes32 foo = "hello";
+  string memory bar = string(abi.encodePacked(foo));
+  ```
+
+### STRING LIBRARIES
+
+* WARN: String manipulation inside contracts is discouraged. It wastes lot of   
+  gas and is error-prone. Use them as last-resort. [[{02_QA.101}]]
+
+* <https://github.com/Arachnid/solidity-stringutils>
+  ```
+  | toSlice     (string self)                           internal returns (slice)
+  | copy        (slice self)                            internal returns (slice)
+  | toString    (slice self)                            internal returns (string)
+  | len         (slice self)                            internal returns (uint)
+  | empty       (slice self)                            internal returns (bool)
+  | compare     (slice self, slice other)               internal returns (int)
+  | equals      (slice self, slice other)               internal returns (bool)
+  | nextRune    (slice self, slice rune)                internal returns (slice)
+  | nextRune    (slice self)                            internal returns (slice ret)
+  | ord         (slice self)                            internal returns (uint ret)
+  | keccak      (slice self)                            internal returns (bytes32 ret)
+  | startsWith  (slice self, slice needle)              internal returns (bool)
+  | beyond      (slice self, slice needle)              internal returns (slice)
+  | endsWith    (slice self, slice needle)              internal returns (bool)
+  | until       (slice self, slice needle)              internal returns (slice)
+  | find        (slice self, slice needle)              internal returns (slice)
+  | rfind       (slice self, slice needle)              internal returns (slice)
+  | split       (slice self, slice needle, slice token) internal returns (slice)
+  | split       (slice self, slice needle)              internal returns (slice token)
+  | rsplit      (slice self, slice needle, slice token) internal returns (slice)
+  | rsplit      (slice self, slice needle)              internal returns (slice token)
+  | count       (slice self, slice needle)              internal returns (uint count)
+  | contains    (slice self, slice needle)              internal returns (bool)
+  | concat      (slice self, slice other)               internal returns (string)
+  | join        (slice self, slice[] parts)             internal returns (string)
+  ```
+
+* <https://github.com/blockapps/blockapps-sol/blob/master/util/contracts/Util.sol>
+  ```
+  | stringToBytes32(string memory input) pure returns (bytes32)
+  | bytes32ToString(bytes32       input) pure returns (string )
+  | b32            (string memory input) pure returns (bytes32)
+  | i2b32          (uint          input) pure returns (bytes32)
+  | a2b32          (uint[]        input) pure returns (bytes32[])
+  | uintToString   (uint          input) pure returns (string str)
+  ```
+[[}]]
+
+[[{12_solidity.101.date_time]]
+## Solidity: Date/Time
+
+- DateTime is stored as uint
+- now (uint) == block.timestamp
+- Next keyword constants are defined:
+  minutes, hours, days, weeks
+  ```
+  | constructor(...) {
+  |   this.time_origin = now;
+  | }
+  | uint timeOutWindow  =  3 days; // (vs 3 * days)
+  |
+  | function myTimeOutDependentFunction(...) returns (...) {
+  |     if (  now  > (  time_origin + timeOutWindow )) throw;
+  |     ... Do something ...
+  | }
+  ```
+[[}]]
+
+## Function modifiers [[{101,12_solidity.101.functions,10_EVM.gas]]
+- Syntax sugar for function precondition checks:
+  <https://en.wikipedia.org/wiki/Precondition>
+- Commonly used to check basic "value security rules"
+  (correct ownership, enough funds, ...)
+- Not recomended, but still in wide use.
+  Syntax:
+  ```
+  | modifier inState (State curState)  { if (state !=curState) throw; \_;  }
+  | modifier require (bool condition) { if (!condition) throw; \_;       }
+  ```
+
+  ```
+  | function confirmPurchase(<parameter_list types>)
+  |       inState (State.Created)          // precondition
+  |       require (msg.value == 2 * value) // precondition
+  |                    VISIBILITY MODIFIERS (v0.5+)
+  |                    ====================
+  |       [internal] ← only this contract and child ones
+  |       [private]  ← only this contract
+  |       [external] ← will only ever be called externally            [evm.gas]
+  |                    external is more efficient than public
+  |                    since it also avoid copying parameters twice
+  |                    (very important with big arrays!!!)
+  |       [public]   ← will also be called internally.
+  | 
+  |                    MUTABILITY MODIFIERS
+  |                    ====================
+  |       [payable]  ← allows fun. to receive ether when called as:
+  |                     myContractInstance.myPayableFunction.call.
+  |                       value("ETH_TO_BE_SENT")("ADDITIONAL_DATA")
+  |                     Ej: function deposit() payable {
+  |                           deposits[msg.sender] += msg.value;
+  |                         };
+  |       [pure]     ← does NOT modify the contract storage
+  |                    and storage can NOT be accesed
+  |                    (utility libraries, ...)
+  |       [view]     ← does NOT modify the contract storage
+  |                    but storage can be accesed  ("getters")
+  |       [constant]   (alias for pure)
+  |     [returns ('return types')]
+  |     {
+  |       // (function body)
+  |       ...
+  |     }
+  ```
+
+* WARN: 
+  ```
+  |      confirmPurchase(...) # Internal call
+  | this.confirmPurchase(...) # External call
+  ```
+[[}]]
+
+## fixing "stack too deep" error [[{101,10_EVM.101,13_SLC.debugging,12_solidity.troubleshooting]]
+
+- PROBLEM CONTEXT: Compiler tries to access a variable var1 that is beyond
+  "16 depth in stack".  Compilation fails with error "stack too deep".
+  EVM stack can be bigger than 16 elements, but OPCODES just can work with the closer 16
+  due to opcode limitations (DUP1, DUP2, ... DUP16).
+- Solution 1:
+  Starting with Solidity 0.8+ ABIv2 is considered establed and we can use it to invoque
+  functions using structs that groups a bunch of imput parameters saving stack space.
+  ```
+  | ABIv1                        ABIv2
+  | ======                       =====
+  | function XXX(                struct InputParams{
+  |      param1_in_stack,             param1,
+  |      param2_in_stack,             param2,
+  |      param3_in_stack,             param3,
+  |      ... ) {                      ...
+  | }                            }
+  |
+  |                              function XXX (InputParams param1_in_stack )
+  ```
+
+- Solution 2: ("Patchy" but it works when nothing else does).
+  When var1 is still accesible, copy it again to var1_clone like
+  ```
+  | function XXXX(uint param1_in_stack, ..., ... ,....)  {
+  |    ...
+  |    uint var1_clone = param1_in_stack;
+  |    ...
+  |    someMap[var1_clone] = ...; // ← At this point var1_clone is still on the stack
+  |                                    but param1_in_stack is "too far away"
+  | }
+  ```
+  ```
+  |    FUNCTION
+  |    STACK FRAME
+  |    -----------
+  |  0 local var3  ←  Copy, for. ex, input arg1 here to have access once stacks grows "too much"
+  |  1 local var2
+  |  2 local var1
+  |  ...
+  | 15 input  arg3 ┐  Created at function call. Since those are the deepest in
+  | 16 input  arg2 ├─ the stack, they are the first to cause "stack too deep" problems
+  | 17 input  arg1 ┘
+  | 18 'return value' ← return statement cleans the stack and places result values here
+  ```
+- Opcodes use arguments at different levels in the stack. Deeper levels are pushed first.
+  If an argument is pushed after another, it should appear in the function signature
+  after the former as well, otherwise it would push the other one down the
+  stack before it could be used.
+
+- WARN:  (<https://blog.aventus.io/stack-too-deep-error-in-solidity-5b8861891bae]>
+  "...more difficult cases arise when calling functions in othe
+   contracts or libraries , since the opcodes CALL and DELEGATECALL take
+   7 or 6 input arguments each, with a lot more possibilities of
+   interaction between the opcode and function arguments..."
+
+- Other solutions: C&P from: https://soliditydeveloper.com/stacktoodeep
+
+  ```
+  | // SPDX-License-Identifier: MIT
+  | pragma solidity 0.7.1;
+
+  | contract StackTooDeepTest1 {
+  |    function addUintsUsingInternalFunc(
+  |         uint256 a,uint256 b,uint256 c,
+  |         uint256 d,uint256 e,uint256 f,
+  |         uint256 g,uint256 h,uint256 i
+  |     ) external pure returns(uint256) {
+  |         return _addThreeUints(a,b,c)    <··┐
+  |              + _addThreeUints(d,e,f)    <··┤
+  |              + _addThreeUints(g,h,i);   <··┤
+  |     }                                      ·
+  |                                            ·
+  |     function _addThreeUints             <··· Solution 3: Create auxiliar
+  |        (uint256 a, uint256 b, uint256 c)      internal function
+  |       private pure returns(uint256) {
+  |         return a+b+c;
+  |     }
+
+  |     function addUintsUsingBlockScoping(
+  |         uint256 a,uint256 b,uint256 c,
+  |         uint256 d,uint256 e,uint256 f,
+  |         uint256 g,uint256 h,uint256 i
+  |     ) external pure returns(uint256) {
+  |         uint256 result = 0;
+  |         { result = a+b+c+d+e; }       <-··· Solution 4. Use block scoping.
+  |         { result = result+f+g+h+i; }
+  |         return result;
+  |     }
+  | }
+  ```
+[[}]]
+
+## Solidity Voting Example [[{12_solidity.101]]
+* <https://github.com/ethereum/go-ethereum/wiki/Contract-Tutorial>
+
+  ```
+  | contract Voting {
+  |   uint       public   MIN_QUORUM      ;
+  |   uint       public   DEBATING_PERIOD ;
+  |   address    public   FOUNDE          ;
+  |   Proposal[] public proposals         ;
+  |   uint       public numProposals      ;
+  |
+  |   struct   Vote {
+  |     int UpOrDown;
+  |     address voter;
+  |   }
+  |
+  |   struct Proposal {
+  |     Vote[]  votes       ;
+  |     mapping (address
+  |           => bool) voted;
+  |     bytes32 data        ;
+  |     string  description ;
+  |     uint    creationDate;
+  |     bool    active     ;
+  |     boolean result;
+  |   }
+  |
+  |   constructor(
+  |     uint _minQuorum, uint _debating_period) {
+  |       FOUNDE            = msg.sender;
+  |       MIN_QUORUM       = _minQuorum || 10;
+  |       DEBATING_PERIOD  = _debating_period * 1 minutes
+  |                          || 30 days;
+  |   }
+  |
+  |   function newProposal(
+  |     bytes32 _data, string _descrip)
+  |   returns (uint Y proposalID ) {
+  |       Y proposalID   = proposals.length++;
+  |       Proposal p     = proposals[Y proposalID ];
+  |       p.data         = _data;
+  |       p.description  = _descrip  ;
+  |       p.creationDate = now;
+  |       p.active       = true      ;
+  |       numProposals   = Y proposalID +1;
+  |   }
+  |
+  |   function vote(
+  |     uint _Y proposalID ,
+  |     int UpOrDown /*+1|-1*/)
+  |   returns (uint   voteID ){
+  |     if (UpOrDown < -1 && UpOrDown > 1 )
+  |       revert("UpOrDown is not valid") ;
+  |     Proposal p = proposals[_Y proposalID ];
+  |     if (p.voted[msg.sender] == true) return;
+  |       voteID  = p.  votes .length++;
+  |     p.  votes[  voteID ] =
+  |       /*new*/Vote( {
+  |          UpOrDown: UpOrDown,
+  |          voter: msg.sender} ) ;
+  |     p.voted[msg.sender] = true;
+  |   }
+  |
+  |   function executeProposal(
+  |     uint _Y proposalID )
+  |   returns (int   result ) {
+  |     Proposal proposal = proposals[_Y proposalID ];
+  |     if (   now > (proposal.creationDate + DEBATING_PERIOD )
+  |         && proposal.active ){
+  |        uint quorum = 0;
+  |        for (uint i = 0; i <  proposal.  votes .length; ++i) {
+  |          Vote v = proposal.  votes [i];
+  |          quorum += 1;
+  |          result += v.UpOrDown;
+  |        }
+  |        if (quorum < MIN_QUORUM ) {
+  |          proposal.active = false;
+  |          proposal.result = result &gt;=0 ? true : false;
+  |        }
+  |     }
+  |   }
+  | }
+  ```
+[[}]]
+
+## Dev. Tools List [[{]]
+* <https://ethereum.org/developers/#other-tools>
+* <https://github.com/ConsenSys/ethereum-developer-tools-list/blob/master/README.md>
+* <https://www.reddit.com/r/ethdev/comments/9jw839/long_list_of_ethereum_developer_tools_frameworks/<
+
+## Visual Tools [[{01_PM.TODO.now]]
+- <https://github.com/ConsenSys/surya>: displays a number of visual outputs
+  and information about the contracts' structure.
+  Also supports QUERYING THE FUNCTION CALL GRAPH.
+- <https://github.com/raineorshine/solgraph>: generate "DOT graph" for
+  function control flow and HIGHLIGHT POTENTIAL SECURITY VULNERABILITIES.
+- <https://github.com/ethereum/evmlab>: Rich tool package to interact
+  with the EVM. Includes a VM, Etherchain API, and a trace-viewer.
+- <https://github.com/fergarrui/ethereum-graph-debugger>
+  - Graphical EVM debugger displaying the entire program control flow graph.  [[}]]
+[[}]]
+
+# Solidity Data Structures 101 [[{12_SOLIDITY.datastructure]]
+
+## STRUCTS
+  ```
+  | struct Bank {               ← DECLARE STRUCT
+  |     address owner;            ← all vars are "zero-value" by default.
+  |     uint balance;               except mappings
+  | }
+  | Bank b = Bank({ owner: msg.sender, balance: 5 });
+  | b.balance = 5;
+  | delete b;
+  ```
+
+## ARRAYS
+  ```
+  bytes32[5] fixedArray1;     ← STATIC/FIXED-SIZE ARRAY DECLARATION
+             fixedArray[0] = 1; ← Intialization.
+             fixedArray[1] = 2;
+             fixedArray.push(3);←   Error. Not allowed for fixed size array
+
+  bytes32[] memory            ← dynamic array declaration/initialization
+  dnyArray1 = bytes32[](3);   ← Dynamics arrays in memory are NOT really
+                                dynamics. An given size must be defined at
+                                initialization to avoid memory overflows.
+                                The only difference with fixed size array is
+                                that they can be used as parameters in functions
+                                receiving an array of undefined size.
+  dynArray1[0] = ...;                 ← By default. values is "Zero".
+  dynArray1[1] = ...;
+  dynArray1.length
+  uint[] storage              ← Dynamic Size Array declaration
+   dynArray2 = uint[]
+  dynArray1.length = 1        ← Fails for in-memory  dyn arrays
+  dynArray2.length = 5        ← OK    for in-storage dyn array
+  dynArray1.push(1)           ← Fails? (TODO)
+  dynArray2.push(1)           ← OK, returns new array length
+  uint newLength = dynArray1.push(...);
+  uint x[][5];                ← 2-dimensional Dyn.array of uint[5]
+  ...
+  var storage x = uint[][5]   ← Fixed-(5)size-array of
+                                dynamic-uint-arrays  (var for type inference)
+  x[2][1]                     ← second uint in third dyn-array
+
+  funcX( [uint(1), 2, 3] );   ← Array Literal expression (not assigned to vars.)
+         └─────────────┘        - type     : memory array of fixed length.
+                                - base type: common type of array elements.
+  ```
+
+* Array Limitations:
+  * arrays of arrays not (YET 202?) allowed in external functions
+  * (EVM limitation): dynamic content NOT allowed in external-function return-value
+    Workaround: use large statically-sized arrays
+  * Deleting an element in the array (delete myArray[idx1]) generates gaps over time
+    leading to unpredictable gas costs if a contract itself has to search
+    through those gaps. Can be fixed (See <#solidity_storage_patterns]
+
+### Walk over arrays
+  ```
+  | for ( uint idx=0; 
+  |    i<arr.length; idx++) {
+  |    require(array3[i] ...);
+  | }
+  ```
+
+  ```
+  ┌────────┬─────────────────────┬───────────────┬──────────────────────┬──────────────────┐
+  │        │ Admited type        │ Creation      │ Resize               │ Delete           │
+  ├────────┼─────────────────────┼───────────────┼──────────────────────┼──────────────────┤
+  │Storage │  any                │ (just declare │- set/reassign .length│ delete myArray;  │
+  │Arrays  │                     │  it)          │- push(el)            │ myArray.length=0;│
+  ├────────┼─────────────────────┼───────────────┼──────────────────────┼──────────────────┤
+  │Memory  │  any  but mapping   │ Use 'new'     │ Not allowed          │                  │
+  │Arrays  │ (ABI comp. for      │ new uint[](7) │(fix size determined  │                  │
+  │        │  public/extern fun) │ new bytes(len)│ at runtime)          │                  │
+  └────────┴─────────────────────┴───────────────┴──────────────────────┴──────────────────┘
+  ```
+
+## MAPS (DICTIONARIES / HASH-TABLEs)
+
+* key-type: almost any type except mapping, dynamic array, contract,enum,struct
+  ```
+  mapping public
+     (string => uint) map1;   ← Keys can not be iterated. Manual support needed
+                                More info: <#solidity_storage_patterns]
+                                • Care must put to not leave orphaned data
+                                 in the state database, specially in self-destruction
+                                 Code must manually clean mappings by DELETING EACH KEY.
+  map1["charles"] = 1;        ← add/modify key.
+  delete balances["charles"]; ←
+  contract.map1("charles")    ← 'public' allows 3rd contracts read (not write) it.
+  map1["non_existing_key"]    ← Returns 0. All non-set values are set to zero
+
+  mapping (                   ← Nested mappings
+     address => mapping (
+        address => uint))
+     public custodians;
+  ```
+
+### WALK-OVER MAP 
+- PROBLEM: Mappings are virtually initialized:
+  - every possible key exists mapped to zero-byte-rep
+  - keys are NOT stored in the map.
+  - values are stored at the state-memory address == keccak256(key)
+- Solution: See section "solidity_storage_patterns"
+
+## Sorted Linked List [[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
+
+* <https://github.com/vittominacori/solidity-linked-list]
+* utility library for using sorted linked list data structures.
+* Well maintained as of 2022-01
+* Public methods
+  ```
+  listExists | nodeExists | sizeOf
+  get(Node|Adjacent|NextNode|PreviousNode|SortedSpot)
+  insertAfter | insertBefore | remove
+  pushFront | pushBack
+  popFront  | popBack
+  ```
+[[}]]
+
+## EnumerableSet [[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence,01_PM.TODO]]
+
+* <https://docs.openzeppelin.com/contracts/2.x/api/utils#EnumerableSet> [[}]]
+
+[[{101,persistence.data_structure,02_QA,12_solidity.persistence]]
+## Iterable map (arachnid gist)
+* <https://gist.github.com/ethers/7e6d443818cbc9ad2c38efa7c0f363d1]
+  ```
+  | library itmap {
+  |     struct entry {
+  |         // Equal to the index of the key of this item in keys, plus 1.
+  |         uint keyIndex;
+  |         uint value;
+  |     }
+  | 
+  |     struct itmap {
+  |         mapping(uint => entry) data;
+  |         uint[] keys;
+  |     }
+  | 
+  |     function insert(itmap storage self, uint key, uint value) internal returns (bool replaced) {
+  |         entry storage e = self.data[key];
+  |         e.value = value;
+  |         if (e.keyIndex > 0) {
+  |             return true;
+  |         } else {
+  |             e.keyIndex = ++self.keys.length;
+  |             self.keys[e.keyIndex - 1] = key;
+  |             return false;
+  |         }
+  |     }
+  | 
+  |     function remove(itmap storage self, uint key) internal returns (bool success) {
+  |         entry storage e = self.data[key];
+  |         if (e.keyIndex == 0)
+  |             return false;
+  | 
+  |         if (e.keyIndex < self.keys.length) {
+  |                       // Move an existing element into the vacated key slot.
+  |                       self.data[self.keys[self.keys.length - 1]].keyIndex = e.keyIndex;
+  |                       self.keys[e.keyIndex - 1] = self.keys[self.keys.length - 1];
+  |                       self.keys.length -= 1;
+  |                       delete self.data[key];
+  |                       return true;
+  |                   }
+  |               }
+  | 
+  |               function contains(itmap storage self, uint key) internal constant returns (bool exists) {
+  |                   return self.data[key].keyIndex > 0;
+  |     }
+  | 
+  |     function size(itmap storage self) internal constant returns (uint) {
+  |         return self.keys.length;
+  |     }
+  | 
+  |     function get(itmap storage self, uint key) internal constant returns (uint) {
+  |         return self.data[key].value;
+  |     }
+  | 
+  |     function getKey(itmap storage self, uint idx) internal constant returns (uint) {
+  |         return self.keys[idx];
+  |     }
+  | }
+  ```
+  ```
+  | contract Test {
+  |     // Use itmap for all functions on the struct
+  |     using itmap for itmap.itmap;
+  | 
+  |     // Declare an iterable mapping
+  |     itmap.itmap mymap;
+  | 
+  |     function insert(uint key, uint value) {
+  |         mymap.insert(key, value);
+  |     }
+  | 
+  |     function get(uint key) returns (uint value) {
+  |         return mymap.get(key);
+  |     }
+  | }
+  ```
+[[}]]
+
+[[{12_solidity.101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
+## storage patterns
+
+* <https://ethereum.stackexchange.com/questions/13167/are-there-well-solved-and-simple-storage-patterns-for-solidity]
+1. Context:
+   Simple and appropriate data organization can challenge Solidity newcomers.
+   It wants us to organize everything in ways many of us aren’t accustomed to.
+2. Q: Are there well-solved general patterns for routine on-chain data
+   organization?
+3. Here are some simple and useful patterns in increasing order of utility.<br/>
+    WARN : Event logs omitted for brevity in example code.
+   In real code they MUST be emitted for any state change.
+  ```
+  |  MAPPING WITH STRUCT         │SIMPLE LIST USING ARRAY  │STRUCT ARRAY WITH           │  MAPPED STRUCTS WITH      │ MAPPED STRUCTS WITH
+  |                              │                         │ UNIQUE IDS                 │  INDEX                    │ DELETE-ENABLED INDEX ¹ 
+  | ── STRENGTHS ────────────────┼─── STRENGTHS ───────────┼── STRENGTHS ───────────────┼── STRENGTHS ──────────────┼── STRENGTHS ────────────────
+  |  Random access by unique Id  │· Reliably chronological │· Random access by Row      │· Random access by Unique  │· Random access by Uniq.Id
+  |  Assurance of Id Uniqueness  │  order of insertion     │  number                    │  Id or row number         │  or row number
+  |  Enclose arrays, mappings,   │· Provides a count       │· Assurance of Id uniqueness│· Assurance of Id          │· Assurance of Id uniqueness
+  |  structs within each "record"│· Random access by Row   │· Enclose arrays, mappings  │    uniqueness             │· Enclose arrays, mapping and
+  |                              │  Number (not Id)        │  and structs with each     │· Enclose arrays/mappings" │  structs within each "record"
+  |                              │                         │  "record"                  │  and structs within each  │· Count the records
+  |                              │                         │                            │  "record"                 │· Enumerate the ids
+  |                              │                         │                            │· List maintains decla-    │· Logically control the size of
+  |                              │                         │                            │  ration order             │  the active list with delete
+  |                              │                         │                            │· Count the records        │  function
+  |                              │                         │                            │· Enumerate the Ids        │
+  |                              │                         │                            │ · "Soft" delete           │
+  |                              │                         │                            │   (by setting boolean val │
+  | ── WEAKNESS  ────────────────┼─── WEAKNESS  ───────────┼── WEAKNESS  ───────────────┼── WEAKNESS  ──────────────┼── WEAKNESS  ────────────────
+  | · Unable to enumerate keys   │· No random access by Id │- No random access by Id    │ · Uncontrolled growth of  │· Marginally increased code
+  | · Unable to count the keys   │· No uniqueness assurance│- Uncontrolled growth of    │   the list                │ complexity
+  | · Needs a manual check to    │· No check for duplicates│  the list                  │                           │- Marginally higher store costs
+  |   distinguish default from   │· Uncontrolled growth of │                            │                           │- Key list inherently unordered
+  |   explicitly "all 0" record  │  list                   │                            │                           │
+  | ── EXAMPLE ──────────────────┼─── EXAMPLE ─────────────┼── EXAMPLE ─────────────────┼── EXAMPLE ────────────────┼── EXAMPLE ──────────────────
+  | contract EntityDDBB {        contract EntityDDBB {     contract EntityDDBB {        contract EntityDDBB {       contract EntityDDBB {
+  | │ struct EntityStruct {      │struct EntityStruct {    │struct EntityStruct {       │struct EntityStruct {      │ struct EntityStruct {
+  | │   uint data;               │  address addr;          │  address addr;             │  uint data;               │   uint data;
+  | │   bool isEntity;           │  uint    data;          │  uint    data;             │  bool exists;             │   uint lstPtr;
+  | │ }                          │}                        │}                           │}                          │ }
+  | │mapping                     │EntityStruct[]  public   │EntityStruct[] public ddbb; │mapping (address=>         │ mapping(address
+  | │ (address => EntityStruct)  │  ddbb;                  │mapping(address => bool)    │         EntityStruct)     │    => EntityStruct)
+  | │    public ddbb;            │                         │  knownEntity;              │    public ddbb;           │   public ddbb;
+  | │                            │                         │                            │address[] public           │ address[] public list;
+  | │                            │                         │                            │        entityLst;         │
+  | │                            │                         │                            │                           │
+  | │function                    │                         │function                    │function                   │function
+  | │  exists(address addr)      │                         │  exists(address addr)      │exists(address addr)       │ exists(address addr)
+  | │  public constant           │                         │    public constant         │    public constant        │     public constant
+  | │  returns(bool isIndeed) {  │                         │    returns(bool) {         │    returns(bool){         │returns(bool) {
+  | │  return  ddbb[addr].       │                         │  return knownEntity[addr]; │  return                   │ if(list.length == 0)
+  | │            .isEntity;      │                         │                            │   ddbb[addr].exists;      │   return false;
+  | │                            │                         │                            │                           │return ddbb[addr].lstPtr]==addr;
+  | │}                           │                         │}                           │}                          │}
+  | 
+  | │                            │function getEntityCount()│function getEntityCount()   │function getEntityCount()  │function getEntityCount()
+  | │                            │   public constant       │     public constant        │    public constant        │    public constant
+  | │                            │   returns (uint) {      │     returns(uint) {        │    returns(uint) {        │ returns(uint entityCount) {
+  | │                            │  return ddbb.length;    │  return ddbb.length;       │  return entityLst         │  return list.length;
+  | │                            │}                        │}                           │          .length;         │}
+  | │                            │                         │                            │}                          │
+  | │                            │                         │                            │                           │
+  | │                            │                         │                            │                           │
+  | │function newEntity          │function newEntity       │function newEntity(         │function newEntity(        │function newEntity(
+  | │    (address addr,          │   (address addr,        │    address addr,           │   address addr            │    address addr,
+  | │     uint data )            │    uint data )          │     uint data )            |   uint data)              │    uint data)
+  | │    public returns(bool) {  │   public                │    public                  │   public                  │ public
+  | │  if(isEntity(addr)) throw; │returns(uint rowNumber) {│returns(uint rowNum) {      │returns(uint rowNumber) {  │ returns(bool success) {
+  | │  ddbb[addr].data  = data;  │ EntityStruct memory aux;│  if(isEntity(addr)) throw; │  if(isEntity(addr)) throw;│  if(isEntity(addr)) throw;
+  | │  ddbb[addr].isEntity =     │ aux.addr = addr;        │  EntityStruct memory aux;  │  ddbb[addr].data = data;  │  ddbb[addr].data = data;
+  | │                 = true;    │ aux.data    = data;     │  aux.addr = addr;          │  ddbb[addr].exists        │  ddbb[addr].lstPtr =
+  | │                            │ return ddbb.push(aux)-1;│  aux.data = data;          │     = true;               │    list.push(addr) - 1;
+  | │                            │                         │  knownEntity[addr] = true; │  return                   │  return true;
+  | │                            │                         │  return ddbb.push(aux)-1;  │  entityLst.push(addr)-1;  │
+  | │}                           │}                        │}                           │}                          │}
+  | │                            │                         │                            │                           │
+  | │                            │                         │                            │                           │
+  | │                            │                         │
+  | │function updateEntity       │                         │function updateEntity       │function updateEntity      │function updateEntity(
+  | │   (address addr, uint data)│                         │   uint rowNum, address addr,│(address addr, uint data) │    address addr,
+  | │   public {                 │                         │   uint data                │    public {               │    uint data)
+  | │  if(!isEntity(addr)) throw │                         │   public {                 │ if(!isEntity(addr)) throw;│public returns(bool success) {
+  | │  ddbb[addr].data = data    │                         │ if(!isEntity(addr)) throw; │  ddbb[addr].data = data;  │  if(!isEntity(addr)) throw;
+  | │}                           │                         │ if(ddbb[rowNum].addr!=addr)│                           │  ddbb[addr].data = data;
+  | │                            │                         │    trhow;                  │                           │  return true;
+  | │                            │                         │ ddbb[rowNumber].data =     │}                          │}
+  | │                            │                         │                  data      │                           │
+  | │                            │                         │}                           │                           │
+  | │function delete             │                         │                            │                           │function delete
+  | │  (address addr)            │                         │                            │                           │    (address addr)
+  | │  public {                  │                         │                            │                           │  public
+  | │  if(!isEntity(addr))       │                         │                            │                           │returns(bool success) {
+  | │    throw ;                 │                         │                            │                           │ if(!isEntity(addr))
+  | │  delete ddbb[addr];        │                         │                            │                           │  throw;
+  | │}                           │                         │                            │                           │ uint rowToDelete =
+  | │                            │                         │                            │                           │    ddbb[addr].lstPtr;
+  | │                            │                         │                            │                           │ address keyToMov =
+  | │                            │                         │                            │                           │   list[list.length-1];
+  | │                            │                         │                            │                           │ list[rowToDelete] =
+  | │                            │                         │                            │                           │   keyToMov;
+  | │                            │                         │                            │                           │ ddbb[keyToMov].lstPtr
+  | │                            │                         │                            │                           │   = rowToDelete;
+  | │                            │                         │                            │                           │ list.length--;
+  | │                            │                         │                            │                           │ return true;
+  | │                            │                         │                            │                           │}
+  | }                            }                         }                            }                           }
+* EXAMPLE Solidty version: 0.4.6
+   ¹  REF:
+   Rob Hitchens@Medium  <https://medium.com/@robhitchens/solidity-crud-part-2-ed8d8b4f74ec#.ekc22r5lf]
+   Source Code          <https://bitbucket.org/rhitchens2/soliditycrud/src/83703dcaf4d0c4b0d6adc0377455c4f257aa29a7/contracts/?at=master]
+  ```
+[[}]]
+
+[[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
+## Composed-keys in maps
+
+* <https://ethereum.stackexchange.com/questions/69727/map-multikey-how-to]
+* Alt1: create key like hash of N input composing keys<br/>
+  Use events to trace input requests. e.j:
+  ```
+  | bytes32 hashOfMultiKey = keccak256(abi.encodePacked(key1,key2));
+  | emit SomeEvent(key1, key2, bytes32 hashOfMultiKey, ...); ← event let observers track keys
+  ```
+  WARN : original keys are lost in contract state.
+
+* Alt2: Map of Map 
+  ```
+  | mapping(                         ← allow to search by key1 or (key1,key2)
+  |   bytes32            /*key1*/ =    More costly but keeps info.
+  |     mapping( bytes32 /*key2*/
+  |       => bytes32)
+  | );
+  |
+  | mapping(                         ← allow searchs by key2 or (key2,key1)
+  |   bytes32            /*key2*/ =    (if key2 is not a subkey of A)
+  |     mapping( bytes32 /*key1*/
+  |       => bytes32)
+  | );
+  ```
+[[}]]
+
+[[12_SOLIDITY.datastructure}]]
+
+[[{12_solidity.error_control,transaction,10_EVM.101,02_doc_has.diagram,13_SLC.debugging]]
+[[ 10_EVM.implementation.besu,10_EVM.events]]
+[[ 13_SLC.testing,transaction,dev_framework.java.web3j,02_QA.error_control]]
+# SOLIDITY ERROR CONTROL  ("QA 101")
+
+* <https://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions]
+
+* ERROR MANAGEMENT 101:
+
+- When an error (revert/...) arises the EVM rollbacks any state-change in the
+  current call and all its sub/super-calls including any events emitted up
+  until the rollback since there is no safe way to continue execution while
+  warrantying atomicity and reproducibility of results.
+- TX is still mined and TXReceipt status flaged with "fail" error, but
+  the execution of the mined will not modify any state. TX will just consume
+  gas and record information about the error.
+  See Example failed TX mined:
+<https://etherscan.io/tx/0x9f00a37416a64735b02ab76da4477ea297bfd4923b1564c1b3579d542b3f4071]
+
+- assert( "my code-logic assertion");
+  - Represent a condition that must never happen unless
+    there has been a solidity programming error.
+  - Check for conditions and throw an exception
+    if the condition is not met
+  - Should only be used to test for internal
+    errors, and to check invariants
+  - If used properly, analysis tools can
+    evaluate your contract to identify
+    the conditions and function calls which will
+    reach a failing assert.
+    Properly functioning code should never reach
+    a failing assert statement
+  - compiles to INVALID 0xfe instruction
+    - The EVM automatically raise assert-like exceptions when
+      - access array at index greater than array length (or negative)
+      - access fixed-length bytes"N" at a too large or negative index
+      - divide or modulo by zero (ex.: 5 / 0 , 23 % 0)
+      - shift by a negative amount
+      - convert a value too big|negative into an enum type
+      - call to zero-initialized variable of internal function type
+      - call assert with an argument that evaluates to false
+      - call function not matching any func. in contract
+    -  Consume all gas available to the call
+    - Error "rethrow"/"bubble up" in sub-calls
+- require("required cond.", "error messsage");
+  - pre/post check in in/out-data to function
+  - Check for conditions and throw an exception
+    if the condition is not met
+  - Should be used to ensure valid conditions,
+    such as inputs, or contract state variables
+    are met, or to validate return values from
+    calls to external contracts
+  - optionally a message-string can be provided
+  - compiles to REVER 0xfd instruction
+  - Error "rethrow"/"bubble up" in sub-calls
+  -  Do not consume gas(v.Metrópolis+)  (Re-check this claim)
+  - The EVM automatically throw requike-like exceptions when
+    call a function via a message call but it does not
+    finish properly (i.e. it runs out of gas, has no
+    matching function, or throws an exception itself),
+    except when a low level operation call, send,
+    delegatecall or callcode is used.
+
+- if ("business condition") revert("error message");
+  - business logic exceptions, like invalid request
+    for current state.
+  - can be used to flag an error and revert the
+    current call.
+  - It is possible to provide a string message
+    containing details about the error that will
+    be passed back to the caller.
+  - Error "rethrow"/"bubble up" in sub-calls
+  -  Do not consume gas(v.Metrópolis+)  (Re-check this claim)
+
+- WARN : low level ops return false, no assert/require/revert exception is raised.
+  Example of low levels conditions returning false:
+  (or true when called account is non-existent,
+   Existence must be checked prior to call)
+  - create a contract using "new" but contract creation does not finish properly.
+  - perform external function call targeting a contract that contains no code
+  - contract receives Ether via public function without payable modifier
+    (including constructor or fallback)
+  - contract receives Ether via public getter function
+  - .transfer() fails
+
+* Solidity compiler automatically generate exceptions (assert or require/revert?) if:
+  - If your contract receives Ether via a public function without payable modifier
+    (including the constructor and the fallback function)
+  - If your contract receives Ether via a public getter function
+  - If you call a zero-initialized variable of internal function type
+  - If a addressInstance.transfer() fails
+  - The provided string in require/revert will be abi-encoded as if it
+    were a call to a function Error(string). Ex:
+    ```
+    revert("Not enough Ether provided.");
+    └───────────────┬───────────────────┘
+    The following string of hexadecimal digits data  (vs byte array) will be
+    set as error return data:
+    (NOTE: no carry-return exists in real output. Fake layout just for clarity)
+
+    0x08c379a0                                                       ← Function selector for Error(string)
+    0000000000000000000000000000000000000000000000000000000000000020 ← String offset  ┐
+    000000000000000000000000000000000000000000000000000000000000001a ← String length  │ String
+    4e6f7420656e6f7567682045746865722070726f76696465642e............ ┐                ├─ABI encoding
+    ................................................................ ├ String payload │
+    ................................................................ ┘ (utf8 hex enc) ┘
+    ```
+
+- revert reason:<br/>
+  Since Solidity 0.4.22 the require() and revert() operation optionally
+  take a revert reason as argument: Revert with reason.
+  This is accessible for eth_calls in the result field.
+
+- Clients libraries will eventually support fetching such value.
+  Ex: web3j REF: <https://github.com/web3j/web3j/issues/858]
+
+- Have a method public String getRevertReason() on
+  org.web3j.protocol.core.methods.response.EthCall that retrieves
+  that revert reason.
+
+- See also (future/rejected?) proposal Typed Errors EIP 838
+  * <https://github.com/ethereum/EIPs/issues/838].
+  Ex of proposal:
+  ```
+  | contract MyToken {
+  |   error InsufficientFunds(uint256 amount, uint256 balance);  // ← Strongly typed error
+  |
+  |   function ... {
+  |     if (! "assertCondition")
+  |        throw InsufficientFunds(_amount, balances[msg.sender]);
+  |     ...
+  |   }
+  |   ...
+  | }
+  ```
+- besu requires the flag '--revert-reason-enabled' to include the revert 
+  reason in the TX receipt. "...  : It may use a significant amount of memory
+  when connected to public networks"
+  - When revert reason is enabled, the revert reason is included as an
+    ABI-encoded string in the transaction receipt returned by eth_getTransactionReceipt.
+  - Important :
+    revert reason is not included in the transactions receipts root hash.
+    This means that the revert reason is only available to nodes that execute the
+    transaction when importing the block.  That is, the revert reason is
+    NOT available if using fast sync
+
+- Example TX Receipt:
+  ```
+  | {
+  |   "jsonrpc": "2.0",
+  |   "id": 1,
+  |   "result": {
+  |      "from": "0x6273...57",
+  |      "blockHash": "0xe72...0a",
+  |      ...
+  |      "revertReason" :"0x08c379a.....000"
+  |    }                     ^
+  |  }                       │
+  | ┌────────────────────────┘
+  | └─ Format: (Official  Solidity documentation),
+  |    - ABI-encoded string consisting of:
+  |      0x08c379a0                                                         // Error-Func.Sel.(string)
+  |      0x0000000000000000000000000000000000000000000000000000000000000020 // Data offset
+  |      0x000000000000000000000000000000000000000000000000000000000000001a // String length
+  |      0x4e6f7420656e6f7567682045746865722070726f76696465642e000000000000 // String data
+  |        ^ Decodes to: "Not enough Ether provided"
+  ```
+
+- Ex code extracting revert reason in Web3j:
+  ```
+  | ...
+  | import org.web3j.protocol.core.methods.response.TransactionReceipt;
+  | import org.web3j.protocol.exceptions.TransactionException;
+  | import java.util.concurrent.CompletableFuture;
+  |
+  | try {
+  |   // ... some code waiting for TX mining results
+  |   CompletableFuture<SomeObjectDTO> futureResult =
+  |           new CompletableFuture();
+  |   myContractProxy.doSendLog2BlockchainAsync(some_input_data, futureResult);
+  | } catch(Throwable e /* capture "everything */) {  /* try-catch, Solidity 0.8 */
+  |   if (e instanceof TransactionException) {
+  |     TransactionException te = (TransactionException) e;
+  |     Optional<TransactionReceipt> tr = te.getTransactionReceipt();
+  |     if (tr.isPresent()) {
+  |       // https://dhondt.tech/blog/2019/1/Web3j-retrieve-revert-reason.html
+  |       System.err.println"revert reason:"+tr.get().getRevertReason());
+  |     } else {
+  |       System.err.println("txReceipt not present");
+  |     }
+  |   }
+  | }
+  ```
+
+## FAIL-FAST (QA 101) [[{]]
+
+* <https://en.wikipedia.org/wiki/Fail-fast>
+  As a rule of thumb, if a function doesn't know what to return it
+  must revert the transaction (Remember: we are managing money). Add
+  `OrThrow` prefix to make the intention clear to (third-parties)
+  client code. 
+* NOTE: This is also the error handling strategy followed by other modern
+  development stacks, for example, Erlang, a programming language used to 
+  build massively scalable soft real-time systems with requirements on
+  high availability.  Example:
+
+  ```
+  |  1 function getDelegatedAddressOrThrow(address _input_address)
+  |  2 public
+  |  3 external
+  |  4 returns (address)
+  |  5 {
+  |  6     require (_input_address != 0, "BILLION_DOLAR_MISTAKE");
+  |  7     address delegatedAddress = delegationDDBB[_input_address];
+  |  8     require (delegatedAddress != 0, "INPUT_NOT_FOUND");
+  |  9 }
+  | 10
+  | 11 function hasDelegatedAddress(address _input_address)
+  | 12 public
+  | 13 external
+  | 14 returns (address)
+  | 15 {
+  | 16     require (_input_address != 0, "BILLION_DOLAR_MISTAKE");
+  | 17     returns delegationDDBB[_input_address] != 0;
+  | 18 }
+  | 19
+  | 20 function getDelegatedAddressOrDefault(address _input_address, address _default)
+  | 21 public
+  | 22 external
+  | 23 returns (address)
+  | 24 {
+  | 25     require (_input_address != 0, "BILLION_DOLAR_MISTAKE");
+  | 26     address delegatedAddress = delegationDDBB[_input_address];
+  | 27     if (delegatedAddress == 0) return _default;
+  | 28     return delegatedAddress;
+  | 29 }
+  ```
+
+    In the previous code `getDelegatedAddressOrThrow` has no way to know
+  if `_input_address` was correctly sent by the client (code outside
+  Solidity control), or the value has not yet been updated (race
+  condition, previous failure, ...). Code just "reverts and forgets".
+
+    Client apps that want to know the value for a potentially
+  unregistered / non-delegated address will check first calling to
+  hasDelegatedAddress ("a la Python").
+
+   It could be the case that client code has information enought to use
+  a default value.  In that case we can add a `getDelegatedAddressOrDefault`
+  to let client use a single query to the blockchain. This is faster,
+  but potentially more error-prone.
+
+* NOTICE/WARN: `error-free code` is better than `fast code`.
+  * Notice also how we protect against the billion-dolar mistake:
+  <https://en.wikipedia.org/wiki/Tony_Hoare#Apologies_and_retractions>
+  from incoming client code data by always avoiding "ZERO" like values
+  (that potentially means an unitialized/undefined/null variable in
+  client code calling the smart-contract logic).
+[[}]]
+
+
+## try/catch (Solidity 0.8+)
+
+* <https://docs.soliditylang.org/en/v0.8.17/control-structures.html#try-catch>
+
+  ```
+  ...
+  | function funA(...) public {
+  |   /*····*/try someContract.extFun01(token)  //< EXTERNAL funct. call || new ContractName()
+  |           returns (uint v)                  //<  required if "success" block is interested in returned values
+  |  {                                          //< start of "success" block. No errors in external call.
+  |                                             //  WARN: Errors inside the expression are not caught!!!
+  |                                             //  (e.g: complex expression with internal function calls)
+
+
+  |   } catch Error(string memory reason ) {    //< caused by revert("reason") | require(false, "reason")
+  |   ...
+  |   return (0, false);
+  |   } catch Panic(uint errorCode    ) {       //< panic raised in extFun01 (div-by-zero/overflow/...)
+  |                                              //  (error code can be used to determine kind-of-error)
+  |   ...
+  |   } catch (bytes memory lowLevelData ) {    //< alt 1: error signature does not match any other clause,
+  |   ...                                       //  (error decoding the err-msg, no error data provided)
+  |   /*····*/} catch { ... }                   //< alt 2: ignore returned data.
+  |   ...
+  | }
+  ```
+* WARN:
+  * If decoding-of-return-data fails, in the calling contract it is not caught in the catch clause.
+  * If decoding-of-catch-Error(string memory reason) and there is a low-level catch clause, this
+    error is caught there.
+[[}]]
+
+# STATIC CODE ANALYSIS [[{]] [[{12_solidity.qa.code_analysis,02_doc_has.comparative,security.101,]]
+
+### Static vs Dynamic Code analysis (QA)
+
+* by QuillAudits, security Firm
+  * <https://blog.quillhash.com/static-and-dynamic-analysis-of-smart-contracts-vulnerabilities/>
+  * <https://audits.quillhash.com>
+  ```
+  | STEP 1   ▸  STEP 2     ▸ STEP 3      ▸ STEP 4    ▸ STEP 5
+  | ────────    ──────────   ───────────   ─────────   ───────────────────────
+  | Solidity    compiler     Recover       functions   · known attacks detection
+  | Source      sol          meaninful     modifiers   · Gas optimizer linters
+  | Code        --ast-json   information   variables   · STATIC CODE ANALYSIS
+  |                          from          ...           Find bugs that standar compiler
+  |                          ast-tree                    is not able to detect
+  |
+  |   KNOW ATTACKS TESTS                SEVERITY LEVEL    STATIC CODE ANALYSIS LIMITATIONS
+  |   -----------------------------     --------------    --------------------------------
+  |   - Reentrancy                      - High            - not a complete Sec tool.
+  |   - uninitialized states            - Medium          - Only known attacks or
+  |   - unused internal functions       - Low               predefined rules can
+  |   - Functions Transferring ethers   - Informational     be scanned.
+  |     (check modifiers/authenticity)
+  |   - Ether lock
+  |   - Gas optimization etc.
+  ```
+[[}]]
+
+## Dynamic Analysis [[{]]
+
+- Dyn.Ana. tests the code in a run-time setup
+- Dummy (or boundary) values are taken as input
+  according to the conditions of function.
+
+- Most of the dynamic analysis tools use:
+  - symbolic analysis
+  - fuzzers
+  - formal verification to secure smart contract.
+[[}]]
+
+## Symbolic Analysis [[{]]
+- analyzes a program to determine what inputs
+  cause each part of a program function to execute.
+
+Compared to traditional functional testing:
+- function "input values" are used to test function i.e
+  ‘123’, ‘Hello’ concrete values,
+- Symbolic analysis: no specific input is taken at present but a
+  default value:
+  - let's say ƛ is taken as an input after reaching at conditional
+    statement it fork the state and two different values are taken.
+
+Ex: Our goal will be to see if we can use symbolic analysis
+    to show that it is possible to get the result of the next function
+    to be 100.
+    ```
+    | 01 function test(uint256 value) public pure returns(int) {
+    | 02   uint result = 0;
+    | 03   if (value > 100) {
+    | 04     result += 100;
+    | 05   }
+    | 06   return result;
+    | 07 }
+    |
+    |  NORMAL DYNAMIC TESTING  | SYMBOLIC ANALYSIS
+    |  (input = 50)            | (input = ƛ)
+    |--------------------------+-------------------------
+    |  value  = 50 (line 1)    |        value  =  ƛ (line 1)
+    |                          |
+    |  value  = 50 (line 2)    |        value  =  ƛ (line 2)
+    |  result =  0             |        result =  0
+    |                          |
+    |  value  = 50 (line 3)    |        value  =  ƛ (line 3)
+    |  result =  0             |        result =  0
+    |                          |
+    |  value  = 50 (line 7)    | value  =  ƛ (line 7)       value  = ƛ    (line 4)
+    |  result =  0             | result =  0 if ƛ<=100      result = 100  if ƛ>100
+    |                          |
+    |                          |                            value  = ƛ    (line 7)
+    |                          |                            result = 100  if ƛ>100
+    |
+    | we use symbolic analysis to find the input values to execute function
+    | input_list [ <=100, >100 ]
+    ```
+[[}]]
+
+## Smart Contract Fuzzing (QA) [[{]]
+
+- Type of testing in which seed inputs or set of inputs are taken
+  to discover new inputs automatically  that might highlight coding
+  errors or security loopholes in smart contracts, by inputting
+  invalid or random data called FUZZ to the smart contract.
+  After which the smart contracts are monitored for various path
+  generated or error handling.
+  ```
+  | │Analyze  │  │ extract Data type│   │ABI signature│   │generate Fuzzing│ 
+  | │Byte Code│ →│ and signature of │ → │analysis     │ → │inputs, based on│ →
+  | │+ ABI    │  │ of functions     │   │             │   │first 3 steps   │
+  |
+  |    │Fuzzing │     │Vulnerability     │
+  |  → │proccess│  →  │analysis, based on│
+  |    │starts  │     │generated logs    │
+  ```
+
+- fuzzer can be classified into three categories based
+  on testing techniques:
+  - Black box testing
+    The fuzzer didn't get any information about the contract
+    performing millions of mutants( inputs ) while testing
+    a smart contract.
+    - PROS:
+      - Millions of input values in few seconds is used to
+        find loopholes in smart contracts.
+    - CONS:
+      - statement or code coverage is "random"
+  - White box testing
+    fuzzer have information about smart contracts input values
+    They use symbolic analysis to test smart contracts,
+    - PROS:
+      - cover most of the paths
+      - It wil use multiple searching techniques to
+        generate new paths like heuristic searching technique.
+  - Grey box testing
+    fuzzer has partial knowledge of smart contracts
+    They are the most popular fuzzers in finding the
+    vulnerability of smart contracts.
+    - lightweight testing approach that effectively
+      detects bugs and security vulnerabilities.
+    - greybox fuzzers randomly mutate program inputs
+      to exercise new paths; this makes it challenging
+      to cover code that is guarded by complex checks
+    - PROS:
+       - cover most of the paths
+
+  Grey box Fuzzing and formal verification are a very popular way to
+secure smart contracts these days but didn’t get the edge yet,
+tools under these techniques are still under development or not
+production-ready.
+
+* TODO: "...In upcoming articles, we will discuss what is formal verification
+      and how formal verification can help in securing smart contracts..."
+
+### REFS:
+* <https://arxiv.org/pdf/1807.03932.pdf>
+* <https://arxiv.org/pdf/1807.07875.pdf>
+[[}]]
+
+## MythX: Sym/Dym,Static,fuzzing analysis [[{security,12_solidity.qa,01_PM.TODO.NOW]]
+- Integrated into "major IDEs". (Truffle/VS.Code/Embark/Remix).
+- MythX: Whole set of micro-services to handle linting and other checks.
+- <https://docs.mythx.io/en/latest/index.html#>
+
+- REF: <https://media.consensys.net/mythx-pro-will-provide-the-most-robust-security-platform-in-the-ethereum-ecosystem-85c3465999b3>
+- Provide symbolic analysis.
+- downloaded 420,000+ times.
+- "... there’s a strong need for interconnected suite of Security tools
+   covering the surface area that can be utilized at all stages of the
+  development lifecycle .... Enter MythX..."
+- Can be run as a SaaS service.
+- Free version: runs in "quick" mode,  between 30 and 120 secs.
+                Very useful for double checking small code changes on the fly
+- MythX Pro: Scan for many more of the SWC IDs (Smart Contract Weakness
+             Classification Registry) and for a longer amount of time,
+             to get into deeper analysis.
+- See also: Truffle Security extension:
+<https://github.com/ConsenSys/truffle-security>
+- Minimum viable MythX client written in JavaScript.
+  <https://github.com/b-mueller/sabre>
+- MythX Python library and CLI tool
+  <https://github.com/dmuhs/PythX>
+[[}]]
+
+## QA: FORMAL PROOFs [[{02_QA.formal_verification,12_solidity.qa,01_PM.WiP]]
+* External Links
+  * <https://github.com/pirapira/eth-isabelle>
+  * <https://github.com/pirapira/ethereum-formal-verification-overview>
+  * <https://gitter.im/ethereum/formal-methods>
+  * <https://en.wikipedia.org/wiki/Logical_harmony>
+  Logical harmony, a name coined by Sir Michael Dummett, is a supposed
+  constraint on the rules of inference (https://en.wikipedia.org/wiki/
+  Rules_of_inference) that can be used in a given logical system(
+  <https://en.wikipedia.org/wiki/Logical_system>)
+
+## FP:SMTChecker ("on" in Solc 0.8.4+)
+
+- ('pragma experimental SMTChecker;' in previous versions)
+  <https://github.com/ethereum/solidity/blob/develop/docs/smtchecker.rst>
+- Perform automated mathematical-proof that source code fulfills a
+  certain formal specification.  THE SPECIFICATION IS STILL FORMAL
+  (JUST AS THE SOURCE CODE), BUT USUALLY MUCH SIMPLER.
+
+- other verification checks at compile-time are:
+  - Arithmetic under/overflow.
+  - Division by zero.
+  - Trivial conditions and unreachable code.
+  - Popping an empty array.
+  - Out-of-bounds index access.
+  - Insufficient funds for a transfer.
+
+- Ej:
+  ```
+  // SPDX-License-Identifier: GPL-3.0
+  pragma solidity >=0.8.0;
+
+  contract Overflow {
+      uint immutable x;
+      uint immutable y;
+
+      function add(uint _x, uint _y)
+      internal pure
+      returns (uint) {
+          return _x + _y;        <···┐ Commenting 'require(...)' will warn:
+      }                              │ > ...
+                                     │ > Overflow, val. larger than 2**256 - 1
+      constructor                    │ > happens here. Counterexample:
+      (uint _x, uint _y) {           │ > x = 1, y = 11579208923731619...639935
+          (x, y) = (_x, _y);         │ > x + y returns 0
+      }                              │ >
+                                     │ > · Overflow TX trace
+      function stateAdd()            │ >   ...
+      public  view returns (uint) {  │ >     Overflow.stateAdd()
+        require(                 <···┘ >      add( _x, _y)
+          x < type(uint128).max);      >       return _x + _y;
+        require(                       >              ^^^^^^^
+          y < type(uint128).max);
+        return add(x, y);
+      }
+  }
+  ```
+
+## FP: Why3 Solidity
+
+- Why3: rich language platform for deductive program verification
+       for specification and programming.
+- Relies on external theorem provers (automated and interactive)
+- Standard library of logical theories included (integer and
+  real arithmetic, Boolean operations, sets, maps, ...).
+- Developers can write WhyML programs directly and get
+  correct-by-construction OCaml programs through an automated
+  extraction mechanism.
+- WhyML (OCaml dialect) also used as an intermediate language
+  for verification of C, Java, or Ada programs.
+- Easy to extend.
+  <https://forum.ethereum.org/discussion/3779/formal-verification-for-solidity-contracts>
+  """
+   We just merged a first pull request that allows Solidity to be
+   formally verified.
+   Only a small subset of Solidity is supported for now ...
+   already possible to verify a recursive binary search routine on arrays:
+   https://gist.github.com/chriseth/0c671e0dac08c3630f47
+   STEP 1) Add  special tags in *sol comments:
+           ///@why3 ... to formulate assertions.
+   STEP 2) *.sol -> solc --formal -o ... -> output -> why3
+  """
+- Why toolkit GUI:
+  "... why3 itself is only a frontend to "provers".
+  1. Install prover (alt-ergo, Z3 ,...)
+  2. `$ why3 config --detect` # """ it should detect your prover."""
+
+- Video Tutorial:
+  <https://www.youtube.com/watch?v=Mzh4fyoaBJ0&feature=youtu.be&list=PL9oaY6Y4QxRZybj86eGItGVApxLXVIXHz>
+- See also:
+  - Virt.Machine for interactive Theorem Provers
+  <http://fc17.ifca.ai/wtsc/Defining%20the%20Ethereum%20Virtual%20Machine%20for%20Interactive%20Theorem%20Provers.pdf>
+  - <https://chriseth.github.io/notes/talks/formal_devcon2/#/>
+  - <http://www.cs.umd.edu/~aseem/solidetherplas.pdf>
+[[}]]
+
+## FP: (Py)Slither [[{security,02_QA,12_solidity,01_PM.TODO.now]]
+
+- <https://github.com/crytic/slither>
+  - Detects vulnerables with LOW FALSE POSITIVES.
+  - Identifies where the error condition occurs in the source code
+  - Built-in 'printers' to report crucial contract information
+  - Detector API to write custom analyses in Python
+  - Ability to analyze contracts written with Solidity >= 0.4
+  - Intermediate representation (SlithIR) for high-precision analyses
+  - Correctly parses 99.9% of all public Solidity code
+  - Average exec. time: < 1 sec/contract
+
+* C&P from: <https://www.reddit.com/r/ethdev/comments/xtqby3/slither_for_automatic_smart_contract_auditing/>
+  ... I was interested in smart contract security so decided to look
+  at some hacking tools that can automatically do auditing. ... 
+  I found Slither the most convenient for this job. It's a static
+   analysis tool that looks for almost 80 known bugs and 
+  vulnerabilities in SCs.
+  * <https://twitter.com/trill2scope/status/1576560563613671424?s=20&t=L12FB6FgipX83AA9vQhVyAInstall>
+  * <https://github.com/crytic/slither>
+
+* Tools:
+  ```
+  - slither-check-upgradeability : Review delegatecall-based upgradeability
+  - slither-flat   : Flatten a codebase
+  - slither-erc    : Check the ERC's conformance
+  - slither-format : Automatic patches generation
+  ```
+* Ussage:
+  ```
+  $ slither .                  # ← Truffle/Embark/Dapp/Etherlime application
+  $ slither .../Contract01.sol # Single solidity file
+  ```
+[[}]]
+[[12_solidity.qa.code_analysis}]]
+
+[[{12_solidity.101,02_QA.error_control,02_doc_has.tutorial,01_PM.WiP]]
+# Solidity Best Patterns
+
+This section covers a series of recomendations in order to develop
+Solidity smart-contracts in order to improve the quality of code
+decreasing or eliminating common bugs as well as making code easier
+to read among developers.
+By following next coding convention among developers, we try to
+make code easier to read and understand. They are non normative and
+developers can use them as a reference.
+
+* Use some sort of convention agreement to prefix/suffix array types
+  (e.g. suffix `_list`) and some prefix/suffix for map (key/value)
+  structures (e.g, suffix `_map`). Note that in Solidity arrays and list
+  are considered "similar" structures (vs arrays and list in Java, where
+  ussually the later has better and more suitable properties than the
+  former), since arrays are used scarcely, increasing slowly with incomming
+  transactions and read by index most of the time.
+
+* Use `/* ... */` comments to explain maps keys/values nature
+  as well as its structure to make them easy to read to third parties.
+  REMEMBER: Smart Contracts are LEGAL contracts reflecting
+  rights and obligations. 
+   In next mapping it is not possible to understand what address and 
+  uint refer to. The variable 'balances' is a map, and array, something 
+  else (when using it later on in code)? What 'keys' refer to?
+  ```
+  | mapping ( address , => uint ) balances;
+  | address[] keys;
+  ```
+  We can write it like:
+  ```
+  | mapping (
+  |   address /* effective identity address */
+  |   => uint /* balances in tokens type 1  */ ) addressToBalance_map;
+  |
+  | address[] address_key_list /* keys used in addressToBalance_map */;
+  ```
+
+* Variable types can easely become difficult to understand if
+  not documented properly.  Use prefixes to be even more explicit about
+  their types. Example:
+  ```
+  | uint256 timeout ;    // ← Problem . Secs or milisecs or number of blocks ?
+  | uint256 ms_timeout ; // OK
+  ```
+
+## In function declatarion use  multiple lines for visibility,
+   mutability and returns keywords.
+
+* Prefixing internal functions using C style underscore (`_`) can
+  improve (somehow) readability in complex code.
+
+   ```
+   |  Alternative 1:                     Alternative 2 (PREFERRED)
+   |  ==============                     =============
+   |  function myFunction(            │  function _myFunction(
+   |    uint256[] memory param1_list) │    uint256[] memory param1_lst)
+   |    internal view returns         │  internal                     // visible inside S.C.
+   |    (uint256[] memory)            │  view                         // mutability: View Only
+   |                                  │  returns (uint256[] memory)   // return value/s
+   ```
+
+* Use human-readable names.<br/>
+   Prefer `_gasReceipt` to `_g` or `signature_lst` over `s_lst`.
+
+* Avoid named return values (even if allowed by Solidity syntax).
+
+* Error Control [[{]]
+  * Use "require" to check input condition.
+  * Use "if (condition) revert(...)" to check business logic conditions.
+  * Use "assert" to check programming errors (theorically "asserts" must never
+    assert to true in deployed production contracts.
+  * KEY POINT:  Make precoditions execute in sequence (vs inside
+    concatenated 'if' statements). Never ever execute normal
+    flow inside an 'if' precontions.
+    ```
+    | (VERY) WRONG.                      │ RIGHT
+    | =============                      │ ============
+    | function ... {                     │ function ... {
+    |   if (precondition1 == true) {     │   require(precondition1 == true, "...");
+    |     if (precondition2 == true) {   │   require(precondition2 == true, "...");
+    |       if (precondition3 == true) { │   require(precondition3 == true, "...");
+    |         ... business logic         │   ... business logic  ...
+    |       }                            │
+    |     }                              │
+    |   }                                │
+    | }                                  │  }
+    ```
+  [[}]]
+
+* USe STATE MACHINEs: Many smart contracts can be reduced "somehow" to a description 
+  of "who is allowed to do what under which circumstances". This is basically an 
+  state-machine.<br/>
+  Incomming Transfers are just events indicating the "who" in the signature.
+  By clearly indicating the state machine the code will be much more readable,
+  easier to mantain and less prone to errors.
+
+* Use dependency injection extensively in constructors, spliting contracts into
+  smaller ones. In practice, component injection is done manually in the
+  deployment scripts.
+
+## Solidity Limitations [[{10_EVM.101]]
+NOTE: Most Solidity limitations are EVM limitations actually and such
+      limitations are "ON PURPOSE". EVM is targeting ledger-like systems
+      (vs general runtime or computing systems).
+- Stack effective size and EVM design by extension is very limited.
+  When it grows beyond 16 elements old elements are not accesible
+  anymore (compilation fails).
+  This is enough to move balances from account to account, lock
+  or do atomic swaps, ... but not much more.
+- Contract size is limited (in public/semi-public networks).
+  Compiler will acept long contracts, but then the deployment will fail 
+  in most networks.
+- String support is limited (this is something good!, don't use them)
+[[}]]
+[[12_solidity.101}]]
+
+[[{standards.eip/erc.165,devops,12_solidity.101,architecture,02_QA.UX]]
+# EIP-165: Standard Interface Detection at Runtime
+
+- NOTE: EIP-1820 improves over this standard, but EIP-165 is not
+  deprecated and still in active use (e.g, required by EIP-1155)
+  as of 2021-10
+
+- NOTE: ERC-1844 improves over EIP-1820?
+
+- standard to publish and detect what interfaces a smart contract implements
+  by detailing:
+
+  - How interfaces are identified
+  - How a contract will publish the interfaces it implements
+  - How to detect if a contract implements ERC-165
+  - How to detect if a contract implements any given interface
+
+  - ERC-165 in practice:
+  ```
+  | $ .../IERC165.sol interface                                      |
+  | interface IERC165 {                                              |
+  |     function supportsInterface(bytes4 interfaceId)               |
+  |     external view returns (bool);                                |
+  | }                                                                |
+  ```
+  ```
+  $ cat ERC1155.sol # implementation
+  | import ".../utils/introspection/ERC165.sol";                     |
+  | import "./IERC1155.sol";                                         |
+  |                                                                  |
+  | contract ERC1155 is IERC165, IERC1155, IERC1155MetadataURI {     |
+  |     ...                                                          |
+  |     function supportsInterface(bytes4 interfaceId)               |
+  |     public view virtual                                          |
+  |     override(IERC165)                                            |
+  |     returns (bool) {                                             |
+  |       return                                                     |
+  |         interfaceId == type(IERC165).interfaceId             ||  |
+  |         interfaceId == type(IERC1155).interfaceId            ||  |
+  |         interfaceId == type(IERC1155MetadataURI).interfaceId ||  |
+  |         super.supportsInterface(interfaceId);                    |
+  |     }                                                            |
+  | }                                                                |
+  ```
+  - See also:<#eip_1820] Pseudo-introspection Registry Contract
+[[}]]
+
+[[{devops,standards.eip/erc.1820,12_solidity.101,architecture,02_QA.UX,01_PM.TODO.NOW]]
+# EIP-1820: EIP-165"++" 
+* <https://eips.ethereum.org/EIPS/eip-1820>
+  - Pseudo-introspection Registry Contract
+  - Status: Final
+  - It improves (but does NOT replaces) EIP-165.
+  - Superseed EIP-820 (universal registry)
+
+- NOTE: ERC-1844 is probably preferred (it makes use of ENS (EIP-137) by extending
+  the ENS registry to offer the needed functionality (useful to internal SCs and 
+  also external DApps)
+[[}]]
+
+[[{10_EVM.debugging,12_solidity]]
+# DECONSTRUCTING A SOLIDITY SMART CONTRACT
+
+* Summary of OpenZepellin Posts:
+  * PART 1: <https://blog.openzeppelin.com/deconstructing-a-solidity-contract-part-i-introduction-832efd2d7737/>
+  * PART 2: <https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-ii-creation-vs-runtime-6b9d60ecb44c>
+  * PART 3: <https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-iii-the-function-selector-6a9b6886ea49>
+  * PART 4: <https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-iv-function-wrappers-d8e46672b0ed>
+  * PART 5: <https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-v-function-bodies-2d19d4bef8be>
+  * PART 6: <https://blog.zeppelin.solutions/deconstructing-a-solidity-contract-part-vi-the-swarm-hash-70f069e22aef>
+  (By Alejandro Santander in collaboration with Leo Arias)
+  ```
+  $ cat BasicToken.sol
+  | pragma solidity ^0.4.24;                                                 |
+  |                                                                          |
+  | contract BasicToken {                                                    |
+  |   uint256 totalSupply_;                                                  |
+  |   mapping(address => uint256) balances;                                  |
+  |                                                                          |
+  |   constructor(uint256 _initialSupply) public {                           |
+  |     totalSupply_ = _initialSupply;                                       |
+  |     balances[msg.sender] = _initialSupply;                               |
+  |   }                                                                      |
+  |                                                                          |
+  |   function totalSupply() public view returns (uint256) {                 |
+  |     return totalSupply_;                                                 |
+  |   }                                                                      |
+  |                                                                          |
+  |   function transfer(address _to, uint256 _value) public returns (bool) { |
+  |     require(_to != address(0));                                          |
+  |     require(_value <= balances[msg.sender]);                             |
+  |     balances[msg.sender] = balances[msg.sender] – _value;                |
+  |     balances[_to] = balances[_to] + _value;                              |
+  |     return true;                                                         |
+  |   }                                                                      |
+  |                                                                          |
+  |   function balanceOf(address _owner) public view returns (uint256) {     |
+  |     return balances[_owner];                                             |
+  |   }                                                                      |
+  | }                                                                        |
+  ```
+
+* BasicToken.asm (executed in the context of a new Contract TX):
+  KEYPOINT: When analyzing bytecode we can put attention to:
+  * JUMP/JUMPI/JUMPDEST (code forks) as marks to split into logical units.
+  * RETURN/REVERT/STOP: are also usefull.
+  units:<https://gists.rawgit.com/ajsantander/23c032ec7a722890feed94d93dff574a/raw/a453b28077e9669d5b51f2dc6d93b539a76834b8/BasicToken.svg>
+  ```
+  |  ┌─ CONTRACT INITIALIZATION START (~70 instructions ) ──────────────
+  |  │   1) CREATE CONTRACT'S INITIAL STATE.
+  |  │   2) RETURN (to EVM) COPY OF RUNTIME BYTE-CODE
+  |  │      (EVM will store it as SC account.code)
+  |  │ ┌─ FREE SOLIDITY MEMORY POINTER ──────
+  |  │ │  SOLIDITY free-memory-pointer indicates where to store "stuff" with the
+  |  │ │  guarantee that no other Solidity (vs asm) code will overwrite it
+  |  │ │  KEYPOINT: EVERY SINGLE FUNCTION IN SOLIDITY, WHEN COMPILED TO EVM BYTECODE,
+  |  │ │            WILL INITIALIZE THIS POINTER.
+  |  │ │      NOTE: MEM.[0x00, 0x40) reserved by Solidity to calculate hashes
+  |  │ │  HEAVELY USED BY MLOAD + MSTORE
+  |  │ │000 PUSH1 80  <- MSTORE ARG1:(dec128) value to store
+  |  │ │                 ("SPOILER":0x80 == mem.pos. to place constructor args loaded from TX.data)
+  |  │ │002 PUSH1 40  <- MSTORE ARG2: (dec64) TARGET POSITION IN MEMORY
+  |  │ │004 MSTORE    <- STORE [0x80]@0x40 in MEM == mstore(0x40,0x80) (YULish CODE)
+  |  │ └─────────────────────────────────────
+  |  │ ┌─ NON-PAYABLE CHECK { ───────────────
+  |  │ │ bytecode for Solidity code "if(msg.value != 0) revert();
+  |  │ │ (injected by compiler -vs developer- when constructor|function is NOT payable.
+  |  │ │ 005 CALLVALUE  <- push TX.value (in wei) to stack-top
+  |  │ │ 006 DUP1       <- duplicate 1st element on stack
+  |  │ │ 007 ISZERO     <- push "0x01" IF CURRENT TOP-OF-STACK-VALUE IS ZERO (JUMPI ARG1)
+  |  │ │ 008 PUSH2 0010 <- JUMPI ARG2: Where to jump to.
+  |  >>> 011 JUMPI      <- JUMP(If) to ARG2 IF ARG1 != 0
+  |  │ │ 012 PUSH1 00   <- REVERT ARG1: Message Length
+  |  │ │ 014 DUP1       <- REVERT ARG2: Message offset position in memory
+  |  <<< 015 REVERT     <- REVERT
+  |  │ └─ NON-PAYABLE CHECK } ───────────────
+  |  ┌── BYTECODE RETRIEVING CONSTRUCTOR PARAMETERS { ────────
+  |  │  param values are appended at the end of a contract's bytecode.
+  |  >>>016 JUMPDEST   ┐
+  |  │ ┌─ read whatever is in memory@0x40 { ─
+  |  │ │ 017 POP       <- pops and discard (u)int256 from stack
+  |  │ │                  (leaves x80 as CODECOPY ARG 2, MEM.POS TO LOAD TO)
+  |  │ │ 018 PUSH1 40  <- CODECOPY ARG3: OFFSET-LENTH
+  |  │ │ 020 MLOAD     <- CODECOPY: target-mem-pos to copy-to ARG:  (0x80)   mload(0x40, 0x80)
+  |  │ └─ read whatever is in memory@0x40 } ─
+  |
+  |                       CODECOPY ARG1: (0x80): INITIAL OFFSET IN "RAM" MEMORY
+  |  │  021 PUSH1 20   <- CODECOPY ARG2: number-of-bytes-to-copy (0x20==32)
+  |  │  023 DUP1       <- KEEP A COPY.
+  |  │  024 PUSH2 0217 <- CODECOPY ARG3: offset instruction number to copy from ARG: (x0217 = 535)
+  |  │  027 DUP4
+  |  │  028 CODECOPY   <- CODECOPY OPCODE [535,567) -> MEMORY [0x80,0x80+32)
+  |  │  028 CODECOPY      == copy latest 32 bytes of code -constructor paramets(uint256),
+  |  │  028 CODECOPY         appended by solc as raw data at end-of-code into memory)
+  |  │  029 DUP2
+  |  │  030 ADD
+  |  │  031 PUSH1 40   <- MSTORE ARG2: VALUE TO STORE
+  |  │  033 SWAP1      <- SETUP STACK: ARG1: 0x80, ARG2: 0x40
+  |  │  034 DUP2       <- KEEP COPY (MSTORE WILL CONSUME STACK-TOP-2)
+  |  │  035 MSTORE     <- memory[0x80:0x80+0x20) = unit256(0x40)
+  |  │                    update free-memory-pointer by shifting 32 bytes forward
+  |  │  036 SWAP1
+  |  │  037 MLOAD      <- reads memory-value@0x40 (10000) into stack,
+  |  │                    to be consumed in next cinstructions.
+  |  │                   (COMMON PATTERN: before function's body is executed,
+  |  │                                    its parameters are loaded in the stack)
+  |  └── BYTECODE RETRIEVING CONSTRUCTOR PARAMETERS } ────────
+  |  ┌─ CONSTRUCTOR BODY BYTECODE { ─────────────   totalSupply_ = _initialSupply; (10000)
+  |  │   (No jumps, so constructor execution follows)
+  |  │                      ( SSTORE ARG1: VALUE TO STORE -10000- )
+  |  │   038 PUSH1 00    ┐ <- SSTORE ARG2: DESTINATION SLOT IN STORAGE
+  |  │   040 DUP2        | <- DUPLICATE ARG1, USED LATER; BUT CONSUMED BY SSTORE
+  |  │   041 DUP2        | <- DUPLICATE ARG2, USED LATER, BUT CONSUMED BY SSTORE
+  |  │   042 SSTORE      ┘ <- STORE 10000 to SLOT 0@STORAGE, sstore(0x00 /*slot dest*/, 0x2710 /* value*/)
+  |  │ ┌─ balances[msg.sender] = totalSupply; { ───
+  |  │ │ 043 CALLER      <- push msg.sender to memory@0x00
+  |  │ │ 044 DUP2        <- keep copy of ARG consumed by MSTORE
+  |  │ │ 045 MSTORE      <- memory[0x100?,0x100+0x20) = unit256(????)
+  |  │ │ 046 PUSH1 01    <- MSTORE VALUE ARG 1: (1 == storage slot for 'balance' map)
+  |  │ │ 048 PUSH1 20    <- MSTORE VALUE ARG 2: DST MEM POSICION
+  |  │ │ 050 MSTORE      <- memory[0x20,0x20+0x20) = uint256(01)
+  |  │ │ 051 SWAP2
+  |  │ │ 052 SWAP1
+  |  │ │ 053 SWAP2
+  |  │ │ 054 SHA3        <- final storage key for balances[msg.sender] == Keccak256(mem<0x00,0x40))
+  |  │ │                                   [mapping slot value, msg.sender /*key*/] == ─┴─────────┘
+  |  │ │ 055 SSTORE      <- 10000 /*totalSupply*/ -> STORAGE-SLOT SHA3[...]
+  |  │ └─ balances[msg.sender] = totalSupply; } ───
+  |  │   056 PUSH2 01d1  <- CODECOPY ARG1: number-of-bytes-to-copy (465 dec == Runtime code)
+  |  │   059 DUP1        <- COPY ARG. Upon return, indicates the EVM how many bytes to copy as code
+  |  │   060 PUSH2 0046  <- CODECOPY ARG2: start-copy-position (dec 70)
+  |  │   063 PUSH1 00    <- CODECOPY ARG3: DST MEMORY: 0x00
+  |  │   065 CODECOPY    <- memory[0x00,0x00+0x01d1) = address(this).code[0x46:0x46+0x01d1)
+  |  │                      to be saved in blockchain as the contract's runtime code after return
+  |  │   066 PUSH1 00    <- 0x00 INDICATES "NO-ERROR" to EVM
+  |  <<< 068 RETURN      <- RETURN. Hands control over to EVM.
+  |  │                      EVM will see that TX.to == 0x0 (contract creation), STACK-TOP = 0x00
+  |  │                      (no errors) and will finally store memory[0x00,0x01d1) as
+  |  │                      new contract's runtime code.
+  |  XXX 069 STOP         STOP ("just in case", compiler safety, this code must never be reached)
+  |  └─── CONTRACT INITIALIZATION   END } ─────────────────────────────────────
+  |
+  |  ┌─ RUNTIME CODE ─────────────────────
+  |  │  070 000 PUSH1 80  ··┐ Setup Solidity
+  |  │  072 002 PUSH1 40    ├ Free-memory-pointer
+  |  │  074 004 MSTORE    ··┘ memory[0x40:0x40+32] = (uint256) 80
+  |  │  Short calldata stack -------------┐ if calldata is shorter than
+  |  │  075 005 PUSH1 04                  | 4 bytes, jump to 86 (fallback)
+  |  │  077 007 CALLDATASIZE              | <- takes no arguments, returns the size of "calldata" (func.signature + func.args)
+  |  │  078 008 LT                        | calldata-size < 4 ?
+  |  │  079 009 PUSH2 0056                |
+  |  >>>082 012 JUMPI        -------------┘ JUMP TO 0x56 (86) to revert if that's is the case.
+  |  │  - Function Selector {-------------  <-- "How Solidity routes incoming transactions"
+  |                                         Extract first 4 bytes of calldata (function signature hash)
+  |  │  083 013 PUSH4 ffffffff            ┐
+  |  │  088 018 PUSH29 010(rep56          | <- push 29-byte-long 0x000000001000...00
+  |  │  118 048 PUSH1 00                  | CALLDATALOAD ARG 1:
+  |  │  120 050 CALLDATALOAD              | <- READ 32 bytes @ POS 00 (ARG 1)  YUL: calldataload(0)
+  |  │                                    |    (== push entire calldata to the stack)
+  |  │  121 051 DIV                       | <- DIV consumes stack-top-2 dividing calldata / weird 0x000000001000...000
+  |  │                                    |    (filter-out non-funct.signature, push 0x00...0070a08231 to stack)
+  |  │  122 052 AND                       ┘ <- consumes stack-top-2 (func.id, ffffffff), to make sure that
+  |                                            signature hash is exactly 8-bytes-long (Safety Solidity compiler measure)
+  |
+  |                                         "swith-case" for the different function (selectors)
+  |  │  123 053 PUSH4 18160ddd            ┐ Matches "totalSupply()"? Jump to 91
+  |  │  128 058 DUP2                      | <- DUP2 needed since EQ consumes stack, but we want to keep around
+  |  │  129 059 EQ                        |
+  |  │  130 060 PUSH2 005b                | 0x5b == 74 (jump to next case if no match)
+  |  >>>133 063 JUMPI                     ┘
+  |  │  134 064 DUP1                      ┐ Matches "balanceOf(address)? Jump to 130
+  |  │  135 065 PUSH4 70a08231            |
+  |  │  140 070 EQ                        |
+  |  │  141 071 PUSH2 0082                |
+  |  >>>144 074 JUMPI                     ┘
+  |  │  145 075 DUP1                      ┐ Matches "transfer(address,uint256)"?
+  |  │  146 076 PUSH4 a9059cbb            | Jump to 176
+  |  │  151 081 EQ                        |
+  |  │  152 082 PUSH2 00b0                |
+  |  >>>155 085 JUMPI                     ┘
+  |  │  156 086 JUMPDEST                  ┐ No match (and no fallback funct), revert!
+  |  │  157 087 PUSH1 00                  |
+  |  │  159 089 DUP1                      |
+  |  │  160 090 REVERT     }              ┘
+  |  │  FUNCTION WRAPPERS {                 "package" calldata -> func. body
+  |                                         "package" func.body result -> user
+  |                                         PACKING AND UNPACKING == "ETHEREUM’S ABI SPEC"
+  |                                          By the time a function body is executed, its
+  |                                         arguments should be sitting comfortably in the stack
+(o|r inn memory if the data is dynamic)
+  |  │                                      totalSupply() func. wrapper
+  |  >>>161 091 JUMPDEST                  ┐  ┐
+  |  │  162 092 CALLVALUE                 |  | Non-payable check
+  |  │  163 093 DUP1                      |  |
+  |  │  164 094 ISZERO                    |  |
+  |  │  165 095 PUSH2 0067                |  |
+  |  >>>168 098 JUMPI                     |  |
+  |  │  169 099 PUSH1 00                  |  |
+  |  │  171 101 DUP1                      |  |
+  |  │  172 102 REVERT                    |  ┘
+  |  >>>173 103 JUMPDEST                  |  ┐ Calldata unpacker
+  |  │  174 104 POP                       |  | <- clean up zero left-over in the stack
+  |  │  175 105 PUSH2 0070                |  | 0x70 == 112 (mark return point -just after next JUMP-)
+  |  │  178 108 PUSH2 00f5                |  | 0xf5 == 245 (jump destination == function body)
+  |  >>>181 111 JUMP                      |  ┘
+  |  │                                    |  ┐ uint256 memory returner
+  |  >>>182 112 JUMPDEST                  |  |
+  |  │  183 113 PUSH1 40                  |  |┐ Read current Solidity free-memory-pointer
+  |  │  185 115 DUP1                      |  ||
+  |  │  186 116 MLOAD                     |  |┘
+  |  │  187 117 SWAP2                     |  |┐ copy value returned in stack by function-body in free-memory-space
+  |  │  188 118 DUP3                      |  ||
+  |  │  189 119 MSTORE                    |  |┘
+  |  │  190 120 MLOAD                     |  |┐ loads mem.pointer(again),
+  |  │  191 121 SWAP1                     |  || compares it to previous mem.pointer
+  |  │  192 122 DUP2                      |  || (most likely in attempt to calculate size-of-returned-data)
+  |  │  193 123 SWAP1                     |  || Some residual data due to optimizer stays here
+  |  │  194 124 SUB                       |  |┘
+  |  │  195 125 PUSH1 20                  |  | <- probably hardcoded size due to optimizer tricks
+  |  │  197 127 ADD                       |  |
+  |  │  198 128 SWAP1                     |  |
+  |  <<<199 129 RETURN                    ┘  ┘ <- finally totalSupply is returned!!
+  |  │                                      balanceOf(address) function wrapper
+  |  >>>200 130 JUMPDEST                  ┐ ┐ non-payable check
+  |  │  201 131 CALLVALUE                 | |
+  |  │  202 132 DUP1                      | |
+  |  │  203 133 ISZERO                    | |
+  |  │  204 134 PUSH2 008e                | |
+  |  >>>207 137 JUMPI                     | |
+  |  │  208 138 PUSH1 00                  | |
+  |  │  210 140 DUP1                      | |
+  |  │  211 141 REVERT                    | ┘
+  |  >>>212 142 JUMPDEST                  | ┐ Calldata unpacker (balanceOf)
+  |  │  213 143 POP                       | |
+  |  │  214 144 PUSH2 0070                | |
+  |  │  217 147 PUSH20 0xff...(20bytes)   | |
+  |  │  238 168 PUSH1 04                  | | ARG TO CALLDATA:
+  |  │  240 170 CALLDATALOAD              | | <- read 32-bytes-of-calldata (address the arg passed to the fun. call)
+  |  │  241 171 AND                       | | <- Mask with 0xff...  for checking/masking.
+  |  │  242 172 PUSH2 00fb                | | <- return address after next jump ends.
+  |  >>>245 175 JUMP                      ┘ ┘
+  |                                         transfer(address,uint256) function wrapper
+  |  >>>246 176 JUMPDEST                  ┐ ┐ Non-payable check
+  |  │  247 177 CALLVALUE                 | |
+  |  │  248 178 DUP1                      | |
+  |  │  249 179 ISZERO                    | |
+  |  │  250 180 PUSH2 00bc                | |
+  |  >>>253 183 JUMPI                     | |
+  |  │  254 184 PUSH1 00                  | |
+  |  │  256 186 DUP1                      | |
+  |  │  257 187 REVERT                    | ┘
+  |  >>>258 188 JUMPDEST                  | ┐ Calldata unpacker
+  |  │  259 189 POP                       | |
+  |  │  260 190 PUSH2 00e1                | |
+  |  │  217 147 PUSH20 f(40dig)           | |
+  |  │  284 214 PUSH1 04                  | |
+  |  │  286 216 CALLDATALOAD              | |
+  |  │  287 217 AND                       | |
+  |  │  288 218 PUSH1 24                  | |
+  |  │  290 220 CALLDATALOAD              | |
+  |  │  291 221 PUSH2 0123                | |
+  |  >>>294 224 JUMP                      | ┘
+  |  >>>295 225 JUMPDEST                  | ┐ bool memory returner
+  |  │  296 226 PUSH1 40                  | |
+  |  │  298 228 DUP1                      | |
+  |  │  299 229 MLOAD                     | |
+  |  │  300 230 SWAP2                     | |
+  |  │  301 231 ISZERO                    | |
+  |  │  302 232 ISZERO                    | |
+  |  │  303 233 DUP3                      | |
+  |  │  304 234 MSTORE                    | |
+  |  │  305 235 MLOAD                     | |
+  |  │  306 236 SWAP1                     | |
+  |  │  307 237 DUP2                      | |
+  |  │  308 238 SWAP1                     | |
+  |  │  309 239 SUB                       | |
+  |  │  310 240 PUSH1 20                  | |
+  |  │  312 242 ADD                       | |
+  |  │  313 243 SWAP1                     | |
+  |  <<<314 244 RETURN    }        -------┘ ┘
+  |
+  |  ┌─ totalSuppy()           FUN.BODY { ─
+  |  >>>315 245 JUMPDEST
+  |  │  316 246 PUSH1 00
+  |  │  318 248 SLOAD     <- load storage at pos.1 into stack
+  |  │  319 249 SWAP1     <- put return position ready for JUMP
+  |  >>>320 250 JUMP      <- return
+  |  └─ totalSuppy()           FUN.BODY } ─
+  |  ┌─ balanceOf(address)     FUN.BODY { ─
+  |  >>>321 251 JUMPDEST
+  |  │  322 252 PUSH20 0xff(20-bytes)     ┐ cast incoming calldata into the address type
+  |  │  343 273 AND                       ┘ <- mask 32-bytes stack input into 20-bytes
+  |  │                                         REMEMBER: Ethereum-addresses are 20 bytes long
+  |  │                                                   EVM-stack operates  in 32-byte words
+  |  │                                      concatenate mapping position + key and  store in memory
+  |  │  344 274 PUSH1 00                  ┐┐
+  |  │  346 276 SWAP1                     || "upload" address from
+  |  │  347 277 DUP2                      || stack to memory
+  |  │  348 278 MSTORE                    |┘   to be placed   at 0x00 in memory
+  |  │  349 279 PUSH1 01                  | <- balance slot
+  |  │  351 281 PUSH1 20                  |    to be placed at 0x20
+  |  │  353 283 MSTORE                    |    in memory
+  |  │  354 284 PUSH1 40                  |
+  |  │  356 286 SWAP1                     ┘
+  |  │  357 287 SHA3                      ┐ Calculate storage position and read it
+  |  │  358 288 SLOAD                     | into the stack
+  |  │  359 289 SWAP1                     | <- "resurfaces" function wrapper's JUMPDEST
+  |  >> 360 290 JUMP                      ┘ <- Call back function wrapper for Ethereum ABI post-processing
+  |  └─ balanceOf(address)     FUN.BODY } ─
+  |  ┌─ transfer(address,uint256)FUN.BODY{─
+  |  >> 361 291 JUMPDEST
+  |  │  362 292 PUSH1 00       ┐ require (_to != address(0))
+  |  │  364 294 PUSH20 f(40rep)|
+  |  │  385 315 DUP4           |
+  |  │  386 316 AND            |
+  |  │  387 317 ISZERO         |
+  |  │  388 318 ISZERO         |
+  |  │  389 319 PUSH2 0147     |
+  |  >> 392 322 JUMPI          |
+  |  │  393 323 PUSH1 00       |
+  |  │  395 325 DUP1           |
+  |  │  396 326 REVERT         ┘
+  |  >> 397 327 JUMPDEST       ┐ require(_value <=balances[msg.sender]);
+  |  │  398 328 CALLER         |
+  |  │  399 329 PUSH1 00       |
+  |  │  401 331 SWAP1          |
+  |  │  402 332 DUP2           |
+  |  │  403 333 MSTORE         |
+  |  │  404 334 PUSH1 01       |
+  |  │  406 336 PUSH1 20       |
+  |  │  408 338 MSTORE         |
+  |  │  409 339 PUSH1 40       |
+  |  │  411 341 SWAP1          |
+  |  │  412 342 SHA3           |
+  |  │  413 343 SLOAD          |
+  |  │  414 344 DUP3           |
+  |  │  415 345 GT             |
+  |  │  416 346 ISZERO         |
+  |  │  417 347 PUSH2 0163     |
+  |  │  420 350 JUMPI          |
+  |  │  421 351 PUSH1 00       |
+  |  │  423 353 DUP1           |
+  |  │  424 354 REVERT         ┘
+  |  >> 425 355 JUMPDEST       ┐ read balances[msg.sneder] value
+  |  │  426 356 POP            |
+  |  │  427 357 CALLER         |
+  |  │  428 358 PUSH1 00       |
+  |  │  430 360 SWAP1          |
+  |  │  431 361 DUP2           |
+  |  │  432 362 MSTORE         |
+  |  │  433 363 PUSH1 01       |
+  |  │  435 365 PUSH1 20       |
+  |  │  437 367 DUP2           |
+  |  │  438 368 SWAP1          |
+  |  │  439 369 MSTORE         |
+  |  │  440 370 PUSH1 40       |
+  |  │  442 372 DUP1           |
+  |  │  443 373 DUP4           |
+  |  │  444 374 SHA3           |
+  |  │  445 375 DUP1           |
+  |  │  446 376 SLOAD          ┘
+  |  │  447 377 DUP6           ┐ calculate and store new balances[msg.sender] value
+  |  │  448 378 SWAP1          |
+  |  │  449 379 SUB            |
+  |  │  450 380 SWAP1          |
+  |  │  451 381 SSTORE         ┘
+  |  │  452 382 PUSH20 0xff(20bytes)      ┐ read balance[_to] value
+  |  │  473 403 DUP6           |
+  |  │  474 404 AND            |
+  |  │  475 405 DUP4           |
+  |  │  476 406 MSTORE         |
+  |  │  477 407 SWAP1          |
+  |  │  478 408 SWAP2          |
+  |  │  479 409 SHA3           |
+  |  │  480 410 DUP1           |
+  |  │  481 411 SLOAD          ┘
+  |  │  482 412 DUP4           ┐ calculate and store new balances[_to] value.
+  |  │  483 413 ADD            |
+  |  │  484 414 SWAP1          |
+  |  │  485 415 SSTORE         |
+  |  │  486 416 SWAP3          |
+  |  │  487 417 SWAP2          |
+  |  │  488 418 POP            |
+  |  │  489 419 POP            |
+  |  >> 490 420 JUMP           ┘
+  |  XX 491 421 STOP           |
+  |  └─ transfer(address,uint256)FUN.BODY}─
+  |
+  |  ┌─ METADATA HASH { ───────────
+  |  │  Unreachable code, introduced by the compiler as the hash of info like source code,
+  |  │  compilation options,...). When CBOR-decoded it looks like:
+  |  │  0xa165627a7a723058202c27c1ef4be478b21f663f0d0ecdd1c73638730ffebbff1...
+  |  │     b z z r 0 : / / ...
+  |  │  It can also be inspected with Remix -> Compile tab > Details panel > Metadata section
+  |  │  bzzr0:// indicating storage in SWARM PROTOCOL v0
+  |  │  (or ipfs0:// indicating storage in IPFS ...)
+  |  │
+  |  │  492 422 log1                 <- NO JUMPDEST after an STOP. Clear indication that
+  |  │  493 ...                         this code is not reachable.
+  |  │  501 431 INVALID              <- Just another hint indicating that this is not real
+  |  │  502 432 INVALID                 bytecode but metadata.
+  |  │  503 ...
+  |  │  534 464 INVALID
+  |  └─ METADATA HASH } ───────────
+  |  ┌ HARDCODED CONSTRUCTOR ARGS. AS 32 BYTES.
+  |  │  equals 0x00..002710 (dec 10000)
+  |  │  535 STOP
+  |  │  536 STOP
+  |  │  552 STOP
+  |  │  553 STOP
+  |  │  554 ...
+  |  │  564 STOP
+  |  │  565 INVALID
+  |  │  566 LT
+  |  └──────────────────────────────
+  ```
+
+* opcodes can push/consume to/from EVM’s stack|memory|contract-storage
+
+* "DIVIDE-AND-CONQUER" STRATEGY, PUT FOCUS ON  OPCODES:
+
+  - JUMPI    : JUMP(If) second position in stack is NOT  "0".
+  - JUMPDEST : Safety measure mark location as valid jump target.
+  - RETURN   : halts execution, returning data from portion-of-EVM's-memory
+  - STOP     : completely halts execution of contract.
+
+- It can be use by wallets, Dapps (Etherscan, ..., SC-auditors, )
+  verify that the produced bytecode matches the contract’s bytecode, then fetch
+  the contract’s JSON ABI and look at the NATSPEC documentation of the function
+  being called.
+- bzzr://a6465fc1ce7ab1a92906ff7206b23d80a21bbd50b85b4bde6a91f8e6b2e3edde
+
+we would need to connect to the same Swarm network to which the metadata file was uploaded to
+(using for example swarm-gateways.net or setting up a local Swarm node)
+[[}]]
+
+
+[[{101,10_EVM,persistence.contract_state,persistence.data_structure]]
+[[ 02_QA.UX,02_QA.solidity,12_solidity.upgradable_contracts]]
+[[ 13_SLC.troubleshooting,standards.eip/erc.2535]]
+# EIP-2535 Diamonds: Progressively upgradable Contracts
+
+* <https://eips.ethereum.org/EIPS/eip-2535>
+- Context Problem: About EIP-170 24K Max Contract Size
+  <https://ethereum-magicians.org/t/removing-or-increasing-the-contract-size-limit/3045>
+   (See original link for -very- detailed info)
+  - 24K max. size is used to prevent denial-of-service attacks.
+    ( O(n) for disk-read resources, code-preprocessing, Merkle proof data )
+
+  Note:  Private chains allow to tune max.contract size in consortium / private networks
+         but the EIP-2535 is compatible with MainNet and provide other features to upgrade
+         contracts (or a subset of functions "inside" the contract) through proxies.
+
+- Possible Solutions changing Ethereum Implementation
+  - Increase contract size limit.
+  - Increase cost of relevant opcodes (CALL, ...)
+  - Allow infinite contract size by Implementing paging of contract code
+    (suggested by @SergioDemianLerner) and "paying" for extra pages:
+    - first page loaded for free
+    - jumping into another page pays a fee (500 gas) to fetch from disk.
+  - Allow infinite contract size and make the cost of OPCODES like CALL
+    dynamic to allow for this change. Code size will still be limited by
+    block gas limit. ( moderate difficulty change but makes a lot of sense IMO)
+    In detail:
+    ```
+      - ethereum account   (array in state trie)
+        ----------------
+         nonce
+         balance
+         storageRoot
+         codeHash        New proposed addition
+         codeSize     ←  · immutable value after deployment
+                         · reseted at contract destruction.
+    ```
+    - CALL, DELEGATECALL, CALLCODE , ... opcodes should charge additional
+      gas per extra word if contract code size greater than 24KB.
+    - Rationale
+      contract size limit used only to prevent exploiting fixed costs.
+      Can be overcomed by making costs variable.'codeSize' helps in calculating
+      call cost before reading the whole contract failing fast with Out-of-Gas.
+      - Merkle proofs will be generated at a fixed cost as we won't have
+        to load whole contracts from disk first. 'codeSize' should be enough
+        for generating Merkle proofs of calls that will throw OOG.
+    - no extra cost charged to existing contracts ( they are all under 24KB).
+
+- proxy pattern: (Compatible with current EIPs and implementations
+  - Allows to store S.C. code in different contracts using a "dispatcher"
+    contract to calls delegating calls to real contracts.
+    (e.g.: ZeppelinOS's upgradability contracts, EIP-#1538)
+  - Proxy Contract == "Stay small by borrowing functions from other
+                      contracts using low level opcode "delegatecall".
+
+  - Proxy Pattern Limitations
+    - extra unnecessary code.
+    - Proxy patterns add another attack vector.
+    - Proxy patterns make contracts calls more expensive
+      ( Proxy must copy params, then make external delegate call).
+    - Proxy patterns (e.g.EIP-1538) make inter-logic contract call
+      (a lot) more expensive:
+       external →  proxy    →  contract → contract2
+       call        contract    call
+    -  hurt readability for the end user:
+      - proxy contract code/ABI is different from real delegated code.
+        most people can barely use the read/write features in etherscan,
+        they can't load a custom ABI and make web3 calls.
+    - development is slightly more complex.
+    - harder to verify actual code.
+    - Loading a large contract will be fast-sequential read while loading
+      multiple small ones will be slow-random read.
+
+## EIP-2535 Diamonds (standard for proxy contracts) 
+- COMPILER AWARE UPGRADABILITY OF CONTRACTS USING FACETS !!!!  by Nick Mudge
+  Replaces "EIP-1538 Upgradeable Contracts" (also by Nick Mudge).
+- The idea is to use a proxy contract with an internal database that maps
+  each function implementation to a different contract (address).
+
+- STATE AND FUNCTIONS ARE KEPT TOGETHER UNDER THE SAME ETHEREUM ADDRESS.
+  MAKING EASIER AND MORE FLEXIBLE TO ACCESS/MODIFY CONTRACT STORAGE.
+
+- PROVIDES A FLEXIBLE AND TRANSPARENT METHOD TO SUPPOR UPGRADEABLE DIAMONDS.
+
+  """ ... A diamond could be structured like this:
+     • The diamond has 10 facets.
+     • Each facet has N functions.
+     • Each facet covers a distinct area of functionality.
+       (ownership, identity, NFT, ...)
+     • Each facet has its own state variables declared it its own
+       Diamond Storage contract, or it shares state variables with a small
+       number of facets via one or more Diamond Storage contracts.
+  """
+
+## DIAMON STORAGE PATTERNS
+* <https://medium.com/1milliondevs/solidity-storage-layout-for-proxy-contracts-and-diamonds-c4f009b6903>
+* <https://medium.com/1milliondevs/new-storage-layout-for-proxy-contracts-and-diamonds-98d01d0eadb<
+
+## PROBLEM CONTEXT
+
+  ```
+    Standard Storage Layout rules for non-proxy contracts:
+    ======================================================
+    - 1st state variable stored at position 0,
+      2nd state variable stored at position 1,
+                └─────────────┘
+      ...
+      this also include arrays/maps "pointers" (vs arrays/map values)
+    - Dynamic arrays/maps store values at positions based on
+      hash (array|map pointer-storage-position, array-index|map-key).
+
+    When using proxies COLLISIONS WILL ARISE  since (at compilation time)
+    Solidity is not aware of "peer" contracts implementing the proxy.
+
+    ┌───────────────────── PROPOSED SOLUTIONS/STORAGE-PATTERNS ***BEFORE DIAMON STANDARD*** ────────────────────────────────────────────────────┐
+    | UNSTRUCTURED STORAGE, using assembly,           | INHERITED STORAGE:                         | ETERNAL STORAGE PATTERN:                   |
+    ├─────────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────|
+    |                                                 |- proxy contract + facets inherit a storage |Both proxy/ies and facet/s use a general    |
+    |contract ProxyA {                                |  contract with storage variables used      |storage based on maps                       |
+    |    const bytes32 STATE01_POS =                  |  ensuring no collision arise.              |contract .... {                             |
+    |          = keccak256("state01");                |                                            |   mapping(bytes32 => uint256  ) uIntStore; |
+    |    function getState01() ...                    |                                            |   mapping(bytes32 => string   ) stringStore|
+    |    returns(address state01) {                   |                                            |   mapping(bytes32 => address  ) addrStore; |
+    |      assembly { state01 := sload(STATE01_POS) } |                                            |   ...                                      |
+    |    }                                            |                                            |                                            |
+    |    function setstate01(address state01) ... {   |                                            |   function (...) {                         |
+    |      assembly { sstore(STATE01_POS, state01) }  |                                            |      return addressStorage["user"];        |
+    |    }                                            |                                            |      addrStorage["user"] = newUser;        |
+    |}                                                |                                            |  }                                         |
+    |                                                 |                                            |}                                           |
+    ├─────────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────┤
+    |DOWNSIDES:                                       |DOWNSIDES:                                  |DOWNSIDES:                                  |
+    |• One getter+setter function for each storage var|• Facets need to inherit storage contracts  |• Clumsy syntax.                            |
+    |• It does not work for complex types             |  that they don't use breaking the basic    |• It          works for values|arrays       |
+    |  (structs, mappings, ...).                      |  "IS-A" inheritance rule in OOP.           |  it does not work  for mapping|struct vals.|
+    |                                                 |• Facets become tightly coupled to specific |  (in simple/generic way).                  |
+    |                                                 |  proxy contracts (Due to the "IS-A" inher.)|• proxies and facets forced to use the same |
+    |                                                 |• facets CANNOT be used by other proxy      |  storage API.                              |
+    |                                                 |  contracts declaring different state vars. |• Not easy to see at what state var. exist  |
+    |                                                 |                                            |• More gas needed than direct access.       |
+    |                                                 |                                            |                                            |
+    ├─────────────────────────────────────────────────│ ────────────────────────────────────────────────────────────────────────────────────────│
+    |• proxy-contract delegates on single pattern.    |• good for diamonds delegating to different facets depending on which function is called.|
+    └───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+    KEYPOINT: Solidity v0.6.4+ allows to set storage slots for storage reference
+      variables from inline assembly within solidity code (bypassing
+      default Compiler default storage patterns causing conflicts among
+      proxy instances ). <https://github.com/ethereum/solidity/releases/tag/v0.6.4>
+      allowing new storage patterns for delegatecall-proxies/upgradable contracts.
+  ```
+
+  ```
+    ┌─ DIAMOND STORAGE PATTERN : NO STORAGE DOWNSIDES !!! ──
+    │ PRE-SETUP: Create Storage Contract/s:
+    │ → Create a "Diamond Storage contract" for
+    │   each storage "interface implementation".
+    │   → Inside it, create struct/s with suitable
+    │     state variables for the interface implementation.
+    │     → Choose a position in storage for the struct/s.
+    │       → Write a function inisde the storage contract
+    │         creating and returning the storage pointer.
+    │
+    │ Identity: example of "orthogonal facet" (vs Tokenization, MarketPrice,...)
+    │ ┌ e.g: ────────────────────────────────┐
+    │ │ contract MyIdentityStorageContract { <·· Create one for each storage pattern
+    │ │   struct MyIdentityStorage {         <·· Struct reused by Facets.
+    │ │     uint aVar;                       │
+    │ │     bytes myBytes;                   │
+    │ │     mapping(uint => bytes32) myMap;  │
+    │ │   }                                  │
+    │ │                                      │
+    │ │   function myIdentityStorage()    <··· Public func. used by proxies/facets
+    │ │   internal pure                      │
+    │ │   returns(MyStorage storage ms) {    │
+    │ │     assembly {                       │
+    │ │      ms_slot := 0xabcd55b489......<···· keccak256("com.comp1.identity.storage")
+    │ │     }                                │  Namespaces come for free!!!
+    │ │   }                                  │
+    │ │ }                                    │
+    │ └──────────────────────────────────────┘
+    │ KEYPOINT:
+    │  For each contract/proxy/facet using the storage contract:
+    │  → inherit storage contract
+    │    → call the function returning the storage pointer.
+    │
+    │ ┌─ e.g. Storage "consumer" ──────────────┐
+    │ │ contract MyIdentityFacet is ...        │
+    │ │         MyIdentityStorageContract {    │
+    │ │   constanct MyIdentityStorage         <·· Instantiate
+    │ │     storage IDS = myIdentityStorage(); │  Storage
+    │ │                                        │
+    │ │   constructor () {}                   <·· Constructor stop working when
+    │ │                                        │  using Diamond. It must be replaced
+    │ │                                        │  with 'init' function in diamondCut
+    │ │                                        │  (or 'post init' function/s after
+    │ │                                        │  different diamond 'pieces' are setup
+    │ │                                        │  but before normal code use)
+    │ │   function ...(...) external {         │
+    │ │     MS01.myMap[selector] = myData;    <·· Write to
+    │ │     MS01.aVar = uint(myData);          │
+    │ │     ...                                │
+    │ │     bytes32 data = IDS01.             <·· Read from
+    │ │                     myMap[selector];   │
+    │ │     ...                                │
+    │ │   }                                    │
+    │ │ }                                      │
+    │ └────────────────────────────────────────┘
+    └─────────────────────────────────────────────────────
+  ```
+
+  ```
+   • interface IDiamondCut {
+     ·  enum FacetCutAction {
+     ·    Add/* 0 */, Replace/* 1 */, Remove/* 2 */
+     ·  }
+     ·
+     ·  struct FacetCut {
+     ·      address facetAddress;
+     ·      FacetCutAction action;
+     ·      bytes4[] functionSelectors;
+     ·  }
+     ·
+     ·  function diamondCut(                    ● CONTROL FUNCTION (Add/update/del funs)
+     ·      FacetCut[] calldata _cut,
+     ·      address _init,                  <-··· (Opt) facet address to execute _calldata
+     ·      bytes calldata _CD              <-··· (Opt) fun to call, including fun selector+args
+     ·  ) external;
+     ·
+     ·  event DiamondCut(
+     ·      FacetCut[] _diamondCut,
+     ·      address _init,
+     ·      bytes _calldata);
+     }
+  ```
+
+  ```
+   • interface IDiamondLoupe {                   ● READ-ONLY INTROSPECTION
+     ·
+     ·  struct Facet {
+     ·      address facetAddress;
+     ·      bytes4[] functionSelectors;
+     ·  }
+     ·
+     ·  function
+     ·    facets()
+     ·    external view
+     ·    returns (Facet[] memory facets_l);      <- ALL THE FACET ADDR.+FUNS. in diamon
+     ·
+     ·  function
+     ·    facetFunctionSelectors(address _facet)
+     ·    external view
+     ·    returns (bytes4[] memory facetFun_l);   <- ALL fun.selectors used from _facet
+     ·
+     ·  function
+     ·    facetAddresses()
+     ·    external view
+     ·    returns (address[] memory facetAddr_l); <- ALL used facets
+     ·
+     ·  function
+     ·    facetAddress(bytes4 _funSelector)
+     ·    external view
+     ·    returns (address facetAddress_);        <- facet address implementing fun.
+     ·}
+  ```
+
+  ```
+    ┌─ DIAMOND IMPLEMENTATION S.C. ────────────────────┐
+    │                                                  │
+    │ mapping (bytes4 ←································ function 'ABI'
+    │          => address  ←··························· SC. instance
+    │ ) internal FACETS_DDBB;                          │address.
+    │  e.g.:                                           │
+    │  e2532512(func1)  => 0x0....contract "Facet" A <··┐     facetA┐
+    │  ───────────────     ─────────────────────────   │├─────│S.C. │
+    │  253e253A(func2)  => 0x0....contract "Facet" A <··┘     └────┬┘
+    │  ───────────────     ─────────────────────────   │           │
+    │  FA539B19(func3)  => 0x0....contract "Facet" B <··┐          │
+    │  ───────────────     ─────────────────────────   ││   facetB┐│
+    │  D38A5B17(func4)  => 0x0....contract "Facet" B   │├───│S.C. ││
+    │  ───────────────     ─────────────────────────   ││   └────┬┘│
+    │  16D253AB(func5)  => 0x0....contract "Facet" B <··┘        │ │
+    │  ───────────────     ─────────────────────────   │         │ │
+    │  ...     (func6)  => 0x0....contract "Facet" C <··┐ facetC┐│ │
+    │  ───────────────     ─────────────────────────   │├─│S.C. ││ │
+    │  ...     (func7)  =˃ 0x0....contract "Facet" C <··┘ └────┬┘│ │
+    │                      └──────────┬────────────┘   │       │ │ │
+    │                      facets are contract/s that  │       │ │ │
+    │                      diamond borrows functions   │       │ │ │
+    │                      from.                       │       │ │ │
+    │ ┌──────────────────────┐                         │       │ │ │
+    │ │struct StorageFacetC {│ <···facetC (read/write)········─┤ │ │
+    │ │  ...                 │                         │       │ │ │
+    │ │}                     │                         │       │ │ │
+    │ └──────────────────────┘                         │       │ │ │
+    └──────────────────────────────────────────────────┘       │ │ │
+    ┌─ S.C. Storage2 ──────────────────────────────────┐       │ │ │
+    │ ┌──────────────────────┐                         │       │ │ │
+    │ │struct StorageFacetB {│ <···· facetC (read)············─┘ │ │
+    │ │  ...                 │                                   │ │
+    │ │}                     │ <···· facetB (read/write)·······──┤ │
+    │ └──────────────────────┘                         │         │ │
+    └──────────────────────────────────────────────────┘         │ │
+    ┌─ S.C. Storage3 ──────────────────────────────────┐         │ │
+    │ ┌─────────────────────┐                          │         │ │
+    │ │struct StorageFacetA{│ <···· facetB (read)··············──┘ │
+    │ │  ...                │                                      │
+    │ │}                    │ <···· facetA (read/write)···········─┘
+    │ └─────────────────────┘                          │
+    └──────────────────────────────────────────────────┘
+                                           ^^^^^^^^^^^^
+    The read-only restriction of facetA contract to storageFacetB       is not
+    mandatory, but probably useful in order to let only facetX update
+    the state of DiamondStorageFacetX.
+  ```
+
+## MainNet diamon "loupe" inspector <https://louper.dev/>
+
+
+## "Diamond Setter", 
+* (Python) tool to manage diamonds.
+   by Joey Zacherl@VolleyFire (liquidity provider for decentralized exchanges),
+   <https://github.com/lampshade9909/DiamondSetter>
+* WARN:
+  * No new upgrades since 2020-07 (more than two years ago)
+  * 60 package dependencies.
+  * 37 stars @ 2021-11, last commit: 2020-06-11
+
+* PRE-SETUP)
+  - User python standard virtualenv mechanism to configure project.
+* USSAGE)
+  ```
+  | → Copy ABI JSON files to "Contracts/"
+  |   (make sure filename matches contract name in config)
+  |   → provide contract addresses in "diamondSetter.config" ^1
+  |     (template "diamondSetter_template.config" can be used)
+  |     →   $ python diamondSetter.py set
+  |       App will automatically determine what needs upgraded/removed
+  |       by calling the proper Diamond Standard functions.
+  |       diamondCutDict_removes = {}
+  |       diamondCutDict_updates = {'0xd3758...': ['d22fd5fc', 'ba802cef'],
+  |                                 '0xc630a...': ['a39fac12', 'c6ee701e', ...]}
+  |       diamondCutDict_merged  = {'0xd3758...': ['d22fd5fc', ... ],
+  |                                 '0xc630a...': ['a39fac12', 'c6ee701e', ...]}
+  |                                               └──────────────┬────────────┘
+  |                                               function selectors affected in proxy diamond
+  |
+  |     →   $ python diamondSetter.py hash diamond.storage.tutorial.properties
+  |         Next assembly code gets added to your solidity smart contract:
+  |
+  |       assembly { ds_slot := 0x8009ef9e316d149758ddd03fd4cb6dd67f0acee3d8cdf1372cf6f2ac6d689dbd }
+  |                             └───────────────────────────────┬────────────────────────────────┘
+  |                                 == keccak256("diamond.storage.tutorial.properties")
+  |
+  |       Use same 'ds_slot' across multiple contracts to share storage or unique one to prevent
+  |       sharing.
+  | 
+  | ^1 Config example:
+  |    | [ACCOUNT]
+  |    | publicAddress = ...
+  |    | privateKey = ...
+  |    | gasPrice_gwei = 20
+  |    |
+  |    | [NODE]
+  |    | url = http://...
+  |    |
+  |    | [CONTRACT_PROXY]
+  |    | filename = tutorial_proxy
+  |    | address = 0xfb1495fb3adca65a1c3374f206971891d3137ff9
+  |    |
+  |    | [CONTRACTS_LOGIC]
+  |    | tutorial_logic_a    = 0xd37589ee0c581ef58efab0d2adb08d08b373125f
+  |    | tutorial_properties = 0xc630aae56ac54f52ee7fb757bf6b23f86a8aacea
+  ```
+
+* Ronan Sandford (wighawag),  (ERC-1155 author), announced
+  WiP support for deploying/cutting diamonds in "buidler-deploy"
+  a tool to deploy contracts to any network, keeping track
+  of them and replicating the same environment for testing.
+
+## Nayms is using diamonds in production. See blog post
+
+* " Upgradeable smart contracts using the Diamond Standard"<br/>
+  reddit announment:
+  <https://www.reddit.com/r/ethereum/comments/hu3gq1/erc1155_multi_token_standard_updated_to_mention/>
+
+## Issue open in OpenZepelling to use diamon standard
+
+* <https://github.com/OpenZeppelin/openzeppelin-contracts/issues/2537>
+
+## EIP-2535 Awesome Diamons
+
+* <https://bytemeta.vip/repo/mudgen/awesome-diamonds>
+  Curated list of external resources
+[[}]]
+
+[[{12_solidity.101,]]
+# Solidity libraries 
+
+* <https://blog.aragon.one/library-driven-development-in-solidity-2bebcaf88736>
+* Library benefits:
+  - saving substantial amounts of gas
+  - can make for a more secure environment (if reused libraries are audited).
+
+- In Solidity, a library is a different type of contract
+  (library myLib {...} vs contract myContract {...}) ,
+  - It doesn't have any storage or ether.
+  - It doesn't allow payable functions or  fallback functions.
+
+  - It can be seen as a sort of a reusable code deployed at a
+    given well-known address in the EVM that can called by
+    any contract without the need to deploy it again.
+
+- EVM DELEGATECALL instruction is used to call the function,
+  causing the calling context to be passed to the library,
+  as if it was code running in the contract itself.
+
+  context kept by delegatecall:
+  ```
+  · this       <- address of calling-contract-invoquing-the-function.
+  · msg.sender
+  · msg.value
+  · msg.sig
+  · msg.data
+  · msg.gas
+  ```
+
+- Library linking happens at deploy time (vs storage level):
+  - once setted it's linked for always:
+  ```
+  STEP 1) Compilation phase:
+       contract A is compiled, leaving a placeholder for the lib.address:
+
+   0073  __ C  _____________________________________ 630dbe671f
+            C                                          ^^^^^^^
+            C                                          0dbe671f is the function
+            C                                          signature for a()
+
+    * Before deploying the contract the placeholder must be
+      replaced with the address of the deployed library in
+      the blockchain.
+  ```
+
+- PROBLEM With Events sent by Libraries:<br/>
+  Only problem is, right now (March 2017), the contract ABI does
+  not reflect the events that the libraries it uses may emit.
+   This confuses clients such as web3, that won't be able to
+  decode what event was called or figure out how to decode its
+  arguments.
+  HACK: duplicate event definition in contracts.
+
+## OpenZeppelin
+- Library with supporting Roles, ECDSA, MerkleProofs, SafeERC20,...
+- Utility libraries (Math, SafeMath, Address, Arrays, ERC165Checker, ... ) are
+  mostly "staless" and un-opinionated.
+- "BUTS": Implementing Token like SC based on inheritance force
+  to use a quite opinionated "parent" code and is only useful for
+  simple (game-like) scenarios.
+<https://github.com/OpenZeppelin/openzeppelin-solidity>
+[[}]]
+
+[[{security.101,12_solidity.qa,security,01_PM.WiP]]
+## STATIC AND DYNAMIC ANALYSIS
+- <https://consensys.github.io/smart-contract-best-practices/security_tools/>
+- <https://github.com/trailofbits/echidna>
+  The ONLY AVAILABLE FUZZER for Ethereum software, using property-testing
+  to generate malicious inputs that break smart contracts.
+- <https://github.com/trailofbits/manticore> - Dynamic binary
+  analysis tool with EVM support
+  <https://asciinema.org/a/haJU2cl0R0Q3jB9wd733LVosL>
+- <https://github.com/melonproject/oyente> - Analyze code for common
+  vulnerabilities, based on <http://www.comp.nus.edu.sg/~loiluu/papers/oyente.pdf>.
+- <https://securify.chainsecurity.com/>: Fully automated online static analyzer
+- <https://tool.smartdec.net>: Static analysis of Solidity source code for
+  security vulnerabilities and best practices.
+- <https://github.com/quoscient/octopus>: Security Analysis tool with support
+  for EVM and (e)WASM.
+
+## WEAKNESS OSSCLASSIFCATION & TEST CASES
+- <https://github.com/SmartContractSecurity/SWC-registry/>:
+   SWC definitions and a large repository of crafted and real-world
+   samples of vulnerable smart contracts.
+- <https://smartcontractsecurity.github.io/SWC-registry/>
+   SWC-registry repo published on Github Pages
+
+## TEST COVERAGE
+- <https://github.com/sc-forks/solidity-coverage>: Code coverage for Solidity testing
+
+## LINTERS
+- <https://github.com/federicobond/solcheck>
+  (written in JS, heavily inspired by eslint)
+- <https://github.com/protofire/solhint>
+  IT PROVIDES BOTH SECURITY AND STYLE GUIDE VALIDATIONS.
+- <https://github.com/weifund/solint>
+- <https://github.com/duaraghav8/Solium>
+[[}]]
+[[12_solidity}]]
+
+

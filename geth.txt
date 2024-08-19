@@ -1,0 +1,676 @@
+# GETH [[{10_evm.implementation.geth,devops.network.bootstrap]]
+## Setup node [[{]]
+   REF:  https://github.com/ethereum/go-ethereum
+    STEP 1) Create  genesis.json
+    {
+      "config": {
+            "chainId": 0,
+            "homesteadBlock": 0,
+            "eip155Block": 0,
+            "eip158Block": 0
+        },
+      "alloc"      : {
+      "0x00...01": {"balance": "111111"},
+      "0x00...02": {"balance": "222222"}
+      },
+      "coinbase"   : "0x─20 bytes hex─",
+      "difficulty" : "0x20000",
+      "extraData"  : "",
+      "gasLimit"   : "0x2fefd8",
+      "nonce"      : "0x0000000000000042",
+      "mixhash"    : "0x ..32bytes hex...",
+      "parentHash" : "0x ..32bytes hex...",
+      "timestamp"  : "0x00"
+    }
+
+    STEP 2) Initialize node
+    $ geth init genesis.json   (init .../qdata/* files)
+
+    STEP 3) (optional) Setup bootstrap node
+     $ bootnode --genkey=boot.key
+     $ bootnode --nodekey=boot.key
+
+## GETH layout
+  $DATADIR: (← defined by geth --datadir flag)
+   ├─ .ethash/             ← ~1GB dataset used for PoW consensus
+   ├─./genesis.json        ← geth init creates initial ddbb based on it
+   ├─./qdata/              ← Node Blockchain and state databases, keystore, process log,...
+   ├─ ...
+   ├─./qdata/geth/nodekey  ← generated automatically on first run or through
+   ├─ ...                    'bootnode -genkey .../nodekey' -writeaddress
+   ├─./qdata/geth/chaindata/                                ^^^^^^^^^^^^^
+   ├─ ...                                                   shows also pub.key
+   ├─./qdata/gethLogs/node1.log                             for enode url
+   ├─ ...                                                    (optional)
+   ├─./qdata/*keystore*/node1key
+   ├─./node1.conf
+   ├─./keys/node1.key
+   ├─./keys/node1a.pub
+   ├─./keys/node1.pub
+   └─./keys/node1a.key
+
+   Full CLI options
+  @[https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options]
+
+## Basic Admin
+  ref: https://github.com/ethereum/go-ethereum/wiki/Managing-your-accounts
+  - Geth Key Handling: [[{10_evm.implementation.geth,security.secret_mng]]
+
+  (Geth) ACCOUNT "==" private key stored in file protected by password stored under:
+                       $DATADIR/keystore/UTC--'created_at_UTC_ISO8601'-'address hex'
+
+  $ geth account   command  [options] [arguments...]
+                   ├─────┘   ^^^^^^^
+     ┌─────────────┘         --datadir   Base dir for databases+keystore
+     v                       --keystore  (def. $DATADIR/keystore)
+     · list
+     · new        ask for password/passphrase, return its public address.
+     · update      migrate to newest key format.
+     · import     Export key unencrypted NOT supported
+       $ geth --datadir /someDir account import ./key.prv
+
+  - using account NON-interactively (not connected to a geth node):
+    $ geth --unlock primary --rpccorsdomain localhost --verbosity 6 2>> geth.log
+    $ KEYLIST="0x407d73d8a49eeb85d32cf465507dd71d507100c1"
+    $ KEYLIST="${KEYLIST},0,5"
+    $ KEYLIST="${KEYLIST},e470b1a7d2c9c5c6f03bbaa8fa20db6d404a0c32"
+    $ geth --unlock "${KEYLIST}"
+
+  [[}]]
+
+  - TODO: Backup/Restore
+    https://github.com/ethereum/go-ethereum/wiki/Backup-&-restore
+
+  $ geth upgraded          ← "Sometimes" the internal database formats need updating
+  $ geth removed           ← cleanup: remove blockchain and state databases
+                             (does not touch the keystore)
+  $ geth export 'filename' 0 30000 ← Export blockchain in binary format
+                           ^^^^^^^
+                           initial and
+                           final block
+
+  $ geth import 'filename'         ← Import form binary file
+
+  - Geth extra CLIs : https://github.com/ethereum/go-ethereum/tree/master/cmd
+    abigen
+    bootnode    bootnode runs a bootstrap node for the Ethereum Discovery Protocol.
+              @[https://godoc.org/github.com/ubiq/go-ubiq/cmd/bootnode]
+    clef        signs TXs and data . Replacement for acct mgnt
+    ethkey      simple tool for working with Ethereum keyfiles
+
+    evm         evm executes EVM code snippets!!.
+                   - internal/compiler
+                   - compiler.go
+                   - disasm.go
+                   - main.go
+                   - runner.go
+                   - staterunner.go
+    faucet
+    geth
+    internal/browser
+    p2psim
+    puppeth
+    rlpdump     rlpdump is a pretty-printer for RLP data
+    swarm       Command bzzhash computes a swarm tree hash.
+    utils
+    wnode
+[[}]]
+
+## Geth Architecture [[{10_evm.implementation.geth,architecture.geth,02_doc_has.diagram,01_PM.TODO]]
+  REF: https://www.mycryptopedia.com/ethereum-geth-installing-and-running-a-node/
+```
+         ┌────────┐              ┌───────┐
+         │JSON RPC│              │LevelDB│
+         └────────┘              └───────┘
+              ↑                      ↑
+  ┌─────┐     │       ┌─────┐        │  ┌───────┐
+  │SWARM│     └──────→│ EVM ┼←───────┘  │Whisper│
+  └──┬──┘             └─────┘           └───┬───┘
+     │                   ↓                  │
+     │         ┌─────────────────────┐      │
+     └────────→│     P2P/Gossip      │←─────┘
+               └─────────┬───────────┘
+                         ↓
+                    ···· ···   ···
+                   ··   ·   ···  ··
+                   ·   Network    ·
+                   ······     ····
+                         ·····
+```
+
+## LevelDB internal (key/value) storage backend. http://leveldb.org/
+    - entries stored lexicographically sorted by keys.
+      (sorting comes-in very useful for querying)
+    - Arbitrary byte arrays:
+      keys and values are treated as simple arrays of bytes,
+      so content can be anything from ASCII strings to binary blobs.
+    - Compressed storage:
+      Google’s Snappy compression library (optional) dependency,
+      highly optimized for fast compression (vs high compress ratio)
+    - Ex ussage:
+      var level = require('level')
+      var db = level('./db', { valueEncoding: 'json' })
+
+      db.put('key', { example: true }, function (err) {
+        if (err) throw err
+
+        db.get('key', function (err, value) {
+          if (err) throw err
+          console.log(value)
+        })
+      })
+[[}]]
+
+## Understanding Geth Code [[{10_evm.implementation.geth,01_PM.TODO]]
+ @[https://github.com/Agzs/geth-pbft-study/wiki/Blockchain-Structure]
+
+  type BlockChain struct {
+    config * params.ChainConfig // chain & network configuration
+
+┌   hc           * HeaderChain
+|   chainDb        ethdb.Database
+|   eventMux     * event.TypeMux
+|   genesisBlock * types.Block
+|
+|   mu      sync.RWMutex // global mutex for locking chain operations
+|   chainmu sync.RWMutex // blockchain insertion lock
+|   procmu  sync.RWMutex // block processor lock
+|
+|   checkpoint       int          // checkpoint counts towards the new checkpoint
+|┌  currentBlock     * types.Block // Current head of the block chain
+|·  currentFastBlock * types.Block // Current head of the fast-sync chain (may be above the block chain!)
+|·
+|·  stateCache   state.Database // State database to reuse between imports (contains state cache)
+|·  bodyCache    * lru.Cache     // Cache for the most recent block bodies
+|·  bodyRLPCache * lru.Cache     // Cache for the most recent block bodies in RLP encoded format
+|·  blockCache   * lru.Cache     // Cache for the most recent entire blocks
+|·  futureBlocks * lru.Cache     // future blocks are blocks added for later processing
+|·
+|·  quit    chan struct{} // blockchain quit channel
+|·  running int32         // running must be called atomically
+|·  // procInterrupt must be atomically called
+|·  procInterrupt int32          // interrupt signaler for block processing
+|·  wg            sync.WaitGroup // chain processing wait group for shutting down
+|·
+|·  engine    consensus.Engine
+|·  processor Processor // block processor interface
+|·  validator Validator // block and state validator interface
+|·  vmConfig  vm.Config
+|·
+|·  badBlocks * lru.Cache // Bad block cache
+|·}
+|·
+|·                                                 // Header represents a block header in the Ethereum blockchain.
+|└→type Block struct {                             type Heade  struct {
+|    header      * Header ·······················→  ParentHash  common.Hash    Keccak256(parent_block_header)
+|    uncles       []*Header                         UncleHash   common.Hash
+|    transactions Transactions                      Coinbase    common.Address miner address
+|                                                   Root        common.Hash   ← of state    trie
+|    // caches                                      TxHash      common.Hash   ← of TX       trie
+|    hash atomic.Value                              ReceiptHash common.Hash   ← of receipts trie
+|    size atomic.Value                              Bloom       Bloom
+|                                                   Difficulty  *big.Int
+|    // Td is used by package core to store the     Number      *big.Int
+|    // total difficulty of the chain up to and     GasLimit    *big.Int
+|    // including the block.                        GasUsed     *big.Int
+|    td *big.Int                                    Time        *big.Int
+|                                                   Extra       []byte
+|    // These fields are used by package eth        MixDigest   common.Hash
+|    // to track inter-peer block relay.            Nonce       BlockNonce    ← PoW (Combined with
+|    ReceivedAt   time.Time                       }                             MixDigest)
+|    ReceivedFrom interface{}
+|  }
+|
+└→ type HeaderChain struct {
+       config *params.ChainConfig
+
+       chainDb       ethdb.Database
+       genesisHeader *types.Header
+
+       currentHeader     *types.Header // Current head of the header chain (may be above the block chain!)
+       currentHeaderHash common.Hash   // Hash of the current head of the header chain (prevent recomputing all the time)
+
+       headerCache *lru.Cache // Cache for the most recent block headers
+       tdCache     *lru.Cache // Cache for the most recent block total difficulties
+       numberCache *lru.Cache // Cache for the most recent block numbers
+
+       procInterrupt func() bool
+
+       rand   *mrand.Rand
+       engine consensus.Engine
+   }
+
+
+  TRANSACTIONS
+  type Transaction struct {    type txdata struct {
+      data txdata                  AccountNonce uint64          `json:"nonce"    gencodec:"required"`
+      // caches                    Price        *big.Int        `json:"gasPrice" gencodec:"required"`
+      hash atomic.Value            GasLimit     *big.Int        `json:"gas"      gencodec:"required"`
+      size atomic.Value            Recipient    *common.Address `json:"to"       rlp:"nil"` // nil → new contract
+      from atomic.Value            Amount       *big.Int        `json:"value"    gencodec:"required"`
+  }                                Payload      []byte          `json:"input"    gencodec:"required"`
+
+                                   // Signature values
+                                   V *big.Int `json:"v" gencodec:"required"`
+                                   R *big.Int `json:"r" gencodec:"required"`
+                                   S *big.Int `json:"s" gencodec:"required"`
+
+                                   // This is only used when marshaling to JSON.
+                                   Hash *common.Hash `json:"hash" rlp:"-"`
+                               }
+
+  DATABASE
+  type Database interface {
+      Put(key []byte, value []byte) error
+      Get(key []byte) ([]byte, error)
+      Delete(key []byte) error
+      Close()
+      NewBatch() Batch
+  }
+  //==> Implied by LDBDatabase ==>
+  type LDBDatabase struct {
+      fn string      // filename for reporting
+      db *leveldb.DB // LevelDB instance
+
+      getTimer       gometrics.Timer // Timer for measuring the database get request counts and latencies
+      putTimer       gometrics.Timer // Timer for measuring the database put request counts and latencies
+      delTimer       gometrics.Timer // Timer for measuring the database delete request counts and latencies
+      missMeter      gometrics.Meter // Meter for measuring the missed database get requests
+      readMeter      gometrics.Meter // Meter for measuring the database get request data usage
+      writeMeter     gometrics.Meter // Meter for measuring the database put request data usage
+      compTimeMeter  gometrics.Meter // Meter for measuring the total time spent in database compaction
+      compReadMeter  gometrics.Meter // Meter for measuring the data read during compaction
+      compWriteMeter gometrics.Meter // Meter for measuring the data written during compaction
+
+      quitLock sync.Mutex      // Mutex protecting the quit channel access
+      quitChan chan chan error // Quit channel to stop the metrics collection before closing the database
+
+      log log.Logger // Contextual logger tracking the database path
+  }
+
+  // Database wraps access to tries and contract code.   //==> Implied by cachingDB ==>
+  type (state.)Database interface {                      type cachingD  struct {
+      // Accessing tries:                                    db            ethdb.Database
+      // OpenTrie opens the main account trie.               mu            sync.Mutex
+      // OpenStorageTrie opens the storage trie              pastTries     []*trie.SecureTrie
+      // of an account.                                      codeSizeCache *lru.Cache
+      OpenTrie(root common.Hash) (Trie, error)           }
+      OpenStorageTrie(addrHash, root common.Hash)
+         (Trie, error)
+      // Accessing contract code:
+      ContractCode(addrHash, codeHash common.Hash)
+         ([]byte, error)
+      ContractCodeSize(addrHash, codeHash common.Hash)
+         (int, error)
+      // CopyTrie returns an independent copy of
+      // the given trie.
+      CopyTrie(Trie) Trie
+  }
+
+  // Trie is a Ethereum Merkle Trie.           //==> Implied by odrTrie, SecureTrie, Trie,
+  type Trie interface {                        // but implied by cachedTrie in this place.==>
+      TryGet(key []byte) ([]byte, error)       // cachedTrie inserts its trie into a cachingDB
+      TryUpdate(key, value []byte) error       // on commit.
+      TryDelete(key []byte) error              type cachedTrie struct {
+      CommitTo(trie.DatabaseWriter)                * trie.SecureTrie
+         (common.Hash, error)                      db * cachingDB
+      Hash() common.Hash                       }
+      NodeIterator(startKey []byte)
+          trie.NodeIterator
+      GetKey([]byte) []byte // TODO(fjl):
+               // remove this when SecureTrie
+               // is removed
+  }
+[[}]]
+
+## Geth (JS cli) Console [[{10_evm.implementation.geth,devops.geth]]
+@[https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console]
+  $ geth attach \
+        --preload "script1.js,..."     <- opt: preload CSV script list
+        --exec  " eth.blockNumber "    <- batch mode
+          http://123.123.123.123:8545
+
+  - Example script: EXAMINE TX.
+    TX_ID ='0xaeb..b49'
+    web3.eth.getTransaction(TX_ID , (err, result) {
+         if (err) { console.log(e); return; }
+         console.log(JSON.stringify(result);
+    });
+  - Example script: CHECK ACCOUNT BALANCE/S
+    loadScript ("gethPreload.js")
+    checkAllBalances()
+
+    function   checkAllBalances()  {
+      var totalBal = 0;
+      for (var acctNum in eth.accounts) {
+        const acct = eth.accounts[acctNum];
+        const acctBal = web3.fromWei( eth.getBalance(acct), "ether");
+        totalBal += parseFloat(acctBal);
+        console.log( acct + " balance: " + acctBal + " ether");
+      }
+    };
+[[}]]
+
+## GETH: Configuration Troubleshooting [[{10_evm.implementation.geth,13_SLC.troubleshooting]]
+  REF: @[https://web3js.readthedocs.io/en/1.0/index.html] Full 1.0 API
+
+  console.dir(eth) does NOT work but all that needed is enter the object name in the prompt
+
+> eth                                > web3
+  {                                    {
+    accounts: [...],                     admin: {
+    blockNumber: ...,                      datadir: ".../qdata/dd1",
+    coinbase: "0xed9....",                 nodeInfo: { enode: ..., },
+    compile: {                             peers: [ ... ],
+      lll: function(),                     ...
+      serpent: function(),               },
+      solidity: function()               eth: {
+    },                                     accounts: [...],
+    pendingTransactions: [],               blockNumber: 5,
+    protocolVersion: "0x3e",               coinbase: "0x ...",
+    syncing: false,                        ...
+    getAccounts: function(callback),     },
+    getBalance: function(),              isIBAN: undefined,
+    getBlock: function(),                ...
+    ...                                }
+  }
+[[}]]
+
+## GETH Disk Space [[{persistence.blockchain,infrastructure.storage,devops.storage]]
+- Sync Mode:
+  @[https://medium.com/coinmonks/how-a-pruned-ethereum-node-can-fully-verify-the-blockchain-bbe9f29663ed]
+  @[https://github.com/ethereum/go-ethereum/pull/1889]
+
+     Mode      2020
+     Archive ~ 1.5TB -Contains state at all given blocks.
+     Prune   ~ 0.2TB -Contains all events and just last state.
+                      After synced, the node will continue to
+                      work in Archive mode. It's recomended then
+                      to resyn every ~6 months to save space unless
+                      archive of old states are needed.
+
+REF:
+@[https://ethereum.stackexchange.com/questions/143/what-are-the-ethereum-disk-space-needs/826#826]
+Last Update: May 14th, 2018 / Block ~ 5_600_000
+Geth (Go) 1.8.3 Ubuntu 16.4 LTS,  VPS + SSD | Parity (Rust)
+--------------------------------------------+--------------------------------------------
+Client / Mode    | Block Number |Disk Space | Client / Mode      |Block Number|Disk Space
+=================|==============|========== | ===================|============|==========
+geth light       | 5_600_000    |363M       | parity light       |5_600_000   | 89M
+geth fast full   | 5_600_000    |142G       | parity warp fast   |5_600_000   | 82G
+geth full full   | ?_???_??? [1]|239G + [1] | parity full fast   |5_600_000   | 78G
+geth full archive| 4_980_000 [2]|671G       | parity full archive|5_600_000   |1.1T
+                                            |
+[1] disk was full, I wasn't able to repeat  |
+    this sync mode                          |
+[2] I didn't manage to fully sync           |
+    within 6 weeks, unfortunately.          |
+--------------------------------------------+--------------------------------------------
+Update 2019-08-08:
+zation of a quadratic CPU and disk IO complexity,
+REF: @[https://blog.ethereum.org/2019/07/10/geth-v1-9-0/]
+"""We've run a fast sync benchmark on two i3.2xlarge AWS EC2 instances
+   (8 core, 61 GiB RAM, 1.9 TiB NVMe SSD) with --cache=4096 --maxpeers=50
+   (defaults on v1.9.0) on the 25th of April."""
+
+ FAST SYNC
+     Version          Sync time   Disk size   Disk reads  Disk writes
+     Geth v1.8.27       11h 20m      176GiB      1.58TiB      1.94TiB
+     Geth v1.9.0          4h 8m      131GiB      0.91TiB      1.06TiB
+---------------------------------------------------------------------
+ FULL SYNC
+     Version          Sync time   Disk size   Disk reads  Disk writes
+     Geth v1.8.27    6d 15h 30m      341GiB      28.9TiB      21.8TiB
+     Geth v1.9.0     6d  8h  7m      303GiB      40.2Ti       32.6TiB *
+
+"""... reducing the memory use by about 1/3rd  and
+       completely removing spurious memory peaks (Shanghai DoS) .
+    The reason for the higher disk IO is due to using less memory
+    for caching, having to push more aggressively to disk."""
+
+ ARCHIVE SYNC
+- archive sync benchmark
+  - two m5.2xlarge AWS EC2 instances (8 core, 32 GiB RAM, 3TiB EBS SSD)
+    with --cache=4096 --syncmode=full --gcmode=archive.
+
+    Version       Sync time   Disk size   Disk reads  Disk writes
+    Geth v1.8.27     62d 4h     2.57TiB     69.29TiB     49.03TiB
+    Geth v1.9.0     13d 19h *   2.32TiB    104.73TiB     91.40TiB
+
+  EBS volumes are significantly slower than physical SSDs
+  attached to the VM. Better performance can be achieved
+  on VMs with real SSDs or actual physical hardware.
+[[}]]
+
+## Monitoring&Metrics [[{10_evm.implementation.geth,devops,13_SLC.monitoring]]
+@[https://github.com/ethereum/go-ethereum/wiki/Metrics-and-Monitoring]
+
+> debug.metrics().p2p.InboundTraffic         > debug.metrics().chain.inserts
+{                                            {
+  Avg01Min: '169.12K (2.82K/s)',               Avg01Min: '10 (0.17/s)',
+  Avg05Min: '1.92M (6.42K/s)',                 Avg05Min: '61 (0.20/s)',
+  Avg15Min: '3.57M (3.96K/s)',                 Avg15Min: '168 (0.19/s)',
+  Total: '5.83M (2.97K/s)'                     Maximum: '2.157261657s',
+}                                              Minimum: '2.271716ms',
+                                               Percentiles: {
+> debug.metrics(true).p2p.InboundTraffic         20: '6.993756ms',
+{                                                50: '12.342836ms',
+  AvgRate01Min: 1599.6190029292586,              80: '21.765944ms',
+  AvgRate05Min: 5367.754506658111,               95: '218.500479ms',
+  AvgRate15Min: 3761.057607521597,               99: '376.015984ms'
+  MeanRate: 2907.3919382272857,                },
+  Total: 5901154                               Total: '432 (0.22/s)'
+}                                           }
+
+$ geth monitor  ← periodically queries a node for
+                  metrics and plots them on the terminal
+
+$ geth monitor [--attach=api-url] metric1 metric2 ... metricN
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  Ex metrics:
+        system/memory/allocs/AvgRate05Min        ← Full canonical metric
+        system/memory/allocs                     ← Group of metrics
+        system/memory                            ← Group of metrics
+        system/memory/allocs,frees/AvgRate01Min  ← Multiple branching metrics
+        system/memory/*/AvgRate01Min             ← wildard pattern   (Not supported by planned)
+        system/memory/allocs/!AvgRate01Min       ← Exclusion pattern (Not supported by planned)
+
+Available metrics (use geth monitor for full list)
+    system/memory/
+        allocs: number of memory allocations made
+        frees: number of memory releases made
+        inuse: memory currently being used
+        pauses: time spent in the garbage collector
+[[}]]
+
+## PUPPETH  [[{]]
+- Easy Geth deployment of networks
+- (Integrated into Geth 1.9+)
+- Creates genesis block, bootnodes, signers, ethstats, faucet,
+  wallet, explorer and dashboard..
+[[}]]
+
+
+
+## GETH What's new [[{10_evm.implementation.geth,devops,integration.graphql,10_EVM.i/o,13_SLC.monitoring]]
+  - 1.9 Release Notes @[https://blog.ethereum.org/2019/07/10/geth-v1-9-0/]
+  Release page      : @[https://github.com/ethereum/go-ethereum/releases/tag/v1.9.0]
+
+  - Performance Improvements.
+
+  - Allow separated database into two parts:
+    - Recent blocks, stored in fast key-val LevelDB, Ideal to put on SSD [[{devops.storage]]
+    - older "stuff", infrequent access. HDD should be "OK"
+      Use --datadir.ancient to move outside chaindata ("SSD" disk)  [[}]]
+    - Ex: A fresh fast sync at block 7.77M placed
+      - 60GB of data into LevelDB
+      - 79GB of data into the freezer
+
+  - GraphQL support (--graphql CLI flag): [[{integration.graphql]]
+    - Support for flexible queries (INNER JOINS) in a single round trip.
+    - Ex: find all the ENS domain registrations on the Görli testnet!
+      STEP 1) Start Geth v1.9.0 on Görli with GraphQL enabled
+      $ geth --goerli --graphql  ← should sync in 1-2 minutes tops
+
+      STEP 2) point browser to BUILT-IN GraphQL explorer http://localhost:8547
+
+      STEP 3) sample query: find ENS HashRegistered events.
+              returns address-of-user doing the registration,
+              block number and timestamp:
+      {
+        logs(                                ← "SELECT FROM  logs INNER JOIN address ON ... "
+          filter: {                          ←   "WHERE"
+            fromBlock: 0,                    ←     "BLOCK > 0 AND"
+            addresses: ["0xf105....62"],     ←     "ADDRESSES IN (${ENS_CONTRACT}) AND "
+            topics   : [ ["0x0f0...670"] ]   ←     "TOPICS    IN (HashRegistered) "
+          }                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        {
+          transaction {                      ← RETURN:
+            hash
+            from {
+              address                        ← + address of the user doing the registration
+            }
+            block{
+              number                         ← + block number
+              timestamp                      ← + timestamp
+            }
+          }
+        }
+      }  [[}]]
+
+  - SUPPORTED HARDWARE WALLETS:
+   - LEDGER WALLETS
+   - TREZOR WALLETS
+   - STATUS KEYCARDS
+     - full HD hardware wallet based on Java SmartCards [[ dev_framework.java.smartcards]]
+  - Added CLEF app:  "wallets everywhere!" as a (eventual) [[{wallet.cloud}]]
+    replacement for Geth's account management.
+    - standalone signer for the entire Ethereum ecosystem
+    - major features:
+      - remove account management from "maybe insecure" Geth gateway.
+      - Reusable by Geth, Parity, Trinity, Metamask, ...
+        - deliberately tiny external API via IPC or HTTP,
+          designed to work with any interface: cli, web, Android, ..
+        - Clef exposes an extended internal API solely via standard input/output.
+          and JSON-RPC IO streams.
+        - pre-built CLI interface
+  - new ULTRA LIGHT CLIENT aiming to be (security like) midway       [[consensus]]
+    between trusted and light enodes, replacing PoW verification
+    with digital signatures from majority-of-trusted enodes:
+
+  - Added support for hard-coded on-chain checkpoint oracle.
+
+   - checkpoint oracle contract is an especially nasty beast:
+
+  - Metrics collection gathering     exposed metrics:
+    $ geth ... --metrics --pprof   ← http://127.0.0.1:6060/debug/metrics
+    (pull based monitoring)          ( expva   -Go ecosystem friendly format)
+                                     http://127.0.0.1:6060/debug/metrics/prometheus
+                                     (prometheus friendly format)
+
+    $ geth ...              + "set of --metrics.influxdb subflags"
+    (push based monitoring)   (server, ddbb, user/password, ...)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              see the METRICS AND STATS OPTIONS section
+                              of geth help for details
+
+  - METRICS VISUALIZATION: [[{devops.monitoring]]
+    You can import next grafana dashboard:
+    (
+    cat << EOF
+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
+EOF
+    ) | base64 -d | gzip -d
+[[}]]
+
+ - New list of pre-hardcoded boot nodes for Mainnet.
+   enode://d860a01f9722d78051619d1e2351aba3f43f943f6f00718d1b9baa4101932a1f5011f16bb2b1bb35db20d6fe28fa0bf09636d26a87d31de9ec6203eeedb1f666@18.138.108.67:30303   (Singapore  , AWS  )
+   enode://22a8232c3abc76a16ae9d6c3b164f98775fe226f0917b0ca871128a74a8e9630b458460865bab457221f1d448dd9791d24c4e5d88786180ac185df813a68d4de@3.209.45.79:30303     (Virginia   , AWS  )
+   enode://ca6de62fce278f96aea6ec5a2daadb877e51651247cb96ee310a318def462913b653963c155a0ef6c7d50048bba6e6cea881130857413d9f50a621546b590758@34.255.23.113:30303   (Ireland    , AWS  )
+   enode://279944d8dcd428dffaa7436f25ca0ca43ae19e7bcf94a8fb7d1641651f92d121e972ac2e8f381414b80cc8e5555811c2ec6e1a99bb009b3f53c4c69923e11bd8@35.158.244.151:30303  (Frankfurt  , AWS  )
+   enode://8499da03c47d637b20eee24eec3c356c9a2e6148d6fe25ca195c7949ab8ec2c03e3556126b0d7ed644675e78c4318b08691b7b57de10e5f0d40d05b09238fa0a@52.187.207.27:30303   (Australia  , Azure)
+   enode://103858bdb88756c71f15e9b5e09b56dc1be52f0a5021d46301dbbfb7e130029cc9d0d6f73f693bc29b665770fff7da4d34f3c6379fe12721b5d7a0bcb5ca1fc1@191.234.162.198:30303 (Brazil     , Azure)
+   enode://715171f50508aba88aecd1250af392a45a330af91d7b90701c436b618c86aaa1589c9184561907bebbb56439b8f8787bc01f49a7c77276c58c1b09822d75e8e8@52.231.165.108:30303  (South Korea, Azure)
+   enode://5d6d7cd20d6da4bb83a1d28cadb5d409b64edf314c0335df658c1a54e32c7c4a7ab7823d57c39b6a757556e68ff1df17c748b698544a55cb488b52479a92b60f@104.42.217.25:30303   (West US    , Azure)
+[[}]]
+
+[[10_evm.implementation.geth}]]
+
+[[{13_SLC.monitoring.blockexplorer]]
+## Geth v1.9.0 ships a preliminary integration of Blockscout 
+   into Puppeth.  Blockscout is a real, open source block explorer,
+   courtesy of "POA Network team" filling a huge hole in our private
+   network deployment tool!
+   https://docs.blockscout.com/
+   OOSS Elixir application that allows users to:
+   - search transactions.
+   - view accounts and balances.
+   - VERIFY SMART CONTRACTS ON ETHEREUM INCLUDING FORKS AND SIDECHAINS.
+[[}]]
+
+

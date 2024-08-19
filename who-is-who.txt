@@ -1,0 +1,189 @@
+
+## Who is Who [[{]]
+
+(Forcibly incomplete but still quite pertinent list of core developers and companies)
+
+See also [core developers](https://medium.com/ethex-market/who-are-the-core-devs-of-ethereum-part-i-beb342aaaff0) 
+
+* Vitalik Buterin, Ethereum White-Paper  
+  · @[https://github.com/vbuterin]  
+  · @[https://github.com/vbuterin/diagrams]  
+  · Many, many contributions  
+* Gavin Wood: Ethereum Co-Founder
+  Ethereum Yellow Paper
+  @[http://gavwood.com/]
+  @[https://en.wikipedia.org/wiki/Gavin_Wood]
+   founder of Parity Technologies
+* Joseph Lubin:
+  @[https://en.wikipedia.org/wiki/Joseph_Lubin_(entrepreneur)]
+  founder of ConsenSys.
+* Shahan Khatchadourian  
+  - Pegasys Eng. Co-founder  
+  - Created Hyperledger Besu  
+  Co-founder@PegaSys
+* Anthony Diorio
+  @[https://anthonydiiorio.ca/]
+  In 2013, Anthony Diiorio funded, and along with Charles Hoskinson, 
+  Mihai Alisie, and Vitalik Buterin, co-founded the smart contract 
+  platform Ethereum.
+* Loredana Cirstea:  
+  Author of dType, seth.io, Pipeline remix plugin, ...  
+  @[https://github.com/loredanacirstea/articles]  
+  @[https://github.com/loredanacirstea?utf8=%E2%9C%93&tab=repositories&q=&type=source&language=]  
+  @[https://medium.com/@loredana.cirstea/dtype-decentralized-type-system-functional-programming-on-ethereum-4f7666377c9f]  
+  @[https://www.youtube.com/watch?v=GZg4L2o0Nyw&feature=youtu.be]
+* Nick Johnson "Arachnid"  
+  @[http://blog.notdot.net/]  
+  @[http://blog.notdot.net/tag/damn-cool-algorithms]  
+  - Arachnid Labs ("string utils")  
+  - Core developer on go-ethereum.  
+  - lead developer of ENS.
+* Ronan Sandford (wighawag), prominent smart contract developer.  
+  - author of ERC-1155 standard  
+  - working on diamonds standards support in buidler-deploy.
+
+- Raul Jordan, Prysmatic labs: Sharding Protocol
+  minimal sharding protocol implementation.
+
+- Yoav Weiss (@yoavw)            EIP-4337 contributors.
+  Kristof Gazso (@kristofgazso)
+  Namra Patel (@namrapatel) 
+  Dror Tirosh (@drortirosh)
+  Shahaf Nacson (@shahafn)
+- Rob Hitchens:
+  @[https://medium.com/@robhitchens]
+  @[https://about.me/hitchens]
+    Distributed Applications Architect and Mentor in Calgary, Alberta, Canada
+    Top poster on Ethereum Stack exchange since 2016.
+    Co-author and mentor, Ethereum Developer, Hyperledger Fabric
+    Developers, Quorum Developer, Hyperledger Sawtooth Lake Developer and
+    Tezos Developer training at B9lab.com since 2017.
+    Advisor and co-founder, Solidified.io, Ethereum smart contract
+    quality assurance.
+    - Author of Solidity CRUD:
+    @[https://medium.com/@robhitchens/solidity-crud-part-1-824ffa69509a]
+
+- Nick Mudge: Designed the Diamon Standard (EIP 2535) for proxy-contracts
+
+- Anjan Roy @[https://github.com/itzmeanjan]
+  Lead Blockchain Engineer @ Polygon ("Matic Network").
+
+- DApps and Solidity Development:
+  - Manuel Araoz: @[https://maraoz.com/]:
+    CTO&co-founder at Zeppelin.
+  - Luis Cuende: @[http://blog.aragon.one/author/luis/]
+    CEO and cofounder of Aragon One
+
+  - b9lab: Quality Blockchain Education for everyone
+  @[https://www.b9lab.com/]
+    - Xavier Lepretre, senior consultant at B9Lab
+
+  - Steve Marx @[https://ethereum.stackexchange.com/users/19510/smarx]
+    and Tood Proebsting:
+    Authors of @[https://programtheblockchain.com/] with great
+    tutorials about Payment Channels:
+    @[https://programtheblockchain.com/posts/2018/12/10/introduction-to-ethereum-payment-channels-video/]
+    @[https://programtheblockchain.com/posts/2018/02/23/writing-a-simple-payment-channel/]:
+    @[https://programtheblockchain.com/posts/2018/03/02/building-long-lived-payment-channels]
+
+  - Péter Szilágyi, @[https://github.com/karalabe]
+    Core Puppeth developer @[https://www.youtube.com/watch?v=T5RcjYPTG9g]
+
+- Paul Lintilhac: Quantitative Developer at ConsenSys, Alethio developer
+
+- Hudson Jameson (@Souptacular)
+@[https://hudsonjameson.com/]
+
+- Nick Savers (@nicksavers)
+
+- Martin Becze (@wanderer)
+
+- Greg Colvin (@gcolvin)
+
+- Alex Beregszaszi (@axic)
+
+- StackExchange Top users:
+  - "Afri" Ethereum FAQ answers on Stackoverflow
+    (hidden user from the Parity Team)
+    Lastest activity: 2018-08-21
+  <https://ethereum.stackexchange.com/users/87/afri>
+
+* Peter Robinson: Protocol Engineering R&D at ConsenSys Thesys
+  <https://www.linkedin.com/feed/update/activity:6968821920196698112>
+  After six years.... my PhD has been conferred. Now you can all call
+  me Dr. The thesis title is: Crosschain Communications: Blockchain
+  Discovery, Atomic Crosschain Function Calls, and Blockchain State
+  Pinning
+  The thesis will be available in open access at this link some
+  time in the coming week: https://lnkd.in/gFUKRaR2
+  Thank you to my supervisors Marius Portmann, David Wood, and my paper
+  co-authors Raghavendra Ramesh, Sandra Johnson, John Brainard, Horacio
+  Mijail Anton Quiles, David Wood, and Christopher H.
+
+
+* Who-is-Who:<br/>
+  https://franck44.github.io/
+  https://www.youtube.com/watch?v=pxe4qGwGBGg
+   The Deposit Smart Contract (DSC) is an instrumental component of the
+  Ethereum 2.0 Phase 0 infrastructure. We have developed the first
+  machine-checkable version of the incremental Merkle tree algorithm
+  used in the DSC. We present our new and original correctness proof of
+  the algorithm along with the Dafny machine-checkable version. The
+  main results are: 1) a new proof of total correctness; 2) a software
+  artefact with the proof in the form of the complete Dafny code base
+  and 3) new provably correct optimisations of the algorithm.
+
+
+[[}]]
+
+## Who-is-who(Companies) [[{]]
+
+- https://consensys.net/:
+  ```
+  Consensys techs:
+  Balanc3             TravelBlocks                                 Linnia
+  Cellarius           Waterloo                                     Catalyst and Hub Account Manager
+  ConsenSys Academy   Panvala                                      Meridio
+  Plasma              Gitcoin                                      MetaMask
+  Gitcoin             Infura                                       N0d.capital
+  Token Foundry       Kaleido                                      Nethereum
+  Viant               Applied Researcher: Sharding                 Numia
+  uPort               Applied Researcher: Sidechains (PegaSys)     OpenLaw
+  Trustology          Quantitative/Qualitative Researcher          PegaSys
+  TruSet              Senior Design Researcher - Ujo Music
+  ```
+
+- QuillHash, security Firm, authors of QuillAudits,
+  fully automated platform to verify smart contracts  
+  @[https://audits.quillhash.com]
+  (manual review + automated tools).  
+  - Smart contract audits and penetration tests.
+- Ujo: Ethereum blockchain-based open music industry peer-to-peer 
+  platform built by ConsenSys.  Ujo aims to increase transparency and 
+  efficiency in the music industry through an automated, decentralised 
+  rights management and payments system upon which any music service or 
+  application can be built. Creators and rights holders register works 
+  and their stakes in those works in smart contracts on the blockchain. 
+  Payments are delivered automatically and instantly based on that 
+  information using the self-enforcing smart contract technology. 
+  Artists may also publish policies for how their music may be used, 
+  facilitating an open marketplace in which anybody can innovate a new 
+  business model, app or service as long as they meet the terms of 
+  those policies.  
+- https://pegasys.tech/: Consensys Company with 55+ team dedicated
+  to enterprise grade blockchain at ConsenSys.
+  focused on privacy, permissioning, scalability, and other
+  features to make Ethereum production-ready.
+  Developers of Pantheon
+- NomiClabs (Argentina) @[https://nomiclabs.io/]  
+  - Products:  
+    - Buidler
+    - Sprawl: Permissionless and censorship resistant p2p decentrilized exchange
+    @[https://github.com/SprawlNetwork/whitepaper/blob/master/Sprawl.pdf]
+  - Developers:
+    - Patricio Palladino: Author on  web3x: Typescript version of web3.js
+
+- OpenLaw: Create, store and exec legal agreements
+
+- https://viant.io/: Model Business processes, track assets+build supply chains faster
+[[}]]

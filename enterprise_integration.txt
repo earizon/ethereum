@@ -1,0 +1,794 @@
+[[{standards.eea,02_doc_has.diagram,integration]]
+# Enterprise Integration ──────────────────────────────────────────
+[[{PM.low_code,standards.openapi,integration,architecture.api,QA.documentation]]
+[[dev_framework.java.web3j,infrastructure.network]]
+## Web3j OpenAPI: Low Code ABI to OpenAPI Service
+@[https://github.com/web3j/web3j-openapi]
+* client and server generator from Solidity smart contracts.
+  allows to interact with the Ethereum blockchain via simple
+  and intuitive HTTP requests.
+* Embeds a Swagger-UI out of the box.
+
+### workflow:
+
+```
+   Solidity SC ··> |solc| ··> ABI ··> |Web3j-OpenAPI| ··> REST server
+```
+
+### How-to:
+
+  ```
+  $ curl -L get.epirus.io | sh 
+
+  $ epirus openapi new
+
+  $ epirus login                                        # <·· Alt 1.
+  $ epirus run rinkeby|ropsten
+
+  $ export WEB3J_ENDPOINT=<link_to_your_Ethereum_node>  # <·· Alt 2.
+  $ export WEB3J_PRIVATE_KEY=<your_private_key>
+  $ export WEB3J_OPENAPI_HOST=localhost
+  $ export WEB3J_OPENAPI_PORT=9090 
+
+
+  ```
+
+
+[[}]]
+
+
+
+## EEA Reference Integration [[{integration.eea]]
+REF: https://medium.com/@bibryam/enterprise-integration-for-ethereum-fa67a1577d43
+┌─ APPLICATIONS ────────────────────────────────────────────────────────────────────────────
+│
+│  DAPPS            ┌──────────────────┐  ┌─────────────────────────────┐
+│                   │   Applications   │  │  Explorers, Monitoring & BI │
+│                   └──────────────────┘  └─────────────────────────────┘
+│
+│  INFRA CONTRACTS  ┌────────┐  ┌────┐^4 ┌──────────┐    ┌────────┐  ┌────────────┐
+│  & STANDARS       │IDENTITY│  │RBAC│   │NETWORK   │    │TOKEN   │  │ETHEREUM    │
+│                   └────────┘  └────┘   │GOVERNANCE│    │STANDARS│  │NAME SERVICE│
+│                                        └──────────┘    └────────┘  └────────────┘
+┌─ TOOLING ───────────────────────────────────────────────────────────────────────────────────
+│
+│  Permisions &     ┌───────┐2  ┌──────────────┐2     ┌───┐3   ┌─────────────────────────────┐3
+│  Credentials      │WALLETS│   │KEY MANAGEMENT│      │HSM│    │PERMISSIONING/AUTHENTICATION │
+│                   └───────┘   └──────────────┘      └───┘    └─────────────────────────────┘
+│
+│  INTEGRATION&     ┌───────────┐2                    ┌──────────────────────────┐3 ┌────────┐3
+│  DEPLOYMENT       │INTEGRATION│                     │ENTERPRISE MANAGEMENT SYS.│  │ORACLES │
+│  TOOLS            │LIBRARIES  │                     └──────────────────────────┘  └────────┘
+│                   └───────────┘
+│
+│                   ┌────────┐2   ┌───────────┐2
+│  CLIENT           │JSON/RPC│    │INTER─CHAIN│
+│  INTERFACES       └────────┘    └───────────┘
+
+┌─ PRIVACY ──────────────────────────────────────────────────────────────────────────────────
+│                  ┌────────┐2    ┌────────────────────┐3  ┌───────────────────┐3
+│                  │ON-CHAIN│     │PRIVATE-TRANSACTIONS│   │OFF+CHAIN          │
+│                  └────────┘     └────────────────────┘   │(TRUSTED EXECUTION)│
+│                                                          └───────────────────┘
+│
+│NOTE: private (node─to─node) eea TX can NOT be used to prevent double─spending:
+│      only for notarization like (ballots, ...) use─case scenarios were there will
+│      probably be a "controller node" to wich all information arrives, (even if it's
+│      just partially visible to other nodes):
+│    @[https://stackoverflow.com/questions/56906115/private─transaction─validation─in─quorum]
+│      To prevese privacy and double─spending, Zero Knowledge Proofs must be used.
+
+┌─ SCALING ──────────────────────────────────────────────────────────────────────────────────
+│                  ┌─────────────────┐2       ┌──────────────────┐2
+│                  │ON+CHAIN(LAYER 2)│        │OFF+CHAIN(COMPUTE)│
+│                  └─────────────────┘        └──────────────────┘
+
+┌─ CORE BLOCKCHAIN ──────────────────────────────────────────────────────────────────────────
+│  STORAGE/LEDGER  ┌────────────┐      ┌────────┐      ┌─────────┐2       ┌─────────────┐3
+│                  │ON+CHAIN    │      │ON+CHAIN│      │OFF+CHAIN│        │ON+CHAIN     │
+│                  │PUBLIC STATE│      │STORAGE │      │STORAGE  │        │PRIVATE STATE│
+│                  └────────────┘      └────────┘      └─────────┘        └─────────────┘
+│
+│  EXECUTION       ┌───┐         ┌─────┐2     ┌───────────┐2      ┌──────────┐3
+│                  │EVM│         │SYNC │      │PRECOMPILED│       │TRUSTED   │
+│                  └───┘         └─────┘      │ CONTACTS  │       │ EXECUTION│
+│                                             └───────────┘       └──────────┘
+│
+│  CONSENSUS       ┌─────────┐             ┌─────────┐3
+│                  │PUBLIC   │             │PRIVATE  │
+│                  │CONSENSUS│             │CONSENSUS│
+│                  └─────────┘             └─────────┘
+┌─ NETWORK ──────────────────────────────────────────────────────────────────────────────────
+│   NETWORK         ┌──────┐2         ┌───────────────┐3
+│   PROTOCOL        │DEVP2P│          │ENTERPRISE P2P │
+│                   └──────┘          └───────────────┘
+
+1: Yellow Paper
+2: Public     Ethereum
+3: Enterprise Ethereum
+4: Solidity libraries like Zeppelin allows for RBAC
+   fine-grained access into the on-chain smart-contracts
+   Standard RBAC in EEA/Quorum expected for mid/late 2019
+[[integration.eea}]]
+
+[[{10_evm.events,integration.data,01_PM.low_code,01_PM.radar]]
+## Eventeum
+@[https://github.com/ConsenSys/eventeum]
+- Project status: Stall.  https://github.com/eventeum/eventeum/issues/176
+
+Eventeum: listen for specified (SmartContract/Blocks) event emissions
+          and broadcasts (Kafka/HTTP/RabbitMQ) them to the middleware layer.
+
+ Features : Static/Dynamic Configuration, HA, Resilient to node failures,  blochain Fork Tolerance
+
+ PREREQUISITES       |  BUILD
+ - Java 8            |  $ git clone https://github.com/ConsenSys/eventeum
+ - Maven             |  $ cd eventeum
+ - Docker (optional) |  $ mvn clean package
+
+ RUNNIN
+  Alt 1: MongoDB, Ethereum, Zookeeper,           │ Alt 2: Docker                                 │ Alt 3: all-in-one
+         Kafka, Rabbit nodes already in place    │ $ cd server ;                                 │ TEST ENVIRONMENT
+  $ cd server                                    │ $ docker build . -t kauri/eventeum:latest     │ $ cd server
+  $ export SPRING_DATA_MONGODB_HOST=host..:port  │ $ export SPRING_DATA_MONGODB_HOST=host...:port│ $ docker-compose \
+  $ export ETHEREUM_NODE_URL=http://host...:port │ $ export ETHEREUM_NODE_URL=http://host..:port │   -f docker-compose.yml \
+  $ export ZOOKEEPER_ADDRESS=zookeeper-host:port │ $ export ZOOKEEPER_ADDRESS=host...:port       │   build
+  $ export KAFKA_ADDRESSES=kafka-host:port       │ $ export KAFKA_ADDRESSES=host...:port         │ $ docker-compose \
+  $ export RABBIT_ADDRESSES=rabbit-host:port     │ $ export RABBIT_ADDRESSES=host...:port        │   -f docker-compose.yml \
+                                                 │                                               │   up
+  $  java -jar target/eventeum-server.jar        │ $  docker run -p 8060:8060 kauri/eventeum     │
+ ────────────────────────────────────────────────┴───────────────────────────────────────────────┴─────────────────────────
+  CONFIGURING NODES
+(application.yml)
+ ethereum:
+   nodes:
+     - name: default               ← node 1
+       url: http://mainnet:8545
+     - name: sidechain             ← node 2
+       url: wss://sidechain/ws
+     - name: sidechain             ← ...
+       ...
+ eventFilters:                     ← HARDCODED EVENTS
+   - id: RequestCreated
+     contractAddress: ${CONTRACT_ADDRESS:0x..}
+     eventSpecification:
+       eventName: RequestCreated
+       indexedParameterDefinitions:
+         - position: 0
+           type: BYTES32
+         - position: 1
+           type: ADDRESS
+       nonIndexedParameterDefinitions:
+         - position: 2
+           type: BYTES32
+     correlationId:
+       type: NON_INDEXED_PARAMETER
+       index: 0
+
+
+
+┌─────────────────────────────────────────────────────────────── ┌──────────────────────────────────────────────────────────
+│  DYNAMIC REGISTE                       │ SUCCESS               │  DYNAMIC UNREGISTE                │ SUCCESS
+│  REQUEST                               │ RESPONSE              │  REQUEST                          │ RESPONSE
+│ ───────────────────────────────────────┼────────────────────── │ ──────────────────────────────────┼──────────────────────
+│ URL    : /api/rest/v1/event-filter     │Code: 200              │ URL:/api/rest/v1/event-filter/{id}│Code: 200
+│ Method : POST                          │Content:               │ Method    : DELETE                │Content: N/A
+│ Headers: content-type application/json │ { "id": "id" }        │ Headers   : N/A
+│ URL    : -                             │                       │ URL Params: N/A
+│ Params                                 │                       │ Body      : N/A
+│ Body                                   │
+│ {                                      │
+│  "id": "event-id",                     │
+│  "contractAddress": "0x1...Af4d2",     │
+│  "eventSpecification": {               │
+│   "eventName": "TestEvent",            │
+│                                        │
+│   "indexedParameterDefinitions": [     │
+│     {"position": 0, "type": "UINT256"},│
+│     {"position": 1, "type": "ADDRESS"} │
+│   ],                                   │
+│   "nonIndexedParameterDefinitions": [  │
+│     {"position": 2, "type": "BYTES32"},│
+│     {"position": 3, "type": "STRING"}  │
+│   ]                                    │
+│  },                                    │
+│                                        │
+│  "correlationIdStrategy": {            │
+│    "type": "NON_INDEXED_PARAMETER",    │
+│    "parameterIndex": 0 }               │
+│ }                                      │
+
+
+ BROADCASTEST MESSAGES FORMAT
+ (to kafka topic|rabit exch)
+
+SMART-CONTRACT EVENT                        |BLOCK EVENT FORMAT
+--------------------------------------------+------------------
+{                                           |{
+ "id":"unique-event-id",                    | "id":"0x79...",
+ "type":"CONTRACT_EVENT",                   | "type":"BLOCK",
+ "details":{                                | "details":{
+   "name":"DummyEvent",                     |  "number":257,
+   "filterId": {SOME_UUID},                 |  "hash":"0x797...",
+   "indexedParameters":[                    |  "timestamp":12345678
+    {"type":"bytes32","value":"BytesValue"},| },
+    {"type":"address","value":"0x00..."}    | "retries":0
+   ],                                       |}
+   "nonIndexedParameters":[
+    {"type":"uint256","value":10},
+    {"type":"string","value":"StringValue"}
+   ],
+   "transactionHash":"0xe4...",
+   "logIndex":0,
+   "blockNumber":258,
+   "blockHash":"0x65...",
+   "address":"0x....",
+   "status":"UNCONFIRMED",
+   "eventSpecificationSignature": "0x....",
+   "id":"unique-event-id"
+ },
+ "retries":0
+}
+
+ CONFIGURATION ENV VARs
+(alternatively use application.yml)
+Env Variable                             Default
+SERVER_PORT                              8060
+ETHEREUM_BLOCKSTRATEGY                   POLL^|PUBSUB
+ETHEREUM_NODE_URL                        http://localhost:8545
+ETHEREUM_NODE_HEALTHCHECK_PPOLLINTERVAL 2000 (ms)
+EVENTSTORE_TYPE                          DB
+BROADCASTER_TYPE                         KAFKA^|HTTP|RABBIT
+BROADCASTER_CACHE_EXPIRATIONMILLIS      6000000     time that a message should live within eventeum broadcast cache.
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ During this time eventeum guarants that duplicate messages are NOT broadcast
+BROADCASTER_EVENT_CONFIRMATION_NUMBLOCKSTOWAIT               12
+BROADCASTER_EVENT_CONFIRMATION_NUMBLOCKSTOWAITFORMISSINGTX  200  After a fork, a TX may disappear,
+                                                                   This params indicates the number of
+                                                                   blocks to wait on the new fork,
+                                                                   before assuming that an event emitted
+                                                                   during this transaction has been INVALIDATED.
+BROADCASTER_MULTIINSTANCE                false      If multiple eventeum instances exits, set this param to true
+                                                    so that the eventeum communicates added/removed filters to other
+                                                    instances, via kafka.
+BROADCASTER_HTTP_CONTRACTEVENTSURL       ...        URL to post to smart-contract events when BROADCASTER_TYPE=HTTP
+BROADCASTER_HTTP_BLOCKEVENTSURL                     URL to post to new-blocks     events when BROADCASTER_TYPE=HTTP
+ZOOKEEPER_ADDRESS                        localhost:2181
+KAFKA_ADDRESSES                          localhost:9092  ← CSV list of addresses
+KAFKA_TOPIC_CONTRACT_EVENTS              contract-events   The kafka topic name for broadcast contract event messages
+KAFKA_TOPIC_BLOCK_EVENTS                 block-events      The kafka topic name for broadcast block event messages.
+KAFKA_REQUEST_TIMEOUT_MS                 20000             The duration after which a request timeouts.
+KAFKA_ENDPOINT_IDENTIFICATION_ALGORITHM  null              The endpoint identification algorithm to validate server hostname using server certificate.
+KAFKA_SASL_MECHANISM                     PLAIN             The mechanism used for SASL authentication.
+KAFKA_USERNAME                           ""                username used to connect to a SASL secured Kafka cluster.
+KAFKA_PASSWORD                           ""                password used to connect to a SASL secured Kafka cluster.
+KAFKA_SECURITY_PROTOCOL                  PLAINTEXT         Protocol used to communicate with Kafka brokers.
+KAFKA_RETRIES                            10                number of times a Kafka consumer will try to publish a message before throwing an error.
+KAFKA_RETRY_BACKOFF_MS                   500               The duration between each retry.
+SPRING_DATA_MONGODB_HOST                 localhost         mongoDB host (used when event store is set to DB).
+SPRING_DATA_MONGODB_PORT                 27017             mongoDB post (used when event store is set to DB).
+RABBIT_ADDRESS                           localhost:5672    property spring.rabbitmq.host (The rabbitmq address)
+RABBIT_EXCHANGE                          ThisIsAExchange   property rabbitmq.exchange
+RABBIT_ROUTING_KEY                       thisIsRoutingKey  property rabbitmq.routingKeyPrefix
+
+(See more info about INFURA Support Configuration in original link)
+
+ ADVANCED CONFI
+
+ Kafka Broadcasting Correlation Id Strategies
+Each subscribed event can have a correlation id strategy association with it,
+during subscription.
+- A correlation id strategy defines what the kafka message key for a
+  broadcast event should be, and allows the system to be configured so that
+  events with particular parameter values are always sent to the same
+  partition.
+
+- Currently supported correlation id strategies are:
+  - Indexed Parameter Strategy: An indexed parameter within the event
+    is used as the message key when broadcasting.
+  - Non Indexed Parameter Strategy: An non-indexed parameter within the
+    event is used as the message key when broadcasting.
+
+ EVENT STORE
+- Eventeum utilises an event store in order to establish
+  the block number to start event subscriptions from,
+  in the event of a failover.
+
+- For example, if the last event broadcast for event with id X
+  had a block number of 123, then on a failover, eventeum will
+  subscribe to events from block 124.
+
+2 supported event store implementations:
+  - MongoDB:
+    Env Variable             Default    Description
+    EVENTSTORE_TYPE          DB         MongoDB event store enabled
+    SPRING_DATA_MONGODB_HOST localhost  The mongoDB host
+    SPRING_DATA_MONGODB_PORT 27017      The mongoDB post
+
+  - REST Service:
+    (see original link for more info)
+
+ EMBEDDING EVENTEUM
+Eventeum can be embedded into an existing Spring Application
+via an annotation following next steps.
+
+STEP 1:  Add Kauri repo to the pom.xml:
+  <repositories>
+    <repository>
+      <id>bintray-consensys-kauri</id>
+      <url>https://consensys.bintray.com/kauri</url>
+    </repository>
+  </repositories>
+
+STEP 2: Add eventeum-core dependency to pom.xml:
+  <dependency>
+    <groupId>net.consensys.eventeum</groupId>
+    <artifactId>eventeum-core</artifactId>
+    <version> LATEST_EVENTEUM_VERSION </version>
+  </dependency>
+
+STEP 3: Within your Application class or a
+  @Configuration annotated class, add the
+  @EnableEventeum annotation.
+
+Known Caveats / Issues
+- In multi-instance mode, where there is more than
+one Eventeum instance in a system, your services are
+required to handle duplicate messages gracefully, as each
+instance will broadcast the same events.
+[[}]]
+
+[[{10_evm.events,integration.data,dev_framework.java,01_PM.TODO]]
+## Camel Connector 
+@[https://github.com/bibryam/camel-web3j]
+@[https://github.com/apache/camel/blob/main/components/camel-web3j/src/main/docs/web3j-component.adoc]
+@[https://medium.com/@bibryam/enterprise-integration-for-ethereum-fa67a1577d43]
+
+* Sample 1: Listen for new mined blocks and send the block hash to a jms queue:
+
+  from("web3j://http://127.0.0.1:7545?operation=ETH_BLOCK_HASH_OBSERVABLE")
+      .to("jms:queue:blocks");
+
+* Sample 2: Use block hash code to retrieve the block and full TXs details
+  from("jms:queue:blocks")
+    .setHeader(BLOCK_HASH, body())
+    .to( "web3j://http://127.0.0.1:7545?"
+       + "operation=ETH_GET_BLOCK_BY_HASH&"
+       + "fullTransactionObjects=true");
+
+* Sample 3
+  from("direct:start")
+    .to("web3j://http://127.0.0.1:7545?"
+      + "operation=ETH_GET_BALANCE&"    ← Read balance
+      + "address=0xc8CDce..&"             ← for address
+      + "atBlock=10");                    ← at given block
+[[}]]
+
+
+## Baseline Protocol [[{integration.enterprise_patterns,integration.data,dev_framework.baseline]]
+                    [[privacy.ZKP,standards.EIP/ERC,01_PM.backlog]]
+@[https://docs.baseline-protocol.org/]
+@[https://github.com/ethereum-oasis/baseline]
+@[https://github.com/eea-oasis/baseline]
+
+* See also Glossary
+@[https://docs.baseline-protocol.org/baseline-basics/glossary]
+- Baseline Protocol: set of methods that enable two or more state
+  machines to achieve and maintain data consistency, and workflow
+  continuity by using a network as a common frame of reference
+  through a Consensus Controlled State Machine (CCSM) like Ethereum
+  MainNet/....   WITHOUT MOVING ANY SENSITIVE DATA OUT OF OF
+  TRADITIONAL SYSTEMS-OF-RECORD .
+
+- """ It is particularly promising as a way to reduce capital
+  expense and other overheads while increasing operational integrity
+  when automating business processes across multiple companies."""
+
+- BaseLine Modules&Packages
+@[https://docs.baseline-protocol.org/baseline-protocol-code/packages]
+
+  (@baseline-
+  protocol)
+  Package     Source Path   Description
+  =========== ===========   =======================================
+  /api        core/api      Core baseline API package providing
+                            unified access to the baseline JSON-RPC
+                            module and blockchain, registry and key
+                            management interfaces
+
+  /baseline   core/baseline Core baseline  package provides unified
+                            access to internal integration
+                            middleware interfaces for systems of
+                            record
+
+
+  /ccsm       core/ccsm     Core ccsm package provides interfaces
+                            for general interaction with an
+                            underlying mainnet
+
+  /identitty  core/identity Core identity package provides interfaces
+                            for organization registry and decentralized
+                            identifiers (DIDs)
+
+  /privacy    core/privacy  Core privacy package provides interfaces
+                            supporting Proversystems and and
+                            zero-knowledge cryptography
+
+
+  /types      core/types    Core reusable type definitions
+
+  /vaults     core/vaults   Core vault Provides management interfaces
+                            for digital authentication credentials such
+                            as keys and secrets
+
+- https://docs.baseline-protocol.org/
+- https://docs.baseline-protocol.org/baseline-protocol/packages/contracts
+
+- Video 1 of 6: Baseline Protocol v0.1 Messaging
+  https://www.youtube.com/watch?v=ZgaAcQvoD_8&feature=youtu.be
+
+- Video 2 of 6 -- Baseline Protocol v0.1 API Registry Interface
+  https://www.youtube.com/watch?v=lsZQwiE2glA&feature=youtu.be
+
+- Video 3 of 6: Baseline Protocol v0.1 Privacy Introduction
+  https://www.youtube.com/watch?v=l3BDBNMnR_Q&feature=youtu.be
+
+- Video 4 of 6: Baseline Protocol v0.1 Privacy Deepdive
+  https://www.youtube.com/watch?v=0vXoSb5bVks&feature=youtu.be
+
+- Video 5 of 6: Baseline Protocol v0.1 Reference Implementation
+  https://www.youtube.com/watch?v=2WXvTHR4_7Q&feature=youtu.be
+
+- Video 6 of 6: Baseline Protocol v0.1 Reference Implementation Part 2
+  https://www.youtube.com/watch?v=R0AEww6fKLk&feature=youtu.be
+
+- https://github.com/ethereum-oasis/baseline/tree/master/core/privacy
+- https://github.com/ethereum-oasis/baseline/tree/master/examples/bri-1
+
+## Who-is-Who
+- Daniel Norkin : co-founder and CEO of Envision Blockchain.
+  a full-service consultancy and Blockchain systems integrator.
+- Stefan Schmidt is the CTO, co-founder, and head of software
+  architecture at Unibright.
+  - Master of Computer Science
+  - 20+years of experience in business modeling and software architecture.
+  - always in search for the perfect harmony of architectural
+    aesthetics and functional simplicity.
+- Kyle Thomas :  Founder/CEO of Provide, cybersecurity
+  and distributed systems polyglot and entrepreneur with experience
+  shipping massively-scalable software to the public/private sectors.
+
+- Salesforce + Baseline: [[{integration.salesforce}]]
+https://medium.com/baselineprotocol/dappsuite-extends-the-salesforce-platform-to-leverage-baseline-protocol-for-b2b-workflow-e466cf85c3f0
+[[}]]
+
+[[{scalability.offchain,02_doc_has.comparative,dev_framework.ipfs]]
+[[infrastructure.storage.offchain,privacy.offchain]]
+[[scalability.offchain,01_PM.TODO]]
+## EXTERNAL STORAGE (IPFS,...)
+- TODO: Compare with alternative Storage "providers": IPFS , Maidsafe, Storj
+- IPFS is just a protocol like http. It is unmotivated (don't have tokens).
+- Eris is permissioned blockchain thing and use IPFS underneath.
+- Storj, SAFE Network, Sia and Filecoin: motivated storage networks with
+  different underlying protocols and design decisions.
+- Swarm is an organizational idea. A philosophical structure.
+  ""serverless hosting incentivised peer-to-peer storage and content distribution""
+  ""From the end user's perspective, Swarm is not that different from WWW,
+    except that uploads are not to a specific server. The objective is to peer-to-peer
+    storage and serving solution that is DDOS-resistant, zero-downtime, fault-tolerant
+    and censorship-resistant as well as self-sustaining due to a built-in incentive
+    system which uses peer to peer accounting and allows trading resources for payment.
+    Swarm is designed to deeply integrate with the devp2p multiprotocol network layer
+    of Ethereum as well as with the Ethereum blockchain for domain name resolution,
+    service payments and content availability insurance. """"""
+
+""""""Two major features of swarm that sets it apart from other decentralised
+distributed storage solutions (bittorent, zeronet, IPFS) are 'upload and
+disappear' and the incentive system. The former refers to fact that Swarm
+does not only serve content, but it also provides a cloud storage service.
+Unlike related systems, you do not only publish the fact you host content,
+but there is a genuine sense in which you can just upload stuff to the swarm
+and potentially disappear (drop off as a node, disconnect or just operate
+without storage entirely) right away. Swarm aspires to be the generic storage
+and delivery service catering for all usecases ranging from serving low
+latency realtime interactive web applications as well as acting as guaranteed
+persistent storage for rarely used content. The incentive system makes sure
+that participating nodes following their rational self interest nontheless
+converge on an emergent swarm behaviour that is beneficial for the entire
+system as well as economically self-sustaining. In particular, it allows
+nodes in the network to pool their bandwidth and storage resources in the
+most efficient way to collectively provide services. """""""
+here are two kinds of accounts in Ethereum which share the same address space
+: External accounts that are controlled by public-private key pairs (i.e.
+humans) and contract accounts which are controlled by the code stored
+together with the account.
+
+
+[[{01_PM.low_code,scalability.offchain,dev_framework.ipfs,02_QA.UX,01_PM.TODO]]
+### Vue+Ethereum+IPFS DApp Starter
+@[https://github.com/redacademy/vue-ethereum-ipfs] [[}]]
+[[}]]
+
+[[{101,integration,10_EVM.i/o.oracles,12_solidity]]
+[[02_use_case.finance,security,02_use_case.integrity,01_PM.WiP]]
+## External Inputs (Oracles)
+- The evm and SmartContract by extension just have access to
+  internal (current-state) blockchain data. Oracles are used when we
+  need logic that depends of external-to-blockchain events, playing the
+  role of "input" devices.
+- Oracles in practice are "trusted" smart-contracts whose internal data/status
+  is the result of a list of minimum threshold "N" of "M" different Signatures,
+  or some sort of voting. Each signature can have a different reputation/weight.
+- For example we trust a deployed Oracle that claims that a vehicle
+  with ID:ABCDEF had an accident because map( hashOfCAR_ID =>
+  carStatus) ddbbStatus is updated only after at least N signatures of
+  M trusted signers have been sent claiming such accident is true.
+
+- Companies like ChainLink offer "professional oracle services for MainNet
+  and other networks.
+
+## chain.link Oracles
+  - "Pole position" in Secutiry Dapps in @[https://www.stateofthedapps.com/]
+     with 1.700+ votes.
+  @[https://chain.link/]
+  - smart contracts connected to real world data, events and payments.
+  - Chainlink network provides reliable tamper-proof inputs and outputs
+    (aka  ORACLES ) for complex smart contracts on any blockchain,
+
+## Provable.xyz Oracles: https://provable.xyz/
+  The ProvableTM blockchain oracle for modern DApps.
+  Enabling the shift of traditional services such as finance, gambling,
+  and insurance into decentralization.
+
+## band-protocol
+@[https://bandprotocol.com/]
+  cross-chain data oracle platform that aggregates and connects real-world
+  data and APIs to smart contracts.
+[[}]]
+
+[[{integration.data,integration.graphql,architecture,01_PM.WiP]]
+
+## Alethio [[{integration.data.alethio,02_QA.auditing,13_SLC.monitoring,security,02_use_case.finance.fraud]]
+@[https://aleth.io]
+@[https://media.consensys.net/alethio-lighting-up-the-blockchain-with-real-time-stats-a80bb30576db]
+@[https://media.consensys.net/using-machine-learning-to-understand-the-ethereum-blockchain-1778485d603a]
+
+- Rakr (IA auditing) 
+_ Alethio's analytics platform helps users visualize,
+  interpret, and react to blockchain data in real time.
+
+""" Current blockchain explorers provide little clarity into the evolving ecosystem.
+ They are often geared towards developers and leave average users in the dark.
+
+ How do we access real time block data, analyzing the application layer,
+ detecting anomalies, or monitoring the statistical signals that translate to larger KPIs.
+"""
+
+- UNSUPERVISED LEARNING
+  - find patterns in large data sets.
+  - reduce complex dataset to simpler high-level patterns/themes.
+  - By reducing a large dataset into a small number of common themes,
+    one can learn what it means for a particular transaction or account
+    point to be "normal". ( anomaly detection ), or compared to a recent
+    historical average ( novelty detection ).
+  - As of 2019-03 Alethio offers an anomaly detection system for
+    TXs, blocks, and accounts.
+    - ranking algorithms
+    - influence analysis like page rank.
+
+ SUPERVISED LEARNIN
+- there must be some large initial set of data for which the value
+  of the labels or responses is known.
+  - Rakr:
+    - gather external data about accounts (metadata) for the
+      purposes of machine learning.
+    - Rakr hopes to provide a platform for gathering and sharing
+      this valuable metadata.
+  - two common subcategories:
+    - prediction:
+      - use historical data to estimate future value
+      - account type:
+        - decentralized exchange
+        - DOS
+        - Ponzi scheme
+      - Price prediction (training input: "large set" of historical prices).
+    - classification:
+      - use historical data and some given-entity data
+        to classify the given-entity. (labeling)
+
+  -  raw data ("the set of knowns") can be used to extract features
+     for accounts (total balance, average TX frequency/age/...)
+
+  - Alethio recently added semantic lifting to expand the set of "knowns"
+    beyond the protocol layer to include application-level data, such as
+    whether a contract is a token, and to which standard it complies.
+
+ In Practice
+Ex: Ponzi model developed by Alethio:
+- First model, to expand to more general fraud models in near term.
+- feature extraction pipelines built during this model development effort
+  can be reused to classify any account according to one of the labels
+  in the (growing) Rakr database. (exchange, art DAO, ICOs, casino, fraud, DoS-alike, ...)
+- ... we envision a blockchain where every account and entity is enriched with
+  useful classifications and properties, whether empirical and created by humans,
+  or predicted and created by statistical models.
+
+Keep an eye out for the next article by Paul Lintilhac, which will give an exposition of one of
+Alethio’s recent data science initiatives: the Ponzi Model.
+[[integration.data.alethio}]]
+
+[[}]]
+
+# DeFi Knowledge Graph with Neo4j [[{]]
+ Decentralized finance (DeFi) is a movement working to replicate and
+replace traditional finance (TradFi) using blockchain and
+cryptocurrencies.Today you can lend, borrow, swap, margin trade, and
+even create your own mini hedge fund on chain. It’s all
+permissionless and trustless.Most DeFi takes place on Ethereum. One
+notable exception is a protocol called Sovryn which brings financial
+primitives to bitcoin using the rootstock sidechain RSK.The project
+I’ll cover today creates a knowledge graph of the Sovryn protocol
+using the graph database Neo4j.My goals were toLearn how the Sovryn
+protocol really works. Blockchain and DeFi are advancing quickly, and
+the pace of progress is faster than the advances in tooling. After
+reading the documentation you have to read the source code of the
+smart contracts, or explore the raw block-level data. Both are
+difficult and unintuitive, particularly for developers that may be
+new to the space.Get a robust dataset about Sovryn. If you want to
+understand the activity on the protocol, and the developers don’t
+happen to provide the answer on the official app, you have to dig
+into the block data. This is clunky and much of the data is not
+human-readable.
+Its also difficult to get a summary of the data. This transaction
+describes a swap between bitcoin (technically WRBTC) and the stable
+coin Tether. What if you wanted to find all such transactions? Today
+you would have to download the whole chain and interact with the ABI.
+
+If you would rather spend your time doing data science instead of
+blockchain development, this is a serious barrier to entry.Graphing
+the ChainTo create a knowledge graph of blockchain data we need to
+define only a few different types of nodes: Block, Transaction,
+Address, Token, Contract, and LogEvent. Token and Contract are
+subtypes of Address. Strictly speaking Token and Contract aren’t
+necessary but they certainly are convenient for helping humans make
+sense of what’s going on.Each Block will CONTAIN zero or more
+Transactions. The Transactions are where much of the action is. Each
+Transaction is from one Address and may be to another one. If these
+addresses describe known Tokens or Contracts then the information for
+those will be filled in.Each Transaction has one or more LogEvents.
+Each of these events CALLS various Addresses (or Tokens, or
+Contracts). In creating this knowledge graph, a number of ABIs were
+parsed so that the information in each of the CALLS.The result is a
+simple schema that can capture all the richness of the blockchain.
+Very satisfying! A simple schema can capture all the richness of the
+blockchain.A Quick Tour of the Knowledge GraphIf you want to take the
+tour with me, check out the repository or the video tour.One goal is
+to be able to load data from the protocol directly into Python.To
+that end I put a wrapper around the Neo4j session to give it a little
+syntactic sugar. You can type any query directly into a
+knowledge_graph.Query object. First, lets see a few blocks with
+available data.from sovrynkg.knowledge_graph import Query
+q = Query()
+q.add("MATCH (b:Block) RETURN b.height as height ORDER BY height LIMIT 10")
+q.data()
+
+[{'height': 2742418},
+ {'height': 2742441},
+ {'height': 2742445},
+ {'height': 2742446},
+ {'height': 2742448},
+ {'height': 2742450},
+ {'height': 2742451},
+ {'height': 2742453},
+ {'height': 2742457},
+ {'height': 2742460}]
+So 2742418 is where it all began. Let’s see the transaction at that block.
+A Cypher query that gets us that data is:
+
+MATCH
+  (b:Block)-[:CONTAINS]->(tx:Transaction)-[:HAS_EVENT]->(le:LogEvent)-[:CALLS]-(addy:Address)
+  WHERE b.height=2742418
+  RETURN b, tx, le, addy
+
+Deciphering the Cypher: this says to find a block with the given
+block height, and also find the Transaction, LogEvent, and any
+Address that is connected (remember Token and Contract are also
+Address). Sovryn is born.Inspecting the CALLS relationship,
+it has"name": "OwnershipTransferred",
+"newOwner": "0x7be508451cd748ba55dcbe75c8067f9420909b49",
+"previousOwner: "0x0000000000000000000000000000000000000000"
+
+The first transaction on the Sovryn protocol is the creation of the
+contract. On RSK contracts are created by “transferring”
+ownership from the null address.So What? I’m Here for
+the MoneyLet’s chase the money. Find a reasonably high value
+transaction
+q = Query()
+q.add(" MATCH (tx:Transaction) RETURN tx ORDER BY tx.value DESC LIMIT 1")
+result = q.only()
+result
+{'tx': {'gas_price': 60000000,
+ 'gas_offered': 172201,
+ 'gas_spent': 172201,
+ 'gas_quote': 0,
+ 'gas_quote_rate': 4083,
+ 'tx_offset': 4,
+ 'value_quote': 7350,
+ 'tx_hash': '0xcaefac99f076cd6e9e02a2b1309056eebab634f7cdf0ff28b7050dbc37c9110d',
+ 'value': 1800000000000000000,
+ 'successful': True}}
+
+This transaction involved 1.8 wrapped BTC ($55k USD) (BTC is given to
+the 18 decimal places).Let’s get more details. We use the
+following (slightly verbose) query to pull out everything having to
+do with that single transaction.
+It’s very similar to the above query, except this time we’re
+getting the Address that the bitcoin was sent TO and FROM , in
+addition to all the other information.
+
+MATCH (b:Block)-[:CONTAINS]->(tx:Transaction)
+  WHERE tx.tx_hash="0xbef02237efff3788082b28d74e34c7c245e1e8ea6a5b1da4d40967ddd08fd5a8"
+  MATCH (frm:Address)<-[:FROM]-(tx)-[:TO*0..1]-(to:Address)
+  MATCH (tx)-[:HAS_EVENT]->(le:LogEvent)-[:CALLS]-(addy:Address)
+  RETURN tx, le, addy, frm, to
+
+ High value transactionLooks like this transaction was a loan.
+Whoever owns the from address 0x5d0eeaeabd5123e3d557c8a552134f24c6271a74
+borrowed 1.8 WRBTC.This address doesn’t seem to match any Contract
+or Token documented as part of the Sovryn protocol so its probably
+just some person out there on the chain.Larger Scale AnalysisThese
+colorful circles are all well and good, but what if you want to
+analyze meaningful amounts of data.We can use the knowledge graph to
+do larger scale analysis as well. Let’s look at a
+swap — exchanging one type of token for an equal monetary value
+of another.We’ll limit the number of results for this example, but
+you could just remove the limit and skip keyword arguments and get
+all the data.import plotly.express as px
+
+from sovrynkg.swaps import get_swap_df
+df = get_swap_df(skip=1000, limit=1000)
+df.head()
+
+Results from a query about swaps, given as a dataframeGreat, we have
+the data. Now lets try to make sense of it. If we want to get more
+information about the addresses we can use a built-in tool.import
+sovrynkg.contracts as contracts
+
+wrbtc = contracts.BY_NAME['WRBTC']
+wrbtc, wrbtc.address
+(<Token WRBTC:0x542…677d>, '0x542fda317318ebf1d3deaf76e0b632741a7e677d')
+You can slice and dice your dataframe in powerful ways.
+Let's look at the history of the WRBTC/USDT swaps here.
+
+bt_pair = df[df.to_token=='WRBTC']
+bt_pair = bt_pair[bt_pair.from_token=='USDT']
+
+#both WRBTC and USDT have 18 decimals
+bt_pair['exchange_rate'] = bt_pair.from_amount/bt_pair.to_amount
+
+fig = px.line(bt_pair, x='signed_at', y='exchange_rate', \
+ title='WRBTC vs USDT swap on Sovryn')
+fig.show()
+
+ Exchange rate between Bitcoin and Tether (~$1 USD) on the Sovryn
+protocol over timeKnowledge Graphs to Answer Any QuestionThe
+amazing thing about a knowledge graph is that for just about any
+question you can dream up, the answer is embedded in the
+data somehow.You just have to be clever enough to craft a query to
+find it. It’s this richness of exploration that makes knowledge
+graphing with Neo4j such a good tool for exploring blockchains.How
+does the protocol work?Who are the biggest users?Are there any
+leading indicators of price movements between one cryptocurrency pair
+or another?Given an outside dataset of the Sovryn team’s marketing
+efforts, is there an effect on trading volume on the protocol?If
+you’ve ever had the experience of setting up an SQL database to
+answer one question, only to be immediately asked an entirely
+different question you’ll be able to sympathize.To Ethereum,
+and BeyondBecause the RSK sidechain of bitcoin is compatible with
+the Ethereum virtual machine, we could unleash this same code onto
+Ethereum and map out that entire chain as well.A continuously
+updated knowledge graph plus a convenient SDK would be a very
+convenient package.If anyone out there is interested in seeing that
+I’d invite you to get in touch.Again, the GitHub repository is
+here if you want to try it yourself.
+[[}]]

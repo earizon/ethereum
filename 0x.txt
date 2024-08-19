@@ -1,0 +1,267 @@
+# 0x API "liquidity and data endpoint for DeFi":
+- 0x allows to access AGGREGATED LIQUIDITY from:
+  - tens of on-chain and off-chain decentralized exchange networks:
+    0x,Uniswap,Uniswap_V2,Eth2Dai,Kyber,Curve,Balancer,Balancer_V2,
+    Bancor,mStable,Mooniswap,Swerve,SnowSwap,SushiSwap,Shell,MultiHop,
+    DODO,DODO_V2,CREAM,LiquidityProvider,CryptoCom,Linkswap,Lido,
+    MakerPsm,KyberDMM,Smoothy,Component,Saddle,xSigma,Uniswap_V3,
+    Curve_V2,ShibaSwap
+
+## 0x API general patterns:
+  - Content-type: "application/json"  (requests and responses)
+  - URL:
+    https://api.0x.org/<path>/<version>/<endpoint>?page=3&perPage=20
+                              └───┬───┘            └───────┬───────┘
+                              versioning           pagination (1-indexed)
+  - All token amounts are sent in amounts of the smallest level of precision (base units).
+    e.g: if token has 18 decimal places, selling 1-unit-of-token will show up as
+         1000000000000000000 base units by the API
+          ^^^^^^^^^^^^^^^^^^
+          123456789 12345678
+  - All addresses are sent as lower-case (non-checksummed) Ethereum addresses with the 0x prefix.
+  - All parameters should use lowerCamelCase.
+
+## Allowance Targets: Some interactions require (or are improved) by
+  allowing 0x's-smart-contracts permission to shell/buy tokens on user's-behalf.
+  Example include:
+  - Submitting a 0x API quote selling ERC20 tokens.
+  0x addresses can be found:
+  - as the value of allowanceTarget returned in the quote response
+  - in the ExchangeProxy Address column in "Addresses by Network"
+    in the official doc: https://docs.0x.org/0x-api-swap/api-references
+
+  - Trading ERC20 tokens using the Exchange contract, need the
+    use to provide allowance to the ERC20Proxy contract.
+  - For swaps with "ETH" as sellToken, wrapping "ETH" to "WETH"
+    or unwrapping "WETH" to "ETH" NO ALLOWANCE IS NEEDED, and
+    a null address of 0x0000000000000000000000000000000000000000
+    is returned instead.
+   ┌────────────────────┬───────────────────────┬───────────────────────┬───────────────────────┐
+   │Network             │ExchangeProxy          │ERC20Proxy             │StakingProxy           │
+   │                    │Address                │Address                │Address                │
+   ├────────────────────┼───────────────────────┼───────────────────────┼───────────────────────┤
+   │Ethereum            │0xdef1c0ded9bec7f1a167↲│0x95e6f48254609a6ee006↲│0xa26e80e7dea86279c6d7↲│
+   │  (mainnet)         │  0819833240f027b25eff │  f7d493c8e5fb97094cef │  78d702cc413e6cffa777 │
+   ├────────────────────┼───────────────────────┼───────────────────────┼───────────────────────┤
+   │Ethereum (ropsten)  │0xdef1c0ded9bec7f1a167↲│0xf1ec7d0ba42f15fb5c9e↲│0x6acab4c9c4e3a0c78435↲│
+   │                    │  0819833240f027b25eff │  3adbe86431973e44764c │  fdb5ad1719c95460a668 │
+   ├────────────────────┼───────────────────────┼───────────────────────┼───────────────────────┤
+   │Polygon             │0xdef1c0ded9bec7f1a167↲│0x00000000000000000000↲│0x00000000000000000000↲│
+   │                    │  0819833240f027b25eff │  00000000000000000000 │  00000000000000000000 │
+   ├────────────────────┼───────────────────────┼───────────────────────┼───────────────────────┤
+   │Binance Smart Chain │0xdef1c0ded9bec7f1a167↲│0x00000000000000000000↲│0x00000000000000000000↲│
+   │                    │  0819833240f027b25eff │  00000000000000000000 │  00000000000000000000 │
+   ├────────────────────┼───────────────────────┼───────────────────────┼───────────────────────┤
+   │Optimism            │0xdef1abe32c034e558cdd↲│0x00000000000000000000↲│0x00000000000000000000↲│
+   │                    │  535791643c58a13acc10 │  00000000000000000000 │  00000000000000000000 │
+   ├────────────────────┼───────────────────────┼───────────────────────┼───────────────────────┤
+   │Fantom              │0xdef189deaef76e379df8↲│0x00000000000000000000↲│0x00000000000000000000↲│
+   │                    │  91899eb5a00a94cbc250 │  00000000000000000000 │  00000000000000000000 │
+   ├────────────────────┼───────────────────────┼───────────────────────┼───────────────────────┤
+   │Celo                │0xdef1c0ded9bec7f1a167↲│0x00000000000000000000↲│0x00000000000000000000↲│
+   │                    │  0819833240f027b25eff │  00000000000000000000 │  00000000000000000000 │
+   ├────────────────────┼───────────────────────┼───────────────────────┼───────────────────────┤
+   │Avalanche           │0xdef1c0ded9bec7f1a167↲│0x00000000000000000000↲│0x00000000000000000000↲│
+   │                    │  0819833240f027b25eff │  00000000000000000000 │  00000000000000000000 │
+   └────────────────────┴───────────────────────┴───────────────────────┴───────────────────────┘
+
+# ERROR "HANDLING":
+  HTTP
+  CODE REASON
+  400  Bad Request – Invalid request format
+  404  Not found
+  429  Too many requests - Rate limit exceeded
+  500  Internal Server Error
+  501  Not Implemented                            ┌ GENERAL
+  503  Server Error - Too many open connections   · ERR.CODE| REASON
+                                                  · --------+------------------
+  ERROR REPORTING FORMAT:                         · 100     |Validation Failed
+  {                                               · 101     |Malformed JSON
+      "code": 101,  <·····························┘ 102     |Order submission disabled
+      "reason": "Validation failed",                103     |Throttled
+      "validationErrors": [                         104     |Not Implemented
+          {                                         105     |Transaction Invalid
+              "field": "maker",
+              "code": 1002, <······················ CODE    | REASON
+              "reason": "Invalid address"           --------+--------------
+          }                                         1000    |Required field
+      ]                                             1001    |Incorrect format
+  }                                                 1002    |Invalid address
+                                                    1003    |Address not supported
+                                                    1004    |Value out of range
+                                                    1005    |Invalid signature or hash
+                                                    1006    |Unsupported option
+                                                    1007    |Invalid 0x order
+                                                    1008    |Internal error
+                                                    1009    |Token is not supported
+                                                    1010    |Field is invalid
+
+# COMMON API OBJECTS
+* SIGNED ORDER
+  ============
+  Field        Description
+  -----        -------------------------------------------------
+  maker        address of party-that-creates-the-order.
+               He is also one of the two parties that will
+               be involved in the trade if the order gets filled.
+  -----        -------------------------------------------------
+  taker        address of party-allowed-to-fill-the-order.
+               If set, the order cannot be filled by anyone else.
+               If left unspecified, anyone can fill the order.
+  -----        -------------------------------------------------
+  makerToken   address-of-ERC20-token that maker is selling to taker
+  -----        -------------------------------------------------
+  takerToken   address-of-ERC20-token tath taker is selling to maker
+  -----        -------------------------------------------------
+  makerAmount  amount-of-makerToken being sold by maker
+  -----        -------------------------------------------------
+  takerAmount  amount-of-takerToken being sold by taker
+  -----        -------------------------------------------------
+  expiry       Timestamp-in-seconds when order expires.
+  -----        -------------------------------------------------
+  salt         It can be used to guarantee order uniqueness.
+               Typically set to a random number.
+  -----        -------------------------------------------------
+  feeRecipient address-of-entity that will receive any fees
+               stipulated by the order. Typically used to
+               incentivize off-chain order relay.
+  -----        -------------------------------------------------
+  pool         staking-pool to attribute the 0x protocol fee
+               from this order. Set to zero to attribute to
+               default-pool, not owned by anyone.
+  -----        -------------------------------------------------
+  takerToken↲  Amount of takerToken paid by taker to feeRecipient.
+    FeeAmount
+  -----        -------------------------------------------------
+  sender       (advanced, optional). It allows the maker to enforce
+               that the order flow through some additional logic
+               before it can be filled (e.g. KYC whitelist) [[{02_use_case.finances.KYC}]]
+  -----        -------------------------------------------------
+  verifying↲   address-of-contract where TX should be sent,
+  Contract     Usually == "0x exchange proxy-contract" address
+  -----        -------------------------------------------------
+  chainId      ID of Ethereum-chain
+  -----        -------------------------------------------------
+  signature    JSON-object with signature of the fields above using
+               the private key of maker. signature fields are:
+               Field        |Description
+               -------------+------------------------------------
+               signatureType|number representing EIP712 | EthSign
+               r            |hex-string with signature data.
+               s            |hex-string with signature data.
+               v            |Int-number with signature data.
+
+
+
+https://docs.0x.org/0x-api-swap/api-references/get-swap-v1-quote
+
+┌─ GET /swap/v1/quote ──────────  (quote for buying buyAmount or selling sellAmount ERC20 tokens).
+│ Return valid-to-be-signed Ethereum TX that can be signed-and-submitted to complete the swap.
+│                          Comments/Examples
+│ sellToken ·············· sellToken=ETH,
+│                          sellToken=0x6b175474e89094c44da98b954eedeac495271d0f
+│ buyToken  ·············· buyToken=ETH
+│                          buyToken=0x6b175474e89094c44da98b954eedeac495271d0f
+│ sellAmount(opt) ········ sellAmount=100000000000
+│ buyAmount (opt) ········ buyAmount=100000000000
+│ slippagePercentage(opt)  Maximum acceptable slippage of
+│                          - buyToken   amount if sellAmount is provided
+│                          - sellAmount amount if buyAmount  is provided
+│                          slippagePercentage=0.03 (3%)
+│ gasPrice(opt,def to   ·· target gas-price (in wei) for swap-TX.
+│    ethgasstation "fast") error returned if gas-price is too low to achieve the quote.
+│                          gasPrice=1000000
+│ takerAddress(Opt) ······ address filling-the-quote.
+│                          takerAddress=0xa8aac589a67ecfade31efde49a062cc21d68a64e
+│ excludedSources(Opt) ··· Liquidity sources (Uniswap, SushiSwap, 0x, Curve etc)
+│                          not be included in the provided quote.
+│                          excludedSources=Uniswap,SushiSwap,Curve
+│ includedSources(Opt) ··· For now (2022-08) it only supports RFQT, which should
+│                          be used when the integrator only wants
+│                          RFQT liquidity without any other DEX orders.
+│                          NOTE: It requires a particular agreement with
+│                               the 0x integrations team.
+│                          includedSources=RFQT
+│ skipValidation(Opt) ···· do NOT validate takerAddress if provided.
+│ intentOnFilling(Opt)···· := true|false , (en|dis)able RFQ-T liquidity.
+│ feeRecipient(Opt) ······ address receiving affiliate fees specified with
+│                          buyTokenPercentageFee.
+│                          feeRecipient=0xa8aac589a67ecfade31efde49a062cc21d68a64e
+│ buyTokenPercentageFee(Opt)  [0, 1.0) percentage of buyAmount to be attributed
+│                          to feeRecipient as affiliate fees.
+│                          buyTokenPercentageFee=0.1
+│ affiliateAddress ······· address for which to attribute the trade for tracking
+│                          and analytics purposes.
+│                          It has no impact on affiliate fees.
+│                          affiliateAddress=0xa8aac589a67ecfade31efde49a062cc21d68a64e
+│ enableSlippageProtection (opt)  := true|false
+│ (Optional) A boolean field, set to true or false.
+│                          if true/unset, it will be adjusted for MEV-aware slippage.
+│                          false recomended for meta-aggregators & integrators
+│                          comparing quoted price with other sources.
+
+┌─ RESPONSE ──────────────────────────────────────────────────────────────────────
+│ Response Field      Description
+│ price               If buyAmount specified, price of buyToken in sellToken
+│                     (and vice versa), NOT including slippage therefore
+│                     representing the best possible price.
+│                     IF ENABLESLIPPAGEPROTECTION IN THE REQUEST WAS NOT FALSE,
+│                     BUYAMOUNT & PRICE RESPONSES RETURNED WILL FACTOR SLIPPAGE
+│                     IN ITS ROUTING.
+│ guaranteedPrice     price which must be met (otherwise TX will revert).
+│ to                  address-of-contract to send call data to.
+│ data                call data to be sent to contract-address.
+│ value               weis to be sent with TX. (Assuming protocolFee paid in ether).
+│ gasPrice
+│ gas                 estimated gas limit to be used
+│                     an accurate estimate will only be returned if a takerAddress is included.
+│ estimatedGas
+│ protocolFee         maximum amount of weis to be paid towards the protocol fee, used to
+│                     compute the value field of the transaction.
+│ minimumProtocolFee
+│ buyAmount
+│ sellAmount
+│ sources             percentage distribution of buyAmount|sellAmount split between each
+│                     liquidity source. Ex:
+│                     [{ name: '0x'   , proportion: "0.8" },
+│                      { name: 'Kyber', proportion: "0.2" },
+│                        ...]
+│ buyTokenAddress
+│ sellTokenAddress
+│ allowanceTarget     contract-address for which user needs to have an allowance
+│ orders              details of fill orders
+│ sellTokenToEthRate
+│ buyTokenToEthRate
+│ expectedSlippage
+
+
+┌─ GET /swap/v1/price ──────────  (quote for buying buyAmount or selling sellAmount ERC20 tokens).
+│ Nearly identical to /swap/v1/quote, key differences:
+│ - returns pricing (vs raw-TX ready to be signed)
+
+┌─ GET /swap/v1/sources
+│ ....
+
+How to Set Your Token Allowances
+
+Setting Allowances for 0x API quotes
+ user needs to set an ERC20 allowance for in order to be able to perform the trade. Note that allowanceTarget is only relevant when selling an ERC20 token.
+
+import { ERC20TokenContract } from '@0x/contract-wrappers';
+import { BigNumber } from '@0x/utils';
+(async () => {
+    const web3 = window.web3;
+    // Get a quote from 0x API which contains `allowanceTarget`
+    const res = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`);
+    const quote = await res.json();
+    // Set up approval
+    const USDCaddress = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
+    const USDCcontract = new ERC20TokenContract(USDCaddress, web3.eth.currentProvider);
+    const maxApproval = new BigNumber(2).pow(256).minus(1);
+    // Send the approval to the allowance target smart contract
+    const chainId = 1;
+    const approvalTxData = USDCcontract.approve(quote.allowanceTarget, maxApproval) <--!!
+        .getABIEncodedTransactionData();
+    await web3.eth.sendTransaction(approvalTxData);
+})();
+

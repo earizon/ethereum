@@ -1,0 +1,319 @@
+# TOKENIZATION 
+
+[[{tokens.ERC20]]
+# ERC-20 Fungible Token [[{]]
+- "Outdated" by the more general ERC-1155, but still widely used.
+- REF:
+  -<https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20-token-standard.md>
+  -<https://theethereum.wiki/w/index.php/ERC20_Token_Standard>
+  - Problems with the Standard:
+  <https://edcon.io/ppt/two/Dmitry%20Khovratovich_Secure%20Token%20Development%20and%20Deployment_EDCON.pdf>
+- Standard interface to Fungible Assets Contracts that
+  different wallets  will understand out-of-the-box. A list of
+  ERC20 compliant wallets can be found at:
+- <https://tokenmarket.net/what-is/ethereum-token-wallets/>
+[[}]]
+
+## ERC-777 (ERC-20 Extension) [[{]]
+- extension backward compatible with ERC-20 including:
+  - operators to send tokens on behalf of another contract|external acct.
+  - send/receive hooks to offer token holders extended control, eg:
+    allow holder to reject|ban tokens from given addresses.
+- It takes advantage of ERC-820 to find out whether and where to
+  notify contracts|external-acct when they receive tokens as
+  well as to allow compatibility with already-deployed contracts.
+- Master Tessis <https://github.com/0xjac/master-thesis>
+
+- introduced to establish an evolved Token standard which learned
+  from misconceptions like approve() with a value and the
+  send-tokens-to-contract-issue.
+
+- Makes use of new standard ERC-820:
+  Pseudo-introspection using a registry contract which allows for
+  registering meta-data for contracts to provide a simple type of
+  introspection. This allows for backwards compatibility and other
+  functionality extensions, depending on the ITokenRecipient returned
+  by a EIP-820 lookup on the to address, and the functions implemented
+  by the target contract.
+
+- Adds lot of learnings from using ERC-20 Tokens, eg.
+  white-listed operators, providing Ether-compliant interfaces with
+  send(...), using ERC-820 (universal registry) to override and
+  adapt functionality.
+[[}]]
+
+## ERC-223 Extension [[{]]
+- ERC-20 extension.
+- REF: <https://github.com/ethereum/EIPs/issues/223>
+- "...ERC20 token standard is leading to money losses for end users.
+   The main problem is lack of possibility to handle incoming ERC20 transactions,
+   that were performed via transfer function of ERC20 token..."
+  ```
+  | "A" SENDING     CONTRACT send  1 Ether      , 1   Token       to "B"
+  | "B" DESTINATION CONTRACT is  NON-Ether aware, NON-Token aware.
+  | Result:
+  | A  →  B: 1ETH   ←   OK , rejected
+  | A  →  B: 1TOKEN ←   K  , possibly accepted since "B" can NOT recognize
+  |                          incoming TX.
+  |                          tokens stuck at the "B" balance
+  ```
+[[}]]
+
+## ERC-1400 "X.509" Ext. [[{]]
+- ERC-20 extension.
+- allows sending arbitrary extra data.
+- Ex. X.509 cert, used by Consensys "Universal Token". See related section.  [[}]]
+
+## ERC-621 Ext. [[{]]
+- Add increaseSupply,decreaseSupply extension (vs original single issuance)
+- REF <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-621.md> [[}]]
+
+## ERC-827:  [[{]]
+- ERC-20 extension allowing executions of calls inside transfers/approvals.
+<https://github.com/ethereum/EIPs/blob/master/EIPS/eip-827.md> [[}]]
+[[tokens.ERC20}]]
+
+# ERC-721 NFT [[{tokens.ERC721]]
+  <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-721.md>
+- "Oudated" by the more general ERC-1155.
+- Standard interface for non-fungible ("deed") tokens, represent the
+  ownership right/obligation over digital or physical asset. Ex:
+  - house ownership rights.
+  - loans obligations.
+
+- ERC-721 rights/obligations can be consigned to third party
+  brokers/wallets/auctioneers ("operators").
+
+- Genobank.io Example:
+  """ Daniel Uribe from Genobank.io will talk about their mission of
+      building a secure and decentralized P2P Genomic Network on the
+      Ethereum blockchain.
+       He will describe how they are using ERC721 and ERC1155 to record
+      unique genomic variants along with the use of IPFS and proxy
+      re-encryption to allow for private and secure sharing of DNA data.
+      - ERC721 and ERC1155 for recording and transmitting genomic data
+      - Proxy re-encryption to secure data and protect privacy
+      - The Ethereum blockchain to keep track of the informed consents
+  """
+[[}]]
+
+# ERC-785 NFT (batching + atomic swaps) [[{tokens.ERC785]]
+<https://eips.ethereum.org/EIPS/eip-875>
+- It also allow users to transfer without paying fees thanks to multisignature
+  ("ecrecover") support.
+- transfer allows for expiration time.
+
+[[}]]
+
+# ERC-1155 NFTs,FT,batch [[{tokens.ERC1155,02_use_case.nft_marketplace,12_solidity.tokens]]
+
+- Standard interface for contracts managing multiple token types.
+
+  ```
+                ┌·>     4000  Gold Coins , non-inflactionary ┐
+                ├·>    10000  FIAT Coins ,     inflactionary │ FT Tokens can be used as
+                ├·>     3000       Bonus , non-inflcationary ├ payments mechanism in different
+                ├·>      ...                                 │ legal contexts.
+                ├·>      ...                                 ┘
+   ERC-1155  1 ←│
+                ├·>  100 NFT type 1      ,                   ┐ 100 NFT are still unique.
+                ├·>    1 NFT type 2      ,                   │ in the sense that each of
+                ├·>    1 NFT type 2      ,                   ├ them can have a distinct
+                ├·>      ...                                 │ traceable history (or Serial
+                                                             ┘ number)
+  ```
+- Natively supported by "major" wallets.
+- Without ERC-1155:
+  - for each token and item type we require deploying a separate contract
+    (74000+ deployed tokens since 2015).
+  - Fungible and non-fungible tokens are not very compatible with each other.
+
+- With    ERC-1155:
+  - configuration data per Token ID.
+  - Atomic Multi-Transfers / Swaps get much simpler.
+  - functions 'transfer','approve','melt','trade' take arrays as
+    parameters allowing for tens/hundreds of operations in a single TX.
+
+- compliant implementations MUST aslo implement ERC-165 "supports" Interface
+  function and return "true" for 0xd9b67a26 interfaceID argument.
+
+-<https://eips.ethereum.org/EIPS/eip-1155>
+   - NOTE 1: `_operator`: address of an account/contract approved to make the transfer (SHOULD be msg.sender)
+  ```
+  | interface ERC1155 /* is ERC165 */ {
+  |   event TransferSingle( address indexed _operator, address indexed _from, address indexed _to,
+  |                         uint256 _id              , uint256 _value );
+  |   event TransferBatch ( address indexed _operator, address indexed _from, address indexed _to,
+  |                         uint256[] _ids           , uint256[] _values);
+  |
+  |   event ApprovalForAll( address indexed _owner, address indexed _operator, bool _approved );
+  |
+  |   event URI( string _value, uint256 indexed _id);
+  |
+  |   function safeTransferFrom(
+  |     address _from, address _to,
+  |     uint256 _id, uint256 _value,
+  |     bytes calldata _data
+  |   ) external;
+  |
+  |   function safeBatchTransferFrom(
+  |     address _from, address _to,
+  |     uint256[] calldata _ids, uint256[] calldata _values,
+  |     bytes calldata _data
+  |   ) external;
+  |
+  |   function setApprovalForAll(
+  |     address _operator, bool _approved
+  |   ) external;
+  |
+  |   // VIEW:
+  |
+  |   function balanceOf( address _owner, uint256 _id )
+  |   external view returns (uint256);
+  |
+  |   function balanceOfBatch(
+  |            address[] calldata _owners, uint256[] calldata _ids )
+  |   external view returns (uint256[] memory);
+  |
+  |   function isApprovedForAll( address _owner, address _operator )
+  |   external view returns (bool);
+  | }
+  ```
+
+- ERC-1155 Token Receiver : MUST be implemented by S.C. accepting transfers.
+  ```
+  | // ERC-165 identifier: 0x4e2312e0.
+  |
+  |  interface ERC1155TokenReceiver {  // Receiver "hook"
+  |    function onERC1155Received(
+  |      address _operator, address _from,
+  |      uint256 _id, uint256 _value,
+  |      bytes calldata _data)
+  |    external returns(bytes4);
+  |
+  |    function onERC1155BatchReceived(
+  |      address _operator, address _from,
+  |      uint256[] calldata _ids, uint256[] calldata _values,
+  |      bytes calldata _data
+  |    ) external returns(bytes4);
+  |  }
+  ```
+
+## ERC-1155 MICRO-HOW TO
+
+* PRESETUP) Get test ethers:
+  ```
+  ▸ https://faucet.rinkeby.io
+    ▸ click "Give me ethers" (Follow instruction in page)
+  ```
+
+1. Create standard metadata (needed by wallets, marketplaces, ...)
+  accesible from public URL:
+  ```
+  ▸ https://"meta"/.../0000...(64 hex zero-left padded) ..0000000001.json
+    {
+       "name" : "MY_FUNGIBLE_OR_NFT_TOKEN_NAME_1" ,
+       "description" : "Lorem Ipsum ..." ,
+       "image" : "https://imageURL/MY_FUNGIBLE_OR_NFT_TOKEN_NAME_1.png"
+    }
+
+  ▸ https://"meta"/.../0000...(64 hex zero-left padded) ..0000000002.json
+    {
+       "name" : "MY_FUNGIBLE_OR_NFT_TOKEN_NAME_1" ,
+       "description" : "Lorem Ipsum ..." ,
+       "image" : "https://imageURL/MY_FUNGIBLE_OR_NFT_TOKEN_NAME_2.png"
+    }
+  ```
+
+2. Create Solidity code: 
+   - Example "simple" implementation extending OpenZepellin "template".
+     Note: Much more advanced implementation can and DO exits. OpenZepellin 
+           can be "good enough" for games-like use-cases.
+   
+   REF: https://www.youtube.com/watch?v=SXp0sWmtuPc
+   ```
+   | // SPDX-Licence-Identifier: MIT
+   | pragma solidity >=0.8 <0.9.0;
+   |
+   | import "@openzepellin/contracts/token/ERC1155/ERC1155.sol";
+   |
+   | contract MyCollectibles is ERC1155 {
+   |   constructor() ERC1155("https://.../{id}.json") {
+   |     _mint( msg.sender, 1 /* Id NFT Type 1 */, 10 /* Cantidad */, "");
+   |     _mint( msg.sender, 2 /* Id NFT Type 2 */, 20 /* Quantity */, "");
+   |   }
+   | }
+   ```
+
+3. Use remix+Metamask|truffle|hardhat|... deployments or ... to deploy to
+  Rinkeby | MainNet | Private Net | ...
+
+4. Use some existing or custom "marketplace" to see the tokens.
+  e.g:
+  - <https://rinkeby.rarible.com>
+  - <https://testnets.opensea.io/>  (Rinkeby)
+
+[[{02_USE_CASE.finance.liquidity_provision]]
+[[ 02_USE_CASE.finance.trading]]
+## ERC-1155 vs MarketPlaces&Exchanges
+
+- ERC-1155 is short of an standard for an accountancy book.
+  It does not mandate any way to shell/buy the tokens reflected
+  in the accountancy book. MarketPlaces and Exchanges will be,
+  in general, of any type and with no standard in mind.
+  An curated example of a real decentralized exchange supporting
+  ERC-1155 "books" can be niftyswap:
+  C&P from https://github.com/0xsequence/niftyswap
+
+  Implementation of the decentralized uniswap protocol
+   for ERC-1155 tokens. (Uniswap was designed for ERC-20 tokens)
+ - Designed to favor ease of use.
+ - Provide guaranteed access to liquidity on-chain.
+
+ Context:
+ - Most exchanges maintain an order book and facilitate matches
+   between buyers and sellers.
+ - Niftyswap smart contracts hold liquidity reserves of various
+   tokens and trades are executed directly against these reserves.
+
+ - Prices are set automatically using the constant product
+   market maker mechanism, which keeps overall reserves in relative
+   equilibrium: Reserves are pooled between a network of liquidity
+   providers who supply the system with tokens in exchange for a
+   proportional share of transaction fees.
+[[}]]
+[[tokens.ERC1155}]]
+
+## Universal Token [[{security.aaa,tokens.universal_token,02_use_case.finance,01_PM.WiP]]
+<https://github.com/ConsenSys/UniversalToken>
+- "A Unique Standard for Centralized and Decentralized Finance Use Cases"
+- Actively maintained as 2022-03-14
+- Inspired by ERC-2020 and Hash Time Locked Contract and (HTLC) implementations.
+
+- Certificate-based token transfers: [[{standards.TLS,integration.PKI,signature.multisignature]]
+<https://github.com/ConsenSys/UniversalToken/blob/master/contracts/certificate/README.md>
+  - Codefi Assets is an extension to ERC-1400 (extension to ERC-20) using the  data" payload
+    to send a TLS CERTIFICATE GENERATED OFF-CHAIN:
+    - At (EVM) TX execution, 'ec-recover' is used to recover the signature of the TLS
+      certificate signer and then compared to the list of signatures authorized by the contract.
+      (Sort of multi-signature within 1 transaction) !!!          [[{02_QA.UX]]
+      + signature of the investor (ethereum transaction signature)
+      + signature of the issuer   (embedded certificate signature) [[}]]
+      NOTE: The 'ec-recover' pattern is the standard way to "zip" many off-chain 
+            signatures into a single signed on-chain TX.
+
+  - Designed to enable issuance of  ANY type of asset or financial instrument :
+    ```
+     - DeFi derivative. - wholesale CBDC  - gaming asset.
+     - loan             - ...             - Fund issuance
+     - mortage          - invoice         - ...
+     - retail           - contract
+    ```
+- Ej: Delivery-vs-payment:
+* <https://github.com/ConsenSys/UniversalToken/blob/master/contracts/tools/DVP.md>
+* Use-case: allow secure token transfers/exchanges between 2 stakeholders
+  ("holder1" and "holder2" in secondary market assets transfers).
+[[}]]
+
+[[02_use_case.finance.universal_token}]]
+[[tokens}]]

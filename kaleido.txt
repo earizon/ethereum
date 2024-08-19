@@ -1,0 +1,220 @@
+# Kaleido (SaaS Besu) [[{infrastructure.cloud.SaaS,dev_framework.kaleido,security.governance,13_SLC.troubleshooting,01_PM.low_code]]
+- External Links:
+-<https://docs.kaleido.io/getting-started/about-kaleido/>
+-<https://github.com/kaleido-io/>
+
+## Kaleido Marketplace (SaaS)
+<https://marketplace.kaleido.io/>
+- Zero Knowledge Token Transfer
+- Token Swap: Easily and securely trade tokens with other members in your environment.
+- Document Store: Store, manage and share information from your own private document store
+- App2App Messaging
+  - Communicate securely and reliably with end-to-end encrypted messaging from Dapp to Dapp
+  - Identity and Access Management (IAM)
+    Integrate your existing enterprise identity management with your Dapp
+- Rotate signers
+  Scale IBFT consensus algorithm for broader participation
+- Token Explorer Dashboard
+- EthWallet
+  Simple and secure way to manage key ownership for signing transactions.
+- HD Wallet
+  Submit transactions anonymously, mask your identity + manage accounts]
+- IPFS File Store
+  Securely store data through a censorship resistant file sharing protocol
+- On-Chain Registry
+  Bind verified digital certificates to org Ethereum addresses via on-chain registry
+- Public Ethereum Tether
+  Pin state proofs from your private chain to public Ethereum networks
+- Connectors
+  - If This Then That (IFTTT)
+    - Automate workflows and exchange data to and from the chain with the IFTTT connector
+  - Zapier
+    - Automate workflows and exchange data to and from the chain with any Zapier app connection
+  - Salesforce
+    - Exchange chain data to and from your Salesforce CRM and applications
+- Middleware
+  - Event Streams:
+    Trigger business processes, and stream data to off-chain caching or analytics
+  - REST API Gateway
+    APIs for all your Smart Contracts, backed by reliable Kafka streaming
+- Partner Integrations
+  - QEDIT Private Asset Transfer
+    Keep sensitive transactional data off the blockchain with zero-knowledge proof cryptography.
+  - Openlaw
+    Create, store and execute legal agreements for blockchain assets
+  - Treum
+    Model business processes, track assets + build supply chains faster
+  - unchain.io
+    Interact with an Ethereum smart contract on Kaleido via a simple API
+  - Clause
+    Store audit trail events from your Smart Clauses (TM) on your Kaleido blockchain.
+  - Chainlink
+    Provide external data to Ethereum smart contracts via oracle network
+  - Rhombus
+    Connect your smart contract with real-world data
+
+- Developer Tools
+  - MythX: Premier security analysis service for Ethereum smart contracts
+  - Remix: Quickly and easily write, compile and debug smart contracts.
+  - OpenZepplin: Reduce the risk of vulnerabilities in your applications by
+    using standard, tested, community-based smart contract code.
+  - MetaMask: Run dApps right in your browser without running a full Ethereum node.
+  - Truffle: Truffle gets developers from idea to dapp as comfortably as possible
+
+- Cloud Configurations
+  - Amazon Web Services: Key Management backed by AWS KMS
+    Create and control the keys used to encrypt your data
+  - Log Streaming
+    View and monitor your Kaleido resources in AWS CloudWatch
+  - Backup your Ledger to AWS S3
+    Backup your Ledger Data and Transactions to AWS S3 blob storage
+
+- Federated Login:
+  -  Implement simple and secure user sign-up, sign-in, and access control
+
+- Private Networking
+  Leverage secure network connectivity for sensitive data sharing
+- Microsoft Azure
+  - Key Protection
+  - Key Management backed by Azure Key Vault
+  - Log Streaming
+    View and monitor your Kaleido resources in Azure Monitor
+  - Data Backup
+    -Backup your Ledger Data and Transactions to Azure blob storage
+
+- Protocols: Geth, Quorum, Besu
+
+## Kaleido Network Governance:
+  - Kaleido Account:
+<https://docs.kaleido.io/using-kaleido/accounts-pricing>
+- parent resource used to manage "super user" actions
+  not related to the application:
+  - organizational identity
+  - shared administrators
+  - consortia collaborators
+  - uploaded certificates
+  - administrative bearer tokens
+  - current plan instance and billing orchestration.
+
+## Kaleido Services:
+<https://docs.kaleido.io/kaleido-services/>
+- Public Eth. Tether
+- Ether pool
+- Block Explorer
+- HD Wallet
+- IPFS
+- ID Registry
+- Eth-Connect
+
+## Kaleido AWS Integration:
+<https://docs.kaleido.io/aws-integrations/using-aws-integrations/>
+
+## Kaleido Troubleshooting:
+<https://docs.kaleido.io/support/troubleshooting/>
+
+## Kaleido Developer Material:
+- <https://docs.kaleido.io/developer-materials/api-101/>
+- <https://console-eu.kaleido.io/>
+- <https://github.com/kaleido-io/kaleido-js>   NodeJS example (Offline TX signing in Azure,...)
+
+## Kaleido Deploy in 10 minutes:
+<https://medium.com/coinmonks/deploy-a-private-ethereum-blockchain-in-10-minutes-with-kaleido-73c21a26d5bb>
+
+## Kaleido + Truffle:
+<https://medium.com/coinmonks/connecting-to-kaleido-private-ethereum-blockchain-with-truffle-7ae7cc6a3234>
+
+ PRE-SETUP 1: Deploy a private Kaleido Blockchain instance:
+<https://medium.com/coinmonks/deploy-a-private-ethereum-blockchain-in-10-minutes-with-kaleido-73c21a26d5bb>
+
+ PRE-SETUP 2: Write down the publicpublic key from any wallet
+
+ PRE-SETUP 3: Truffle Framework setup
+$ npm install -g -production windows-build-tools  (Windows OS only)
+$ npm install -g truffle
+$ npm install @truffle/hdwallet-provider
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+              allows to sign and exec TXs by providing
+              a private key that belongs to an existing
+              Ethereum wallet. (generated by MetaMask,...)
+
+$ cd ...
+$ mkdir trufflekaleido
+$ cd trufflekaleido
+
+$ truffle unbox webpack # ← simplex box
+
+ Kaleido STEP 1: Ether Pool
+- paste your public key here to receive some ETH.
+
+ Kaleido STEP 2: Edit/Create the contract
+$ "vim" .../contracts/hello.sol
+  |pragma solidity >=0.4.22 <0.6.0;
+  |contract Mortal {
+  |    address owner;
+  |    constructor() public { owner = msg.sender; }
+  |    function kill() public { if (msg.sender == owner) selfdestruct(msg.sender); }
+  |}
+  |
+  |contract Greeter is Mortal {
+  |    string greeting;
+  |    constructor(string memory _greeting) public { greeting = _greeting; }
+  |    function greet() public view returns (string memory) { return greeting; }
+  |}
+
+ Kaleido STEP 3.1: create truffle migration script
+$ "vim" .../migrations/2_deploy_contracts.js
+  |var mortal = artifacts.require("./Mortal");
+  |var greeter = artifacts.require("./Greeter");
+  |module.exports = function(deployer) {
+  |deployer.deploy(greeter, 'Jack');
+  |};
+
+ Kaleido STEP 3.2: Setup truffle-config.js
+const HDWalletProvider = require("@truffle/hdwallet-provider")
+const  privKeys = [${private_key_in_hex_format_with_NO_leading_0x}] ;
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            Ex: ["65c2d64f53211d8328c6db8e8bc22341c0f0b8d22989f40f4efd0ed55e3e3d8b"];
+module.exports = {
+  networks: {
+    development: {
+      provider: function() {
+        return new   HDWalletProvide  (  privKeys , "http://kaleido_host:port");
+      },                                             ^^^^^^^^^^^^^^^^^^^^^^^^
+      network_id: '*',                               In the Kaleido interface select node then:
+      gas: 4700000                                 - [Connect Node] →   [VIEW DETAILS]     → input SECRET-KEY → [Submit]
+    },                                                              (under Native JSON/RPC)
+    ganache: { ...  },                             - Copy the CONNECTION-URL under "Auth Type -INURL" section.
+  },
+  mocha: { ... }
+  compilers: {...}
+}
+
+
+ Kaleido STEP 4: compile and run
+$ truffle compile
+$ truffle migrate
+→ Running migration: 1_initial_migration.js
+→   Deploying Migrations...
+→   ... 0xbb56569292a0a5f47700f450dc8e166545308835b5fd8db7d09c00a306d83852
+→   Migrations: 0xcdd5665ec87da674dc58549f2fc0bb8c514661bb
+→ Saving artifacts...
+→ Running migration: 2_deploy_contracts.js
+→   Replacing Greeter...
+→   ... 0xa3447e50d0de2a86c0325e975478399d8abe931efa6458a9deb78b0b24a89d82
+→   Greeter: 0x96b9b7d5330021ed3e1ab2191482479def16c036
+
+ Kaleido STEP 5: Testing the Contract
+$ truffle console --network development
+truffle(development)>
+truffle(development)> Greeter.deployed().then(function(contractInstance) {contractInstance.greet().then(function(v) {console.log(v)})})
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      Greeter.deployed().then(
+                        function(contractInstance) {
+                           contractInstance.greet().then(
+                             function(v) {console.log(v)}
+                           )
+                        }
+                      )
+[[}]]
+
+

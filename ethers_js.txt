@@ -1,0 +1,108 @@
+[[{ethers.js]]
+https://docs.ethers.org/v5/api/contract/contract/
+
+Documentation  »  API  »  Contract Interaction  »  Contract
+
+- Contract: proxy of SC.
+
+  new ethers.Contract( address , abi , signerOrProvider ) // <··· Creating Instances
+  contract.attach( addressOrName ) : Contract  // <··· attach to deployed contract @ addressOrName
+  contract.connect( providerOrSigner ) : Contract <··· Returns new instance connected to providerOrSigner.
+                                                       (downgraded to read-only access for provider)
+
+PROPERTIES:
+  contract.address : string< Address >
+  contract.resolvedAddress : string< Address >    <··· resolved to address (in the ENS case)
+  contract.deployTransaction : TransactionResponse
+  If the Contract object is the result of a ContractFactory deployment, this is the transaction which was used to deploy the contract.
+  contract.interface ⇒ Interface                  <·· ABI interface
+  contract.provider ⇒ Provider                    <-- If provider was provided  @ constructor, this is that provider.
+                                                      If signer   was provided that had a Provider, this is that provider.
+  contract.signer ⇒ Signer                        <·· signer if provided.
+
+METHODS:
+contract.deployed( ) ⇒ Promise< Contract >
+Contract.isIndexed( value ) ⇒ boolean
+
+EVENTS:
+contract.queryFilter( event [ , fromBlockOrBlockHash [ , toBlock ] ) ⇒ Promise< Array< Event > >
+contract.listenerCount( [ event ] ) ⇒ number  <··· Return #listeners subscribed to event or total count of all events if no event provided.
+contract.listeners( event ) ⇒ Array< Listener > <··· Return list-of-listeners subscribed to event.
+contract.off( event , listener ) ⇒ this         <··· Unsubscribe listener to event.
+contract.on( event , listener ) ⇒ this          <··· Subscribe to event calling listener when the event occurs.
+contract.once( event , listener ) ⇒ this        <··· Subscribe once to event calling listener when the event occurs.
+contract.removeAllListeners( [ event ] ) ⇒ this
+
+META-CLASS: Class which has any of its properties determined at run-time.
+
+READ-ONLY METHODS (constant)
+contract.METHOD_NAME( ...args [ , overrides ] ) ⇒ Promise< any > <··· result-type depends on ABI.
+
+For numbers, BigNumber used when not in safe-range (i.e. less than 53 bits, such as an int24 or uint48).
+DataHexString returned for bytes (both fixed length and dynamic), a
+
+If call-reverts (or runs out of gas), a CALL_EXCEPTION will be thrown which will include:
+    error.address - the contract address
+    error.args - the arguments passed into the method
+    error.transaction - the transaction
+
+The overrides object for a read-only method may include any of:
+    overrides.from - the msg.sender (or CALLER) to use during the execution of the code
+    overrides.value - the msg.value (or CALLVALUE) to use during the execution of the code
+    overrides.gasPrice - the price to pay per gas (theoretically); since there is no transaction, there is not going to be any fee charged, but the EVM still requires a value to report to tx.gasprice (or GASPRICE); most developers will not require this
+    overrides.gasLimit - the amount of gas (theoretically) to allow a node to use during the execution of the code; since there is no transaction, there is not going to be any fee charged, but the EVM still processes gas metering so calls like gasleft (or GAS) report meaningful values
+    overrides.blockTag - a block tag to simulate the execution at, which can be used for hypothetical historic analysis; note that many backends do not support this, or may require paid plans to access as the node database storage and processing requirements are much higher
+
+contract.functions.METHOD_NAME( ...args [ , overrides ] ) ⇒ Promise< Result >
+The result will always be a Result, even if there is only a single return value type.
+This simplifies frameworks which wish to use the Contract object,
+since they do not need to inspect the return types to unwrap
+simplified functions.
+
+Another use for this method is for error recovery. For example, if a
+function result is an invalid UTF-8 string, the normal call using the
+above meta-class function will throw an exception. This allows using
+the Result access error to access the low-level bytes and reason for
+the error allowing an alternate UTF-8 error strategy to be used.
+
+WRITE METHODS (NON-CONSTANT)
+contract.METHOD_NAME( ...args [ , overrides ] ) ⇒ Promise< TransactionResponse >
+Returns a TransactionResponse for the transaction after it is sent to the network. This requires the Contract has a signer.
+
+WRITE METHODS ANALYSIS
+
+There are several options to analyze properties and results of a write method without actually executing it.
+contract.estimateGas.METHOD_NAME( ...args [ , overrides ] ) ⇒ Promise< BigNumber >
+
+Returns the estimate units of gas that would be required to execute the METHOD_NAME with args and overrides.
+
+The overrides are identical to the overrides above for read-only or write methods, depending on the type of call of METHOD_NAME.
+
+
+contract.populateTransaction.METHOD_NAME( ...args [ , overrides ] ) ⇒ Promise< UnsignedTx >
+
+Returns an UnsignedTransaction which represents the transaction that would need to be signed and submitted to the network to execute METHOD_NAME with args and overrides.
+
+The overrides are identical to the overrides above for read-only or write methods, depending on the type of call of METHOD_NAME.
+contract.callStatic.METHOD_NAME( ...args [ , overrides ] ) ⇒ Promise< any >
+
+Rather than executing the state-change of a transaction, it is possible to ask a node to pretend that a call is not state-changing and return the result.
+
+This does not actually change any state, but is free. This in some cases can be used to determine if a transaction will fail or succeed.
+
+This otherwise functions the same as a Read-Only Method.
+
+The overrides are identical to the read-only operations above.
+Event Filters
+
+An event filter is made up of topics, which are values logged in a Bloom Filter, allowing efficient searching for entries which match a filter.
+contract.filters.EVENT_NAME( ...args ) ⇒ Filter
+
+Return a filter for EVENT_NAME, optionally filtering by additional constraints.
+
+Only indexed event parameters may be filtered. If a parameter is null (or not provided) then any value in that field matches.
+←Contract Interaction
+ContractFactory→
+The content of this site is licensed under the Creative Commons License. Generated on October 19, 2022, 7:40pm.
+
+[[ethers.js}]]

@@ -1,0 +1,179 @@
+# Web3J JAVA SDK [[{dev_framework.java.web3j,10_EVM.events]]
+  - https://docs.web3j.io/
+  - https://docs.web3j.io/getting_started.html
+  - https://github.com/web3j/sample-project-gradle/blob
+      /master/src/main/java/org/web3j/sample/Application.java
+  - https://docs.web3j.io/infura.html Using infura
+
+- Web3J recipes:
+  - SYNC vs Future vs RXJAVA(recomended)
+    └ SYNC. REQUESTS
+      Web3ClientVersion web3ClientVersion = web3.web3ClientVersion()
+          .send().getWeb3ClientVersion();
+
+    └ CompletableFuture (Future ON ANDROID): [[{architecture.async]]
+      Web3ClientVersion web3ClientVersion =
+         web3.web3ClientVersion()
+         .sendAsync().get/*block thread*/();
+
+    └ RXJAVA OBSERVABLE:
+      web3.web3ClientVersion()
+          .observable().subscribe(x -> {
+          String clientVersion =
+              x.getWeb3ClientVersion();
+      });                                    [[}]]
+
+
+  - Transact (write/change state) vs Call (Read-only) with S.C. Wrapper:
+    └ TRANSACT WITH A SMART CONTRACT WRAPPER: (changes status in blockchain, needs mining)
+    · TransactionReceipt transactionReceipt = contract.someMethod("param1", ...).send /*block*/();
+    ·
+    └ CALL A SMART CONTRACT WRAPPER: (local query to "view" or "pure" solidity code, no mining needed)
+      Type result = contract.someMethod(param1, ...).send();
+
+### 'web3j' Wrapper command line client around web3j library
+  $ web3j version|wallet|solidity ... [[{01_PM.TODO}]]
+
+## (event)filters [[{]]
+   REF: https://docs.web3j.io/filters.html
+  - Provide notifications of Ethereum-events
+  - Based on RXJava
+  - NOTE: Standard Ethereum filter-classes:
+          - Block filters
+            - provide only block-hash.
+              a second request(block-hash) needed to fetch the actual block
+          - Pending TX filters
+            - provide only TX-hash.
+              a second request(TX-hash) needed to fetch the actual TX
+          - Topic filters  (aka SmartContract event-logs):
+            - WebSockets
+            - JSON-RPC poll
+
+  - web3j's managed Filter implementation:
+    - Provides a fully asynchronous event based API
+      for working with filters.
+    - Based on RxJava's Flowables which provides a consistent API
+      for working with events, which facilitates the chaining
+      together of JSON-RPC calls via functional composition.
+      Subscription subscription =
+        //  start listening for new events
+        web3j .blockFlowable (false)        .subscribe(block -> { ... }); ← Listening for new blocks
+        web3j .transactionFlowable()        .subscribe(   tx -> { ... }); ← Listening for new mined TXs
+        web3j .pendingTransactionFlowable() .subscribe(   tx -> { ... }); ← Listening for new pending-to-mine TXs
+                                                                           (TXs added to local-node queue)
+        web3j .replayBlocksFlowable(blck0, blck1, <fullTxObjects>) .subscribe(block -> { ...  });
+        //  Replay history (block/TX) filters  (in a range blck0 to blck1 of blocks):
+        web3j .replayBlocksFlowable      (blck0, blck1, <fullTxObjects>) .subscribe(block -> { ... });
+        web3j .replayTransactionsFlowable(blck0, blck1                 ) .subscribe(tx -> { ... });
+        //  Replay history (block/TX) filters and provide notification (via the submitted Flowable) once you’ve caught up
+        web3j .replayPastBlocksFlowable  (blck0,        <fullTxObjects>, <onCompleteFlowable>) .subscribe(blck -> { ... });
+                                                                        ^^^^^^^^^^^^^^^^^^^^                    ^^^^^^^
+                                                                        listen here for                        listen here for
+                                                                        future events                          past events
+        //  Replay history (block/TX) filters and continue listening for new events
+        web3j .replayPastAndFutureBlocksFlowable( block0, <fullTxObjects>). subscribe(block -> { ... });
+            (.replayPastAndFutureTransactionsFlowable)                                        ^^^^^^^
+                                                                                         listen here for
+                                                                                         past and future events
+
+        NOTE:simpler alternatives exits providing onley block/tx hashes
+     ...
+     subscription .unsubscribe() ; ← end subscription
+[[}]]
+
+## Topic filters [[{]]
+ EVM (Smart-Contract) events stored in the TX log of the blockchain.
+ - Since code changing the blockchain status (write TXs) are executed
+   "at will" (maybe one second later, maybe one hour later) EVM code
+   notifies of any return value from calls to smart-contracts functions
+   using those events.
+   - Note that a solidity function can return a value, but this value
+     is just useful to other calling function executed during the TX,
+     not to the external web3 client that send the original signed TX
+     maybe long time ago. This client only have to oportunity to know
+     the TX status by listening for EVM topic log event (filters in web3j)
+
+  STEP 1:
+    EthFilter filter = new EthFilter( block0 , block1 , <optional-contract-address>)
+                       [ .addSingleTopic (...) | .addOptionalTopics (..., ...) | ...];
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     - specify topics of interest and initial/end block.
+                     - individual topics represent indexed parameters on the smart contract
+                     - If no topics are added, all EVM events taking place in the network
+                       will be captured.
+  STEP 2:
+      Subscription subscription =
+        web3j .ethLogFlowable(filter) .subscribe(log -> { ... });
+
+Java Implementation Note:
+- blockFlowable itself is composed of two of separate JSON-RPC calls:
+
+public Flowable<EthBlock> blockFlowable(
+      boolean fullTransactionObjects, long pollingInterval) {
+  // STEP 1: Create flow of block-hash events
+  return this.ethBlockHashFlowable(pollingInterval)
+    .flatMap(blockHash ->
+      // STEP 2: Map each returned blockHash by using JSON-RPC to query for new block
+      web3j.ethGetBlockByHash(blockHash, fullTransactionObjects).flowable()
+    );
+}
+
+
+REF:
+Integration-Tests
+@[https://github.com/web3j/web3j/blob/master/integration-tests/src/test/java/org/web3j/protocol/core/FlowableIT.java]
+Manual filter API:
+@[https://github.com/web3j/web3j/blob/master/integration-tests/src/test/java/org/web3j/protocol/scenarios/EventFilterIT.java]
+
+- Web3J: fetch receipt logs:
+@[https://www.programcreek.com/java-api-examples/?class=org.web3j.protocol.core.methods.response.TransactionReceipt&method=getLogs]
+private void sendTransferTokensTransaction(...)  {
+    Function function = transfer(to, qty);
+    String functionHash = execute(credentials, function, contractAddress);
+    TransactionReceipt transferTransactionReceipt = waitForTransactionReceipt(functionHash);
+    assertThat(transferTransactionReceipt.getTransactionHash(), is(functionHash));
+    List<Log> logs = transferTransactionReceipt.getLogs();
+    assertFalse(logs.isEmpty());
+    Log log = logs.get(0);
+
+    List<String> topics = log.getTopics(); // verify event called with expected function params
+    assertThat(topics.size(), is(3));
+
+    Event transferEvent = transferEvent();
+
+    // check function signature - we only have a single topic our event signature,
+    // there are no indexed parameters in this example
+    String encodedEventSignature = EventEncoder.encode(transferEvent);
+    assertThat(topics.get(0), is(encodedEventSignature));
+    assertThat(new Address(topics.get(1)), is(new Address(credentials.getAddress())));
+    assertThat(new Address(topics.get(2)), is(new Address(to)));
+
+    // verify qty transferred
+    List<Type> results = FunctionReturnDecoder.decode(
+            log.getData(), transferEvent.getNonIndexedParameters());
+    assertThat(results, equalTo(Collections.singletonList(new Uint256(qty))));
+}
+[[}]]
+
+* See Also:
+### SpringBoot ERC-20 RESTfull ex:  [[{01_PM.low_code}]]
+@[https://github.com/blk-io/erc20-rest-service/blob/master/src/main/java/io/blk/erc20/Controller.java]
+[[dev_framework.java.web3j}]]
+
+
+# Web3J TODO
+
+## Valid private key range not enforced ·
+*  https://github.com/web3j/web3j/issues/502
+
+## Generate wallet from Ganache test account private key
+   https://github.com/web3j/web3j/issues/697 
+
+## Expose hardened bit in Bip32ECKeyPair for other libraries
+   web3j/web3jhttps://github.com/web3j/web3j/issues/838 
+
+## Adding support of hardware wallets to web3j
+   web3j/web3jhttps://github.com/web3j/web3j/issues/892 
+
+## Different privateKey generated by Mnemonic comparing to other libraries
+   web3j/web3jhttps://github.com/web3j/web3j/issues/919 

@@ -1,0 +1,114 @@
+[[{scalability.101,101,scalability.zkp,privacy.zkp,scalability.layer2]]
+[[dev_framework.remix,02_doc_has.diagram,layer2.rollup.optimistic]]
+[[,layer2.rollup.zk,01_PM.WiP]]
+# SCALABILITY SOLUTIONS
+
+## L1 Scalability [[{]]
+- L1: layer 1, scaling the main-net (vs children networks)
+- Solutions include:
+  · DDBB (storage) Sharding.
+  · Multi-signature aggregation.
+    (e.g.: EIP-191: Signed Data  Standard,...)
+  · EVM improvements.
+  · eWASM runtime.
+[[}]]
+
+## State channels [[{]]
+  · Account-to-Account offchain state channel periodically
+    synchronized within MainNet. Ussually the state reflects
+    the balance of two peer accounts, but it could be
+    anything else. It highly increases the TX/sec by offloading
+    as much TX as desired from main network, but requires
+    collaboration and monitoring by both peers.
+[[}]]
+
+## Layer 2 Side chain  [[{]]
+  · Similar to L2 Rollups with with lower security.
+    They "sync" to L1 through peer "escrow" contracts on each
+    network (L1 and L2) in charge of syncrhonizing escrows.
+    They can use more centralized consensus (consortium IBFTv2,
+    ...).
+    Rollups require L2 each block update to be "notarized" (optimistic
+    rollups) or probed (zk-rollups). Side-chains can "sync" at
+    will every N blocks.
+    "sidechain" term is often used to imply that an INDEPENDENT
+    blockchain has a relationship with another blockchain.
+  · bridge contracts types can be divided into:
+    · Single organisational: 1        owner  custody locked funds in escrow.
+    · Multi organisational : N-of-M   owners custody locked funds in escrow.
+    · Crypto-economic      : "moving" owners custody locked funds in escrow
+                             relative to the weight of their assets.
+[[}]]
+
+## L2 Rollups Scaling: [[{]]
+- L2: Layer 2 "Children" networks protected by parent network (ussually MainNet).
+  · Many different methods exist to sync with MainNet,
+  · As of 2021, optimistic rollups (bundling L2-chain blocks) is the working solution.
+    In a near future zk-Rollups will "replace" them.
+  └ L2 optimistic-Rollups provide passive security.
+    After
+    L2         zk-Rollups provide active  security.
+    L2 optimistic-Rollups need to submit a "zipped" version of data
+    to L1 blockchain while zk-Roolups have to potential to send only a
+    proof of the full block allowing for theorical performance upgrades of
+    tens of thousands TX/s.
+    • zSNARKS provides also for enhanced privacy. (but scalability features
+      are even more important).
+    • optimistic-Roolups are more compatible with Layer 1 "MainChain".
+      zk-SNARKs L2 chains require new signatures schemas not compatible with
+      L1, requiring also changes in wallets (Metamask,...) to avoid the need
+      of intermediate "custom" DApp wallets.
+
+      Scalability L2 Comparation:
+      REF: @[https://www.youtube.com/watch?v=qwtOJvFo6vs]
+                          ┌─────────┐
+                          │ Honesty │← Active Security.
+                          │  Proofs │  No false transitions can be submitted.
+                          └────┬────┘
+                               ├ ZKP (zk-Rollups: Validium, 0x, ...)
+                               │
+                               ├ Sign.Aggregation
+                               │
+                               │
+                               │        Merkle
+    ┌────────┐ Compression     │        Trees    ZKP ┌─────────┐
+    │  Data  │──────┴─────┬────┼───┬──────┴────┬──┴──│  Data   │
+    │On Chain│           Gas   │Acummulators   VC    │Off-Chain│ [[{02_use_case.identity}]]
+    └────────┘         golfing │                     └─────────┘
+                               ├  Rollback
+                               ├  Slashing
+                               │
+                               ├  Optimistic Rollups/Watch-Towers: monitoring TXs.
+                               │  W.T can fail but they can compete with each other
+                               │  e.x.: Plasma, Optimistic, ...
+                               │
+                           ┌───┴────┐
+                           │ Fraud  │← Passive Security. Fix problem after detection.
+                           │ Proofs │  All TX are accepted as valid and Watch-Towers
+                           └────────┘  need to probe the opposite.
+
+
+    • Accumulators can only test "SET membership".
+    • Merkle trees improve over accumulators by having an "index" that can be mapped to a balance.
+    • Factors commitments mix the advantages of accumulators and Merklet trees.
+    • ZKP improves all over the previous techniques (Accumulators/Merkle Trees, ...)
+[[}]]
+[[scalability.101}]]
+
+
+# EIP 648: Process TXs in parallel [[{scalability.evm,standards.EIP/ERC.648,01_PM.TODO]]
+@[https://github.com/ethereum/EIPs/issues/648] (V. Buterin)
+## Introduce new type of transaction (following same general format as #232)
+  [2, network_id, startgas, to, data, ranges]
+  Where ranges is an RLP list, where each value in the list is an
+  address prefix, representing the range of all addresses with that
+  prefix.
+## Rationale
+  transactions in the EVM to be processed in parallel much more easily,
+  by specifying statically what addresses they can access; it also
+  appropriately incentivizes making transactions that are easy to
+  parallelize. It does this in a maximally backwards-compatible and
+  non-intrusive way where old-style transactions can continue to work.
+[[}]]
+
+

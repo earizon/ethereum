@@ -1,0 +1,32 @@
+# polygon.Network [[{scalability.layer2.polygon,layer2.rollup.optimistic,01_PM.TODO]]
+- Layer 2 network with low transaction costs.
+- Scanner: @[https://polygonscan.com/]
+- Polygon solves pain points associated with Blockchains, like high gas
+  fees and slow speeds, without sacrificing on security. This
+  multi-chain system is akin to other ones such as Polkadot, Cosmos,
+  Avalanche etc, but with at least three major upsides:
+
+  + It is able to fully benefit from Ethereum’s network effects
+  + It is inherently more secure
+  + It is more open and powerful
+
+- Polygon is both a protocol and a framework for building and connecting
+  Ethereum-compatible blockchain networks, featuring:
+
+  + One-click deployment of preset blockchain networks
+  + Growing set of modules for developing custom networks
+  + Interoperability protocol for exchanging arbitrary messages with Ethereum
+    and other blockchain networks
+  + Modular and optional "security as a service".
+  + Adaptor modules for enabling interoperability for existing blockchain networks.
+
+- See POLYGON (MATIC) - Ethereum's Internet Of Blockchains Explained - Layer 2 [Video]
+@[https://www.youtube.com/watch?v=IijtdpAtOt0%20%20POLYGON%20(MATIC)%20-%20Ethereum%27s%20Internet%20Of%20Blockchains%20Explained%20-%20Layer%202]
+
+- TODO: Looks like different Polygon networks can connect
+        through side-chains or rollups.
+  extracted from https://blog.infura.io/offchain-protocols-sidechains-and-rollups/
+  "... Polygon side-chain uses a crypto-economic bridge ...
+        (⅔)+1 of stake to appoint validators who post periodic
+        checkpoints about network's state to bridge contract  ..."
+[[}]]

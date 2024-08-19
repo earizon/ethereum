@@ -1,0 +1,33 @@
+[[{]]
+# Parity
+
+* (Rust Based) Public Node 
+- External Links:
+  - @[https://parity.io/parity.html]
+  - @[https://github.com/paritytech/parity]
+  - @[https://github.com/paritytech/parity/wiki/Coding-guide]
+  - @[https://github.com/paritytech/parity/wiki]
+
+- features:
+  "full" Ethereum Wallet and Dapp environment with web-front-end ("http://127.0.0.1:8180"):
+  - Account, address-book and multi-sig management
+  - Key creation, importing and exporting
+  - Web3 Ðapp browser
+  - Hardware and electronic cold-wallet support
+  - Name registry support
+- Parity Substrate:
+  -  Designed to build custom blockchains for enterprises
+     - Right privacy level for each use case
+     - Light- client- first design for mobile applications and IoT
+     - Forkless upgrade path to keep networks together
+     - Multi-level permissioning
+     - Encrypted transactions and state
+     - Limiting to asynchronous calls optionality
+     - Account-level locking
+     - Governance tools and methods such as stakeholder referendums,
+       approval voting, and qualified abstention biasing
+  - Architected on industry-standard WebAssembly  smart contracts
+  - Highly extensible Libp2p networking
+  - Rust-based primary implementation for speed and reliability
+  - Javascript secondary implementation for developability
+[[}]]

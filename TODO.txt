@@ -1,0 +1,2580 @@
+## TODO / Non-Classified
+
+## MetaMask Integration Unlocks Decentralized Social for Millions of Ethereum Users
+
+* <https://cryptobriefing.com/metamask-integration-unlocks-decentralized-social-for-millions-of-ethereum-users/>
+
+
+[[{signature.multisignature.eip4337,signature.snort,scalability,10_evm.gas]]
+## Ethereum EIP-4337: Account Abstraction using alt mempool
+* <https://eips.ethereum.org/EIPS/eip-4337>
+
+## EIP-1820: Pseudo-introspection Registry Contract
+* <https://eips.ethereum.org/EIPS/eip-1820>
+
+## EIP-7212:  "Passkeys Legers" [[{PM.TODO.now,wallet.EIP7212]]
+
+* @LinkedIn (Alberto G. Toribio)
+  ...  A la vez que Ledger envía sus primeros Stax (2024-08), la industria
+  crypto ha reemplazado las app wallets y hardware wallets por un un nuevo
+  estándar: EIP-7212. Este estándar hace posible usar un tipo de clave
+  criptográfica llamada passkeys como clave privada para poseer criptoactivos,
+  ...soportado por defecto en Android, iPhone, y es el método recomendado de 
+  login en Google o Microsoft 365. 
+  .... Con la llegada del estándar EIP-7212, empresas como Metamask, Ledger
+  o Wallet Connect están fuera del mercado ...Wallet Connect reconocía en 
+  ETHCC 2024 Bruselas que su empresa está trabajando en reinventarse, porque
+  asumen que su producto desaparecerá en dos años.<br/>
+[[PM.TODO.now}]]
+
+## Weird Error with Addresses
+* <https://ethereum.stackexchange.com/questions/140043/weird-error-with-addresses?noredirect=1#comment159295_140043>
+
+## Dafny formal verification
+* <https://github.com/ConsenSys/evm-dafny>
+
+## Top Cryptocurrency Exchanges Ranked By Volume
+* <https://coinmarketcap.com/rankings/exchanges/>
+
+## Smart Contract Security Verification Standard
+* <https://www.linkedin.com/posts/gerardespuga_sc-security-verification-ugcPost-6994593042657648640-bo0E>
+
+[[{PM.TODO.now]]
+## "Ethereum Merge Update: End of PoW, Long Live PoS!" en YouTube
+
+* <https://youtu.be/jy4QgwdTb7o>
+[[PM.TODO.now}]]
+
+
+
+[[{12_solidity.qa.inmutability]]
+## clone contracts with immutable arguments
+
+* <https://github.com/Arachnid/clones-with-immutable-args>
+  The immutable arguments are stored in the code region of the created 
+  proxy contract, and whenever the proxy is called, it reads the 
+  arguments into memory, and then appends them to the calldata of the 
+  delegate call to the implementation contract. The implementation 
+  contract can thus read the arguments straight from calldata. 
+
+* <https://github.com/Arachnid/clones-with-immutable-args>
+[[12_solidity.qa.inmutability}]]
+
+## ZKP app bolierplate [[{]]
+* <https://github.com/privacy-scaling-explorations/zkp-app-boilerplate/blob/main/TUTORIAL.md>
+[[}]]
+
+## LLM Security and Ethereum [[{]]
+* <https://twitter.com/jconorgrogan/status/1635695064692273161>
+  "...esas vulnerabilidades detectadas existían de verdad
+  y fueron expuestas en 2018 tras ser hackeado el contrato.."
+[[}]]
+
+## pwell-known DAO governance framework [[{]]
+* AragonOS vs Gnosis Zodiac vs OZ vs etc...
+[[}]]
+
+## probably correct SCs [[{]]
+
+* <https://www.linkedin.com/posts/peter-robinson-98a0061_provably-correct-smart-contracts-using-deepsea-activity-7026430537997185026-Y7mu>
+[[}]]
+
+## Ropsten, Rinkeby & Kiln Deprecation Announcement [[{]]
+
+* <https://blog.ethereum.org/2022/06/21/testnet-deprecation>
+  Two testnets, Goerli and Sepolia, will be maintained going forward.
+  Goerli is recommended for stakers to test protocol upgrades and
+  developers who want to interact with a large existing state. Sepolia
+  is recommended for users and developers who want a lighter weight
+  chain to sync to and interact with.
+
+*  For the majority of the Ethereum network, the Merge will be a
+  seamless transition like any other software upgrade. But for solo
+  stakers, it's important you upgrade your clients with an execution
+  and consensus layer.
+[[}]]
+
+
+## Uniswap V3 Development Book  [[{]]
+* <https://uniswapv3book.com/>
+[[}]]
+
+## reentrant attack explained [[{security.101]]
+
+* How to ".call" a function of another contract that
+  uses ".call"
+  <https://www.reddit.com/r/ethdev/comments/xucrim/how_to_call_a_function_of_another_contract_that/>
+[[}]]
+
+## web3 scaffolding [[{PM.low_code,qa.ux]]
+* <https://www.reddit.com/r/ethdev/comments/xv5n8f/>
+[[}]]
+
+
+## SOBRE LA NECESIDAD DE DOTAR DE ESTRUCTURA JURÍDICA A LAS DAO: [[{]]
+
+* <https://www.linkedin.com/posts/mar%C3%ADa-del-sagrario-navarro-l%C3%A9rida-4b2652160_sobre-la-necesidad-de-dotar-de-estructura-activity-6985158623903551488-zcAJ>
+
+  SUSHISWAP PROPONE REORGANIZARSE PARA MITIGAR RIESGOS
+  ... Aparecen casos de exigencia de responsabilidad a las DAO,
+  o a sus token holders ... ej: "CFTC contra Ooki DAO" ...
+  revulsivo de la propuesta de SushiSwap DAO de buscar una 
+  correcta estructura legal que le permita “mitigar riesgos”.
+  ... interesante, tanto por la relevancia del protocolo SushiSwap 
+  – uno de los más importante DEX- como por la incertidumbre que
+  la propia propuesta plantea. ... Con un 92% a favor se decidió
+  crear una estructura legal “by limiting liability for contributors”.
+  ... se propone:- Crear una fundación en las Islas Caiman.... 
+  y facilitar las actividades fuera de la cadena (administrar el
+treasury y los grants, facilitar las propuestas, las votaciones,..)-
+  .. Una fundación en Panamá para administrar el protocolo de Sushi
+  existente (incluidos SC de Automated Market Maket, protocolo Kashi 
+  y staking ...  una corporación Panameña para operar la capa GUI
+  del protocolo.
+  ...  desde el punto de vista jurídico surgen preguntas interesantes
+  ... ¿cual es el fundamento de la "selección" de estos wrappers
+  jurídicos? Se rechaza el derecho suizo porque "los casos de uso
+  de Foundations & Verein (es decir, asociaciones) no eran apropiados
+  dadas las actividades actuales de Sushi y el modelo fiscal no es
+  favorable ...  Reflexiones a las que yo uniría la sensación de 
+  estar caminando hacia un parcelamiento de responsabilidades que
+  van a obligar a mirar, como ya ocurrió por ejemplo en el ámbito
+  de los grupos de sociedades, al concepto empresa y al concepto
+  clave de "control".
+[[}]]
+
+[[{use_case.energy]] 
+## Traceability renewal energy.
+
+* <https://www.linkedin.com/feed/update/activity:6981666140078948352#share-modal>
+[[use_case.energy}]]
+
+[[{12_solidity.diamonds,use_case.ticketing]]
+## Diamond Contracts in Remix 
+
+* <https://www.youtube.com/watch?v=8p4NhC9sLDA&ab_channel=WhatTheFunc%3F>
+
+* Ex: "production ready" diamond:
+  <https://louper.dev/diamond/0x93ea6ec350ace7473f7694d43dec2726a515e31a?network=mainnet>
+
+  ```
+  | DiamondLoupeFacet
+  | 0x47195a03fc3fc2881d084e8dc03bd19be8474e46
+  | Method 	Selector
+  | facetAddress(bytes4) 	0xcdffacc6
+  | facetAddresses() 	0x52ef6b2c
+  | facetFunctionSelectors(address) 	0xadfca15e
+  | facets() 	0x7a0ed627
+  | supportsInterface(bytes4) 	0x01ffc9a7
+  | [[}]]
+  | 
+  | OwnershipFacet  0x14ab595377e4fccca46062a9109ffac7fa4d3f18Method
+  | Selectorowner()            0x8da5cb5b
+  | transferOwnership(address) 0xf2fde38b
+  | 
+  | StakingFacet    0x4a271b59763d4d8a18ff55f1faa286de97317b15
+  | claimTickets(uint256[],uint256[]) 0xaa061d09
+  | frens(address) 	0x4b334ef6
+  | stakeGhst(uint256) 0x88fa5b04
+  | stakeUniV2PoolTokens(uint256)  0x338d88
+  | castaked(address) 0x98807d84
+  | ticketCost(uint256) 0xf8a6103
+  | fwithdrawGhstStake() 0x9119f150
+  | withdrawGhstStake(uint256) 0x9c0dfa01
+  | withdrawUniV2PoolStake()  0xc51c02ed
+  | withdrawUniV2PoolStake(uint256) 0xeb747260
+  | 
+  | TicketsFacet 0xdf36944e720cf5af30a3c5d80d36db5fb71dde40
+  | balanceOf(address,uint256) 0x00fdd58e
+  | balanceOfAll(address) 0xfe992c98
+  | balanceOfBatch(address[],uint256[]) 0x4e1273f4
+  | isApprovedForAll(address,address) 0xe985e9c5
+  | safeBatchTransferFrom(address,address,uint256[],uint256[],bytes) 0x2eb2c2d6
+  | safeTransferFrom(address,address,uint256,uint256,bytes) 0xf242432
+  | asetApprovalForAll(address,bool) 0xa22cb465
+  | setBaseURI(string) 0x55f804b3
+  | totalSupplies() 0xd068cdc5
+  | totalSupply(uint256) 0xbd85b039
+  | uri(uint256) 0x0e89341c
+  ```
+
+## zkBattleship: world’s 1st&only interactive ZKP tutorial
+* <https://xiaohuiliu.medium.com/introducing-zkbattleship-the-worlds-first-interactive-zero-knowledge-proof-tutorial-95d1fc5f65cb>
+
+## Polygon zkEVM Public Testnet
+
+* The Next Chapter for Ethereum
+ <https://blog.polygon.technology/polygon-zkevm-public-testnet-the-next-chapter-for-ethereum/>
+
+## online Piano NFT [[{]]
+
+two token contracts involved.
+- Piano Keyboard Token (ERC721):  the keyboard itself
+  with the image stored on chain, samples stored on arweave.
+- Sound Token (ERC1155) tokens:  acting as sound "sample packs"
+  for the Keyboard Token, ranging from electric pianos, grand pianos,
+  synths, basses... you name it! Users can mint and own Sound tokens.
+- <https://3szarl6dzyiypmhnj2bqplaiqydgn5qmh24iu7zz6nzr5q5fwuxa.arweave.net/3LIIr8POEYew7U6DB6wIhgZm9gw-uIp_OfNzHsOltS4/>
+[[}]]
+
+## 0x Labs Documentation: API Specification
+
+* <https://www.0x.org/docs/api>
+* 0x Labs (trusted unofficial standard for decentralized exchange).
+  .. currently supports 7 major blockchains:
+    Ethereum, Polygon, Fantom, Avalanche, Optimism, BNB Chain, and Celo
+  .. integrations across all of the top wallets and apps, including MetaMask,
+    Coinbase Wallet and Coinbase NFT, Polygon Wallet, Brave, Matcha, dYdX,
+    Zapper, Zerion, and Shapeshift,
+
+## Personality NFT
+
+* <https://www.personalitynft.com/>
+
+
+## zero knowledge for those with zero knowledge
+
+* <https://github.com/cawfree/zk-starter>
+
+## EEA: Ethereum Common Tests: what, how, why
+
+* <https://m.youtube.com/watch?v=x8qSF2_saxc>
+
+## EBSI Ethereum Conformant wallets?
+* <https://ec.europa.eu/digital-building-blocks/wikis/display/EBSI/Conformant+wallets>
+
+## Flow is building future of culture
+
+* <https://flow.com/> 
+
+[[{use_case.realstate]] 
+## "Queremos convertir los contratos de alquiler en SC"
+ 
+* <https://www.eleconomista.es/vivienda-inmobiliario/noticias/11936257/09/22/Nicolas-Barilari-Nash21-Queremos-convertir-los-contratos-de-alquiler-tradicionales-en-contratos-inteligentes.html>
+
+... compañía especializada en tokenizar los contratos de alquiler 
+...  Fundada por cuatro emprendedores, Nicolás Barilari, Miguel Caballero, 
+Gabriela Roberto Baró y Jesús Pérez, Nash21 
+ ... brindar a los partícipes del mercado inmobiliario acceso a nuevos usos
+para estos contratos. ...  Al propietario que quiere garantizar, tokenizar y
+poder vender su contrato de alquiler ... al inquilino que quiere contratar 
+una garantía para su contrato de alquiler ... al inversor que quiere obtener
+una rentabilidad comprando contratos garantizados.
+... ¿Cómo funciona? estudio del perfil del inquilino y propietario. 
+Una vez que Nash21 lo aprueba, se lleva a cabo la tokenización del contrato 
+y la garantía de éste, ... incluye una garantía total de impago ... el
+propietario cobrará la renta, pague o no pague su inquilino.
+...se habilitan usos como:
+  - Comprar y vender contratos de alquiler. 
+  - Cobrar la renta por día o semana.
+  - Utilizar el contrato de alquiler (el NFT) como medio de pago o
+    garantía para préstamos.
+  - Enviar el NFT del contrato o la renta a una tercera persona en
+    cualquier parte del mundo
+[[use_case.realstate}]]
+
+## w3c wallets  [[{]]
+* <https://www.linkedin.com/pulse/your-keys-problem-conor-svensson/>
+  But a middle ground is emerging which has the potential to appease
+  both Web3 businesses and Web3 consumers in the form of semi-custody
+  wallets. Semi-custody wallets use a technique called multi-party
+  computation (MPC) where wallets can be split between multiple
+  parties or devices in order to transact with a blockchain. A
+  threshold is defined that sets the number of parties required to
+  successfully perform a transaction out of the total parties storing
+  parts of the key.
+*  For example, a key could be split between a device, a user account
+  and an exchange with a threshold of two. This means that two out of
+  the three parties or devices need to be used in order to authorise a
+  transaction successfully. In practical terms, this means that a user
+  can have an MPC wallet they are in charge of primarily via their
+  local account and device, but there is a backup party in the mix
+  should the user lose their device or forget their local account
+  credentials.  This approach ensures that they get the best of both
+  worlds — security in part underpinned by an organisation adept at
+  managing digital assets but also the flexibility to remain fully in
+  control of their wallet.  The crucial detail is that the user
+  controls the majority of the split keys to retain this control. It
+  seems feasible that this approach could become the new standard for
+  the management of digital assets, with Coinbase recently launching
+  its own MPC wallet.  Whilst the MPC wallet is not going to prevent
+  scam websites from trying to steal people's funds or replace the
+  need for cold storage. It does leave me optimistic that combined with
+  some of the other technologies such as hardware wallets, it could
+  provide a far more robust approach to safeguarding these digital
+  assets than what we have now.  There are still many challenges
+  associated with solving the UX in Web3, but MPC wallets seem like a
+  positive step forward for the industry, and if your average user no
+  longer has to know what a seed phrase is, that’s a big win for all
+[[}]]
+
+## Slither for automatic smart contract auditing:
+
+## Google Web3... Blockworks [[{]]
+
+* Google has embraced Web3.
+ ```
+ Let's take a look (In chronological order):
+ 1/ Hedera Hashgraph, February 11, 2020
+    next generation of distributed ledger technology.
+    https://t.co/bl0cSDtr5X
+ 2/ EOS NetworkOctober 6, 2020
+    Google Cloud joined the EOS Public Blockchain to become a block
+    producer.
+    https://t.co/38n6BMrIFI
+ 3/ Theta LabsMarch 15, 2021The
+    decentralized video streaming platform started using Google Cloud's
+    database and analytics solutions.
+    https://t.co/kxhFBj0Bjd
+ 4/ Chainlink  August 6, 2021
+    Although collaborating since 2019, the firm announced
+    that it had fully added decentralized weather data from
+    the Google Cloud.
+    https://t.co/SXN5MLOAk5
+ 5/ Dapper Labs September 14, 2021
+    developers of Flow announced Google Cloud as its strategic cloud
+    provider.
+    https://t.co/woodXqmw7o
+ 6/ Blockchain-Focused UnitJanuary 19, 2022
+    Following years of tiptoeing around directly involving itself in
+    blockchain projects, tech giant Google finally created a
+    blockchain-focused unit.
+    https://t.co/yb07GJeg4w
+ 7/ Web3 Team  May 6, 2022
+    Back in May Google Cloud announced that it was forming a web3
+    team to build services for developers running blockchain
+    applications.
+    https://cnb.cx/390Hrck
+ 8/ Nansen AI Jun 9, 2022
+    The blockchain data analytics platform announced an extended multi-year
+    collaboration with Google Cloud.
+    https://t.co/lXakIyHue1 BNB
+ 9/ ChainSeptember 14, 2022With this partnership, startups building
+    products and services on the BNB Chain blockchain also would be able
+    to build on Google Cloud’s infrastructure.
+    https://t.co/kE1xaZe9yo
+10/ Fortress Blockchain Technologies September 28, 2022
+    Fortress announced the launch of The Fortress Vault, an NFT
+    database solution built on Google Cloud's infrastructure.
+    https://t.co/Q9isKo4NNd
+11/ Near Protocol October 4, 2022
+    Google Cloud to provide technical support for NEAR grant recipients.
+12/ CoinbaseOctober 11, 2022
+    Google Cloud selected Coinbase to take payments with crypto.
+    https://t.co/yYenpJbwkw
+ ```
+[[}]]
+
+## "Advanced Solidity Test: Flashloan contract via a Transparent Upgrade Proxy
+
+* <https://youtu.be/nFsBSVstYiI>
+
+## DeSci: revolución de ciencia y medicina
+
+* <https://observatorioblockchain.com/blockchain/que-es-desci-revolucion-de-ciencia-y-medicina-con-blockchain-en-web3/>
+
+## gnark: Your Guide to Write zkSNARKs in Go
+* <https://consensys.net/blog/research-development/gnark-your-guide-to-write-zksnarks-in-go/>
+  
+## ConsenSys Diligence now offering SC auditing through TURN
+
+* the first open marketplace for buyers and sellers of security auditing.
+  <https://consensys.net/blog/diligence/smart-contract-auditing-with-turn-token/>
+
+## fin al "salvaje oeste" de las criptomonedas [[{]]
+
+* <https://www.xataka.com/legislacion-y-derechos/europa-aprueba-mica-asi-regulacion-que-quiere-poner-fin-al-salvaje-oeste-criptomonedas>
+* Europa aprueba regulación MiCA.
+
+* MiCA: 'Markets in Crypto Assets' ... En 2020 fue cuando la CE
+planteó su primer texto, 3 años más tarde, el Parlamento lo ha
+aprobado ... 'Reglamento Europeo relativo a los mercados de 
+criptoactivos' ...Para algunas de las nuevas disposiciones habrá un 
+margen de entre 12 y 18 meses para su aplicación ... será 
+a principios de 2025 cuando veremos todos los efectos de MiCA. 
+... definición de activo cripto según MiCA: "Una representación 
+digital de valor o derechos que puede transferirse y almacenarse 
+electrónicamente, mediante la tecnología de registro descentralizado
+o una tecnología similar" .... se diferencia entre criptomonedas, 
+stablecoins o tokens y se definen actividades como la 
+"custodia y administración, operación de una plataforma de 
+negociación o intercambio, ejecución, asesoramiento y concertación". 
+
+Stefan Berger "MiCA quiere restaurar la confianza que fue dañada 
+por el caso FTX". 
+
+... obligaciones para los prestadores de servicios: contar con 
+procedimientos efectivos para la detección, gestión y revelación 
+de posibles conflictos de interés y procedimientos efectivos de 
+gestión de reclamaciones.<br/>
+* 'Crypto-asset service providers' (CASP): podrán ser intervenidos 
+en caso de que se detecten peligros operativos por la Autoridad
+Bancaria Europea (ABE) y por la Autoridad Europea de Valores y
+Mercados (AEVM) ... reglas concretas contra la financiación del
+terrorismo y blanqueo de capitales, ... transparencia medioambiental
+exigidos a los exchanges más grandes.  ... exchanges como Coinbase, 
+Gemini o Kraken ya han recibido la autorización. 
+* **NFT, DeFi yCBDC ** se quedan fuera. 
+* Rodrigo Buenaventura, presidente de la Comisión Nacional del 
+ Mercado de Valores (CNMV): " podría haber sido considerablemente 
+más estricta ...  no es un bálsamo arreglatorio. No elimina los 
+riesgos y no será instantáneo ...  MiCA es una versión en miniatura
+de MiFID. Toca todos los temas, pero los regula uno, dos o tres
+escalones por debajo del nivel de exigencia de los activos financieros
+regulados. Habrá que seguir advirtiendo que son productos con menos
+mecanismos de protección".
+[[}]]
+
+## V.Buterin: "Plans to Make Wallets as Simple as Email"
+
+* <https://decrypt.co/149063/vitalik-buterin-explains-how-ethereum-plans-to-make-crypto-wallets-as-simple-as-email>
+>  This is not the only Ethereum upgrade currently in the works. 
+> Proto-danksharding, or EIP-4884 is also underway. It’s quickly become 
+> one of the main focuses of development on the network because it sets 
+> the foundation for a new data type which will drastically reduce 
+> costs and make data usage more efficient.
+> The latest version is EIP-4337 (Ethereum Improvement Proposal 4337), 
+> also known as Account Abstraction Using Alt Mempool. The Ethereum 
+> (ETH) upgrade would allow users to create non-custodial wallets as 
+> programmable smart contracts. This would unlock a number of features, 
+> such as easy wallet recovery, signless transactions–which translates 
+> into lower transaction fees–and team wallets (also known as 
+> multisignature wallets).
+
+
+## Sismo protocl [[{]]
+
+* <https://docs.sismo.io>
+ C&P from job offer: "... you will be in charge of maintaining and 
+  improving the infrastructure powering the entire Sismo protocol. It 
+  includes our products, our backend infrastructure as well as our 
+  packages, smart contracts or ZK circuits.<br/>
+  ... Sismo is an attestation protocol that enables users to selectively 
+  reveal data derived from their web2 or web3 accounts.Users aggregate 
+  their identity and use it to generate ZK proofs that applications can 
+  verify through our on-chain and off-chain verifiers. The resulting 
+  privacy-preserving attestations—stored in on-chain smart contracts or 
+  off-chain databases—are utilized by applications for access control 
+  and reputation curation.Standing at the crossroads between digital 
+  identity, web3 social, and zero-knowledge technology, we were 
+  recently featured in a list of Vitalik Buterin’s most exciting 
+  projects.Our Factory — the portal for integrating Sismo — currently 
+  enables developers to create ZK Badges, a tokenized form (SBTs) of 
+  attestations issued by the Sismo protocol.Our tightknit team of 
+  crypto natives has been working on Ethereum since 2015 (ex Aave, 
+  EthCC, Kleros, ConsensSys). To realize our vision, we raised 
+  $10,000,000 from some of the biggest names in crypto (angels such as 
+  Lens, Optimism, Starkware, the Ethereum Foundation, Curve, Aave, 
+  Snapshot, Guild, and top VCs like Framework, Delphi, IDEO or Seedclub 
+  Ventures).Team members are exposed to the best training, conferences, 
+  and hackathons the space has to offer. <br/>
+  ... As a Senior Software Engineer, you will be in charge of 
+  maintaining and improving the backend infrastructure powering the 
+  entire Sismo protocol. It includes the Sismo hub, our different APIs 
+  and core packages, as well as the infrastructure behind it all. You 
+  will work closely with our smart contracts, ZK circuits, and product 
+  front-ends—as well as entirely new products.<br/>
+  ... Nice to have: Experience writing smart contracts, ZK circuits, 
+  subgraphs, and other crypto tools, ...<br/>
+  Tech stack Sismo, Back: Typescript, Node.js, PostgreSQL and DynamoDB
+  ...  APIs: REST, GraphQL, theGraph<br/>
+  ...Smart contracts & ZK: Solidity, Foundry, Hardhat, Ethers.js,
+  Circom, 
+[[}]]
+
+## TokenScripts [[{wallet.mobile,scalability.sidechain,privacy.offchain,01_PM.radar,02_QA.UX]]
+    In short, it's like a SECURE FRONT-END FOR TOKENS.
+  - AlphaWallet is a production-ready white-label wallet that is easy to
+    customize. TokenScript is similar to web frameworks used by web apps,
+    combining the attributes of a blockchain-based token and the perks of
+    a web app, allowing users to interact directly with
+    blockchain-powered applications and services.
+
+  - It tries to solve the Trilemma "Security,Decentralization,Scalability".
+
+  - It consists of protocols chaining Dapss with Side Chains and "Main" Chains
+    converting "value" into "tokens" than can be used in the AlphaWallet
+    mobile platform.  Its core strategy is to "move" as much as possible
+    off-chain while keeping it only validation logic on-chain.
+
+  - A TokenScript file is made of:
+    - JavaScript to make Token work in the user's wallet or across multiple apps; and
+    - XML data to extract status and value of the token.
+
+  - Benefits
+    - Run your tokens from users wallets as native, modular ‘Mini-DApps'
+    - Extend token structure and realise rich functions with a single file
+    - Portable across DApps
+    - Sync updates at any time
+    - Blockchain agnostic
+    - Secure Enclave
+    - DvP Security
+    - Context based programming: User-experience
+    - Attestation
+
+  - Who-is-Who:
+    Wei Wu Zhang: head of development for AlphaWallet
+[[wallet.mobile}]]
+
+## Portis self-custody wallet
+
+## AlphaWallet TokenScripts "Smart Tokens"            [[{wallet,01_PM.radar]]
+- Web3 access provider.
+- powered by ShapeShift and provides access to multiple networks
+  including Ethereum, Bitcoin, SKALE, xDai, and many others. It
+  supports easy onboarding and user engagement and is trusted by a
+  growing number of the most popular decentralized applications. Tom
+  Teman, a co-founder at Portis, will be the presenter [[}]]
+
+
+## Hyperledger FireFly SuperNode  [[{PM.low_code.firefly]]
+* <https://github.com/hyperledger/firefly>
+* "Out of the box" functionality for:
+  * event handling.
+  * REST API custom Firefly API.
+  * Smart Contract API Generator.
+  * Explorer UI.
+  * Prometheus Server.
+  * PSQL integration.
+  * Conector Tookit.
+  * Blob Store.
+  * MutualTLS.
+  * Multipartly(¿Multitenancy?) support.
+  * ...
+[[PM.low_code.firefly}]]
+
+## EthVM OOSS Blockchain Explorer focused mainly on Ethereum
+    [[{02_QA.auditing,integration,13_SLC.monitoring,01_PM.radar}]]
+    (although other networks and forks will be supported over time)
+    under the SSPL license (a small variation of the GNU Affero License v3)
+    and written in a mixture of different languages.
+    - backed by popular frameworks:
+        Apache Kafka = Kafka Connect + Kafka Streams + Kafka Schema Registry
+        VueJs
+        NestJS
+    - Example ussage of Kafka streams as "micro-esb" to transform Etherum events:
+    @[https://github.com/EthVM/EthVM/tree/develop/apps/processing/kafka-streams/src/main/kotlin/com/ethvm/kafka/streams]
+</pre>
+
+[[{12_solidity,security.101}]]
+## Solidity Security Considerations 
+@[http://solidity.readthedocs.io/en/develop/security-considerations.html#security-considerations]
+
+[[{02_QA.solidity,12_solidity,02_QA.UX,01_PM.radar}]]
+## Ethereum Package Registry
+  @[https://www.ethpm.com/]
+  - A package index for Ethereum smart contract packages.
+  - The Ethereum Package Registry is a package index for Ethereum smart contract
+    packages. The registry is based on the ERC190 Smart Contract Packaging
+    Specification.
+
+    """Dear Ethereum,
+    We need to talk. You're not the easiest platform to work with. Don't get me
+    wrong, you have some great qualities but it's time to grow up and start
+    acting a bit more... mature
+
+    Since we care about you and really want you to succeed we made you something
+    that should help. It's called a package index.
+
+    I know change can be a little scary but we're sure that once you try it you'
+    ll love it. Developers are going to like you more. Their bosses may even stop
+    seeing you as the dangerous kid teaching their devs bad habits like copy/pasting code.
+    Please give it a try. We really do want the best for you.
+
+
+## How to build server less applications for Mist
+@[https://blog.ethereum.org/2016/07/12/build-server-less-applications-mist/]
+
+[[{12_solidity}]]
+## https://buidler.dev/ (npm package)
+   @[https://www.npmjs.com/package/@nomiclabs/buidler-ethers]
+   """ Turn a mess of tricky Solidity tools into a smooth workflow """
+   ...
+   - Buidler: task runner for Ethereum smart contract developers.
+
+   - It works with all developer tools, rather than replace any       @ma
+     specific ones. It's value comes from being the connective tissue,
+     rather than from specific functionality. It's an integration
+     platform for other tools to build upon.
+
+[[{wallet.standards,standards.secret_storage}]]
+## Web3-Secret-Storage-Definition
+  @[https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition]
+
+[[{wallet.hsm}]]
+## SmartCard USB HSM
+@[https://blog.coinfabrik.com/using-the-cardcontact-smartcard-usb-hsm-in-an-ethereum-poa-chain/]
+   Using the CardContact SmartCard USB HSM in an Ethereum PoA Chain
+
+[[{dev_framework.js}]] https://github.com/ethpm/ethpm-js
+## ethpm-js
+   Javascript library for publishing and consuming Ethereum packages,
+   on the Ethereum Package Manager specification. It is meant to be integrated
+   directly into development tools to support their use of the Ethereum Package
+   Management ecosystem.
+
+## https://etherscan.io/pushTx : Send raw-transactions
+
+[[{10_EVM.implementation.geth,10_EVM.implementation.besu,scalability.evm}]]
+## Mine Only on Pending TXs (avoid empty blocks)
+   @[https://ethereum.stackexchange.com/questions/3151/how-to-make-miner-to-mine-only-when-there-are-pending-transactions]
+   - How to make miner to mine only when there are Pending Transactions?
+     As of now the geth miner running on my system mines even empty blocks.
+   - How to do that same in Besu, Parity, ...?
+
+[[{wallet.cloud,security}]]
+## Ether Vault (Anti-theft)
+   https://www.blunderingcode.com/ether-vaults/
+   - The basic idea is to have a hot wallet account, plus a contract which
+     holds the bulk of your ether, and stores a vault key and recovery
+     key. Most of the money is vaulted and inaccessible. To unvault some
+     of it, use the vault key. After a delay the vault key can send the
+     money to your hotwallet.
+
+[[{13_SLC.testing,02_QA,standards.EIP/ERC,10_EVM}]]
+## Ephemeral Testnet YOLO 
+   In preparation for the next network upgrade, Berlin, an ephemeral
+   testnet called YOLO was launched with two new EIPs enabled: EIP-2315,
+   which adds subroutines to the EVM, and EIP-2537, which introduces a
+   new precompile for the BLS12-381 curve.
+
+[[{persistence.offchain_objects,,02_QA.UX,architecture,scalability.offchain}]]
+## OrbitDB 
+  @[https://orbitdb.org/]
+  - OrbitDB is a serverless, distributed, peer-to-peer database. OrbitDB
+    uses IPFS as its data storage and IPFS Pubsub to automatically sync
+    databases with peers. It’s an eventually consistent database that
+    uses CRDTs for conflict-free database merges making OrbitDB an
+    excellent choice for decentralized apps (dApps), blockchain
+    applications and offline-first web applications.
+
+  - "Alternatives":
+    - DOLT: Distributed SQL ddbb on top of Git.
+
+[[{101,standards.EIP/ERC}]]
+## EIP vs ERC
+   - ERC are a subset of EIPs for application-level standards and
+     conventions, including contract standards such as token standards
+     (ERC-20), name registries (ERC-137), URI schemes (ERC-681),
+     library/package formats (EIP190), and wallet formats (EIP-85).
+
+ [[{13_SLC,persistence.contract_state,security]]
+[[devops,12_solidity.troubleshooting,02_QA.UX]]
+## LEGIONS
+  @[https://diligence.consensys.net/blog/2020/06/legions-a-tool-for-seekers/]
+" Tool to poke around Geth Nodes in the terminal."
+  -  Poke around a public Ethereum node JSON RPC endpoints?
+  -  See if an Ethereum node is mining or not?
+  -  Read the storage of a smart contract? And maybe see how the [[{13_SLC.debugging.state}]]
+     storage changed between different block numbers?
+  -  Get the bytecode of a smart contract without going to etherscan?
+  -  List all ENS domains names owned by an address and their expiry dates?
+
+  So I began building a tool for that specific engagement. As the
+  engagement went on, certain other tasks kept cropping up, such as
+  simple Wei to Eth conversion, or more challenging tasks like reading
+  the storage of a smart contract.
+  Is there anything better than a cool command-line interface?
+
+  Legions is now open-source and also available on Pypi Package manager.
+
+  Simply install the package for python 3.6+ and everything else should
+  be easy to find with the interactive interface:
+
+    $ pip install legions
+  [[}]]
+
+[[{integration.data,dev_framework.python,10_EVM.events,01_PM.low_code]]
+## ethereum-etl
+   WARN: See limitation in Github Project page.
+   Export blocks and transactions (Schema, Reference):
+   $ python export_blocks_and_transactions.py \
+   $   --start-block 0 --end-block 500000 \
+   $   --provider-uri https://mainnet.infura.io \
+   $   --blocks-output blocks.csv --transactions-output \
+   $   transactions.csv
+
+   Export ERC20 and ERC721 transfers (Schema, Reference):
+   $ python export_token_transfers.py \
+   $   --start-block 0 --end-block 500000 \
+   $   --provider-uri file://$HOME/Library/Ethereum/geth.ipc \
+   $   --output token_transfers.csv
+
+   Export receipts and logs (Schema, Reference):
+   $ python export_receipts_and_logs.py --transaction-hashes \
+   $   transaction_hashes.txt \
+   $   --provider-uri https://mainnet.infura.io --receipts-output \
+   $   receipts.csv --logs-output logs.csv
+
+   Export ERC20 and ERC721 token details (Schema, Reference):
+   $ python export_tokens.py \
+   $   --token-addresses token_addresses.csv \
+   $   --provider-uri https://mainnet.infura.io --output tokens.csv
+
+   Export traces (Schema, Reference):
+   $ python export_traces.py --start-block 0 --end-block 500000 \
+   $   --provider-uri file://$HOME/Library/Ethereum/parity.ipc \
+   $   --output traces.csv
+   [[}]]
+
+[[{02_use_case.finance.stablecoins,02_doc_has.comparative]]
+## Algorithmic stablecoins
+REF: @[https://frax.finance/whitepaper/]
+     @[https://github.com/FraxFinance/frax-truffle/blob/master/test/Frax-Tests.js]
+- Although there are many ways to categorise stablecoins, two distinct
+  design concepts have stood out over time:
+  - collateralized stablecoins:
+    - Main categories:
+      - crypto-collateralized (MakerDAO’s Dai)
+      - fiat-collateralized tokens (Tether, BUSD, USDC)
+    (both subgroups having had significant adoption).
+  - algorithmic stablecoins :
+    - attempt to change the circulating supply of the token
+      so that changes in demand for the stablecoin minimally
+      affect its price.
+    -   not collateralized or redeemable fo
+        an underlying asset.
+    - no significant traction (high profile attempts done):
+      " ... We contend that a prevailing reason
+        for the lack of traction of algorithmic
+        stablecoins was not their economic
+        infeasibility, but their flawed designs
+        and execution..."
+        https://frax.finance/whitepaper/   [[}]]
+
+
+[[{12_solidity,security,02_QA.auditing]]
+## EthTrust
+   https://entethalliance.org/enterprise-ethereum-alliance-launches-ethtrust-security-initiative-to-advance-confidence-in-ethereum-as-a-global-settlement-layer-for-transactions-of-all-types/
+
+  Enterprise Ethereum Alliance Launches EthTrust Security Initiative to
+  Advance Confidence in Ethereum as a Global Settlement Layer for
+  Transactions of All Types
+
+  .. The Working Group’s mission will be to continue the advances begun
+   by the Ethereum Trust Alliance (ETA), now part of the EEA, on the
+   EthTrust project, that will :
+    set standards for secure, smart contract transactions that are
+    conducted within the Ethereum ecosystem.
+
+     Given that it only takes one small flaw in smart
+    contract code to instantly lock up or lose tens of millions of
+    dollars, the EthTrust project’s standard and registry aim to make
+    it quick and easy for organizations and individuals to tell if a
+    smart contract has been through a full security audit by a
+    professional team.
+[[}]]
+
+[[{scalability.node_storage,implementation.turbo_geth]]
+## Turbo Geth
+@[https://eth.wiki/en/fundamentals/patricia-tree]
+    ...  Turbo-geth is one implementation that gets to the root of the
+    problem: It flattens the trie database and uses the path of a node
+    (rather than its hash) as the [key, value] pair. This effectively
+    makes the depth of the tree irrelevant for lookups, and allows for a
+    variety of nifty features that can improve performance and reduce the
+    load on disk when running a full node.
+[[}]]
+
+[[{scalability.consensus]]
+## SKALE framework
+ @[https://skale.network/]
+ @[https://skale.network/whitepaper] <!-- @ma -->
+  SKALE Network. An Ethereum Interoperable Elastic Blockchain Network
+  SKALE: Standard Kit for Asyncronous Ledgers.
+
+  - SKALE is a modular framework that splits blockchain consensus (BC)
+    under asynchronous networking model into a sequence of stages. It
+    then applies provably secure algorithms at each stage, so that the
+    entire BC becomes provably secure. This modular framework allows to
+    construct a wide variety of BCs with different tradeoffs as well as
+    re-interpret and analyze security some of the existing BCs such as
+    Tendermint.
+[[}]]
+
+[[{02_use_case.finance.exchange,02_use_case.finance.liquidity_provision]]
+## Uniswap
+   "fully decentralized protocol for automated liquidity provision on Ethereum".
+    Uniswap is a good example of use-case when ethers are controlled by Smart Contracts
+    (vs externally owned accounts).
+
+   - centralized vs de-centralized exchange:
+     centralized exchange (Coinbase,...):
+     - PRE-SETUP: register for an account.
+     - exchange monitors and facilitates transactions.
+     decentralized exchange (Coinbase,...):
+     - PRE-SETUP: Connected crypto wallet to Uniswap's app (no third party involved)
+     - no registration required.
+     - exchange operates as automated market maker offering various
+       pairs of tokens to trade with prices set using mathematical formulas.
+
+   - Uniswap cryptocurrency:
+     - high-risk "investment".
+     - governance token to vote on proposed changes for the exchange.
+     - if the exchange gets more popular, it will likely lead to more
+       people wanting to buy the token.
+
+   - Implementation:
+     - Exchange uses liquidity pools, "drawing" from them when users trade.
+                     └──────┬─────┘
+                     ej:
+                     ( crypto1, crypto 2) fund  ← e.g.: (ETH, DAI) pool
+                     ( crypto1, crypto 3) fund
+                     ( crypto2, crypto 3) fund
+                     ...
+
+* PRE-SETUP
+
+   User_A            → Uniswap_Dapp_S.C: Signed TX "Add liquidity"
+                                         (Lend equivalent amount of both cryptos to some Uniswap pool)
+   Uniswap_Dapp_S.C  → Uniswap_Dapp_S.C: Add to pool.
+                                          Pay share of the gas fees to user in that pool.
+
+*  SWAP Execution
+   User_B            → Uniswap_Dapp_S.C: Signed TX with:
+                                         - amount to trade  : N (owned) Ethers
+                                         - Crytpo to receive: Dai
+
+   Uniswap_Dapp_S.C  → Uniswap_Dapp_S.C: calculate Dai to be received
+   User_B            ← Uniswap_Dapp_S.C: Dai to be received
+   User_B            → Uniswap_Dapp_S.C: confirm the trade
+   Uniswap_Dapp_S.C  → Uniswap_Dapp_S.C: Pay from internal Ethereum/Dai pool
+                                         minus transaction (gas) fee, always
+                                         paid in Ethers. This fee is shared among
+                                         users "feeding" the pool in the "PRESETUP".
+                                         NOTE: Fees in Ethereum depend on the congestion of the network,
+                                               not on the value of the transaction.
+                                               Uniswap is a poor choice for trading small swap amounts.
+
+- Alternatives (inspired by Uniswap) include: ( PancakeSwap , SushiSwap , BurgerSwap , Curve , DODO )
+   - One advantage several other exchanges offer is that they run
+     on the Binance Smart Chain, which currently has much lower fees than Ethereum.
+     Particularly succesful is the case of PancakeSwap.
+
+- Options to "invest" in Uniswap include:
+  - buy it through an exchange like any other cryptocurrency (Coinbase, Gemini, Binance, ...)
+  - trade for it on Uniswap exchange.
+[[}]]
+
+[[{02_use_case.finance.exchange]]
+## QuickSwap 
+@[https://coinquora.com/quickswap-the-dex-curating-an-economical-and-scalable-way-to-swap-tokens/]
+  "... The tradeoffs of a blockchain are passed on to the project’s building on top of them.
+   This is what happened with Uniswap, the world’s first decentralized token swap platform.
+   It was the first decentralized exchange (DEX) of the crypto space, which attracted the
+   community for its decentralization and ability to process trades without asking its users
+   to go through rigorous KYC/AML processes. However, with all of the advantages UniSwap offers,
+   its users suffer from high gas fees due to it being built on the Ethereum blockchain.
+   A simple transaction on Uniswap now often costs more than the transaction itself,
+   leaving a gap that needed filling.
+
+   QuickSwap was quick to address the issues plaguing Ethereum-based DEXs,[[{10_EVM.GAS_PRICE,02_QA.UX]]
+   by offering much lower transaction fees and almost instant block formation time. [[}]]
+
+   QuickSwap DES allows users to trade any ERC-20 tokens.
+   It is powered by the Polygon network, which provides several
+   benefits not seen in other similar solutions.
+
+    For example, QuickSwap can trade any of the ERC-20 tokens listed
+   on its platform with almost no gas costs and at lightning-fast
+   speeds, making QuickSwap (and Polygon) a great accompaniment for
+   UniSwap and Ethereum.
+
+    Moreover, anyone can list any ERC-20 token on QuickSwap by
+   providing liquidity to enable token swaps.  In return, the platform
+   rewards them with a 0.3% transaction fee (out of which 0.25% goes to
+   the LPs, 0.04% to the dragon’s lair (which is the QUICK staking
+   pool), and 0.01% goes to  QuickSwap’s treasury (to fund
+   development).
+
+    In addition to the trading fee, liquidity providers can earn
+   QuickSwap’s native governance QUICK token – which they can use to
+   create, vet, and vote on proposals relating to the running of the
+   protocol. They can also use QUICK tokens to stake  in the Dragon’s
+   Lair to earn additional QUICK.
+
+## Reference Implementation
+  https://github.com/mudgen/quickswap-contracts/] By Nick Mudge ("Diamonds Standard")
+[[}]]
+
+
+[[{02_use_case.finance.compliance,02_use_case.finance.fraud]]
+[[ standards,02_QA.auditing,01_PM.RADAR]]
+## Hapi One: On-Chain X-Chain Protocol&Oracle
+  https://www.hapi.one
+   - On-Chain Cybersecurity Cross-Chain Protocol and Oracle
+     data -> ML -> Oracle -> DAO
+   - Monitor for frauds, stolen-wallets, ...
+   - Works on Polygon.Network (cross-chain Ethereum compatible networks) [[}]]
+
+[[{02_use_case.IoT.arduino,02_QA.UX]]
+## FireFly IoT Wallet 
+  @[https://firefly.city/]
+  @[https://ethereum.stackexchange.com/questions/29524/sign-raw-transaction-offline-with-c-on-arduino]
+    use our Firefly Hardware Wallet (https://firefly.city) for the ATmega328 to do:
+  - secp256k1 signing
+  - RLP decoding transactions
+  - keccak256
+  - generating checksum addresses (or raw addresses)
+  - Signing requires in the neighbourhood of around 700 bytes of free memory,
+    everything else requires a fairly slim memory footprint.
+  - Optional OLED display: Firefly source code also includes zero-memory video driver.
+  @[https://github.com/firefly/wallet/tree/master/source/libs/ethers]
+  [[}]]
+
+[[{02_use_case.finance.micropayments,scalability.payment_channels]]
+## Raiden Network: (Micro) Payment channels
+[[}]]
+
+
+[[{layer2.rollup.optimistic,privacy.zksnark,scalability.layer2]]
+## ZkOpru 
+https://github.com/zkopru-network/zkopru
+- Ethereum L2 scaling solution for private transactions using
+  zk-SNARK and optimistic rollup.
+[[}]]
+
+[[{layer2.rollup.stark,02_USE_CASE.finance.trading,scalability.layer2]]
+## L2 Exchanges
+    - major centralized exchanges integrating Layer 2:
+      BInance, OKEx (also with Arbitrum),  Coinbase (Polygon's
+      Layer 2 planned, Arbitrum, Optimism, Starkware on radar),
+
+    - Decentralized protocols:
+      Uniswap, 1inch, Aave: Already integrate with Arbitrum's and
+      other Layer 2 technologies into their platforms.
+
+    -  WARN:!!!!  @ma
+    -  Binance's Arbitrum integration comes at a time when Binance Smart
+       Chain (BSC) validators are complaining that the network is poorly run.
+       "BSC is a lost cause," one GitHub user posted earlier this week, fo
+        instance. "There is zero responding to bug reports. Hundreds of
+        people report non syncing nodes or nodes falling out of sync.
+        Response from the 'developers' - zero."
+     https://github.com/binance-chain/bsc/issues/553  [[}]]
+
+[[{layer2.rollup.stark,scalability.layer2}]]
+## StarkNet proof system 
+https://starkware.co/stark/
+- STARK is a proof system based on cutting-edge cryptography to
+  provide polylogarithmic verification resources and proof size, with
+  minimal and post-quantum-secure assumptions.
+  White paper: @[https://eprint.iacr.org/2018/046.pdf]
+- Alpha State as of 2022-02-22
+- StarkNet is a permissionless decentralized ZK-Rollup. It operates
+  as an L2 network over Ethereum, enabling any dApp to achieve
+  unlimited scale for its computation – without compromising
+  Ethereum's composability and security.
+
+[[{]]
+## ERC-2309: ERC-721 Consecutive Transfer Extension
+- Standarized event emitted when creating/tranferring
+- 1+ NFTs using consecutive tokens ids.
+[[}]]
+
+[[{scalability.consensus.ethereum2,consensus.PoS]]
+## Ethereum 2.0 delegators
+-   How Proof of Stake Addresses Scalability, Why Validator and
+    Delegator Economics Matter, and Why Yield Farming is a Thing.
+    Join Konstantin Richter of Blockdaemon as he explores what it takes
+    to operate nodes for blockchain networks as well as detail the
+    improvements that the Proof of Stake consensus model will bring to
+    Ethereum and Layer 2 networks. He will dive into the new world of
+    validator and delegator staking and how it serves as a key element in
+    providing scalable networks while ensuring secure and collusion
+    resistant transaction settlement. Lastly, he will discuss DeFi,
+    explain what yield farming is, and put the current chase for APY
+    (annual percentage yield) in crypto into better context for all.
+    About the Speakers
+    Konstantin Richter is the CEO and Founder of Blockdaemon. He is a
+    serial entrepreneur and investor. He has led several SaaS B2B
+    companies towards meaningful exits in the media/advertising space,
+    most notably, Audiotube, Lookbooks, and Wiredrive. He also is an
+    advisor to blockchain company Gem, and serves on the board of
+    MadHive, a leading media/advertising blockchain business. He
+    currently serves as the CEO and founder of Blockdaemon, the most
+    battle-tested blockchain infrastructure platform for major blockchain
+    protocols. [[}]]
+
+## Security Attack
+
+* <https://www.theblockcrypto.com/post/84804/defi-protocol-origin-attack-7-million-lost>
+
+## DeFi Flash Loans:
+* <https://academy.binance.com/en/articles/what-are-flash-loans-in-defi>
+
+## eth_getLogs
+* Returns an array of logs matching a specified filter object.
+  Leave the - -auto-log-bloom-caching-enabled command line option at
+  the default value of true to improve log retrieval performance. [[{scalability.evm,scalability.logs}]]
+
+## BitGo: digital asset trust company and security company [[{]]
+
+* Founded in 2013.
+* The company offers a multisignature bitcoin wallet service,
+  where keys are divided among a number of owners to manage risk.
+  Generally, BitGo wallets have three keys:
+  ```
+  | - one held by BitGo,
+  | - two held by the wallet's owner.
+  | - Wallets can be configured in:
+  |   - hot |  cold  mode.
+  |   - non-custodial  | custodial.
+  ```
+* 2015-01: BitGo announces general availability of their Platform API.
+- The BitGo SDK enables the following:
+  - Creation of multi-signature wallets
+  - Transaction creation and signing
+  - Transaction monitoring and notifications
+  - Wallet balance and transaction listing
+  - Secure user authentication
+  - Multi-user workflows for use in enterprise environments.
+  - Policies and spending limits
+[[}]]
+
+
+[[{02_use_case.finance.trading,architecture.API]]
+## Bitstamp API
+
+- Ticker: returns BTC/ETH/... TO USD/EUR/GBP/... currency pair.
+- Hourly Ticker:
+- EUR/USD conversion rate
+- Order book:
+  Returns dictionary with "bids" and "asks".
+  Each is a list of open orders and each order is represented as
+  a list holding the price and the amount.
+- Transactions:
+  Descending list of transactions.
+- Trading pairs info: Returns list of pairs (minum order, trading
+  engine status, decription,...)
+
+- OHLC data: returs dictionary of tick-data for selected trading pair.
+  Each tick in the dic is rpresented as a list of OHLC data
+  - OHLC == Open high low close chart.
+  - pair
+  - high
+  - timestamp
+  - volume
+  - low
+  - close
+  - open
+[[}]]
+
+[[{01_PM.RADAR,02_QA.UX.spreadsheet]]
+## LUXOR - a spreadsheet for decentralized data.
+
+* <https://m.youtube.com/watch?v=DmFLWpV7nGQ>
+[[}]]
+
+## Total Value Locked in DeFi Tripled in a Month ConsenSys Codefi
+
+* <https://codefi.consensys.net/blog/total-value-locked-tripled-newsletter-8>
+
+## Bashir: ZK-rollups [[{scalability.layer2]]
+
+* <https://www.infoq.com/news/2021/01/mastering-blockchain-3rd-ed-qa/>
+  ... A lot of work has been done on scalability. Solutions
+   such as ZK-rollups, lightning network, state channels, and plasma are
+   all new technologies that have been developed, indicating significant
+   progress in this area.
+[[scalability.layer2}]]
+
+## secp256k1 details
+
+* C&P from: https://github.com/q9f/secp256k1.cr
+  ```
+  | - private keys are scalars
+  |   public  keys are points with (x , y) coordinates.
+  | 
+  | - bitcoin public keys can be uncompressed #{p}#{x}#{y} or compressed
+  |   #{p}#{x}. both come with a prefix p which is useless for uncompressed
+  |   keys but necessary for compressed keys to recover the y coordinate on
+  |   the secp256k1 elliptic curve.
+  | 
+  | - ethereum public keys are uncompressed #{x}#{y} without any prefix.
+  |   the last 20 bytes slice of the y coordinate is actually used as
+  |   address without any checksum. a checksum was later added in eip-55
+  |   using a keccak256 hash and indicating character capitalization.
+  | 
+  | - neither bitcoin nor ethereum allow for recovering public keys from
+  |   an address unless there exists a transaction with a valid signature
+  |   on the blockchain.
+  ```
+
+## Tutorial: how to create hierarchical deterministic wallets
+
+* <https://medium.com/coinmonks/hierarchical-deterministic-wallets-ethereum-589f8a359b81>
+*  We’ll be using bip39, ethereumjs-tx, ethereumjs-util, hdkey and web3.js.
+  - BIP39: To generate mnemonics
+  - Ethereumjs-tx: To create the transaction (Set params and serialize)
+  - Ethereum-util: To leverage checksum, private-public key creation and convert public
+    key to address
+  - HDkey: To construct Hierarchical Deterministic key trees
+
+[[{integration.stakenet,scalability,scalability.payment_channels}]]
+## StakeNet "1st trustless interchain economy"
+* <https://stakenet.io/>
+* <https://github.com/X9Developers/DexAPI>
+
+  ... near zero fees over Lightning Network
+  ... Masternodes on a highly secure PoS blockchain
+  ... utilizing Trustless Proof of Stake.
+[[}]]
+
+## https://www.komputing.org/  [[{13_SLC.monitoring,02_QA.auditing]]
+
+* Decentralized Metadata and Source Code Repository
+  Sourcify is a decentralized automated contract verification service,
+  which makes publishing and verifying source code easy.
+  - Choose network from dropdown menu
+  - Input contract address
+  - Upload all metadata and contract files that you want to verify via the dropzone
+
+  Together with the compilation metadata, everyone can re-compile the
+  smart contract and be sure that the source code is exactly the same
+  as at deploy time, including every comment.
+[[}]]
+
+## General Purpose Atomic Crosschain Transaction(GPACT)
+
+* ... a protocol that allows composable programming across multiple 
+  Ethereum blockchains .. it allows for inter-contract and inter-blockchain
+  function calls that are both synchronous and atomic 
+  ....The protocol operates on existing Ethereum blockchains without 
+  modification ... it is expected to work across heterogeneous blockchains
+  other than Ethereum.
+
+## EEA DeFi Interest Group
+- Bringing Definition to an Emerging Innovation workshop on DeFi will 
+  focus on current issues that need to be addressed for DeFi to really 
+  flourish.
+- explore what the ideal world looks like for DeFi years from now.
+  
+## https://github.com/fergarrui/ethereum-security
+
+* Repository with some Ethereum security bugs. The bugs and fixes
+  are demonstrated using Mocha tests.
+
+Bugs added so far:
+- Overflow
+- Underflow
+- Reentrancy (DAO hack)
+- Delegatecall (Parity hack style)
+- DOS (e.g. stay as an Auction leader forever)
+- DOS (unbounded array loop)
+- Force ether (relying on the invariant this.balance == 0)
+- Tx.origin
+- Unchecked send() output
+- Storage override (commonly used in honeypots - or genuine bugs)
+- Array storage override (length underflow - storage override)
+- extcodesize bypassed when used to check if the caller is a contract
+
+## solidity-patterns [[{PM.TODO.now}]]
+
+* <https://github.com/fravoll/solidity-patterns>
+
+## EVM. Add diagram similar to
+* <https://fullstacks.org/materials/ethereumbook/14_evm.html>
+
+## Infura TX relayer [[{PM.low_code,qa.reliability,]]
+
+* https://blog.infura.io/why-you-should-use-infura-transactions-instead-of-building-your-own-in-house-relayer/
+ ... fix problems with stuck TXs using infura TX relayer.
+
+* Infura Alternatives include:
+  - https://deploy.radar.tech/
+  - https://alchemyapi.io/
+[[PM.low_code}]]
+
+## truffle-teams
+* <https://www.trufflesuite.com/blog/iterate-faster-with-truffle-teams>
+
+ Truffle Teams provides now a complete workflow including building,
+testing, managing, monitoring, and debugging. This means you’re
+getting a huge boost in productivity.
+
+## Ethereum Upgrade Moves Into Final Stages
+
+... The London upgrade should be ready by the end of July,2021 and willi
+come to the Ropsten testnet next week. There will be five EIPs in the
+London upgrade, including the much anticipated EIP-1559, which will
+change how gas fees work on Ethereum and what happens to those gas
+fees.
+
+## Java+Ethereum Kauri-io Archive. 
+
+* <https://github.com/kauri-io/archive/tree/main/docs/communities/Java%20Ethereum>
+
+## See Plasma World Map in
+
+* <https://medium.com/paradigm-fund/ethereum-report-zk-snarks-on-ethereum-mainnet-by-aztec-sandbox-for-playing-with-minimum-viable-a4ac80121fec>
+
+## Use golang to interact with Ethereum.
+
+* <https://www.programmersought.com/article/99731280412/>
+
+## A Buidler Plugin For Replicable Deployments And Tests [[{PM.TODO,devops.101,02_QA.UX,]]
+
+* Created by Ronan Sandford (wighawag), a prominent smart contract developer and
+  an author of the ERC-1155 standard
+* Supports the diamon standard.
+  <https://www.npmjs.com/package/buidler-deploy>
+[[}]]
+
+## Solidity constants: [[{12_solidity.qa.inmutability]]
+
+* <https://docs.soliditylang.org/en/latest/contracts.html#constants>
+[[12_solidity.qa.inmutability}]]
+
+
+[[{dev_framework.js.101,PM.TODO.now]]
+## eip-1193 : JS Ethereum Provider API for consistency across clients and applications.
+* <https://eips.ethereum.org/EIPS/eip-1193>
+    
+  ...  A common convention in Dapps ecosystem is for key-management-software
+(“wallets”) to expose their API via a JavaScript object in the web page.
+This object is called “the Provider”  (window.ethereum)<br/>
+
+  ...  Historically, Provider implementations have exhibited conflicting
+interfaces and behaviors between wallets.<br/>
+
+... This EIP the API and is designed to be minimal, event-driven, and
+agnostic of transport and RPC protocols.
+
+... Can easily be extended with new RPC methods and message event types.
+
+* Ej: from https://github.com/trufflesuite/ganache
+  ```
+  | (EIP-1193 vs "alternatives")
+  | - Ganache As an EIP-1193 provider only:
+  |   const ganache = require("ganache");
+  |
+  |   const options = {};
+  |   const provider = ganache.provider(options);
+  |   const accounts = await provider.request({ method: "eth_accounts", params: [] });
+  |
+  | - Ganache As an EIP-1193 provider and JSON-RPC web server:
+  |   const ganache = require("ganache");
+  |
+  |   const options = {};
+  |   const server = ganache.server(options);
+  |   const PORT = 8545;
+  |   server.listen(PORT, err => {
+  |     if (err) throw err;
+  |
+  |     console.log(`ganache listening on port ${PORT}...`);
+  |     const provider = server.provider;
+  |     const accounts = await provider.request({ method: "eth_accounts", params:[] });
+  |   });
+  |
+  | - Ganache As a web3.js provider:
+  |   const Web3 = require("web3");
+  |   const ganache = require("ganache");
+  |   const web3 = new Web3(ganache.provider());           ←  alt 1: depending on web3 version
+  |   const web3 = new Web3(ganache.provider(),            ←- alt 2: depending on web3 version
+  |                        null,
+  |                { transactionConfirmationBlocks: 1 });
+  |
+  | - Ganache As an ethers.js provider:
+  |   const ganache = require("ganache");
+  |   const provider = new ethers.providers.
+  |                      Web3Provider(ganache.provider());
+  ```
+[[dev_framework.js.101}]]
+
+##  Truffle: assert,reverts in solidity SC
+
+* <https://kalis.me/assert-reverts-solidity-smart-contract-test-truffle/>
+
+## Solidity Tutorial. 
+
+* <https://jeancvllr.medium.com/solidity-tutorial-all-about-bytes-9d88fdb22676>
+
+## try-catch in Solidity
+
+* <https://blog.polymath.network/try-catch-in-solidity-handling-the-revert-exception-f53718f76047>
+
+## Making sense of Ethereum L2 scaling solutions
+
+* <https://entethalliance.github.io/client-spec/spec.html>
+* <https://medium.com/l4-media/making-sense-of-ethereums-layer-2-scaling-solutions-state-channels-plasma-and-truebit-22cb40dcc2f4>
+
+## privacy solution comparative between EEA, Fabric, Corda
+
+* <https://www.linkedin.com/pulse/blockchain-myths-data-visibility-conor-svensson/>
+
+## Ethereum DNS names mainstream by integrating with Cloudflare
+
+* <https://es.cointelegraph.com/news/ethereum-based-domain-names-go-mainstream-with-cloudflare-integration>
+
+* Dns over ethereum: Unstoppable Domains
+  https://unstoppabledomains.com/
+
+## Avalanche ([[{scalability.layer2.avalanche]]
+* <https://docs.avax.network/>
+- OOSS platform for launching Dapps and enterprise blockchain
+  deployments in one interoperable, highly scalable ecosystem.
+- 1st smart contracts platform that processes 4,500+ transactions/second
+  and instantly confirms transactions. Ethereum developers can quickly
+  build on Avalanche as Solidity works out-of-the-box.
+[[scalability.layer2.avalanche}]]
+
+
+## Web3J OpenAPI "bridge"  [[{integration.openapi,PM.TODO.now]]
+
+* <http://docs.web3j.io/latest/web3j_openapi/>
+
+[[integration.openapi}]]
+
+
+## Blockchain Myths by Conor Svensson
+
+* <https://www.linkedin.com/pulse/blockchain-myths-data-visibility-conor-svensson/>
+
+## Tally: arbitrary precision arithmetic library
+
+* <https://youtu.be/N8Es2iPLGzY>
+
+## Phases of Ethereum
+* <https://etherbasics.com/the-basics/phases-of-ethereum/>
+* <https://blog.ethereum.org/2015/03/03/ethereum-launch-process/>
+
+## Polymath Network
+* <https://polymath.network/>
+
+## awesome-quorum
+
+* <https://github.com/ConsenSys/awesome-quorum>
+
+## Truffle DB [[{PM.TODO.now]]
+https://www.trufflesuite.com/docs/truffle/db/ @ma
+- complete system of record to track information about smart 
+   contracts and their development histories.
+- Information is organized as content-addressed, immutable resources
+- Use-cases:
+  - reproduce prior builds
+  - single source of truth in development life cycle from source code 
+to deployment.
+- features:
+  - track the continuity of a smart contract as it is implemented.
+    (even in case of  hard-forks).
+  - Blockchain data and metadata is never forgotten.
+  - GraphQL interface
+  - data persisted to several backend through PouchDB.
+- Ussage:
+  ```
+  | $ truffle db serve # <·· Starts GraphQL Playground HTTP server.
+  ```
+[[PM.TODO.now}]]
+
+## WARN: Eth2 devs destroyed staking
+
+* <https://ethereum-magicians.org/t/in-one-swoop-the-eth2-0-devs-destroyed-staking/7379>
+
+## Headlong 
+[[{dev_framework.java,dev_framework.headlong,10_EVM.abi,dev_framework.java.web3j,02_doc_has.comparative]]
+  @[https://github.com/esaulpaugh/headlong]
+- A Contract ABI and Recursive Length Prefix library in Java for use 
+  on the Ethereum network.
+- Contract ABI and Recursive Length Prefix made easy in Java (or Android).
+  Everything heavily optimized for maximum throughput (ABI function
+  call encoding  up to 500x faster than a popular competitor  and one
+  function creation plus one encode is up to 60x faster
+  ("f(uint,uint32[],bytes10,bytes)", openjdk 11.0.1)).
+  [[{doc_has.comparative,scalability.java.headlong}]]
+[[}]]
+
+
+## Solidity RLP [evm.rlp,12_solidity.persistence,01_PM.TODO]
+
+- <https://github.com/hamdiallam/solidity-rlp>
+  Currently support for solidity v0.5.0.
+
+- The reader contract provides an interface to first take RLP
+  encoded bytes and convert them into an internal data structure,
+  RLPItem through the function, toRlpItem(bytes). This data structure
+  can then be destructured into the desired data types.
+  ```
+  | import "solidity-rlp/contracts/RLPReader.sol"
+  |
+  | contract SomeContract {
+  |   // optional way to attach library functions to these data types.
+  |   using RLPReader for RLPReader.RLPItem;
+  |   using RLPReader for RLPReader.Iterator;
+  |   using RLPReader for bytes;
+  |
+  |   // lets assume that rlpBytes is an encoding of [[1, "nested"], 2, 0x<Address>]
+  |   function someFunctionThatTakesAnEncodedItem(bytes memory rlpBytes)
+  |   public {
+  |     RLPReader.RLPItem[] memory ls = 
+  |       rlpBytes.toRlpItem().toList(); // must convert to an rlpItem first!
+  |
+  |     RLPReader.RLPItem memory item = ls[0]; // the encoding of [1, "nested"].
+  |     item.toList()[0].toUint(); // 1
+  |     string(item.toList()[1].toBytes()); // "nested"
+  |
+  |     ls[1].toUint(); // 2
+  |     ls[2].toAddress(); // 0x<Address>
+  |   }
+  |
+  |   // lets assume rlpBytes is an encoding of [ ["sublist"] ]
+  |   function someFunctionThatDemonstratesIterators(bytes memory rlpBytes) public {
+  |     RLPReader.Iterator memory iter = rlpBytes.toRlpItem().iterator();
+  |     RLPReader.Iterator memory subIter = iter.next().iterator();
+
+  |     // iter.hasNext() == false
+  |     // string(subIter.next().toBytes()) == "sublist"
+  |     // subIter.hasNext() == false
+  |   }
+  | }
+  ```
+
+
+## Exploring Ethereum's Data Stores: A Cost and Performance Comparison
+
+* <https://www.youtube.com/watch?v=tmRj7cYxxBY>
+
+
+[[{qa.101,PM.TODO.now]]
+## (OZ) Defender: Automated SC Admin (access control, upgrades, pausing)
+* <https://openzeppelin.com/defender/>
+- Automate and secure all your smart contract administration.
+  Administration mistakes on protocols and applications put user
+  funds at risk. With Defender Admin, you can seamlessly manage all
+  smart contract administration including access controls, upgrades,
+  and pausing. Works with popular multi-sigs including Gnosis Safe.
+[[PM.TODO.now}]]
+
+## Estimating gas price 
+
+(Add to existing info)
+* <https://medium.com/@blockchain101/estimating-gas-in-ethereum-b89597748c3f>
+
+## EIP-998: ERC-721 Extension
+
+* <https://eips.ethereum.org/EIPS/eip-998>
+* Enable ERC721 tokens to own other ERC721 and ERC20 tokens.
+
+[[{doc_has.ontology]]
+## TxTrie: Ethereum TX Ontology
+
+* <https://ethon.consensys.net/class-txtrie.html>
+[[doc_has.ontology}]]
+
+[[{PM.TODO.now,10_EVM.GAS_PRICE]]
+## Ways to reduce gas fees</span>
+
+* <https://www.makeuseof.com/ways-reduce-ethereum-gas-fees/>
+[[PM.TODO.now}]]
+
+
+[[{12_solidity,10_EVM,01_PM.TODO]]
+
+## Inline Assembly
+
+* <https://github.com/ethereum/solidity/blob/develop/docs/assembly.rst#opcodes>
+ 
+* YUL: language used for inline assembly.
+
+* assembly blocks share no namespace<br/>.
+  Yul block can NOT read val/call func. in other block.
+
+  Ex: access code in another contract and load it into a bytes variable.
+      (similar to solidity 'contractXXXAddress.code')
+  ```
+  | // ========================================
+  | // SPDX-License-Identifier: GPL-3.0
+  | pragma solidity >=0.4.16 <0.9.0;
+  | 
+  | library GetCode {
+  |   function at(address _addr) public view returns (bytes memory o_code) {
+  |     assembly {
+  |       let size := extcodesize(_addr) // ← fetch code
+  |       o_code := mload(0x40)          // ← Solidity converion 0x40. Mem.pointer
+  |       mstore(0x40,                   // ←  Allocate new memory by updating it.
+  |           add(o_code,                //    convention) and update it.
+  |               and(                   //    Reserved memory is random init (vs
+  |                 add(                 //    (zero-init)
+  |                   add(size, 0x20),   //    No built-in mechanism to free exists.
+  |                   0x1f),             //    See Note ^1
+  |                 not(0x1f)
+  |               )
+  |           )
+  |       )
+  |       mstore(o_code, size)           // store length in memory
+  |       extcodecopy(                   // retrieve code
+  |           _addr,
+  |           add(o_code, 0x20),
+  |           0,
+  |           size)
+  |     }
+  |   }
+  | }
+  |
+  |
+  | e.g.2:
+  | // NON-OPTIMAL solidity (array check at each iteration)
+  | for (uint i = 0; i < _data.length; ++i) { sum += _data[i]; }
+  |
+  | // OPTIMIZED INLINE ASSEMBLY
+  | function sumPureAsm(
+  |              uint[] memory _data)
+  | public
+  | pure
+  | returns (uint sum) {
+  |   assembly {
+  |       let len := mload(_data)       ← Load array length
+  |       let data := add(_data, 0x20)  ← Skip length field.
+  |       for                             0x20: uint byte-size
+  |       {                             ← for-loop initialization
+  |          let end := add(
+  |                      data,
+  |                      mul(len, 0x20 ))
+  |       }
+  |       lt(data, end)                 ← for-loop end-condition
+  |       { data := add(data, 0x20  ) } ← for-loop post-end code?
+  |       {                             ← for-loop body
+  |         sum := add(sum, mload(data))
+  |      I}
+  |   }
+  | }
+  ```
+
+* Rules: 
+  1. Local solidity vars/value types  are directly read/write accesible.
+  2. A single Yul identifier is not sufficient, since they do not
+     necessarily occupy a single full storage slot. Their "address" is
+     composed of ( slot, byte-offset (inside slot) ).
+     ```
+     | x.slot  : retreive slot
+     | x.offset: retreive offset always zero for structs, arrays and mappings
+     | x       : error.
+     |
+     | .slot,.offset is read       for state variable.
+     |                  read/write for local vars.
+     ```
+     HINT: for var less than 32 bytes clean them first. Ex.:
+     ```
+     | uint32 x ...; int32 y = ...;
+     | assembly { x := and(x, 0xffffffff) }
+     | assembly { signextend("num_bytes_of_y_minus_one", y) }
+     ```
+  3. * Function calls, loops, ifs and switches are converted by simple
+     rewriting rules and after that, the only thing the assembler does for
+     you is re-arranging functional-style opcodes, counting stack height
+     for variable access and removing stack slots for assembly-local variables
+     when the end of their block is reached.
+
+* Solidity memory convetions:
+  1. 1st 64 memory bytes [0,0x40] are "scratch space" (short-term alloc)
+  1. [0x40,0x60) is the memory pointer.
+  1. [0x60,0x80) are meant to be zero permanently and is used
+     as initial value for empty dynamic memory arrays.
+  1. [0x80,....) Start of allocatable memory (init value of 0x40 pointer)
+  1. Elements in memory arrays in Solidity always occupy multiples of
+     32 bytes (0x20 bytes) even for bytes1[].
+  1. Multi-dimensional memory arrays are pointers to memory arrays.
+     The length of a dynamic array is stored at the first slot of
+     the array and followed by the array elements.
+  1. Statically-sized memory arrays do NOT have a length field, but it
+     might be added later. Do NOT rely on this.
+[[}]]
+
+## Proof of Auhority [[{consensus.PoA,01_PM.TODO}]]
+
+* <https://limechain.tech/blog/proof-of-authority-explained/>
+    Proof of Authority is a variant of the Proof of Stake consensus
+  mechanism where instead of tokens, network participants stake their
+  identity and reputation. Proposed in 2015 by Ethereum’s co-founder
+  Gavin Wood, Proof of Authority has in recent years become one of the
+  more prominent consensus mechanisms, as the blockchain world has
+  increasingly been exploring ways to move beyond Proof of Work.
+  POA, OR AS IT IS ALSO KNOWN, PROOF OF STAKED AUTHORITY (POSA) IS SEEKING
+  TO RESOLVE SOME OF THE ISSUES FOUND IN OTHER POW ALTERNATIVES, NAMELY
+  PROOF-OF-STAKE.
+
+## ethereumjs-vm
+   
+* <https://github.com/ethereumjs/ethereumjs-vm>
+
+[[{dev_framework.js,doc_has.comparative]]
+## web3js vs etherjs 
+* https://blog.infura.io/ethereum-javascript-libraries-web3js-ethersjs-nov2021/
+[[dev_framework.js}]]
+
+
+## Bridge Tokens from Ethereum to Optimism with Metamask
+
+* <https://consensys.net/blog/metamask/how-to-bridge-tokens-from-ethereum-to-optimism-with-metamask/>
+
+
+## Verifying signature was produced by Ethereum Address
+
+* <https://ethereum.stackexchange.com/questions/710/how-can-i-verify-a-cryptographic-signature-that-was-produced-by-an-ethereum-addr>
+
+## "promising" L2 projects!
+
+- ORU (Ben Jones @ Optimism)
+- Arbitrum SCSC (Ed Felten @ Offchain Labs)
+- ZK rollup and Validium (Alex Gluchowski @ Matter Labs)
+
+## About ZK-Snarks
+* <https://medium.com/coinmonks/practical-zk-snarks-for-ethereum-140cbddcb55d>
+
+[[{PM.roadmap]]
+## data sharding roadmap
+
+* <https://notes.ethereum.org/@vbuterin/data_sharding_roadmap>
+
+[[PM.roadmap}]]
+
+[[{doc_has.comparative,scalability.layer2,layer2.Cosmos,layer2.Tendermint,01_PM.TODO]]
+## Cosmos and Tendermint
+
+* Cosmos is also building an ecosystem that relies on the Tendermint consensus
+  mechanism. The platform depends on validators (similar roles to miners)
+  with staking tokens called Atoms via a proof-of-stake.
+   This security design allows for the proper functioning of the 
+  Application Blockchain Interface (ABCI), the Inter-Blockchain Communication
+  protocol (IBC) as well as the varying interactions between the Cosmos
+  hub and zones.
+  ....
+[[}]]
+
+
+## Ethereum Smart Contracts in L2: Optimistic Rollup
+
+* <https://medium.com/plasma-group/ethereum-smart-contracts-in-l2-optimistic-rollup-2c1cef2ec537>
+   
+* This post outlines optimistic rollup:<br/>
+  ... construction which enables autonomous smart contracts on layer 2 (L2)
+  using the OVM. ... it borrows heavily from both plasma and zkRollup designs,
+   and builds on shadow chains as described by Vitalik.
+    ... it resembles plasma but trades off some scalability to enable 
+   running fully general (eg. Solidity) smart contracts in layer 2,
+   secured by layer 1. Scalability is proportional to the bandwidth of data
+   availability oracles which include Eth1, Eth2, or even Bitcoin Cash or ETC —
+   providing a near term scalable EVM-like chain in layer 2.
+
+## ProgPow: ASIC resistence [[{security,01_PM.TODO}]]
+
+* <https://journalducoin.com/altcoins/ethereum-eth-bientot-resistant-aux-asic-grace-a-progpow>
+
+[[{01_PM.RADAR,02_QA.UX.DataService]]
+## Ethereum Data Service (EDS)
+- features:
+  - Insert/Update/Delete of packed type data (shallow object)
+  - Insert/Update/Delete for Deep Objects,
+    (EDO across contracts atomically) similarly to GraphQL inserts
+  ```
+                                                    ┌──────┐
+                                                  ┌····→ o←···· Object component
+                      ┌··· reference to another ··┘ │      │  + Object behaviour
+                      ·    component                └──────┘
+                     ┌v────┐         ┌──────┐        Object
+     User   ←········-o←·┐o│         │o ⇄  o│       Contract 4
+     ====            │  o└······←·┬··←┘     │
+     Person/         └─────┘      ·  └──────┘
+     Contract       Contract 1    ·  Contract 3
+                                  ·
+                                  ·  ┌──────┐
+                                  └····o    │
+                                     │      │
+                                     └──────┘
+                                     Contract 2
+  ```
+- Decentralized maintenance of types
+- Data shortcuts (alias)
+- Important available types:
+  - NFT
+  - Geo POI (Point-of-Interest)
+  - Various Type of Hashes
+  - URL
+  - IPFS Pointer
+  - Pointer to other Data.
+
+
+[[{implementation.quorum,infrastructure.cloud,devops.k8s,infrastructure.cloud,01_PM.TODO]]
+## Running on kubernetes 
+
+* <https://github.com/majd1239/Quarum-Maker-Kubernetes>
+* See also: <https://github.com/synechron-finlabs/quorum-maker/issues/75>
+[[}]]
+
+[[{13_SLC.TESTING.coverage,]]
+## Code Coverage  
+
+* <https://blog.colony.io/code-coverage-for-solidity-eecfa88668c2/>
+
+[[13_SLC.TESTING.coverage}]]
+
+[[{13_SLC.TESTING.property_based]]
+## Property based testing
+
+* <https://iamdefinitelyahuman.medium.com/effective-smart-contract-testing-property-based-testing-9e2a2b1fe77e>
+[[13_SLC.TESTING.property_based}]]
+
+
+## MultiSwap advanced
+
+* <https://soliditydeveloper.com/multiswap-advanced>
+
+
+## MetaMask to offer improved gas experience (2022-03-18)
+
+ ....terms have been changed to accurately capture market conditions:
+- "Low" (previously "Low"): is much lower than market prices and it
+  allows a user to pay a lower fee when they are willing to wait a
+  longer time. It allows you to wait a longer period and skip the price
+  spikes (i.e. save money). Note that this setting is based on past
+  trends, which means we can never be sure the transaction goes
+  through. If you require a transaction to go through, this may not be
+  the right setting for you.
+- "Market" (previously "Medium"): reflects market prices.
+- "Aggressive" (previously "High"): is much higher compared to market
+  prices. It allows you to set a really high max fee and priority fee
+  to increase the likelihood of your transaction being successful if
+  you're expecting to participate in a gas war.
+
+- Find out more about these changes and EIP-1559 in general in the
+  updated MetaMask hub.
+
+
+[[{integration.data]]
+## EIP 1767: GraphQL for Ethereum node data
+
+* <https://eips.ethereum.org/EIPS/eip-1767>
+[[integration.data}]]
+
+[[{[12_solidity.transient_storage,10_evm.gas,]]]
+## EIP-2200: simplified transient storage
+* <https://eips.ethereum.org/EIPS/eip-2200 >
+   This EIP mostly achieves what a transient storage tries to do
+   (EIP-1087 and EIP-1153), but without the complexity of introducing
+   the concept of “dirty maps”, or an extra storage struct.
+[[12_solidity.transient_storage}]]
+
+## Add summary to Diamond's notes
+
+* <https://github.com/aavegotchi/ghst-staking/tree/master/contracts/facets>
+
+## ConsenSys launches Infura NFT API and MetaMask Institutional NFT Portfolio
+
+* <https://consensys.net/blog/press-release/consensys-accelerates-the-nft-experience-by-launching-infura-nft-api-and-metamask-institutional-nft-portfolio-view-for-developers-and-organizations/>
+
+[[{scalability.node_storage.filecoin]]
+## filecoin virtual machine introduction
+## https://filecoin.io/blog/posts/introducing-the-filecoin-virtual-machine/ [storage]
+[[scalability.node_storage.filecoin}]]
+
+[[{security.101]]
+## Smart Contract Security Verification Standard
+
+* <https://github.com/securing/SCSVS/tree/prerelease/SCSVSv2>
+  [qa,security]
+   
+- Authors
+  - Damian Rusinek @drdr_zz (damian.rusinek@securing.pl)
+  - Pawel Kuryowicz @wh01s7 (pawel.kurylowicz@securing.pl)
+
+- FREE checklist created to standardize the security of smart contracts for
+  developers, architects, security reviewers and vendors.
+
+- This list helps to avoid the majority of known security problems
+  and vulnerabilities by providing guidance at every stage of the
+  development cycle of the smart contracts (from designing to
+  implementation).
+
+Objectives:
+- Help to develop high quality code of the smart contracts.
+- Help to mitigate known vulnerabilities by design.
+- Provide a checklist for security reviewers.
+- Provide a clear and reliable assessment - Security Health Factor -
+  of how secure smart contracts are in the relation to the percentage of SCSVS coverage.
+- Updates in v2
+- Security, Composability and Transparency are fundamentals of the
+  SCSVS. These values are achieved thanks to the engagement and
+  cooperation of the #BlockSec community. The standard structure
+  distinguishes 3 chapters, each operating in a slightly different area.
+- General - common and general security problems including, among others, design,
+  upgrades, policies.
+- Components - contracts that make up the project, frequently used patterns with
+  their typical security issues.
+- Integrations - components with which the project integrates, general recommendations
+  and threats to frequently used smart contracts.
+[[security.101}]]
+
+
+[[{02_QA.error_control,01_PM.TODO.NOW]]
+## Error handling
+
+- TODO: update existing info and details about 'error' keyword, try-catch limitations)
+
+* <https://medium.com/coinmonks/learn-solidity-lesson-26-error-handling-ccf350bc9374>
+[[}]]
+
+[[{dev_framework.aragon,02_use_case.finance.DAO,security.governance]]
+
+## Aragon OS: Advanced deployment 
+* <https://aragon.one/>
+* <https://blog.aragon.one/advanced-solidity-code-deployment-techniques-dc032665f434>
+
+- Upgradeability: https://hack.aragon.org/docs/apm.html
+   As a DAO, each aragonPM registry includes a number of installed applications,
+  including one APMRegistry, one ENSSubdomainRegistrar, and many Repo instances.
+
+- @[https://hack.aragon.org/docs/aragonos-intro.html]
+  aragonOS provides the following functionality:
+  - DAO: Decentralized Autonomous Organization
+  - Upgreadability:
+  - Permission control: By using the auth() and authP() modifiers you can
+    protect functionality such that they're only accessible by other apps or
+    entities if given permission. This completely abstracts the authentication
+    logic from an app, allowing you to focus on your app's business logic.
+    Example: protecting a vault so only the organization's Voting app can
+    initiate an action to transfer funds.
+  - Forwarders: aragonOS apps can communicate with each other by sending their
+    intent to perform an action to other apps. Example: withdrawing funds from
+    a vault only on the passing of a vote and the expiring of a time-lock.
+  - All the above makes it very simple for aragonOS apps to incorporate governance.
+    You just need to add a voting app, configure permissions the right way, and
+    away you go!
+  - Aragon Apps: https://github.com/aragon/aragon-apps
+    This repository contains the following apps:
+    - Vault       : Securely owns and manages tokens on behalf of a DAO.
+    - Finance     : Send payments and manage expenses with budgeting.
+    - Voting      : Create votes that execute actions on behalf of token holders.
+    - Token Manager: Manages organization tokens.
+    -  Payroll    : Manages employees' payrolls.
+  - Aragon Connect https://aragon.org/connect
+    - toolkit for developers to seamlessly integrate
+      DAO functionality into apps.
+    - easy to use and blazing fast!
+
+  - Ex 1: Obtain all the token holders (e.g. members) of a DAO
+    ```
+    | const tokens = new TokenManager(await org.app({
+    |   appName: 'tokens.aragonpm.eth'}))
+    | const tokenDetails = await tokens.token()
+    | const tokenHolders = await tokenDetails.holders()
+    ```
+
+  - Ex 2: Get all votes (past and ongoing) of a DAO:
+    ```
+    | const voting = new Voting(await org.app({
+    |   appName: 'voting.aragonpm.eth'}))
+    | const votes = await voting.votes()
+    ```
+
+  - Allow your user to vote on a proposal:
+    ```
+    | const [path] = await org.appIntent(
+    |     voting, 'vote', [votes[0].id, true, true] ).
+    |     paths(wallet.account)
+    | for (const transaction of path.transactions) {
+    |   await ethers.sendTransaction(transaction)
+    | }
+    ```
+[[}]]
+
+[[{02_use_case.finance.prediction_markets,wallet.multisignature,02_use_case.finance]]
+## GNOSIS Research: Create Prediction Markets
+
+* <https://github.com/gnosis/research>
+  
+- Whitepaper, ed. 22 Decmber 2017
+- Any-order condition resolution in conditional prediction markets
+- Apollo Prediction Market Framework Documentation
+
+- TRADE—Trading Protocols
+  - Batch Auction Optimization
+  - Batch auctions with uniform clearing price on Plasma
+  - Plasma SNAPP: Fully verified Plasma chain
+  - Plasma Research
+  - dFusion Specs
+  - DutchX: Fully decentralized auction based exchange
+  - DutchX Trading Protocol Documentation
+
+
+- HOLD—Multi-sig Wallets:
+  - Gnosis Safe Documentation
+  - Gnosis Safe Formal Verification
+  - Add wallet_ methods to improve dapp to wallet interaction
+    "...  Interacting with smart contract based wallets is different to
+      the interaction with EOA based wallets.   The biggest difference is
+      that smart contract based wallets cannot generate ECDSA signatures.
+      Also smart contract based wallets provide the possibility for a lot
+      of extended functionality  ..."
+[[02_use_case.finance.prediction_market}]]
+
+[[{02_QA.formal_verification,scalability.consensus.ethereum2]]
+## Formal Verification for Eth2.0 (Beacon Chain)
+
+- """ ...With my colleague Joanne Fuller, PhD at ConsenSys, we are
+  delighted to have released the first version of the formal
+  verification of the Eth2.0 (Beacon chain) specifications
+  https://lnkd.in/gw4JFf7q. This project was partially funded by a
+  grant from the Ethereum Foundation. ..."
+
+* <https://github.com/ConsenSys/eth2.0-dafnypre>
+* <https://cs.paperswithcode.com/paper/verification-of-the-incremental-merkle-tree>
+   Verification of the Incremental Merkle Tree Algorithm with Dafny by Franck Cassez
+[[}]]
+
+[[{privacy.offchain,infrastructure.storage.offchain]]
+## NuCypher: Privacy Infrastructure for the Decentralized Web.
+* <https://www.nucypher.com/>
+- Cryptographic Infrastructure for Privacy-Preserving Applications
+- Alice has sensitive data that she wants to store and share.
+- Alice encrypts her data using her public key and uploads it to
+  storage.
+- Alice delegates access to Bob. The data is rekeyed to Bob's key
+  using proxy re-encryption
+- Bob downloads the data and decrypts it with his own private key.
+
+- Manage secrets such as IAM tokens, database and SSH credentials,
+  X.509 certificates, and signing/encryption keys across dynamic
+  environments.
+ Proxy Re-encryption (PRE)
+  NuCypher's PRE network provides cryptographic access controls for
+  distributed apps and protocols.
+
+ Fully Homomorphic Encryption (FHE)
+  NuCypher's NuFHE library enables secure, private computation on
+  encrypted data by outsourced nodes.
+
+- See also:
+@[https://blog.nucypher.com/numerology-fast-ecc-arithmetic-on-chain-5eb438a735d4]
+[[}]]
+
+[[{02_QA.formal_verification}]]
+## DeepSea: formally verified language for EVM
+
+* @[https://certik.org/deepsea_blockchain.html]
+  Research at Yale and Columbia to further their work on DeepSEA,
+  a formally verified language that compiles to the EVM.
+
+
+[[{persistence.data_structure,02_QA.solidity,12_solidity.persistence,02_doc_has.diagram]]
+## SandCastle_SQL 
+
+* <https://pegasys.tech/sandcastle-brings-sql-to-ethereum-smart-contracts/>
+* WARN : Doesn't look to be continued.
+  ```
+  <https://twitter.com/shahankhatch/status/1129427879262138369>
+
+    |SQL| → |compiler| → |AST|  → |scopes    | → |code     | → |Solidity|
+                 ^                |validation|   |generator|
+           ┌─────┴─────┐
+           │           │
+         |lexer|    |parser|
+           ^           ^
+           └─────┬─────┘
+                 │
+         |parser-generator|
+  ```
+[[}]]
+
+
+[[{layer2.OptimisticVM,layer2.rollup.optimistic,scalability.layer2]]
+## Optimistic VM (OVM)
+* <https://medium.com/plasma-group/introducing-the-ovm-db253287af50>
+- VM designed to support all layer 2 (L2) protocols.
+  It generality comes from a reframing of L2 as an "optimistic" fork
+  choice rule layered on top of Ethereum.
+-  The formalization borrows heavily from CBC Casper research , and
+  describes layer 2 as a direct extension to layer 1 consensus. This implies a
+  possible unification of all “layer 2 scalability” constructions (Lightning,
+  Plasma, etc) under a single theory and virtual machine: the OVM.
+[[}]]
+
+
+
+[[{devops.network.bootstrap,01_PM.low_code]]
+## Hyperledger Bevel 
+- accelerator helping developers to rapidly set-up and deploy
+  production ready consortium based DLT network(s)  allowing
+  for fast onboarding of new organizations.
+[[}]]
+
+[[{wallet.hsm,security]]
+
+## Gemalto HSM 
+
+* <https://safenet.gemalto.com/data-encryption/hardware-security-modules-hsms/protectserver-security-module/>
+- Supports SECP256K1 , required by Ethereum
+[[}]]
+
+
+## Deth (Ganache alt)
+@[https://github.com/ethereum-ts/deth]
+- RPC support
+- state snapshots (evm_snapshot), time manipulation (evm_increaseTime),
+  mining control (evm_mine)
+- print out decoded logs and calldata for all transactions
+  (even reverted ones!)
+- display revert reasons
+- built-in blockchain explorer
+- ignore nonce errors(perfect while working with Metamask fox_face)
+- much faster (60%) than Ganache
+
+[[{scalability.zkp,01_PM.radar}]]
+## The Matter (500 TX/s) (Ethereum 2019 Grant) 
+
+- @[https://thematter.io/]
+- Productionising ‘Plasma Ignis’ code, a SNARK-driven “roll up” that can
+  support up to 500 transactions per second.
+
+[[{101,scalability.consensus.ethereum2,consensus.PoS,10_EVM.I/O.ORACLES,01_PM.radar]]
+## verifiable delay functions
+
+- core building block for proof stake block chains and secure lotteries.
+[[}]]
+
+[[{privacy.zkp,01_PM.radar]]
+## Bulletproofs: short of non-interactive zk-proofs trustless
+
+- A bulletproof can be used to convince a verifier that an encrypted
+  plaintext is well formed. For example,
+  prove that an encrypted number is in a given range, without revealing
+  anything else about the number. Compared to SNARKs, Bulletproofs
+  require no trusted setup. However, verifying a bulletproof is more
+  time consuming than verifying a SNARK proof.
+- used to secure cryptocurrencies like Monero, Mimblewimble
+  and others and is used in enterprise blockchains like JP
+  Morgan's quorum.
+[[}]]
+
+[[{privacy.zkp,scalability.zkp,01_PM.radar]]
+## SuperSonic: zSNARK trustless setup
+
+- Ben Fisch, Benedikt, and Alan Szepeniec also recently introduced
+  SuperSonic, the first fully practical zero-knowledge SNARK that
+  doesn't require a trusted setup.
+
+ - ... guest speaker Brecht Devos of Loopring for a presentation and
+   Q+A about scaling with ZKPs and Loopring.
+[[}]]
+
+[[{security,PRIVACY.ZKP,01_PM.radar]]
+## Homomorphic Hashing
+
+* <http://blog.notdot.net/2012/08/Damn-Cool-Algorithms-Homomorphic-Hashing>
+[[}]]
+
+[[{wallet.mobile,02_QA.UX,02_USE_CASE,01_PM.radar]]
+## Status: Wallet and IM 
+
+* <https://status.im/>
+* <https://github.com/status-im/status-react>
+* currently (20??-??) in alpha:
+* can be tested on Android and iPhone.
+* Status is a mobile messenger, crypto wallet, and Web3 browser.
+* peer-to-peer protocol that doesn't rely on centralized servers.
+[[}]]
+
+## How can dapps work on smartphones
+* <https://ethereum.stackexchange.com/questions/18461/how-can-dapps-work-on-smartphones>
+- Download Status on your phone
+- configure an account
+- Install
+  $ npm i -g status-dev-cli
+- In status console, enter /debug.
+  That will give you your device IP address {DEVICE_IP}
+- From your machine, make sure you can see you device and status:
+  status-dev-cli scan (status must be running)
+- Last step, consist in registering the dapp in status:
+  status-dev-cli add
+  ```
+  "{\"whisper-identity\": \"my-dapp\", \"dapp-url\": \"{DAPP_URL}\", \"name\": \"MyDAPP\"}" --ip {DEVICE_IP}
+  ```
+[[}]]
+
+[[{02_use_case.finance.prediction_markets,01_PM.radar]]
+## Augur Prediction Markets (Research project) 
+* <https://www.augur.net/>
+  Markets for Anyone Anywhere on Anything
+- politics and elections prediction markets
+- sport and football prediction markets
+- crypto and bitcoin prediction markets
+- prediction markets on anything
+- ...
+[[}]]
+
+[{privacy.ZKP,02_use_case,01_PM.radar]]
+## ZK Range Proves (ZKRP) by ING Bank
+
+* <https://github.com/ing-bank/zkrp>
+
+* ...Launched in 2017, zero-knowledge range proof (ZKRP) enabled numerical
+  data to be validated within a number range. For example, a mortgage
+  applicant could prove that their salary sits within a certain range
+  without revealing the exact figure. A year later, ING took the
+  solution a step further and introduced ZKSM, which goes beyond
+  numerical data to include other types of information, like locations
+  and names. This made the new code, ZKSM, more powerful. For instance,
+  banks could validate that a new client lives in a country that
+  belongs to the European Union, without revealing the country. Simply
+  put, this allows for information to be shared without revealing
+  contextual details.
+
+* Following a trend now widely adopted in the industry Bulletproofs
+  code is open-source, which means that other interested parties in the
+  development community are able to use, access and even contribute to
+  the solution.
+[[}]]
+
+[[{12_solidity,02_QA.solidity,02_QA.documentation,13_SLC.debugging]]
+## Piet: parses \*.sol
+
+* generates graphs of contracts and their relations
+  (inheritance structure,...).
+* <https://blog.slock.it/analyzing-solidity-smart-contracts-with-piet-6db33a733e79>
+* <https://github.com/slockit/piet>
+* <https://piet.slock.it/?container=examples%2Fexport1562664060589.piet.json>
+
+- Web GUI to read the state, send transactions, or list events
+- create smart contract documentation from NatSpec annotations.
+- support for Solidity source files, Truffle build files, piet
+  container files and GitHub repositories.
+- Can use web3 injected objects ("MetaMask") to interact with a live blockchain.
+
+  Warning: Piet has not yet undergone in-depth testing and may contain serious bugs.
+[[}]]
+
+[[{scalability.ewasm]]
+## EWASM
+* <https://ewasm.readthedocs.io/en/mkdocs/>
+  Ethereum WebAssembly is a proposed redesign of the Ethereum smart
+  contract execution layer using a deterministic subset of WebAssembly.
+  The use of WebAssembly as a format for smart contracts gains a
+  variety of benefits, a few of which are listed below:
+  - Near-native execution speed for smart contracts
+  - The possibility to develop smart contracts in many traditional
+    programming languages, such as C, C++, and Rust
+  - Access to a vast developer community and the toolchain surrounding WebAssembly
+  - Was abandoned for mainnet but can make sense in other contexts.
+[[}]]
+
+[[{12_solidity]]
+## Flattening code
+* <https://stackoverflow.com/questions/50137954/verify-smart-contract-code-deployed-with-truffle>
+- https://github.com/BlockCatIO/solidity-flattener
+- https://github.com/nomiclabs/buidler
+- https://github.com/nomiclabs/truffle-flattener
+- https://github.com/RyuuGan/sol-merger
+[[}]]
+
+[[{12_solidity.qa,security,01_PM.backlog]]
+## Mythril: detects integer underflows, owner-overwrite-to-Ether-withdrawal, ... 
+- https://github.com/ConsenSys/mythril-classic
+- Swiss army knife for smart contract security.
+- @[https://github.com/ConsenSys/mythril/wiki]
+- However, the analysis will NOT detect business
+  logic issues.
+- It is NOT equivalent to formal verification.
+[[}]]
+
+[[{101,security,12_solidity.qa]]
+## Security Best Practices 
+
+* <[https://consensys.github.io/smart-contract-best-practices/>
+[[}]]
+
+[[{12_solidity]]
+## Example ussage of msg.data:
+
+* Imagine we pass two uint256 as msg.data.  To use them:
+  ```
+  | function sum() ... {
+  |   uint256 op1;
+  |   uint256 op2;
+  |   uint256 result;
+  |   bytes memory data = msg.data;
+  |   assembly {
+  |     op1 := mload(add(data, 36)) <- 36 (not 32) because First 4 bytes of
+  |     op2 := mload(add(data, 68))     the msg.data is the func.selector data.
+  |     result  := add(op1, op2)
+  |   }
+  | }
+  ```
+[[}]]
+
+[[{PM.TODO.now]]
+## library of standards for security tokens ("Obligation to pay") on Ethereum
+
+*  suite of standard interfaces for:
+- issuing / redeeming security tokens
+- managing ownership and transfer restrictions.
+- providing transparency on how different subsets
+  of their token balance behave with respect to
+  transfer restrictions, rights and obligations.
+- Standards should be backwards compatible with ERC-20 (#20).
+- Depends on:
+  - ERC-1410: differentiated ownership / transparent restrictions
+  - ERC-1594:  on-chain restriction checking with error-signalling.
+              off-chain data injection for transfer restrictions and
+              issuance / redemption semantics
+  - ERC-1643: document / legend management
+  - ERC-1644: controller operations (force transfer)
+[[PM.TODO.now}]]
+
+## OZ MerkleProof SC:
+
+* <https://docs.openzeppelin.com/contracts/2.x/api/cryptography#MerkleProof>
+  ```
+  | verify(bytes32[] proof, bytes32 root, bytes32 leaf) -> bool
+  |
+  | Returns true if leaf can be proved to be a part of a Merkle tree
+  | defined by root when supplied with a proof.
+  | proof = sibling hashes in branch from leaf-to-root.
+  |         Each pair of leaves and each pair of pre-images
+  |         are assumed to be sorted.
+  ```
+
+## Awesome Solidity Libraries
+  
+* <https://github.com/bkrem/awesome-solidity#libraries>
+
+##  EVM Memory and Storage
+
+* Review an update notes.
+<https://kauri.io/article/766e5d1e1ba240a7976943b659a871fc/v1/a-deep-dive-into-the-ethereum-virtual-machine-(evm)-part-2:-memory-and-storage>
+
+
+## Awesome EVM list
+
+* <https://github.com/pirapira/awesome-ethereum-virtual-machine>
+
+## truffle: run multiline scripts.
+
+* REF: <https://ethereum.stackexchange.com/questions/36549/how-to-run-a-multiline-script-in-truffle-console>
+  ```
+  |  STEP 1)
+  |    Write script to 'myScript.js' file.
+  |  STEP 2)
+  |    Use require or exec like:
+  |    truffle(dev)> require ('./myScript.js') // < alt 1
+  |    truffle(dev)> exec  './myScript.js'     // < alt 2
+  ```
+
+[[{dev_framework.python.TextUI,01_PM.low_code]]
+## TextUI: Console "Prototyping"
+* <https://github.com/kayagoban/shadowlands>
+- rapid prototyping platform for Eth apps which breaks the paradigm
+  that everything must be a web app.
+- Suppports: Trezor Harwdware Wallet, ... 
+[[dev_framework.python.TextUI}]]
+
+[[{privacy.ZKP.zokrates]]
+## Zokrates 
+* <https://zokrates.github.io/print.html>
+* <https://www.youtube.com/watch?v=YymE69JcKEk>
+- Convert zSNARKS "algebra" circuits to Solidity verifier code.
+- Clients can send "proofs" to be verified by the Solidity code that will
+  ultimately continue/rollback any TX.  [[}]]
+
+[[{privacy.offchain.whisper,scalability.offchain]]
+## Whisper Dapp Protocol
+
+* <https://github.com/ethereum/wiki/wiki/Whisper>
+
+* communication protocol to communicate DApps with each other for off-chain Data.
+
+### USE CASE:
+- DApps that need to publish small amounts of information to each other and
+  have the publication last some substantial amount of time. For example, a
+  currency exchange DApp may use it to record an offer to sell some currency at
+  a particular rate on an exchange. In this case, it may last anything between
+  tens of minutes and days. The offer wouldn't be binding, merely a hint to get
+  a potential deal started.
+
+-  DApps that need to signal to each other in order to ultimately
+  collaborate on a transaction. For example, a currency exchange DApp may use
+  it to coordinate an offer prior to creating one (or two, depending on how the
+  exchange is structured) transactions on the exchange.
+
+-  DApps that need to provide non-real-time hinting or general
+  communications between each other. E.g. a small chat-room app.
+
+-  DApps that need to provide dark (plausible denial over perfect network
+  traffic analysis) comms to two correspondents that know nothing of each other
+  but a hash. This could be a DApp for a whistleblower to communicate to a
+  known journalist exchange some small amount of verifiable material and
+  arrange between themselves for some other protocol (Swarm, perhaps) to handle
+  the bulk transfer.
+
+  geth experimental flags related to whisper:
+  --shh                       Enable Whisper
+  --shh.maxmessagesize value  Max message size accepted (default: 1048576)
+  --shh.pow value             Minimum POW accepted (default: 0.2)
+
+- Whisper Alternative include "Message Contract" and "Telehash"
+[[privacy.offchain.whisper}]]
+
+[[{integration.data,scalability.offchain,01_PM.TODO,01_PM.low_code]]
+
+## EtherQuery 
+@[https://github.com/Arachnid/etherquery]
+Custom ethereum client that uploads blockchain data to BigQuery
+[[}]]
+
+
+[[{devops,infrastructure.cloud.aws,infrastructure.cloud]]
+## AWS Lambda -> Eth.RPC
+@[https://blogs.sequoiainc.com/blockchain-dev-part-2-ethereum-rpc-from-aws-lambda/]
+  how to interact with that node via RPC using an AWS Lambda function. This
+  enables DApp development to leverage benefits of "serverless" software
+  architecture while still maintaining the isolation and security of our original
+  architecture.  [[}]]
+
+[[{01_PM.low_code.kaleido,integration,devops.network.bootstrap]]
+## Kaleido.io SaaS Ethereum/Quorum in AWS, Azure, ... 
+  @[https://kaleido.io/]:
+  - Marketplace: @[https://marketplace.kaleido.io/]
+    - Salesforce Integration    :
+    - APP+INTEGRATION GATEWAY   :
+    - PUBLIC ETHEREUM TETHER    : Pin state proofs from your private chain to public Ether. networks
+    - ETHER POOL                : Enable token economy use-cases without developing your own token
+    - BLOCK EXPLORER            : Get more insights through real-time+historical snapshots of your blockchain
+    - IDENTITY REGISTRY         : Bind verified digital certificates to org Ether. addresses via on-chain registry
+    - IPFS FILE STORE           : Securely store data through a censorship resistant file sharing protocol
+    - IDENTITY MASKING HD WALLET: Submit TXs anonymously, mask your identity+manage accounts [[privacy]]
+[[01_PM.low_code.kaleido}]]
+
+
+## Data structure in Ethereum
+
+* <https://medium.com/coinmonks/data-structure-in-ethereum-episode-4-diving-by-examples-f6a4cbd8c329>
+
+[[{10_EVM.EIP2315]]
+## EIP-2315 (EVM new ops for Control-flow)
+- https://eips.ethereum.org/EIPS/eip-2315 
+- Simple Subroutines for the EVM (Already implemented in Quorum 21, Geth?, others?)
+- two new opcodes: RJUMPSUB and RETURNSUB.
+  together with other recent propoposals they provides
+  A STATIC, COMPLETE, SAFE, AND EFFICIENT CONTROL-FLOW FACILITY.
+- Previously calls (RJUMSUB) were synthesized by fetching-and-pushing the
+  return-address and subroutine-address on the data-stack and
+  executing a JUMP to the subroutine.
+   "Returns" were synthesized by moving return-address to stack-top,
+  then and jumping back to it, causing cost gas and increasing program size. 
+[[10_EVM.EIP2315}]]
+
+[[{standards.eip/erc.191,security.governance]]
+## EIP-173: Contract Ownership Standard
+-  https://eips.ethereum.org/EIPS/eip-173
+  ```
+  | function transferOwnership(address newOwner) external;
+  | └ event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+  ```
+- function owner() view external returns(address);
+[[standards.eip/erc.191}]]
+
+[[{layer2.rollup.zk,devops.network.bootstrap]]
+## Polygon Edge: Bootstrap custom or soverign zk-rollups 
+* <https://polygon.technology/solutions/polygon-edge/>
+-  Developers can quickly set up validiums, zk-roolups or sovereign rollups
+-Deploy application specific blockchain networks
+-Polygon Supernets service will provide access to premium tools and services in the future
+[[}]]
+
+## ERC-4626, ¿Boosting DeFi?
+* <https://decrypt-co.cdn.ampproject.org/c/s/decrypt.co/es/99721/conoce-el-erc-4626-el-estandar-que-podria-impulsar-la-nueva-ola-de-las-defi>
+
+
+## Ganache 7 EVM Simulator
+
+* <https://trufflesuite.com/blog/introducing-ganache-7/>
+
+[[{PM.whats_new]]
+## Solidity 0.8.10 
+* <https://blog.soliditylang.org/2021/11/09/solidity-0.8.10-release-announcement/>
+   In our benchmarks, the new code transform has resulted in significant runtime gas savings,
+   although at the cost of a slight increase in code size.
+   While previously any Yul variable had a fixed position on stack during its entir
+   e lifetime, the new code transform drops this restriction and attempts to determ
+   ine a more optimal layout that (1) reduces the required amount of swapping and
+   thereby reduces gas cost and (2) keeps overall stack usage as low as possible to
+   work against stack-too-deep errors.
+[[PM.whats_new}]]
+
+[[{dev_framework.kotlin]]
+## KEthereum: Kotlin library
+
+* <https://github.com/komputing/KEthereum>
+[[dev_framework.kotlin}]]
+
+[[{use_case.identity.SSI,]]
+## Universal Verifier Interface for Identity
+* <https://gataca.io/blog/the-verifier-universal-interface-vui-releases-its-first-official-draft-to-achieve-interoperability-between-id-wallets-and-verifier-components>
+[[}]]
+
+## HackMD
+
+* 8 April 2022 
+* <https://hackmd.io/@benjaminion/eth2_news/https%3A%2F%2Fhackmd.io%2F%40benjaminion%2Fwnie2_220408>
+* <https://consensys.net/blog/blockchain-explained/the-ethereum-2-0-beacon-chain-is-here-now-what/>
+* <https://consensys.net/blog/blockchain-explained/what-is-ethereum-2/>
+* <https://consensys.net/blog/blockchain-explained/how-to-safely-migrate-your-ethereum-2-0-validator-client/>
+* <https://consensys.net/blog/developers/how-to-monitor-your-eth2-validator-and-analyze-your-pl/>
+* <https://cdn.consensys.net/uploads/2022/04/14055036/Merge-FeatureBlock-Become_A_Validator.png>
+
+## Arrow Glacier
+
+* <https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/arrow-glacier.md>
+
+## Pulse Search Engine
+
+* <https://www.linkedin.com/pulse/search-engines-web3-conor-svensson/>
+
+
+[[{signature.ecdsa_secp256k1.recovery]]
+## Signature Recovery 
+
+* <https://ethereum.stackexchange.com/questions/15364/ecrecover-from-geth-and-web3-eth-sign/16072#comment112406_16072>
+-  OZ's ECDSA has a tool to generate these wrapped messages 
+as well as root out additional corner cases in ECDSA.
+I wrote an article describing what I think is the right way to use
+web3's hashMessage() and sign(), Solidity's ecrecover(), and Open
+Zeppelin's ECDSA lib.
+- <https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/cryptography/ECDSA.sol>
+- <https://medium.com/@yaoshiang/ethereums-ecrecover-openzeppelin-s-ecdsa-and-web3-s-sign-8ff8d16595e1>
+- See also:
+  - http://coders-errand.com/details-of-ecdsa-signatures/
+  - https://blog.ricmoo.com/verifying-messages-in-solidity-50a94f82b2ca
+[[signature.ecdsa_secp256k1.recovery}]]
+
+[[{12_solidity.101,12_solidity.troubleshooting,02_QA.error_control,01_pm.todo]]
+## Bubbling up Custom Errors
+* <https://ethereum.stackexchange.com/questions/109457/how-to-bubble-up-a-custom-error-when-using-delegatecall custom_errors>
+[[}]]
+
+[[{devops.network.bootstrap,consensus.PoS]]
+## Sedge: PoS Node Bootrap
+
+* <https://github.com/NethermindEth/sedge>
+   A one click setup tool for PoS network/chain validators.
+Currently, Sedge is designed primarily for solo stakers and testnet
+devs of the Beacon Chain and the Merge (Ethereum). Sedge generates
+docker-compose scripts for the entire on-premise validator setup
+based on the chosen client.
+[[}]]
+
+[[{integration.enterprise_patterns]]
+## OpenSea Stream API
+
+* <https://docs.opensea.io/reference/stream-api-overview>
+- websocket-based service enabling to receive events as they occur,
+  ensuring our custom service has the most up-to-date details without 
+  the need to poll for updates.
+[[}]]
+
+[[{integration.ENTERPRISE_PATTERNS.SAP]]
+## SAP Ethereum Integration
+
+* <https://github.com/KevinSmall/SapEthereumIntegration>
+* <https://blogs.sap.com/2020/08/21/sap-integration-with-ethereum-mainnet/>
+
+ " .... You will see how easy it is to connect an ABAP-based system to mainnet"*
+
+  ```
+  | SAP ECC            AZURE             Ethereum Network      Other Clients
+
+  | program ● <···> ● Web API  ● <···> ● Smart Contract        many libraries
+  | UI                - SC Access,       Business Logic +      /clients.
+  |                   - config,          Data Store.
+  |                   - keys
+  ```
+[[integration.ENTERPRISE_PATTERNS.SAP}]]
+
+[[{scalability.layer2.hop_protocol]]
+## HopProtocol L2 to L2 without L1
+
+* <https://hop.exchange/whitepaper.pdf>
+* <https://hop.exchange/>
+
+ ... move assets directly among L2 Rollups chains skipping layer 1.
+[[}]]
+
+
+[[{escalability.layer2.zkopru]]
+## ZKOPRU
+* <https://github.com/zkopru-network/zkopru>
+*  https://docs.zkopru.network/getting-started
+[[escalability.layer2.zkopru}]]
+
+[[{13_SLC.debugging,12_SOLIDITY.TROUBLESHOOTING,01_PM.TODO.NOW]]
+## Ethereum Debugging Working Group
+
+* <https://github.com/ethdebug>
+[[}]]
+
+[[{STANDARDS.EIP/ERC.1844,doc_has.comparative,]]
+## ERC-1844: ENS Interface Discovery  (Registry)
+
+* <https://eips.ethereum.org/EIPS/eip-1844>
+  by Nick Johnson (@arachnid)
+* <https://ethereum-magicians.org/t/ens-interface-discovery/2924>
+* Requires: EIP-137 (ENS), EIP-165
+
+* Compared with:
+  * EIP-137 ENS: Replace long addresses with 'myName.eth'. It 
+    requires an SC registry.
+  * EIP 165 supports interface discovery (by external Dapps): Does 
+    contract@address supports interfaceX?
+  * EIP-1844: Allows to link interfaces with ENS names (and 
+    addresses) as well as , and of discovering those interfaces, by 
+    adding a new profile for ENS resolvers.
+  It requires a (modified/extended EIP-137?) SC registry.  
+  NOTE: Interfaces can be implemented either by target contract (if any) or another contract.
+  e.g: A Token contract can expose the Interface for 'atomic swap' even if it is actually
+       implemented by another contract.
+
+  It adds next function to ENS resolvers:
+  ```solidity
+  function interfaceImplementer(
+     bytes32 node /*ENS name hash node */,
+     bytes4 interfaceID /* EIP-165 of search-for interface */
+  )
+  external
+  view 
+  returns (
+    address /* of an appropriate SC implementing of that interface (or 0 if not found) */
+  );
+
+  EIP-165 interface ID: 0xb8f2bbb4.
+  ```
+
+* Implementations MAY utilise a fallback strategy:  
+  If no matching interface was explicitly provided by the user, query
+  the contract returned by addr(), returning its address if the requested
+  interface is supported by that contract, and 0 otherwise. 
+
+* Naive approach: add method directly to target contract. Shortcomings:
+  * Each contract must maintain its own list of interface implementations.
+  * Modifying this list requires access controls, which the contract 
+    may not have previously required.
+  * Support for this must be designed in when the contract is 
+    written, and cannot be retrofitted afterwards.
+  * Only one canonical list of interfaces can be supported.
+      Using ENS resolvers instead mitigates these shortcomings, making it 
+    possible for anyone to associate interfaces with a name, even for 
+    contracts not previously built with this in mind.
+[[STANDARDS.EIP/ERC.1844}]]
+
+## Teku: Java Implementation of Ethereum 2.0 Beacon Chain
+
+* <https://docs.teku.consensys.net/>
+* <https://github.com/ConsenSys/teku>
+
+## ERC-6551: Game-Changing NFT Standard?  [[{]]
+* https://eips.ethereum.org/EIPS/eip-6551
+* https://www.bsc.news/post/erc-6551-the-game-changing-nft-standard
+[[}]]
+
+
+<!--
+## use_case.identity, standards
+* <https://forum.eid.as/t/european-digital-identity-architecture-and-reference-framework/216/2>
+-->

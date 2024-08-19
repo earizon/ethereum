@@ -1,0 +1,14 @@
+# Brownie [[{dev_framework.python.brownie,13_SLC.testing,02_QA,01_PM.TODO]]
+  @[https://eth-brownie.readthedocs.io/en/latest/]
+  @[https://eth-brownie.readthedocs.io/en/stable/tests-hypothesis-property.html]  [[{13_SLC.testing.property_based}]]
+  @[https://github.com/HyperLink-Technology/brownie]
+- simple python framework for testing, deploying and interacting with SCs.
+
+- PROPERTY-BASED TESTING — Brownie v1.6.5 documentation [[{01_PM.TODO.now}]]
+
+- See Also:
+  - Effective Smart Contract Testing with Brownie:
+@[https://medium.com/coinmonks/effective-smart-contract-testing-developer-revert-comments-c7a6f250df0f]
+[[}]]
+
+

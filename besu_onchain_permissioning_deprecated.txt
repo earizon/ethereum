@@ -1,0 +1,44 @@
+[[{standards.eea,10_EVM.implementation.besu,security.governance,01_PM.TODO]]
+## BESU/EEA NODES GOVERNANCE
+- Onchain Permissioning: (Las Update 2020-03-20)
+  (Deprecated as inidicated in https://github.com/ConsenSys/permissioning-smart-contracts)
+<https://besu.hyperledger.org/en/stable/Concepts/Permissioning/Onchain-Permissioning/>
+
+- SCs used to store and administer allowed nodes, accounts and admin whitelists.
+  (vs whitelists in config files with the potential to have errors or not being in sync).
+
+- Custom SCs and DApps can be implemented to work with onchain permissioning.
+
+- Existing Permissioning contracts:
+  - INGRESS CONTRACTS : proxy contracts DEFINED IN THE GENESIS FILE to defer the
+    for nodes and       permissioning logic to the Node Rules and Account Rules contracts.
+    accounts            The Ingress contracts deploy to static addresses.
+
+  - NODE RULES        : stores node whitelist and node whitelist operations
+                        (for example, add and remove).
+
+  - ACCOUNT RULES     : stores the accounts whitelist and account
+                        whitelist operations (for example, add and remove).
+
+  - ADMIN             : stores the list of admin accounts and admin list
+                        operations (for example, add and remove). There is one
+                        list of admin accounts for node and accounts.
+
+- Permissioning Management Dapp:
+  - provides view and maintain access to the whitelists.
+
+- Whitelists implemented:
+  - ACCOUNTS that can submit transactions to the network.
+  - NODES    that can join the network.
+             TIP: All bootnodes must be on the nodes whitelist.
+  - ADMINS   accounts that are able to update the ACCOUNTS
+             and NODES WHITELISTS
+
+  WARN: On-chain ACCOUNT whitelist permissioning is incompatible  [[{privacy]]
+        with random key signing for privacy marker transactions:
+        A signing key must be specified using the
+        "--privacy-marker-transaction-signing-key-file" cli flag,
+        and also included in the accounts whitelist.              [[}]]
+
+<https://besu.hyperledger.org/en/stable/HowTo/Limit-Access/Local-Permissioning/>
+[[}]]

@@ -1,0 +1,327 @@
+# Wallets ─────────────────────────────────────────────────────────
+## Wallet Comparative [[{wallet.101,02_QA.UX.WALLET,01_PM.WiP]]
+  Based on previous work from: https://github.com/shanefontaine/ethereum-wallet-comparison
+  LECTURE: 1: yes/OK/supported, 0: no/KO/unsupported, p: In-progress
+                              ┌----------------------------------------- https://airgap.it
+                              | ┌--------------------------------------- https://authereum.org
+                              | | ┌····································· https://universallogin.io/
+                              | | · ┌----------------------------------- https://www.portis.io/
+                              | | · | ┌································· https://www.argent.xyz/
+                              | | · | · ┌------------------------------- https://metamask.io/
+                              | | · | · | ┌····························· https://abridged.github.io/splash/
+                              | | · | · | · ┌--------------------------- https://safe.gnosis.io/
+                              | | · | · | · | ┌························· https://magic.link/
+                              | | · | · | · | · ┌----------------------- https://tor.us
+                              | | · | · | · | · | ┌····················· https://www.dapperlabs.com/
+                              | | · | · | · | · | · ┌------------------- https://wallet.coinbase.com/
+                              | | · | · | · | · | · | ┌················· https://status.im/
+                              | | · | · | · | · | · | · ┌--------------- https://trustwallet.com/
+                              | | · | · | · | · | · | · | ┌············· https://www.ledger.com/
+                              | | · | · | · | · | · | · | · ┌----------- https://squarelink.com
+                              | | · | · | · | · | · | · | · | ┌········· https://ethvault.xyz
+                              | | · | · | · | · | · | · | · | · ┌------- https://github.com/poanetwork/nifty-wallet
+                              | | · | · | · | · | · | · | · | · | ┌····· https://bitski.com
+                              | | · | · | · | · | · | · | · | · | · ┌--- http://breadapp.com
+                              | | · | · | · | · | · | · | · | · | · | ┌· https://token.im/
+                              | | · | · | · | · | · | · | · | · | · | ·  Venly wallet
+                              | | · | · | · | · | · | · | · | · | · | ·  TODO: WalletConnect (OOSS protocol connecting dApps to mobile wallets
+                              | | · | · | · | · | · | · | · | · | · | ·        using QR code scanning or deep linking), Fortmatic.
+                              | | · | · | · | · | · | · | · | · | · | ·      - https://github.com/walleth, https://walleth.org/,
+                                                                               OOSS Android native wallet.
+ ENS Integration             |?|1|1|0|1|1|1|0|0|0|0|0|1|1|0|0|1|1|0|0|1|<- users can natively create an ENS name
+ Browser Extension Required  |0|1|1|1|1|0|1|1|1|1|0|1|1|1|1|1|1|0|1|1|1|
+ Supports all Mobile Browsers|?|1|1|1|1|0|1|1|1|1|0|1|1|1|0|1|1|0|1|1|1|
+ Integrates with Native Apps |?|1|1|1|1|0|1|1|1|1|0|0|0|0|0|1|1|0|1|0|1|
+ No Phone Number Required    |?|1|1|1|0|1|1|1|0|1|0|0|1|1|1|1|1|1|1|1|1|
+ Account Recovery            |?|1|1|1|1|1|1|0|1|1|1|1|0|1|0|1|1|1|1|1|1|
+ No Seed Phrase Backup       |?|1|1|0|1|0|1|0|1|1|0|0|1|1|0|1|1|0|1|0|0|
+ Non-custodial               |1|1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|0|1|1|<- no 3rd party needed
+ Exportable Wallet           |?|1|1|1|0|1|1|1|1|1|0|0|0|1|1|1|1|1|0|1|1|
+ Testnet Availability        |0|1|1|1|0|1|1|1|1|1|0|1|1|0|1|1|1|1|1|0|0|
+ SC-based(vs EOAs) Accounts  |0|1|1|0|1|0|1|1|0|0|1|0|0|0|0|0|0|0|0|0|0|
+ Pay Gas in Tokens           |?|1|1|0|0|0|p|1|0|0|0|0|0|0|0|0|0|0|0|0|0|<- vs just ethers
+ Web2.0 Style Login          |?|1|0|1|1|0|1|0|1|1|1|0|1|0|0|1|1|0|1|0|0|<- familiar username/password [[security.AAA]]
+ Purchase ETH/Tokens In App  |?|1|0|1|1|p|1|0|0|0|1|1|0|1|0|1|0|1|0|1|1|
+ Web3 Provider Available     |?|1|0|1|0|1|0|0|1|0|1|1|0|1|0|1|1|1|1|0|1|
+ Software Token 2FA          |0|1|0|1|0|0|p|0|1|0|0|0|0|0|0|1|0|0|0|0|0|
+ Hardware Token 2FA          |1|1|0|0|0|0|p|0|0|0|0|0|0|0|0|0|0|0|0|0|0|
+ Hardware Wallet Integration |?|1|0|0|0|1|p|0|0|0|1|0|0|0|1|0|0|1|0|0|1|
+ Transaction Firewall        |?|1|0|0|1|0|p|0|0|0|0|0|0|0|0|0|0|0|0|0|0|<- TX check against "firewall" to prevent attacks [[security]]
+ Off-chain Login             |?|1|0|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|1|1|<- no need for "TX-logins" in different devices
+ No Mobile App Required      |0|1|0|1|0|1|1|1|1|1|1|0|0|0|1|1|1|1|1|0|0|
+ No Hardware Required        |0|1|1|1|1|1|1|1|1|1|1|1|1|1|0|1|1|1|1|1|1|
+ Sandboxed Key Storage       |1|1|0|1|1|1|0|1|1|1|1|1|1|1|0|1|1|1|1|1|1|<- or iframes and not easily accessible
+ Upgradeable/Modular S.C.    |0|1|1|0|1|1|1|1|0|0|1|0|0|0|0|0|0|0|0|0|0|<- SC-based User's contract is upgradeable/modular
+ Batched Transactions        |?|1|0|0|0|0|1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|<- Send N TX as 1 (atomic) onchain TX [[architecture.batch,scalability.offchain,transaction.signature]]
+ Open Sourced                |1|1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|
+[[}]]
+
+## MetaMask Wallet [{wallet.metamask,dev_framework.js,security.aaa]]
+  https://github.com/MetaMask/test-dapp [[{01_PM.TODO.now}]]
+  - simple test dapp for use in MetaMask e2e tests and manual QA
+  - Test full functionallity of Wallet including:
+    - Basic Actions.
+    - Permissions Actions.
+    - En/De-crypt text.
+    - Eth/Personal Signature, ecRecover, Sign Typed Data V3/V4,
+
+  WARN,WARN,WARN:  (Update 2019-12) Metamask management problems:
+@[https://metamask.github.io/metamask-docs/]
+
+  - [[{01_PM.RISKS]]
+    REF: https://www.bitcoininsider.org/article/79962/updated-metamask-contributor-says-project-lacks-support-consensys
+   """... A contributor of major Ethereum browser extension Metamask has
+     reported that the MetaMask team is “totally overwhelmed” and not
+     being prioritized by its parent company ConsenSys.
+
+     The post, titled “Help MetaMask out of its Activity-Trap,” goes
+     on to say that the MetaMask team has a number of unsolved issues and
+     its inner workflow structure is neither transparent nor
+     decentralized. The post reads:
+
+     “One cannot follow development via the public issue-tracker,
+      simply because the team uses an internal tracker and internal
+      ‘meetings.’ This is not transparent. This is not decentralized.
+      MetaMask is a critical value-moving piece of Ethereum. It is written
+      in JavaScript, nearly completely untyped. The code is of low quality,
+      full of technical debt (both, in terms of code and architecture)..."""
+   [[}]]
+
+- Injects a window.ethereum web3 provider into the current web page
+  when the extension is enabled.  (See also notes on eip-1193 standarization).
+- It handles account management and  client-node management.
+- Support for different hardware-wallets, while isolating them from the site context.
+  (vs storing keys on central server, local storage, ..)
+- API Reference
+  · Ethereum_Provider ← "web3 provider object"
+  · JSON_RPC_API
+  · Experimental_APIs
+
+- Calling a Contract from Web Browser with Metamask and ethjs
+@[https://medium.com/metamask/calling-a-smart-contract-with-a-button-d278b1e76705]
+(ethjs: lightweight alternative to web3.js)
+  - PRE-SETUP) $ npm install ethjs
+
+  - ethjs JS how-to)
+   const Eth = require('ethjs-query')
+   const EthContract = require('ethjs-contract')
+   const CONTRACT_ADDRESS = '0xdea...'
+   const CONTRACT_ABI = [{
+          "name": "transfer", "inputs": [ ...  ], "outputs": [ ... ],
+          ...
+        }]
+
+   function initContract (contract) {
+     const MiniToken = contract(CONTRACT_ABI)  // <- Proxy JS object to real remote ABI
+     const miniToken = MiniToken.at(address)   // <- Point to correct address.
+   }
+
+   function startApp(web3) {
+     const eth = new Eth( web3.currentProvider  )
+                          └──────────────────┴─ Injected by MetaMask
+     const contract = new EthContract(eth)
+     initContract(contract)
+   }
+
+   window.addEventListener('load', function() {
+     if (typeof web3 === 'undefined') { return; }
+     startApp(web3);
+   })
+
+   function onButtonCliced (miniToken) {
+       miniToken.transfer(
+         toAddress, value, { from: addr })
+         .then( txHash => {
+            console.log('Transaction sent')
+            console.dir(txHash)
+            waitForTxToBeMined(txHash)
+          })
+         .catch(e => { ... })
+   }
+
+- Related:
+@[https://github.com/MetaMask/vault-decryptor]
+   A web app for decrypting MetaMask vault data.
+
+## MetaMask Mobile [[{01_PM.TODO}]]
+@[https://mobile.metamask.io/]
+
+### What's new MetaMask
+* ver 8 (major upgrade)
+  @[https://medium.com/metamask/announcing-metamask-version-8-9126dc2df98]
+
+  - Unparalleled Privacy Control:
+    select one or more accounts to associate with
+    a website or create a new account just for that site .
+  - EIP-2255 (site) permissions system. [[{02_QA.UX]]
+       proposed standard interface for granting wallet security-sensitive
+       asking "just once" in order to get permissions like:
+       - "Reveal wallet address to a given site".
+       - "Switch to preferred network".
+       - "Sign a cryptographic challenge".
+       - "Grant a token allowance to our contract".
+       - "Send TXs to our contract".
+       - ...
+       - Users can "uncheck" permissions individually [[}]]
+  - New features for Developers:
+    - Allow websites to en/de-crypt messages intended for Web3 users:
+      - For "Now"(20??) decryption requests require user confirmation:
+        => mostly ideal for decrypting infrequent, important messages.
+    - Enable web sites to implement custom connect buttons.
+      (e.g.: allow user to seamlessly land on a site, install MetaMask,
+       and be automatically redirected back to your application)
+
+    - ERC-1193 Provider API:
+      for consistency across clients and applications.
+      Instead of (old) ethereum.sendAsync(options, callback)
+      pattern everywhere, you now get a nice and simple
+      const result = await ethereum.request({ method, params }).
+      If you’re a developer that relies on the window.web3 object
+      injected by MetaMask, you’ll need to implement changes before we
+      remove the injected web3 object or your site will break.
+      If you’re a developer that only relies on your own version of
+      ethers or web3, you won’t need to take any action — just keep it
+      up to date.
+      IF CHOOSING A NEW CONVENIENCE LIBRARY, WE  RECOMMEND ETHERS. [[{02_doc_has.comparative}]]
+
+    - Cutting Edge Security:
+      The (new) LavaMoat tool helps raise the bar of security for
+      nearly any JavaScript project by using  Secure EcmaScript
+      to confine every third-party dependency in a piece of JS
+      code at build time.
+
+## Lattice1 Metamask Integration (2021-11) [[{wallet.hardware,wallet.metamask]]
+    @[https://consensys.net/blog/news/metamask-x-lattice1-the-hardware-wallet-designed-for-ethereum-users-is-now-supported/]
+    - Lattice1 (by GridPlus): hardware wallet for Ethereum users.
+    - MetaMask / Lattice1 is done through Wi-FI (vs USB).
+    - Lattice1 aims to solve 3 big crypto security problems:
+      - Leaking private keys:
+        SafeCards securely back up seeds onto PIN-protected cards.
+        Every SafeCard is essentially a physical carrier of an
+        HD wallet seed that looks like a traditional credit/debit card.
+      - Signing messages unintentionally:
+        - big touch screen interface and human-readable markup.
+        - supports for NFTs.
+        - "enhanced" smart contract interaction.
+      - great user experience in integrating with MetaMask.  [[}]]
+[[wallet.metamask}]]
+
+## LedgerHQ Hardware Wallet [[{wallet.hsm,02_QA.UX,security]]
+@[https://github.com/LedgerHQ]
+- LedgerJS examples: @[https://github.com/LedgerHQ/ledgerjs-examples]
+- High activity on Github, including (non-complete list):
+  - ledger-live-common : JS core for the Ledger Wallet apps
+  - lib-ledger-core    : C++
+  - TRX Ledger         : C, app-exchange
+  - SWAP application   : C
+  - ledger-wallet-daemon: Scala web server exposing Core API through
+                         simple REST API
+  - ledger-live-mobile : react-native, bluetooth
+  - ledger-live-desktop: electron
+  - wallet             : JS
+  - openpgp-card-app   : C, OpenPGP Card Application
+  - app-terra          : C, Nano S/Nano X
+  - app-ethereum       : C, Wallet App for Ledger Blue and Nano S
+  - app-bitcoin        : C, Bitcoin wallet app for Ledger Blue and Nano S
+  - ledger-updater     : JS, Standalone firmware update / app install
+  - ledger-scala-template: template for scala projects
+  - ledger-dev-doc     : Python, Ledger developer docs.
+  - ledger-app-store-front: JS
+  - ledger-manager-chrome: Scala, Ledger Manager Chrome application
+  - ledger-wallet-chrome: JS, Ledger Wallet Chrome application
+  - ledgerctl          : Python Lib. to control Ledger devices
+
+  - Does it support EIP-712(Typed human-friendly signing) ??
+[[}]]
+
+## AirGap Wallet [{wallet.airgap,security.aaa]]
+@[https://airgap.it]
+* airgap-vault 
+  The AirGap Vault is installed on a spare smartphone that has
+  no connection to any network, thus it is air gapped. 
+  This app handles the private key. 
+
+* airgap-wallet
+  The AirGap Wallet is installed on an everyday smartphone. 
+  This app has only access to public information. 
+[[}]]
+
+## Mnemonic to Seed [[{wallet.mnemonics]]
+  @[https://ethereum.stackexchange.com/questions/25484/could-address-reuse-leak-your-mnemonic-seed/25705#2570://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki#from-mnemonic-to-seed]
+
+ (mnemonic, passphrase) → (input to) → │PBKDF2│ ──────────────→  derived key ("seed")
+  ^            ^^                         ^                      512 bits (64 bytes)
+  └ UTF-8 NFKD ┘|              - Iter.count : 2048                ^
+                |              - HASH       : HMAC-SHA512        Can be used to generate
+                |                                                deterministic keys (wallets)
+                |                                                (BIP-0032)
+       every "random" passphrase
+       generates a valid seed but
+       only the correct one will
+       make the desired wallet available
+[[}]]
+
+
+[[{wallet.cloud,wallet.101]]
+## Etherum Offline TX signature in with JS in Azure
+   Snippet example from Kaleido examples:
+   REFs:
+   https://github.com/kaleido-io/kaleido-js/blob/master/deploy-transact/lib/azure-signing.js
+   https://tomislav.tech/2018-01-31-ethereum-keyvault-generating-keys/
+   https://tomislav.tech/2018-02-05-ethereum-keyvault-signing-transactions
+
+   WARN: According to this link  the secp256k1 curve spec (used by
+   Bitcoin and Ethereum signatures) is only available in Azure Key Vault
+   under Premium SKU, not Standard.
+
+    async signTx(signedTx) {
+      // signature on the tx is over the hash of the tx
+      let hash = signedTx.hash(false);
+      // now ask Azure to sign the hash
+      let res;
+
+      // reference: blog by Tomislav Markovski
+      // https://tomislav.tech/2018-02-05-ethereum-keyvault-signing-transactions/
+      try {
+        // The output of this will be a 64 byte array. The first 32 are the value for R and the rest is S.
+        res = await
+    //${serviceName}.vault.azure.net`,   // ← sign directly by setting signature key.
+              keyName, keyVersion, 'ECDSA256', Buffer.from(hash));
+      } catch(err) {
+        throw new Error('Failed to get signature from the signing service', err);
+      }
+
+      // standard ethereum signature object has "r", "s" and "v"
+      let sig = {
+        r: res.result.slice(0, 32),
+        s: res.result.slice(32)
+      }
+
+      // find the recovery ID by trying the possible values (0, 1, 2, 3) with "recover"
+      let account = await this.getAccount();
+      console.log(`\tRetrieved account from Azure key vault: ${account.address}`);
+      let recoverId;
+      for (let i of [0, 1, 2, 3]) {
+        let recovered = this.web3.eth.accounts.recover({
+          messageHash: '0x' + hash.toString('hex'),
+          v: '0x' + (i + 27).toString(16),
+          r: '0x' + sig.r.toString('hex'),
+          s: '0x' + sig.s.toString('hex')
+        });
+
+        if (recovered.toLowerCase() === account.address.toLowerCase()) {
+          recoverId = i;
+          break;
+        }
+      }
+
+      sig.v = recoverId + 27;
+
+      if (signedTx._chainId > 0) {
+        sig.v += signedTx._chainId * 2 + 8;
+      }
+      Object.assign(signedTx, sig);
+
+      return signedTx;
+    }
+[[}]]
