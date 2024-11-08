@@ -1,63 +1,80 @@
-https://besu.hyperledger.org/en/stable/public-networks/how-to/use-besu-api/authenticate/
+## Besu Athenticated and authorize JSON-RPC Requests
 
-Authenticate and authorize JSON-RPC
+* <https://besu.hyperledger.org/en/stable/public-networks/how-to/use-besu-api/authenticate/>
 
-Methods to authenticate/protect JSON-RPC methods:
-WARN: NOT SUPPORTED BY MetaMask (last check:  2022-XX-XX)
+* Methods to authenticate/protect JSON-RPC methods:
+  * WARN: NOT SUPPORTED BY MetaMask (last check:  2022-XX-XX)
 
- - JWT public key.
+* Basic idea, add a Bearer header with a well signed JWT.
+  (The signature must be from a trusted entity)
 
-PRESETUP: HTTPS setup (otherwise requests will leak secrets)
+* PRESETUP
 
-Enable authentication from the command line. Supply the credentials file and send a request to the /login endpoint using the username and password. The /login endpoint creates a JWT for making permitted JSON-RPC requests.
-Using public key authentication disables the /login endpoint.
+  * HTTPS setup (otherwise requests will leak secrets)
+  * Enable authentication from the command line. Supply the 
+    credentials file and send a request to the /login endpoint using the 
+    username and password. The /login endpoint creates a JWT for making 
+    permitted JSON-RPC requests.
+  * Using public key authentication disables the /login endpoint.
 
-## USERNAME/PASSWORD JSON-RPC AUTHENTICATION ( internally Besu creates JWT)
+* USERNAME/PASSWORD JSON-RPC AUTHENTICATION 
 
-  Enable authentication from the command line and supply the external JWT provider’s public key.
-  ──────────────────────────────────────────────── PRESETUP) Generate private and public key pair (not needed for user/pass Auth)
-  $ openssl genrsa -out privateRSAKey.pem 2048   <·· RSA-2048bits-RS256*|RS384|RS512
-  $ openssl rsa -pubout \                            ECDSA ES256(secp256r1 or secp256k1)|ES384|ES512.
-    -in privateRSAKey.pem \
-    -pubout -out publicRSAKey.pem
-  ────────────────────────────────────────────────── STEP 1) ENAMBLE FLAGS IN BESU AT LAUNCH TIME: (not neede for user/pass Auth)
-  $ besu \
-    --rpc-http-authentication-enabled                 \
-    --rpc-ws-authentication-enabled                   \
-    --rpc-http-authentication-jwt-public-key-file ... \ <···· (JWT Auth only) (this disables user/pass /login)
-    --rpc-ws-authentication-jwt-public-key-file   ... \ <···· (JWT Auth only) (this disables user/pass /login)
-    --rpc-http-authentication-credentials-file    ... \ <···· user/pass auth only
-    --rpc-ws-authentication-credentials-file      ... \ <···· user/pass auth only
-    ...
-  ────────────────────────────────────────────────── STEP 2) JWT-PAYLOAD (not needed for user/pass Auth)
-  | {
-  |   "permissions": ["*:*"],           <····· required perm.    claim
-  |   "exp": 1600899999002,             <····· required exp.time claim
-  |   "privacyPublicKey": "2U...s="     <····· (Opt) tenant’s Tessera pub.key
-  |     (Only used for multi-tenancy)                using privacyPublicKey.
-  |
-  | }
-  ────────────────────────────────────────────────── STEP 3) TOML CREDENTIALS FILE (User/Pass only, Not needed for JWT)
-  | [Users.username1]
-  | password = "$2a$10$l3GA7K8g6rJ/Yv.... "          <····· besu password hash --password=MySecretPassForUsername1
-  | permissions=["net:*","eth:blockNumber"]          <····· list of allowed permissions (["*:*"] for all API methods)
-  | privacyPublicKey="U7ANiOOd5L9Z/dMxRFj...="
-  |
-  | [Users.username2]
-  | password = "$2b$10$6sHt1J0MVUGIoNKvJiK33uaZzUwNmMmJlaVLkIwinkPiS1UBnAnF2"
-  | permissions=["net:version","admin:*"]
-  | privacyPublicKey="quhb1pQPGN1w8ZSZSyiIfncEAlVY/M/rauSyQ5wVMRE="
-  ────────────────────────────────────────────────── STEP 4): GENERATE temporal AUTH. TOKEN (Not needed for JWT)
-  | $ JSON_BODY='{"username":"...","password":"..."}'        WARN: EXPIRE AFTER 5 MINUTES!!!
-  | $ curl -X POST \
-  |   --data "${JSON_BODY}" ${NODEX_JSON_RPC_URL}/login
+* Keypoint: Internally Besu creates JWT after correct login.
 
-──────────────────────────────────────────────────
-In the Authorization tab in the TYPE drop-down list, select Bearer Token and specify the token (generated either externally or by the login request).
-Specify the Bearer in the header. Example:
-  CURL REQUEST WITH AUTHENTICATION:
-  $ curl -X POST -H 'Authorization: Bearer <JWT_TOKEN>' \
-      -d '{"jsonrpc":"2.0","method":"<API_METHOD>","params":[],"id":1}' \
-      <JSON-RPC-http-hostname:port>
+1.  Enable authentication from the command line and supply the external JWT provider’s public key.
+
+    ```
+    | PRESETUP) Generate private and public key pair ───────────────────────────────
+
+    | (not needed for user/pass Auth) 
+    | $ openssl genrsa -out privateRSAKey.pem 2048 # <·· RSA-2048bits-RS256*|RS384|RS512
+    |                                              #     ECDSA ES256(secp256r1 or secp256k1)|ES384|ES512.
+    | $ openssl rsa -pubout  -in privateRSAKey.pem \
+    |   -pubout -out publicRSAKey.pem
+    |
+    | STEP 1) ENAMBLE FLAGS IN BESU AT LAUNCH TIME:  ───────────────────────────────
+    | 
+    | (not needed for user/pass Auth)   
+    | $ besu \
+    |   --rpc-http-authentication-enabled                 \
+    |   --rpc-ws-authentication-enabled                   \
+    |   --rpc-http-authentication-jwt-public-key-file ... \ <···· (JWT Auth only) (this disables user/pass /login)
+    |   --rpc-ws-authentication-jwt-public-key-file   ... \ <···· (JWT Auth only) (this disables user/pass /login)
+    |   --rpc-http-authentication-credentials-file    ... \ <···· user/pass auth only
+    |   --rpc-ws-authentication-credentials-file      ... \ <···· user/pass auth only
+    |   ...
+    | STEP 2) JWT-PAYLOAD (not needed for user/pass Auth) ──────────────────────────
+    | {
+    |   "permissions": ["*:*"],           <····· required perm.    claim
+    |   "exp": 1600899999002,             <····· required exp.time claim
+    |   "privacyPublicKey": "2U...s="     <····· (Opt) tenant’s Tessera pub.key
+    |     (Only used for multi-tenancy)                using privacyPublicKey.
+    |
+    | }
+    | STEP 3) TOML CREDENTIALS FILE (User/Pass only, Not needed for JWT) ───────────
+    | [Users.username1]
+    | password = "$2a$10$l3GA7K8g6rJ/Yv.... "          <····· besu password hash --password=MySecretPassForUsername1
+    | permissions=["net:*","eth:blockNumber"]          <····· list of allowed permissions (["*:*"] for all API methods)
+    | privacyPublicKey="U7ANiOOd5L9Z/dMxRFj...="
+    |
+    | [Users.username2]
+    | password = "$2b$10$6sHt1J0MVUGIoNKvJiK33uaZzUwNmMmJlaVLkIwinkPiS1UBnAnF2"
+    | permissions=["net:version","admin:*"]
+    | privacyPublicKey="quhb1pQPGN1w8ZSZSyiIfncEAlVY/M/rauSyQ5wVMRE="
+    | STEP 4): GENERATE temporal AUTH. TOKEN (Not needed for JWT) ──────────────────
+    | WARN: EXPIRE AFTER 5 MINUTES!!!
+    | $ JSON_BODY='{"username":"...","password":"..."}'        
+    | $ curl -X POST \
+    |   --data "${JSON_BODY}" ${NODEX_JSON_RPC_URL}/login
+    | 
+    | 
+  In the Authorization tab in the TYPE drop-down list, select Bearer Token
+  and specify the token (generated either externally or by the login request).
+  Specify the Bearer in the header. Example:
+    CURL REQUEST WITH AUTHENTICATION:
+    $ curl -X POST -H 'Authorization: Bearer <JWT_TOKEN>' \
+        -d '{"jsonrpc":"2.0","method":"<API_METHOD>","params":[],"id":1}' \
+        <JSON-RPC-http-hostname:port>
+    ```
 
 

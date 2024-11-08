@@ -8,7 +8,7 @@
   <https://ethfiddle.com/>
   <https://github.com/ConsenSys/smart-contract-best-practices'>
 
-[[{12_solidity]]
+[[{solidity]]
 ## Solidity: What's New
 ### 0.8 [[{]]
 - Solidity 0.8 Breaking changes
@@ -77,7 +77,7 @@
 
   - Unicode string literals supported now.  unicode"Hello 😃"
 
-  - state mutability of functions can now be restricted during inheritance    [[02_QA]]
+  - state mutability of functions can now be restricted during inheritance    [[QA]]
     with "pure" and "view".
 
   - structs and arrays containing mapping can only be used in storage.
@@ -119,7 +119,7 @@
       - called whenever the call data is empty (with/without ether received).
 
 - New Features
-  - try/catch statement allows to react on failed external calls.     [[02_QA.error_control]]
+  - try/catch statement allows to react on failed external calls.     [[QA.error_control]]
   - "struct" and "enum" types can be declared at file level.
   - Array slices can be used for calldata arrays.
     e.g.: low-level way to decode function call payload
@@ -133,10 +133,10 @@
 ### 0.6.0
 - try-catch added: WARN: Ussage is quite different to standard languages.
   <https://blog.ethereum.org/2020/01/29/solidity-0.6-try-catch/>
-  [[{02_qa.error_control}]]
+  [[{qa.error_control}]]
 [[}]]
 
-[[{101,12_solidity.solc,02_QA.formal_verification,02_QA.auditing,13_SLC.debugging,01_PM.WiP]]
+[[{101,solidity.solc,QA.formal_verification,QA.auditing,SLC.debugging,PM.WiP]]
 ## compiling: [[{]]
 * solc command line tool is the standard compiler for Solidity for the EVM.
   Note: alternative `solang` compiler exists compiling [[{SCALABILITY.EWASM]] 
@@ -291,7 +291,7 @@
   |        "*": {             abi, ast, devdoc, userdoc, metadata, ir/irOptimized(Yul),
   |          "*": [ "abi" ] ← storageLayout(Slots/offsets/types of contract's vars),
   |        }                   evm.assembly, evm.bytecode.*, evm.methodIdentifiers
-  |      }                      ,10_EVM.gasEstimates, ewasm.wast, ewasm.wasm
+  |      }                      ,EVM.gasEstimates, ewasm.wast, ewasm.wasm
   |    "modelChecker":{...} ← experimental/subject to changes (Formal Probes)
   |    }
   |  }
@@ -349,7 +349,7 @@
   the source code and comparing the resulting bytecode (bitwise) to
   what is deployed. If it matches, SUCCESS.
 
-* Don't use '^' versioning [[{02_QA.bestpattern]]
+* Don't use '^' versioning [[{QA.bestpattern]]
   Extracted from: <https://ethereum.stackexchange.com/questions/74785/publish-and-verify-the-source-contract-code-in-ethscan-i-tried-it-but-it-keeps/74796>
 >  """ ...contract has ^ in pragma, so no one can be sure what
 >    compiler was used**. Its presence is a sign that the code hasn't
@@ -366,7 +366,7 @@
   <https://contract-library.com/contracts/Ethereum/42A1CA0A79A9E7D83AEE9012D21920B02F9FC2C6>
 [[}]]
 
-[[{12_solidity,persistence.data_structure,02_QA,01_PM.WiP]]
+[[{solidity,persistence.data_structure,QA,PM.WiP]]
 
 # Solidity 101
 
@@ -393,7 +393,7 @@
   (Some low level-EVM data can be directly extracted from the
   TX receipt, like the gas spent, hash, ...).
 
-[[{02_QA.documentation.natspec]]
+[[{QA.documentation.natspec]]
 ## NATSPEC COMMENTS
 
   ```
@@ -513,7 +513,7 @@
   are not part of EVM accesible data. They are still accesible
   to clients.
 
-[[{10_EVM,persistence.contract_state,12_solidity,13_SLC.troubleshooting,13_SLC.debugging]]
+[[{EVM,persistence.contract_state,solidity,SLC.troubleshooting,SLC.debugging]]
 ## Solidity to 'storage' address mapping
 
 REF: <https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-storage>
@@ -605,7 +605,7 @@ REF: <https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-stor
   ```
   | NonTrustedContract  // <·· External contract can potentially waste all gas.
   |  .someMethod {
-  |     gas:gasleft()   // <·· Safe calling. [[{01_PM.TODO.now]}]
+  |     gas:gasleft()   // <·· Safe calling. [[{PM.TODO.now]}]
   |   }.(...);          //     What about other gas quantities
   ```
     
@@ -625,11 +625,11 @@ REF: <https://www.mayowatudonu.com/blockchain/deep-dive-into-evm-memory-and-stor
 
 ## Time units
   ```
-  second : unit-of-time, minutes, days [[{12_SOLIDITY.date_time}]]
+  second : unit-of-time, minutes, days [[{SOLIDITY.date_time}]]
   ```
 
 
-[[{12_solidity,10_EVM.events,scalability.solidity,integration.enterprise_patterns]]
+[[{solidity,EVM.events,scalability.solidity,integration.enterprise_patterns]]
 ## Retrieving events quickly
 
 Imagine the COMMON PROBLEM:
@@ -686,7 +686,7 @@ SOLUTION :
 [[}]]
 
 
-## SOLIDITY GLOBALS [[{12_solidity.101]]
+## SOLIDITY GLOBALS [[{solidity.101]]
 
 * GLOBAL METHODS:
 
@@ -763,7 +763,7 @@ SOLUTION :
 [[}]]
 
 
-[[{101,12_solidity.strings]]
+[[{101,solidity.strings]]
 ## Solidity String Manipulation
 
 - Can be used as keys for mappings
@@ -807,7 +807,7 @@ SOLUTION :
                    !=keccak256((""));
   ```
 
-- Check white-space paddings: [[{01_PM.TODO}]]
+- Check white-space paddings: [[{PM.TODO}]]
 
 - uint256 to/from Strings:
   ```
@@ -838,7 +838,7 @@ SOLUTION :
 ### STRING LIBRARIES
 
 * WARN: String manipulation inside contracts is discouraged. It wastes lot of   
-  gas and is error-prone. Use them as last-resort. [[{02_QA.101}]]
+  gas and is error-prone. Use them as last-resort. [[{QA.101}]]
 
 * <https://github.com/Arachnid/solidity-stringutils>
   ```
@@ -880,7 +880,7 @@ SOLUTION :
   ```
 [[}]]
 
-[[{12_solidity.101.date_time]]
+[[{solidity.101.date_time]]
 ## Solidity: Date/Time
 
 - DateTime is stored as uint
@@ -900,7 +900,7 @@ SOLUTION :
   ```
 [[}]]
 
-## Function modifiers [[{101,12_solidity.101.functions,10_EVM.gas]]
+## Function modifiers [[{101,solidity.101.functions,EVM.gas]]
 - Syntax sugar for function precondition checks:
   <https://en.wikipedia.org/wiki/Precondition>
 - Commonly used to check basic "value security rules"
@@ -954,7 +954,7 @@ SOLUTION :
   ```
 [[}]]
 
-## fixing "stack too deep" error [[{101,10_EVM.101,13_SLC.debugging,12_solidity.troubleshooting]]
+## fixing "stack too deep" error [[{101,EVM.101,SLC.debugging,solidity.troubleshooting]]
 
 - PROBLEM CONTEXT: Compiler tries to access a variable var1 that is beyond
   "16 depth in stack".  Compilation fails with error "stack too deep".
@@ -1048,7 +1048,7 @@ SOLUTION :
   ```
 [[}]]
 
-## Solidity Voting Example [[{12_solidity.101]]
+## Solidity Voting Example [[{solidity.101]]
 * <https://github.com/ethereum/go-ethereum/wiki/Contract-Tutorial>
 
   ```
@@ -1138,7 +1138,7 @@ SOLUTION :
 * <https://github.com/ConsenSys/ethereum-developer-tools-list/blob/master/README.md>
 * <https://www.reddit.com/r/ethdev/comments/9jw839/long_list_of_ethereum_developer_tools_frameworks/<
 
-## Visual Tools [[{01_PM.TODO.now]]
+## Visual Tools [[{PM.TODO.now]]
 - <https://github.com/ConsenSys/surya>: displays a number of visual outputs
   and information about the contracts' structure.
   Also supports QUERYING THE FUNCTION CALL GRAPH.
@@ -1150,7 +1150,7 @@ SOLUTION :
   - Graphical EVM debugger displaying the entire program control flow graph.  [[}]]
 [[}]]
 
-# Solidity Data Structures 101 [[{12_SOLIDITY.datastructure]]
+# Solidity Data Structures 101 [[{SOLIDITY.datastructure]]
 
 ## STRUCTS
   ```
@@ -1255,7 +1255,7 @@ SOLUTION :
   - values are stored at the state-memory address == keccak256(key)
 - Solution: See section "solidity_storage_patterns"
 
-## Sorted Linked List [[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
+## Sorted Linked List [[{101,persistence.data_structure,QA.solidity,solidity.persistence]]
 
 * <https://github.com/vittominacori/solidity-linked-list]
 * utility library for using sorted linked list data structures.
@@ -1270,11 +1270,11 @@ SOLUTION :
   ```
 [[}]]
 
-## EnumerableSet [[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence,01_PM.TODO]]
+## EnumerableSet [[{101,persistence.data_structure,QA.solidity,solidity.persistence,PM.TODO]]
 
 * <https://docs.openzeppelin.com/contracts/2.x/api/utils#EnumerableSet> [[}]]
 
-[[{101,persistence.data_structure,02_QA,12_solidity.persistence]]
+[[{101,persistence.data_structure,QA,solidity.persistence]]
 ## Iterable map (arachnid gist)
 * <https://gist.github.com/ethers/7e6d443818cbc9ad2c38efa7c0f363d1]
   ```
@@ -1353,7 +1353,7 @@ SOLUTION :
   ```
 [[}]]
 
-[[{12_solidity.101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
+[[{solidity.101,persistence.data_structure,QA.solidity,solidity.persistence]]
 ## storage patterns
 
 * <https://ethereum.stackexchange.com/questions/13167/are-there-well-solved-and-simple-storage-patterns-for-solidity]
@@ -1467,7 +1467,7 @@ SOLUTION :
   ```
 [[}]]
 
-[[{101,persistence.data_structure,02_QA.solidity,12_solidity.persistence]]
+[[{101,persistence.data_structure,QA.solidity,solidity.persistence]]
 ## Composed-keys in maps
 
 * <https://ethereum.stackexchange.com/questions/69727/map-multikey-how-to]
@@ -1495,11 +1495,11 @@ SOLUTION :
   ```
 [[}]]
 
-[[12_SOLIDITY.datastructure}]]
+[[SOLIDITY.datastructure}]]
 
-[[{12_solidity.error_control,transaction,10_EVM.101,02_doc_has.diagram,13_SLC.debugging]]
-[[ 10_EVM.implementation.besu,10_EVM.events]]
-[[ 13_SLC.testing,transaction,dev_framework.java.web3j,02_QA.error_control]]
+[[{solidity.error_control,transaction,EVM.101,doc_has.diagram,SLC.debugging]]
+[[ EVM.implementation.besu,EVM.events]]
+[[ SLC.testing,transaction,dev_stack.java.web3j,QA.error_control]]
 # SOLIDITY ERROR CONTROL  ("QA 101")
 
 * <https://solidity.readthedocs.io/en/v0.4.24/control-structures.html#error-handling-assert-require-revert-and-exceptions]
@@ -1790,7 +1790,7 @@ SOLUTION :
     error is caught there.
 [[}]]
 
-# STATIC CODE ANALYSIS [[{]] [[{12_solidity.qa.code_analysis,02_doc_has.comparative,security.101,]]
+# STATIC CODE ANALYSIS [[{]] [[{solidity.qa.code_analysis,doc_has.comparative,security.101,]]
 
 ### Static vs Dynamic Code analysis (QA)
 
@@ -1937,7 +1937,7 @@ production-ready.
 * <https://arxiv.org/pdf/1807.07875.pdf>
 [[}]]
 
-## MythX: Sym/Dym,Static,fuzzing analysis [[{security,12_solidity.qa,01_PM.TODO.NOW]]
+## MythX: Sym/Dym,Static,fuzzing analysis [[{security,solidity.qa,PM.TODO.NOW]]
 - Integrated into "major IDEs". (Truffle/VS.Code/Embark/Remix).
 - MythX: Whole set of micro-services to handle linting and other checks.
 - <https://docs.mythx.io/en/latest/index.html#>
@@ -1962,7 +1962,7 @@ production-ready.
   <https://github.com/dmuhs/PythX>
 [[}]]
 
-## QA: FORMAL PROOFs [[{02_QA.formal_verification,12_solidity.qa,01_PM.WiP]]
+## QA: FORMAL PROOFs [[{QA.formal_verification,solidity.qa,PM.WiP]]
 * External Links
   * <https://github.com/pirapira/eth-isabelle>
   * <https://github.com/pirapira/ethereum-formal-verification-overview>
@@ -2058,7 +2058,7 @@ production-ready.
   - <http://www.cs.umd.edu/~aseem/solidetherplas.pdf>
 [[}]]
 
-## FP: (Py)Slither [[{security,02_QA,12_solidity,01_PM.TODO.now]]
+## FP: (Py)Slither [[{security,QA,solidity,PM.TODO.now]]
 
 - <https://github.com/crytic/slither>
   - Detects vulnerables with LOW FALSE POSITIVES.
@@ -2092,9 +2092,9 @@ production-ready.
   $ slither .../Contract01.sol # Single solidity file
   ```
 [[}]]
-[[12_solidity.qa.code_analysis}]]
+[[solidity.qa.code_analysis}]]
 
-[[{12_solidity.101,02_QA.error_control,02_doc_has.tutorial,01_PM.WiP]]
+[[{solidity.101,QA.error_control,doc_has.tutorial,PM.WiP]]
 # Solidity Best Patterns
 
 This section covers a series of recomendations in order to develop
@@ -2196,7 +2196,7 @@ developers can use them as a reference.
   smaller ones. In practice, component injection is done manually in the
   deployment scripts.
 
-## Solidity Limitations [[{10_EVM.101]]
+## Solidity Limitations [[{EVM.101]]
 NOTE: Most Solidity limitations are EVM limitations actually and such
       limitations are "ON PURPOSE". EVM is targeting ledger-like systems
       (vs general runtime or computing systems).
@@ -2210,9 +2210,9 @@ NOTE: Most Solidity limitations are EVM limitations actually and such
   in most networks.
 - String support is limited (this is something good!, don't use them)
 [[}]]
-[[12_solidity.101}]]
+[[solidity.101}]]
 
-[[{standards.eip/erc.165,devops,12_solidity.101,architecture,02_QA.UX]]
+[[{standards.eip/erc.165,devops,solidity.101,architecture,QA.UX]]
 # EIP-165: Standard Interface Detection at Runtime
 
 - NOTE: EIP-1820 improves over this standard, but EIP-165 is not
@@ -2259,7 +2259,7 @@ NOTE: Most Solidity limitations are EVM limitations actually and such
   - See also:<#eip_1820] Pseudo-introspection Registry Contract
 [[}]]
 
-[[{devops,standards.eip/erc.1820,12_solidity.101,architecture,02_QA.UX,01_PM.TODO.NOW]]
+[[{devops,standards.eip/erc.1820,solidity.101,architecture,QA.UX,PM.TODO.NOW]]
 # EIP-1820: EIP-165"++" 
 * <https://eips.ethereum.org/EIPS/eip-1820>
   - Pseudo-introspection Registry Contract
@@ -2272,7 +2272,7 @@ NOTE: Most Solidity limitations are EVM limitations actually and such
   also external DApps)
 [[}]]
 
-[[{10_EVM.debugging,12_solidity]]
+[[{EVM.debugging,solidity]]
 # DECONSTRUCTING A SOLIDITY SMART CONTRACT
 
 * Summary of OpenZepellin Posts:
@@ -2709,9 +2709,9 @@ we would need to connect to the same Swarm network to which the metadata file wa
 [[}]]
 
 
-[[{101,10_EVM,persistence.contract_state,persistence.data_structure]]
-[[ 02_QA.UX,02_QA.solidity,12_solidity.upgradable_contracts]]
-[[ 13_SLC.troubleshooting,standards.eip/erc.2535]]
+[[{101,EVM,persistence.contract_state,persistence.data_structure]]
+[[ QA.UX,QA.solidity,solidity.upgradable_contracts]]
+[[ SLC.troubleshooting,standards.eip/erc.2535]]
 # EIP-2535 Diamonds: Progressively upgradable Contracts
 
 * <https://eips.ethereum.org/EIPS/eip-2535>
@@ -2828,14 +2828,14 @@ we would need to connect to the same Swarm network to which the metadata file wa
     ├─────────────────────────────────────────────────┼────────────────────────────────────────────┼────────────────────────────────────────────|
     |                                                 |- proxy contract + facets inherit a storage |Both proxy/ies and facet/s use a general    |
     |contract ProxyA {                                |  contract with storage variables used      |storage based on maps                       |
-    |    const bytes32 STATE01_POS =                  |  ensuring no collision arise.              |contract .... {                             |
+    |    const bytes32 STATEPOS =                  |  ensuring no collision arise.              |contract .... {                             |
     |          = keccak256("state01");                |                                            |   mapping(bytes32 => uint256  ) uIntStore; |
     |    function getState01() ...                    |                                            |   mapping(bytes32 => string   ) stringStore|
     |    returns(address state01) {                   |                                            |   mapping(bytes32 => address  ) addrStore; |
-    |      assembly { state01 := sload(STATE01_POS) } |                                            |   ...                                      |
+    |      assembly { state01 := sload(STATEPOS) } |                                            |   ...                                      |
     |    }                                            |                                            |                                            |
     |    function setstate01(address state01) ... {   |                                            |   function (...) {                         |
-    |      assembly { sstore(STATE01_POS, state01) }  |                                            |      return addressStorage["user"];        |
+    |      assembly { sstore(STATEPOS, state01) }  |                                            |      return addressStorage["user"];        |
     |    }                                            |                                            |      addrStorage["user"] = newUser;        |
     |}                                                |                                            |  }                                         |
     |                                                 |                                            |}                                           |
@@ -3105,7 +3105,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
   Curated list of external resources
 [[}]]
 
-[[{12_solidity.101,]]
+[[{solidity.101,]]
 # Solidity libraries 
 
 * <https://blog.aragon.one/library-driven-development-in-solidity-2bebcaf88736>
@@ -3170,7 +3170,7 @@ we would need to connect to the same Swarm network to which the metadata file wa
 <https://github.com/OpenZeppelin/openzeppelin-solidity>
 [[}]]
 
-[[{security.101,12_solidity.qa,security,01_PM.WiP]]
+[[{security.101,solidity.qa,security,PM.WiP]]
 ## STATIC AND DYNAMIC ANALYSIS
 - <https://consensys.github.io/smart-contract-best-practices/security_tools/>
 - <https://github.com/trailofbits/echidna>
@@ -3205,6 +3205,6 @@ we would need to connect to the same Swarm network to which the metadata file wa
 - <https://github.com/weifund/solint>
 - <https://github.com/duaraghav8/Solium>
 [[}]]
-[[12_solidity}]]
+[[solidity}]]
 
 

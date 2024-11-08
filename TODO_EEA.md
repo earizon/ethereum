@@ -141,7 +141,7 @@ A,B EVM → A,B EVM: contract code execution
 -@[https://github.com/ewasm/benchmarking]
 [[}]]
 
-[[{13_SLC.profiling,02_QA,01_PM.TODO]]
+[[{13_SLC.profiling,QA,PM.TODO]]
 ## Caliper blockchain performance benchmark
   @[https://github.com/hyperledger/caliper] with support for:
   - test different blockchain solutions with predefined use cases,
@@ -156,8 +156,8 @@ A,B EVM → A,B EVM: contract code execution
     - FISCO BCOS
 [[}]]
 
-# Quorum [[{privacy.private_tx,privacy.private_tx.101,01_PM.OUTDATED]] 
-         [[02_doc_has.diagram,implementation.quorum,devops,01_PM.low_code]]
+# Quorum [[{privacy.private_tx,privacy.private_tx.101,PM.OUTDATED]] 
+         [[doc_has.diagram,devops,PM.low_code]]
 @[https://consensys.net/quorum/]
 ## Originally developed by JP Morgan as an extension to standard geth adding
   support for private transactions and later on adquired by Consensys
@@ -169,7 +169,7 @@ A,B EVM → A,B EVM: contract code execution
   KEY POINT: Private granularity is done at enode scope.
 
   PRIVATE TX SIMPLIFIED SCHEMA:
-
+  ```
   ┌ Node  ───┐     ┌ Node ────┐ • Each node trusted-admin will generate a couple of
   │ @ClientA │     │ @ClientB │   priv/pub keys for the Tessera "side-car", keeping
   │  ┌───────┤     ├───────┐  │   the private key "safe", and distributing the pub.
@@ -185,9 +185,11 @@ A,B EVM → A,B EVM: contract code execution
             └ Node ─────────┘      The tessera "side-car" is normally installed
                                   on the dApps node used by dApp clients.
                                   In simple setups, validator can also be re-used
-to serve dapps, query the blockchain, send new private/public TXs, but is less secure,
-since secrets are more exposed to the rest of the network.
+  to serve dapps, query the blockchain, send new private/public TXs, but is less secure,
+  since secrets are more exposed to the rest of the network.
+  ```
 
+  ```
  @[https://raw.githubusercontent.com/jpmorganchase/quorum-docs/master/images/QuorumTransactionProcessing.JPG]
    P┌====================================================================┐
    A│                           (9) TxAB-hash Payload?                   │
@@ -242,6 +244,7 @@ since secrets are more exposed to the rest of the network.
           └───────────────┘  └─────────────────────────┘
             Ethereum standard       EEA PRIVATE TX
              p2p Protocol         EXTENSION PROTOCOL
+  ```
 
 ## TESSERA (Private TX)
 - Developed in Java, used both by Quorum and Besu.
@@ -274,7 +277,7 @@ since secrets are more exposed to the rest of the network.
   - Connects to any SQL DB which supports the JDBC client
 [[}]]
 
-[[{scalability.offchain,security,01_PM.radar]]
+[[{scalability.offchain,security,PM.radar]]
 # Hyperledger Avalon, Improving Performance Off-Chain
   @[https://www.infoq.com/news/2019/10/Hyperledger-Avalon-Blockchain/]
   - It aims to move blockchain processing off the main

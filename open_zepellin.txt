@@ -1,4 +1,4 @@
-## Open Zepellin (OZ) Summary [dev_framework.zepellin,12_solidity,security.aaa,02_QA,01_PM.TODO]
+## Open Zepellin (OZ) Summary [dev_stack.zepellin,solidity,security.aaa,QA,PM.TODO]
     WARN: upgradable contracts, the "core" of OZ, looks to be replaced by "Diamon Standard"
     @[https://github.com/OpenZeppelin/]
     - TODO: Summary of "important" libraries

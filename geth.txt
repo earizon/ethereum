@@ -1,4 +1,4 @@
-# GETH [[{10_evm.implementation.geth,devops.network.bootstrap]]
+# GETH [[{evm.implementation.geth,devops.network.bootstrap]]
 ## Setup node [[{]]
    REF:  https://github.com/ethereum/go-ethereum
     STEP 1) Create  genesis.json
@@ -54,7 +54,7 @@
 
 ## Basic Admin
   ref: https://github.com/ethereum/go-ethereum/wiki/Managing-your-accounts
-  - Geth Key Handling: [[{10_evm.implementation.geth,security.secret_mng]]
+  - Geth Key Handling: [[{evm.implementation.geth,security.secret_mng]]
 
   (Geth) ACCOUNT "==" private key stored in file protected by password stored under:
                        $DATADIR/keystore/UTC--'created_at_UTC_ISO8601'-'address hex'
@@ -116,7 +116,7 @@
     wnode
 [[}]]
 
-## Geth Architecture [[{10_evm.implementation.geth,architecture.geth,02_doc_has.diagram,01_PM.TODO]]
+## Geth Architecture [[{evm.implementation.geth,architecture.geth,doc_has.diagram,PM.TODO]]
   REF: https://www.mycryptopedia.com/ethereum-geth-installing-and-running-a-node/
 ```
          ┌────────┐              ┌───────┐
@@ -161,7 +161,7 @@
       })
 [[}]]
 
-## Understanding Geth Code [[{10_evm.implementation.geth,01_PM.TODO]]
+## Understanding Geth Code [[{evm.implementation.geth,PM.TODO]]
  @[https://github.com/Agzs/geth-pbft-study/wiki/Blockchain-Structure]
 
   type BlockChain struct {
@@ -323,7 +323,7 @@
   }
 [[}]]
 
-## Geth (JS cli) Console [[{10_evm.implementation.geth,devops.geth]]
+## Geth (JS cli) Console [[{evm.implementation.geth,devops.geth]]
 @[https://github.com/ethereum/go-ethereum/wiki/JavaScript-Console]
   $ geth attach \
         --preload "script1.js,..."     <- opt: preload CSV script list
@@ -351,7 +351,7 @@
     };
 [[}]]
 
-## GETH: Configuration Troubleshooting [[{10_evm.implementation.geth,13_SLC.troubleshooting]]
+## GETH: Configuration Troubleshooting [[{evm.implementation.geth,SLC.troubleshooting]]
   REF: @[https://web3js.readthedocs.io/en/1.0/index.html] Full 1.0 API
 
   console.dir(eth) does NOT work but all that needed is enter the object name in the prompt
@@ -442,7 +442,7 @@ REF: @[https://blog.ethereum.org/2019/07/10/geth-v1-9-0/]
   on VMs with real SSDs or actual physical hardware.
 [[}]]
 
-## Monitoring&Metrics [[{10_evm.implementation.geth,devops,13_SLC.monitoring]]
+## Monitoring&Metrics [[{evm.implementation.geth,devops,SLC.monitoring]]
 @[https://github.com/ethereum/go-ethereum/wiki/Metrics-and-Monitoring]
 
 > debug.metrics().p2p.InboundTraffic         > debug.metrics().chain.inserts
@@ -492,7 +492,7 @@ Available metrics (use geth monitor for full list)
 
 
 
-## GETH What's new [[{10_evm.implementation.geth,devops,integration.graphql,10_EVM.i/o,13_SLC.monitoring]]
+## GETH What's new [[{evm.implementation.geth,devops,integration.graphql,EVM.i/o,SLC.monitoring]]
   - 1.9 Release Notes @[https://blog.ethereum.org/2019/07/10/geth-v1-9-0/]
   Release page      : @[https://github.com/ethereum/go-ethereum/releases/tag/v1.9.0]
 
@@ -543,7 +543,7 @@ Available metrics (use geth monitor for full list)
    - LEDGER WALLETS
    - TREZOR WALLETS
    - STATUS KEYCARDS
-     - full HD hardware wallet based on Java SmartCards [[ dev_framework.java.smartcards]]
+     - full HD hardware wallet based on Java SmartCards [[ dev_stack.java.smartcards]]
   - Added CLEF app:  "wallets everywhere!" as a (eventual) [[{wallet.cloud}]]
     replacement for Geth's account management.
     - standalone signer for the entire Ethereum ecosystem
@@ -659,9 +659,9 @@ EOF
    enode://5d6d7cd20d6da4bb83a1d28cadb5d409b64edf314c0335df658c1a54e32c7c4a7ab7823d57c39b6a757556e68ff1df17c748b698544a55cb488b52479a92b60f@104.42.217.25:30303   (West US    , Azure)
 [[}]]
 
-[[10_evm.implementation.geth}]]
+[[evm.implementation.geth}]]
 
-[[{13_SLC.monitoring.blockexplorer]]
+[[{SLC.monitoring.blockexplorer]]
 ## Geth v1.9.0 ships a preliminary integration of Blockscout 
    into Puppeth.  Blockscout is a real, open source block explorer,
    courtesy of "POA Network team" filling a huge hole in our private

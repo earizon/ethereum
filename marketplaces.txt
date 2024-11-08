@@ -1,71 +1,74 @@
 # NFT MARKETPLACE COMPARATIVES:
-  REF: https://www.journaldunet.com/media/publishers/1515923-le-guide-des-differentes-marketplaces-de-nft/
-       + other
 
-│  NOM         │STA.│CATEGORY│NETWORKS  │TOKEN │  PAYMENT│ FEE│ NOTES
-│              │DATE│        │          │NATIVE│   METHOD│ %  │
-│──────────────┼────┼────────┼──────────┼──────┼─────────┼────┼──────────────────────────────
-│• OpenSea·····│2012│Collect.│Ethereum··│-·····│····· ETH│ 2,5│························
-│              │    │        │Polygon   │      │    MATIC│    │
-│              │    │        │Solana    │      │   SOL,CC│    │
-│• Rarible ····│2012│Collect.│Ethereum··│- RARI│···  TODO│ ?  │ "Truly" decentralized marketplace.
-│              │    │        │Polygon   │      │         │    │ (10x bigger than SuperRare|OpenSea as of 2020-09)
-│              │    │        │...       │      │         │    │ RARI token lets users vote on future evolution
-│              │    │        │...       │      │         │    │ of the company allowing for Collectibles,
-│              │    │        │...       │      │         │    │ yield farming, liquidity mining)
-│              │    │        │...       │      │         │    │
-│              │    │        │...       │      │         │    │
-│• MagicEden···│2021│Collect.│Ethereum··│MAGIC │· SOL,ETH│ 2,0│························
-│              │    │        │Solana    │TICKET│       CC│    │
-│              │    │        │          │NFT   │       CC│    │
-│• LooksRare···│2021│Collect.│Ethereum··│LOOKS·│······ETH│ 2,0│························
-│• X2Y2        │2021│Collect.│Ethereum  │X2Y2  │      ETH│ 0,0│························
-│• Rarible·····│2020│Collect.│Ethereum··│RARI··│MATIC,ETH│ 2,0│························
-│              │    │        │Solana    │      │ SOL,FLOW│    │
-│              │    │        │Polygon   │      │   XTZ,CC│    │
-│              │    │        │InmutableX│      │         │    │
-│              │    │        │Flow      │      │         │    │
-│              │    │        │Tezos     │      │         │    │
-│• Coinbase NFT│2022│Collect.│Ethereum··│-·····│····· ETH│ 0,0│························
-│• Mintable ···│2018│Collect.│Ethereum··│- ····│····· ETH│[2,5│························
-│              │    │        │Ziliqa    │      │         │ 10]│
-│              │    │        │ImmutableX│      │         │    │
-│• Blur ·······│2022│Collect.│Ethereum ·│BLUR*1│····· ETH│ 0,0│ *1: Future·············
-│• Foundation  │2021│Art     │Ethereum  │-     │      ETH│ 5,0│
-│• SuperRare   │2018│Art     │Ethereum  │RARE  │      ETH│ 3,0│
-│• KnownOrigin │2018│Art     │Ethereum  │-     │      ETH│ 2,5│
-│• ArtBlocks   │2020│Art     │Ethereum  │-     │      ETH│10,0│
-│• Objkt       │2021│Art     │Tezos     │-     │      XTZ│ 2,5│
-│• FxHash      │2021│Art     │Tezos     │FXH *1│      XTZ│ 0,0│ *1: Future·············
-│• Viv3        │2021│Collect.│Flow      │-     │     FLOW│ 2,5│
-│• Sturdy      │2021│Collect.│Flow      │-     │     FLOW│  NO│
-│• ImmutableX  │2021│Gaming  │ImmutableX│IMX   │   ETH,CC│ 2,0│L2, increasing adopted by gaming
-│              │    │        │          │      │         │    │Fast-and-unexpensive TXs ("Gods
-│              │    │        │          │      │         │    │Unchained", "d'Immortal" ...)
-│              │    │        │          │      │         │    │Also used by GameStop for Collect.
-│• AtomicMarket│2020│Gaming  │Wax       │WAXP  │  WAXP,CC│  NO│························
-│  Focused on video.│        │          │      │         │    │
-│• EnjinX      │2019│Gaming  │Ethereum  │ENJ   │      ENJ│ 2,5│························
-│• The Demater.│2020│Wearable│Lukso,    │LYXE  │  ETH,BTC│  NO│ It proposes also "phygitals":
-│              │    │        │Ethereum  │      │  USDC,CC│    │ physics wearable with virt.clones.
-│              │    │        │          │      │      DAI│    │
-│• DressX ·····│2020│Wearable│Polygon ··│- ····│···· WETH│····│························
-│• Artisant ···│2020│Wearable│Ethereum  │-     │      ETH│ 5,0│························
-│• GameStop ···│2021│Gaming  │Loopring  │-     │     WETH│  NO│························
-│              │    │        │ImmutableX│-     │     WETH│  NO│
-│• Sudoswap ···│2021│Collect.│Ethereum  │SUDO  │      ETH│ 0,5│························
-│• Skyweaver···│    │Gaming  │          │      │         │ ?  │························
-│• Zora     ···│    │Art     │          │      │         │ ?  │························
-└────────────────────────────────────────────────────────────────────────────────────────────
- Collect.: Collectibles
- CC: Credit Card
- (F): "Future"
 
-# ETHEREUM OOSS MarketPlaces (1155 Compliant)  [[{02_use_case.nft_marketplace,01_PM.WiP]]
-  ===========================================
-Source: https://github.com/topics/nft-marketplace
+*  REF: <https://www.journaldunet.com/media/publishers/1515923-le-guide-des-differentes-marketplaces-de-nft/>
 
-- https://github.com/fingerchar/fingernft
+  ```
+  | │  NOM         │STA.│CATEGORY│NETWORKS  │TOKEN │  PAYMENT│ FEE│ NOTES
+  | │              │DATE│        │          │NATIVE│   METHOD│ %  │
+  | │──────────────┼────┼────────┼──────────┼──────┼─────────┼────┼──────────────────────────────
+  | │• OpenSea·····│2012│Collect.│Ethereum··│-·····│····· ETH│ 2,5│························
+  | │              │    │        │Polygon   │      │    MATIC│    │
+  | │              │    │        │Solana    │      │   SOL,CC│    │
+  | │• Rarible ····│2012│Collect.│Ethereum··│- RARI│···  TODO│ ?  │ "Truly" decentralized marketplace.
+  | │              │    │        │Polygon   │      │         │    │ (10x bigger than SuperRare|OpenSea as of 2020-09)
+  | │              │    │        │...       │      │         │    │ RARI token lets users vote on future evolution
+  | │              │    │        │...       │      │         │    │ of the company allowing for Collectibles,
+  | │              │    │        │...       │      │         │    │ yield farming, liquidity mining)
+  | │              │    │        │...       │      │         │    │
+  | │              │    │        │...       │      │         │    │
+  | │• MagicEden···│2021│Collect.│Ethereum··│MAGIC │· SOL,ETH│ 2,0│························
+  | │              │    │        │Solana    │TICKET│       CC│    │
+  | │              │    │        │          │NFT   │       CC│    │
+  | │• LooksRare···│2021│Collect.│Ethereum··│LOOKS·│······ETH│ 2,0│························
+  | │• X2Y2        │2021│Collect.│Ethereum  │X2Y2  │      ETH│ 0,0│························
+  | │• Rarible·····│2020│Collect.│Ethereum··│RARI··│MATIC,ETH│ 2,0│························
+  | │              │    │        │Solana    │      │ SOL,FLOW│    │
+  | │              │    │        │Polygon   │      │   XTZ,CC│    │
+  | │              │    │        │InmutableX│      │         │    │
+  | │              │    │        │Flow      │      │         │    │
+  | │              │    │        │Tezos     │      │         │    │
+  | │• Coinbase NFT│2022│Collect.│Ethereum··│-·····│····· ETH│ 0,0│························
+  | │• Mintable ···│2018│Collect.│Ethereum··│- ····│····· ETH│[2,5│························
+  | │              │    │        │Ziliqa    │      │         │ 10]│
+  | │              │    │        │ImmutableX│      │         │    │
+  | │• Blur ·······│2022│Collect.│Ethereum ·│BLUR*1│····· ETH│ 0,0│ *1: Future·············
+  | │• Foundation  │2021│Art     │Ethereum  │-     │      ETH│ 5,0│
+  | │• SuperRare   │2018│Art     │Ethereum  │RARE  │      ETH│ 3,0│
+  | │• KnownOrigin │2018│Art     │Ethereum  │-     │      ETH│ 2,5│
+  | │• ArtBlocks   │2020│Art     │Ethereum  │-     │      ETH│10,0│
+  | │• Objkt       │2021│Art     │Tezos     │-     │      XTZ│ 2,5│
+  | │• FxHash      │2021│Art     │Tezos     │FXH *1│      XTZ│ 0,0│ *1: Future·············
+  | │• Viv3        │2021│Collect.│Flow      │-     │     FLOW│ 2,5│
+  | │• Sturdy      │2021│Collect.│Flow      │-     │     FLOW│  NO│
+  | │• ImmutableX  │2021│Gaming  │ImmutableX│IMX   │   ETH,CC│ 2,0│L2, increasing adopted by gaming
+  | │              │    │        │          │      │         │    │Fast-and-unexpensive TXs ("Gods
+  | │              │    │        │          │      │         │    │Unchained", "d'Immortal" ...)
+  | │              │    │        │          │      │         │    │Also used by GameStop for Collect.
+  | │• AtomicMarket│2020│Gaming  │Wax       │WAXP  │  WAXP,CC│  NO│························
+  | │  Focused on video.│        │          │      │         │    │
+  | │• EnjinX      │2019│Gaming  │Ethereum  │ENJ   │      ENJ│ 2,5│························
+  | │• The Demater.│2020│Wearable│Lukso,    │LYXE  │  ETH,BTC│  NO│ It proposes also "phygitals":
+  | │              │    │        │Ethereum  │      │  USDC,CC│    │ physics wearable with virt.clones.
+  | │              │    │        │          │      │      DAI│    │
+  | │• DressX ·····│2020│Wearable│Polygon ··│- ····│···· WETH│····│························
+  | │• Artisant ···│2020│Wearable│Ethereum  │-     │      ETH│ 5,0│························
+  | │• GameStop ···│2021│Gaming  │Loopring  │-     │     WETH│  NO│························
+  | │              │    │        │ImmutableX│-     │     WETH│  NO│
+  | │• Sudoswap ···│2021│Collect.│Ethereum  │SUDO  │      ETH│ 0,5│························
+  | │• Skyweaver···│    │Gaming  │          │      │         │ ?  │························
+  | │• Zora     ···│    │Art     │          │      │         │ ?  │························
+  | └────────────────────────────────────────────────────────────────────────────────────────────
+  |  Collect.: Collectibles
+  |  CC: Credit Card
+  |  (F): "Future"
+  ```
+
+# ETHEREUM OOSS MarketPlaces (1155 Compliant)  [[{use_case.nft_marketplace,PM.WiP]]
+
+* Source: <https://github.com/topics/nft-marketplace>
+
+* https://github.com/fingerchar/fingernft
   """ draw lessons from rarible smart contract to realize fee free offline signature
     and help users reduce fee consumption while trading NFT. """
   - Dev Stack: Java spring boot, Vue3.0.
@@ -83,16 +86,17 @@ Source: https://github.com/topics/nft-marketplace
 - https://github.com/yessGlory17/nft-marketplace
 [[}]]
 
-# EIP-2981: NFT Royalty Payments [[{02_use_case.royalty,tokens.ERC1155,tokens.ERC721]]
+# EIP-2981: NFT Royalty Payments [[{use_case.royalty,tokens.ERC1155,tokens.ERC721]]
 #[ERC_1155_summary]
 - Current state (no-standard):
+  ```
   Artist → MarketPlace: "Do you support royalty payments?"
   Artist ← MarketPlace: "Yes we do, but if your NFT is sold
                          on another marketplace then we cannot
                          enforce this payment."
   Artist → MarketPlace: "Don't you share royalty info with others?"
   Artist ← MarketPlace: "No, we DO NOT"
-
+  ```
   """ It is believed that the NFT marketplace ecosystem will voluntarily
       implement this royalty payment standard since NFT buyers
       will assess the royalty payment as a factor when making NFT
@@ -101,6 +105,7 @@ Source: https://github.com/topics/nft-marketplace
 - Standard proposal designed to support ongoing funding of original
   NFT-creator or rights-holder to receive some quantity in future
   re-sales of its art-work.
+  ```
   interface IERC2981 is IERC165 {
       function royaltyInfo( uint256 _tokenId, uint256 _salePrice)
       external view returns (
@@ -108,6 +113,7 @@ Source: https://github.com/topics/nft-marketplace
           uint256 royaltyAmount
       );
   }
+  ```
   NOTE: it's not restricted to any other standard appart of ERC-165.
 
 - ROYALTY PAYMENT MUST BE VOLUNTARY (by Marketplace), vs triggered by
@@ -115,26 +121,25 @@ Source: https://github.com/topics/nft-marketplace
   movement to a different wallet of the same owner (vs new sale or
   change of ownership).
 
+  ```
 - Marketplaces → SC: royaltyInfo()?
 - Marketplaces ← SC: royalty payment information
                      ===========================
                      - royaltyAmount to pay for a given sale price.
                        as a (calculated) percentage of _salePrice.
                      - recipient address
-
- - royaltyInfo is not aware of _salePrice monetary-unit.
- - marketplaces MUST calculate final royalty price in the same monetary-unit
-   used by the _salePrice.
- - if the calculated royaltyAmount is zero, no further processing is expected.
- - calculus of percentage is left un-specified mut marketplaces SHOULD
-   implement it, with next restriction:
-   - It must be based on predictable variables (vs using block.timestamp,
-     block.number, ...) and must not make assumptions about the unit
-     of exchange.
-   - Examples:
-   - It can be a fixed inmutable percentage.for any future sale.
-   - Percentage drops linearly over time.
-   - Based on min/max thresholds.
+  ```
+- royaltyInfo is not aware of _salePrice monetary-unit.
+- marketplaces MUST calculate final royalty price in the same monetary-unit
+  used by the _salePrice.
+- if the calculated royaltyAmount is zero, no further processing is expected.
+- calculus of percentage is left un-specified mut marketplaces SHOULD
+  implement it, with next restriction:
+  - It must be based on predictable variables (vs using block.timestamp,
+    block.number, ...) and must not make assumptions about the unit
+    of exchange.
+  - Examples:
+  - It can be a fixed inmutable percentage.for any future sale.
+  - Percentage drops linearly over time.
+  - Based on min/max thresholds.
 [[}]]
-
-

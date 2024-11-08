@@ -135,7 +135,7 @@
   -----        -------------------------------------------------
   sender       (advanced, optional). It allows the maker to enforce
                that the order flow through some additional logic
-               before it can be filled (e.g. KYC whitelist) [[{02_use_case.finances.KYC}]]
+               before it can be filled (e.g. KYC whitelist) [[{use_case.finances.KYC}]]
   -----        -------------------------------------------------
   verifying↲   address-of-contract where TX should be sent,
   Contract     Usually == "0x exchange proxy-contract" address

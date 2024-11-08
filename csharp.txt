@@ -1,4 +1,4 @@
-# C# [[{dev_framework.C#]]
+# C# [[{dev_stack.C#]]
 <span xsmall>Nethereum</span>
 <https://nethereum.readthedocs.io/en/latest/>
 PRE-SETUP
@@ -73,7 +73,7 @@ var   fromToIndextFilterID  = await   transferEventHandle  .CreateFilterAsync(fr
 var allNewEventsFromTo   = await   transferEventHandle  .GetFilterChanges(  fromToIndextFilterID );
 </pre>
 
-# Nuget packages [[{dev_framework.C#,devops.C#]]
+# Nuget packages [[{dev_stack.C#,devops.C#]]
 <https://nethereum.readthedocs.io/en/latest/nugets/>
 - Standalone packages targeting Netstandard 1.1, net451, Netstandard 2.0, Netcoreapp 2.1
   and where possible net351 to support Unity3d.

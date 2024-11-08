@@ -1,4 +1,4 @@
-# Web3JS DApp API [[{dev_framework.js.web3_js]]
+# Web3JS DApp API [[{dev_stack.js.web3_js]]
 - Ussage Ex. (works on browser/browser js console, web3.js v1+):
 
  const ctr = new web3.eth.Contract(abiDef, ctrAddress) // ← Create local JS "proxy"
@@ -52,7 +52,7 @@
    web3.eth.abi.encodeParameter(
       "bytes32",web3.utils.fromAscii( str01 ));
 
-## web3.js vs eth.js [[{dev_framework.js.web3_js,02_doc_has.comparative,dev_framework.js.eth js]]
+## web3.js vs eth.js [[{dev_stack.js.web3_js,doc_has.comparative,dev_stack.js.eth js]]
 @[https://blog.infura.io/ethereum-javascript-libraries-web3-js-vs-ethers-js-part-i/]
 Ethereum JavaScript Libraries: web3.js vs. ethers.js (Part I)
 - Both libraries work!!

@@ -1,4 +1,4 @@
-#  HardHat Summary [[{dev_framework.js.hardhat,13_SLC.testing,]]
+#  HardHat Summary [[{dev_stack.js.hardhat,SLC.testing,]]
  - https://hardhat.org/.
  - It looks to be much better managed/supported than Truffle.
 
@@ -36,7 +36,7 @@
 
   - plugins can override default task behaviour.
 
-- Hardhat for VS Code: adds advanced support for Solidity. [[{IDE,dev_framework.js}]]
+- Hardhat for VS Code: adds advanced support for Solidity. [[{IDE,dev_stack.js}]]
 
 - Ussage:
   $ npm install --save-dev hardhat  <- PRESETUP: only local install is allowed to
@@ -58,8 +58,8 @@
     --verbose  ...          │ typechain  Generate Typechain typings for Compiled contracts
     --version  ...          │ verify     Verifies contract on Etherscan  [[security]]
                             │
-                            │ coverage   [[13_SLC.testing.coverage]]
-     ^^^^^^^^^^             │ test       test/*js *ts [[13_SLC.testing]]
+                            │ coverage   [[SLC.testing.coverage]]
+     ^^^^^^^^^^             │ test       test/*js *ts [[SLC.testing]]
      ENV.VARS:
      - HARDHAT_NETWORK           (overriden by --network flag)
      - HARDHAT_SHOW_STACK_TRACES

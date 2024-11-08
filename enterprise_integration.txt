@@ -1,7 +1,7 @@
-[[{standards.eea,02_doc_has.diagram,integration]]
+[[{standards.eea,doc_has.diagram,integration]]
 # Enterprise Integration ──────────────────────────────────────────
 [[{PM.low_code,standards.openapi,integration,architecture.api,QA.documentation]]
-[[dev_framework.java.web3j,infrastructure.network]]
+[[dev_stack.java.web3j,infrastructure.network]]
 ## Web3j OpenAPI: Low Code ABI to OpenAPI Service
 @[https://github.com/web3j/web3j-openapi]
 * client and server generator from Solidity smart contracts.
@@ -111,7 +111,7 @@ REF: https://medium.com/@bibryam/enterprise-integration-for-ethereum-fa67a1577d4
    Standard RBAC in EEA/Quorum expected for mid/late 2019
 [[integration.eea}]]
 
-[[{10_evm.events,integration.data,01_PM.low_code,01_PM.radar]]
+[[{evm.events,integration.data,PM.low_code,PM.radar]]
 ## Eventeum
 @[https://github.com/ConsenSys/eventeum]
 - Project status: Stall.  https://github.com/eventeum/eventeum/issues/176
@@ -338,7 +338,7 @@ required to handle duplicate messages gracefully, as each
 instance will broadcast the same events.
 [[}]]
 
-[[{10_evm.events,integration.data,dev_framework.java,01_PM.TODO]]
+[[{evm.events,integration.data,dev_stack.java,PM.TODO]]
 ## Camel Connector 
 @[https://github.com/bibryam/camel-web3j]
 @[https://github.com/apache/camel/blob/main/components/camel-web3j/src/main/docs/web3j-component.adoc]
@@ -365,8 +365,8 @@ instance will broadcast the same events.
 [[}]]
 
 
-## Baseline Protocol [[{integration.enterprise_patterns,integration.data,dev_framework.baseline]]
-                    [[privacy.ZKP,standards.EIP/ERC,01_PM.backlog]]
+## Baseline Protocol [[{integration.enterprise_patterns,integration.data,dev_stack.baseline]]
+                    [[privacy.ZKP,standards.EIP/ERC,PM.backlog]]
 @[https://docs.baseline-protocol.org/]
 @[https://github.com/ethereum-oasis/baseline]
 @[https://github.com/eea-oasis/baseline]
@@ -462,9 +462,9 @@ instance will broadcast the same events.
 https://medium.com/baselineprotocol/dappsuite-extends-the-salesforce-platform-to-leverage-baseline-protocol-for-b2b-workflow-e466cf85c3f0
 [[}]]
 
-[[{scalability.offchain,02_doc_has.comparative,dev_framework.ipfs]]
+[[{scalability.offchain,doc_has.comparative,dev_stack.ipfs]]
 [[infrastructure.storage.offchain,privacy.offchain]]
-[[scalability.offchain,01_PM.TODO]]
+[[scalability.offchain,PM.TODO]]
 ## EXTERNAL STORAGE (IPFS,...)
 - TODO: Compare with alternative Storage "providers": IPFS , Maidsafe, Storj
 - IPFS is just a protocol like http. It is unmotivated (don't have tokens).
@@ -504,13 +504,13 @@ humans) and contract accounts which are controlled by the code stored
 together with the account.
 
 
-[[{01_PM.low_code,scalability.offchain,dev_framework.ipfs,02_QA.UX,01_PM.TODO]]
+[[{PM.low_code,scalability.offchain,dev_stack.ipfs,QA.UX,PM.TODO]]
 ### Vue+Ethereum+IPFS DApp Starter
 @[https://github.com/redacademy/vue-ethereum-ipfs] [[}]]
 [[}]]
 
-[[{101,integration,10_EVM.i/o.oracles,12_solidity]]
-[[02_use_case.finance,security,02_use_case.integrity,01_PM.WiP]]
+[[{101,integration,EVM.i/o.oracles,solidity]]
+[[use_case.finance,security,use_case.integrity,PM.WiP]]
 ## External Inputs (Oracles)
 - The evm and SmartContract by extension just have access to
   internal (current-state) blockchain data. Oracles are used when we
@@ -546,9 +546,9 @@ together with the account.
   data and APIs to smart contracts.
 [[}]]
 
-[[{integration.data,integration.graphql,architecture,01_PM.WiP]]
+[[{integration.data,integration.graphql,architecture,PM.WiP]]
 
-## Alethio [[{integration.data.alethio,02_QA.auditing,13_SLC.monitoring,security,02_use_case.finance.fraud]]
+## Alethio [[{integration.data.alethio,QA.auditing,SLC.monitoring,security,use_case.finance.fraud]]
 @[https://aleth.io]
 @[https://media.consensys.net/alethio-lighting-up-the-blockchain-with-real-time-stats-a80bb30576db]
 @[https://media.consensys.net/using-machine-learning-to-understand-the-ethereum-blockchain-1778485d603a]

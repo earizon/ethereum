@@ -1,4 +1,4 @@
-# Web3J JAVA SDK [[{dev_framework.java.web3j,10_EVM.events]]
+# Web3J JAVA SDK [[{dev_stack.java.web3j,EVM.events]]
   - https://docs.web3j.io/
   - https://docs.web3j.io/getting_started.html
   - https://github.com/web3j/sample-project-gradle/blob
@@ -32,7 +32,7 @@
       Type result = contract.someMethod(param1, ...).send();
 
 ### 'web3j' Wrapper command line client around web3j library
-  $ web3j version|wallet|solidity ... [[{01_PM.TODO}]]
+  $ web3j version|wallet|solidity ... [[{PM.TODO}]]
 
 ## (event)filters [[{]]
    REF: https://docs.web3j.io/filters.html
@@ -156,9 +156,9 @@ private void sendTransferTokensTransaction(...)  {
 [[}]]
 
 * See Also:
-### SpringBoot ERC-20 RESTfull ex:  [[{01_PM.low_code}]]
+### SpringBoot ERC-20 RESTfull ex:  [[{PM.low_code}]]
 @[https://github.com/blk-io/erc20-rest-service/blob/master/src/main/java/io/blk/erc20/Controller.java]
-[[dev_framework.java.web3j}]]
+[[dev_stack.java.web3j}]]
 
 
 # Web3J TODO

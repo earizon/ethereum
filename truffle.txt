@@ -1,14 +1,14 @@
-# Truffle Framework [[{dev_framework.js.truffle,12_solidity,13_SLC.testing,02_QA,13_SLC.debugging]]
+# Truffle Framework [[{dev_stack.js.truffle,solidity,SLC.testing,QA,SLC.debugging]]
   - Truffle Framework Full Journey: <https://www.truffleframework.com/>
   - Truffle Framework Code reference:
     - https://github.com/trufflesuite/truffle/tree/develop/packages
     - https://github.com/trufflesuite/truffle/tree/next/packages/contract-tests/test
-      ├─ errors.js: Error control example for "Out of gas", "revert reason". [[{02_QA.error_control}]]
-      ├─ events.js: Example tests showing how to test for expected  future/past events [[{13_SLC.testing,10_EVM.events}]]
+      ├─ errors.js: Error control example for "Out of gas", "revert reason". [[{QA.error_control}]]
+      ├─ events.js: Example tests showing how to test for expected  future/past events [[{SLC.testing,EVM.events}]]
       ├─ abiV2.js
       ├─ cloning.js
       ├─ customoptions.js
-      ├─ deploy.js: Example code showing deploy timeout control    [[{10_EVM.gas]]
+      ├─ deploy.js: Example code showing deploy timeout control    [[{EVM.gas]]
       │             pre-flight gas-cost-estimation
       │             .on("confirmation",...) block-depth confirmation number  [[}]]
       ├─ deprecated_keys.js
@@ -220,7 +220,7 @@ $ truffle deploy                          <- Deploy contract. It will deploy Mig
 [[}]]
 
 
-## Truffle Framework: Security: [[{security,02_QA,01_PM.TODO.NOW]]
+## Truffle Framework: Security: [[{security,QA,PM.TODO.NOW]]
 <https://github.com/ConsenSys/truffle-security>
   - MythX Security Analysis Plugin for Truffle Framework
   - adds automated smart contract security analysis to the
@@ -228,12 +228,12 @@ $ truffle deploy                          <- Deploy contract. It will deploy Mig
   - Compatible with Truffle 4.0 or higher.
 [[}]]
 
-## Truffle Framework: IPFS/Filecoin: [[{scalability.offchain,infrastructure.storage.offchain,01_PM.TODO]]
+## Truffle Framework: IPFS/Filecoin: [[{scalability.offchain,infrastructure.storage.offchain,PM.TODO]]
 <https://www.trufflesuite.com/blog/announcing-collaboration-with-filecoin>
 [[}]]
 
 
-## Truffle Framework: migrating to web3 v1.0 [[{01_PM.TODO]]
+## Truffle Framework: migrating to web3 v1.0 [[{PM.TODO]]
 <https://medium.com/@adrianmcli/migrating-your-truffle-project-to-web3-v1-0-ed3a56f11a4>
  "... Unfortunately Truffle uses the 0.20.x version of Web3.js
       instead of vs v1.0+, providing a more easier to work with API (e.g.:
@@ -257,6 +257,6 @@ $ truffle deploy                          <- Deploy contract. It will deploy Mig
 [[}]]
 
 
-[[dev_framework.js.truffle}]]
+[[dev_stack.js.truffle}]]
 
 

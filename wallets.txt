@@ -1,5 +1,5 @@
 # Wallets ─────────────────────────────────────────────────────────
-## Wallet Comparative [[{wallet.101,02_QA.UX.WALLET,01_PM.WiP]]
+## Wallet Comparative [[{wallet.101,QA.UX.WALLET,PM.WiP]]
   Based on previous work from: https://github.com/shanefontaine/ethereum-wallet-comparison
   LECTURE: 1: yes/OK/supported, 0: no/KO/unsupported, p: In-progress
                               ┌----------------------------------------- https://airgap.it
@@ -56,8 +56,8 @@
  Open Sourced                |1|1|1|1|1|1|1|1|0|1|1|1|1|1|1|1|1|1|1|1|1|
 [[}]]
 
-## MetaMask Wallet [{wallet.metamask,dev_framework.js,security.aaa]]
-  https://github.com/MetaMask/test-dapp [[{01_PM.TODO.now}]]
+## MetaMask Wallet [{wallet.metamask,dev_stack.js,security.aaa]]
+  https://github.com/MetaMask/test-dapp [[{PM.TODO.now}]]
   - simple test dapp for use in MetaMask e2e tests and manual QA
   - Test full functionallity of Wallet including:
     - Basic Actions.
@@ -68,7 +68,7 @@
   WARN,WARN,WARN:  (Update 2019-12) Metamask management problems:
 @[https://metamask.github.io/metamask-docs/]
 
-  - [[{01_PM.RISKS]]
+  - [[{PM.RISKS]]
     REF: https://www.bitcoininsider.org/article/79962/updated-metamask-contributor-says-project-lacks-support-consensys
    """... A contributor of major Ethereum browser extension Metamask has
      reported that the MetaMask team is “totally overwhelmed” and not
@@ -143,7 +143,7 @@
 @[https://github.com/MetaMask/vault-decryptor]
    A web app for decrypting MetaMask vault data.
 
-## MetaMask Mobile [[{01_PM.TODO}]]
+## MetaMask Mobile [[{PM.TODO}]]
 @[https://mobile.metamask.io/]
 
 ### What's new MetaMask
@@ -153,7 +153,7 @@
   - Unparalleled Privacy Control:
     select one or more accounts to associate with
     a website or create a new account just for that site .
-  - EIP-2255 (site) permissions system. [[{02_QA.UX]]
+  - EIP-2255 (site) permissions system. [[{QA.UX]]
        proposed standard interface for granting wallet security-sensitive
        asking "just once" in order to get permissions like:
        - "Reveal wallet address to a given site".
@@ -182,7 +182,7 @@
       If you’re a developer that only relies on your own version of
       ethers or web3, you won’t need to take any action — just keep it
       up to date.
-      IF CHOOSING A NEW CONVENIENCE LIBRARY, WE  RECOMMEND ETHERS. [[{02_doc_has.comparative}]]
+      IF CHOOSING A NEW CONVENIENCE LIBRARY, WE  RECOMMEND ETHERS. [[{doc_has.comparative}]]
 
     - Cutting Edge Security:
       The (new) LavaMoat tool helps raise the bar of security for
@@ -206,7 +206,7 @@
       - great user experience in integrating with MetaMask.  [[}]]
 [[wallet.metamask}]]
 
-## LedgerHQ Hardware Wallet [[{wallet.hsm,02_QA.UX,security]]
+## LedgerHQ Hardware Wallet [[{wallet.hsm,QA.UX,security]]
 @[https://github.com/LedgerHQ]
 - LedgerJS examples: @[https://github.com/LedgerHQ/ledgerjs-examples]
 - High activity on Github, including (non-complete list):

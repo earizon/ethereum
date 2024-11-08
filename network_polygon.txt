@@ -1,4 +1,4 @@
-# polygon.Network [[{scalability.layer2.polygon,layer2.rollup.optimistic,01_PM.TODO]]
+# polygon.Network [[{scalability.layer2.polygon,layer2.rollup.optimistic,PM.TODO]]
 - Layer 2 network with low transaction costs.
 - Scanner: @[https://polygonscan.com/]
 - Polygon solves pain points associated with Blockchains, like high gas

@@ -1,16 +1,18 @@
-# Privacy [[{]]
+# Privacy
+
 ## Privacy layers [[{standards.eea,privacy.101]]
-└ PRIVACY OF PARTICIPANTS:
-  Allow for anonymous parties.
-  - on-chain cryptographic mechanisms
+
+* PRIVACY OF PARTICIPANTS:
+  * Allow for anonymous parties.
+  * on-chain cryptographic mechanisms
     like ring signatures, stealth addresses, mixing,
     or storage of private data off-chain.
-└ PRIVACY OF DATA:
+* PRIVACY OF DATA:
   keep transactions, balances, SCs, data encrypted
   on|off-chain, using cryptographic tools like ZKP
   and zk-SNARKS, Pedersen commitments, or off-chain
   privacy layers like TEEs.
-  └ Consensys PROJECT UBIN:
+  * Consensys PROJECT UBIN:
     - Public TX validated by the whole network but whose amount,
       asset type,... are shielded.
       "...a consortium of financial institutions used
@@ -22,18 +24,16 @@
       for a balance update, network participants can validate that the correct
       update has happened without knowing the opening balance, the closing
       balance, or the transfer amount:
-      [[{02_doc_has.comparative]]
       Pedersen commitments and Folklore range proofs to process the typical
       daily volume of payments for the SARB with full confidentiality and
       finality in less than two hours. These commitment schemes proved to be
-      much quicker to validate than the zero-knowledge proofs.
+      much quicker to validate than the zero-knowledge proofs.  [[doc_has.comparative]]
     - Adhara has been exploring substituting range proofs with bullet proofs,
       which are much smaller and quicker to validate. Very simply, instead
       of writing the balances and the transaction amounts in the clear as in
       a normal ERC20 contract, nodes write a proof or a Pedersen commitment
-      of the balance.
-      [[}]]
-└ Public-First + Privacy Layers = Future-Proof
+      of the balance.  [[doc_has.comparative]]
+* Public-First + Privacy Layers = Future-Proof
   - Business networks need resilience, interoperability, permissioning,
     and privacy to succeed.
 
@@ -43,5 +43,4 @@ granular privacy layers and public-first approach make it a powerful
 enterprise solution for organizations that need the flexibility of an in-
 house platform and that want the global reach to participate in economies of
 scale.
-[[}]]
 [[}]]

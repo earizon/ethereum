@@ -149,8 +149,8 @@ curl -X POST -H "Content-Type: application/json" \
  http://localhost:8547/graphql
 [[}]]
 
-[[{integration.protocol.thegraph,integration.graphql,scalability.graph,10_EVM.events]]
-[[01_PM.low_code,dev_framework.the_graph,02_QA.UX,01_PM.TODO]]
+[[{integration.protocol.thegraph,integration.graphql,scalability.graph,EVM.events]]
+[[PM.low_code,dev_stack.the_graph,QA.UX,PM.TODO]]
 ## TheGraph Protocol
 - "Before The Graph, teams had to develop and operate proprietary
   indexing servers. This required significant engineering and hardware

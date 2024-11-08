@@ -1,6 +1,6 @@
 [[{scalability.101,101,scalability.zkp,privacy.zkp,scalability.layer2]]
-[[dev_framework.remix,02_doc_has.diagram,layer2.rollup.optimistic]]
-[[,layer2.rollup.zk,01_PM.WiP]]
+[[dev_stack.remix,doc_has.diagram,layer2.rollup.optimistic]]
+[[,layer2.rollup.zk,PM.WiP]]
 # SCALABILITY SOLUTIONS
 
 ## L1 Scalability [[{]]
@@ -61,6 +61,7 @@
 
       Scalability L2 Comparation:
       REF: @[https://www.youtube.com/watch?v=qwtOJvFo6vs]
+      ```
                           ┌─────────┐
                           │ Honesty │← Active Security.
                           │  Proofs │  No false transitions can be submitted.
@@ -71,10 +72,10 @@
                                │
                                │
                                │        Merkle
-    ┌────────┐ Compression     │        Trees    ZKP ┌─────────┐
-    │  Data  │──────┴─────┬────┼───┬──────┴────┬──┴──│  Data   │
-    │On Chain│           Gas   │Acummulators   VC    │Off-Chain│ [[{02_use_case.identity}]]
-    └────────┘         golfing │                     └─────────┘
+      ┌────────┐ Compression   │        Trees    ZKP ┌─────────┐
+      │  Data  │────┴─────┬────┼───┬──────┴────┬──┴──│  Data   │
+      │On Chain│         Gas   │Acummulators   VC    │Off-Chain│ [[{use_case.identity}]]
+      └────────┘       golfing │                     └─────────┘
                                ├  Rollback
                                ├  Slashing
                                │
@@ -87,6 +88,7 @@
                            │ Proofs │  All TX are accepted as valid and Watch-Towers
                            └────────┘  need to probe the opposite.
 
+      ```
 
     • Accumulators can only test "SET membership".
     • Merkle trees improve over accumulators by having an "index" that can be mapped to a balance.
@@ -96,7 +98,7 @@
 [[scalability.101}]]
 
 
-# EIP 648: Process TXs in parallel [[{scalability.evm,standards.EIP/ERC.648,01_PM.TODO]]
+# EIP 648: Process TXs in parallel [[{scalability.evm,standards.EIP/ERC.648,PM.TODO]]
 @[https://github.com/ethereum/EIPs/issues/648] (V. Buterin)
 ## Introduce new type of transaction (following same general format as #232)
   [2, network_id, startgas, to, data, ranges]

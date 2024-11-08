@@ -1,12 +1,13 @@
-[[{10_EVM.implementation.besu,standards.eea,standards.eea,10_EVM.implementation.besu.architecture]]
+[[{EVM.implementation.besu,standards.eea,standards.eea,EVM.implementation.besu.architecture]]
 # Besu
 * Consensys implementation of Ethereum nodes supporting pluglable architectures for 
   consensus, storage, ...
 
 
-### High level component architecture [[{02_doc_has.diagram]]
+### High level component architecture [[{doc_has.diagram]]
+
 - External Resources
-* Chat     : @[https://chat.hyperledger.org/channel/besu]
+  * Chat     : @[https://chat.hyperledger.org/channel/besu]
 * Releases : @[https://github.com/hyperledger/besu/releases]
 * Core Devs: @[https://github.com/hyperledger/besu/graphs/contributors?from=2021-06-01&to=2022-02-01&type=c]
 
@@ -21,46 +22,51 @@
 - OpenSource / Enterprise version.
 
 Extracted from old gitter channel: 2019-03-27
-https://gitter.im/PegaSysEng/pantheon
 
-┌─────────────────────────────────────────────────────────────────────────────────────────────┐
-│                              JSON RPC                                                       │
-└─────────────────────────────────────────────────────────────────────────────────────────────┘
-╔═ CORE ("Mining") ═════╗ ╔ CHAIN PROCESSING ═══════╗ ╔ P2P ══════════════════════════════════╗
-║╔═ SYNCHRONIZER ══════╗║ ║ PROTOCOL SPEC:          ║ ║╔ ETH SUB-PROTOCOL ═══════════════════╗║
-║║ ● DOWNLOADER        ║║ ║ Update chain-of-blocks: ║ ║║┌ ETH PEER ─────────┐─┌ EXECUTORS ──┐║║
-║║                     ║║ ║                         ║ ║║│                   │ │             │║║
-║║ ● BLOCK PROPAGATION ║║ ║ ● BLOCK     ● TX        ║ ║║│ ● WIRE-CONNECTION │ │● SYNC WORKER│║║
-║║   MANAGER           ║║ ║   HEADER      VALIDATOR ║ ║║│ ● REQUEST-MANAGER │ │● TX WORKER  │║║
-║╚═════════════════════╝║ ║   VALIDATOR             ║ ║║│ ● PEER-REPUTATION │ │● SCHEDULED  │║║
-║╔ TX POOL ════════════╗║ ║                         ║ ║║│ ● CHAIN-STATE     │ └─────────────┘║║
-║║ ● PENDING  ● TX     ║║ ║ ● BLOCK     ● BLOCK     ║ ║║└───────────────────┘                ║║
-║║   TXs        SENDER ║║ ║   IMPORTER    PROCESSOR ║ ║║ ● ETH MESSAGER                      ║║
-║╚═════════════════════╝║ ╚═════════════════════════╝ ║╚═════════════════════════════════════╝║
-║ ● MINER               ║                             ║┌─WIRE P2P PROTOCOL──────────────────┐ ║
-╚═══════════════════════╝                             ║└────────────────────────────────────┘ ║
-                                                      ║┌ DISCOVERY AGENT ───────────────────┐ ║
-            ╔═ STATE  ══════════════════╗             ║└──▲─────────────────────────────────┘ ║
-            ║┌ WORLD───┐ ┌ BLOCKCHAIN ┐ ║             ╚═══│═══════════════════════════════════╝
-            ║│ STATE   │ │            │ ║       • DEVp2 Peer Discovery
-            ║│ ARCHIVE │ │            │ ║         . UDP-based system to discover other nodes
-            ║└─────────┘ └────────────┘ ║         . Based on a  well-known set of boot nodes .
-            ║┌CONSENSUS┐ ┌ SYNC STATE ┐ ║           . Recursively looks up new peers (neighbors)
-            ║└─────────┘ └────────────┘ ║             from known peers.
-            ╚═══════════════════════════╝       • DISCOVERY (of (neighbors IP) PACKET EXCHANGE
-                                                  Node_A → Node_B: Ping
-                                                  Node_A ← Node_B: Pong
-                                                  Node_A → Node_B: Find Neighbors
-                                                  Node_A ← Node_B: known-neighbors list
+   ```
+   | https://gitter.im/PegaSysEng/pantheon
+   | 
+   | ┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+   | │                              JSON RPC                                                       │
+   | └─────────────────────────────────────────────────────────────────────────────────────────────┘
+   | ╔═ CORE ("Mining") ═════╗ ╔ CHAIN PROCESSING ═══════╗ ╔ P2P ══════════════════════════════════╗
+   | ║╔═ SYNCHRONIZER ══════╗║ ║ PROTOCOL SPEC:          ║ ║╔ ETH SUB-PROTOCOL ═══════════════════╗║
+   | ║║ ● DOWNLOADER        ║║ ║ Update chain-of-blocks: ║ ║║┌ ETH PEER ─────────┐─┌ EXECUTORS ──┐║║
+   | ║║                     ║║ ║                         ║ ║║│                   │ │             │║║
+   | ║║ ● BLOCK PROPAGATION ║║ ║ ● BLOCK     ● TX        ║ ║║│ ● WIRE-CONNECTION │ │● SYNC WORKER│║║
+   | ║║   MANAGER           ║║ ║   HEADER      VALIDATOR ║ ║║│ ● REQUEST-MANAGER │ │● TX WORKER  │║║
+   | ║╚═════════════════════╝║ ║   VALIDATOR             ║ ║║│ ● PEER-REPUTATION │ │● SCHEDULED  │║║
+   | ║╔ TX POOL ════════════╗║ ║                         ║ ║║│ ● CHAIN-STATE     │ └─────────────┘║║
+   | ║║ ● PENDING  ● TX     ║║ ║ ● BLOCK     ● BLOCK     ║ ║║└───────────────────┘                ║║
+   | ║║   TXs        SENDER ║║ ║   IMPORTER    PROCESSOR ║ ║║ ● ETH MESSAGER                      ║║
+   | ║╚═════════════════════╝║ ╚═════════════════════════╝ ║╚═════════════════════════════════════╝║
+   | ║ ● MINER               ║                             ║┌─WIRE P2P PROTOCOL──────────────────┐ ║
+   | ╚═══════════════════════╝                             ║└────────────────────────────────────┘ ║
+   |                                                       ║┌ DISCOVERY AGENT ───────────────────┐ ║
+   |             ╔═ STATE  ══════════════════╗             ║└──▲─────────────────────────────────┘ ║
+   |             ║┌ WORLD───┐ ┌ BLOCKCHAIN ┐ ║             ╚═══│═══════════════════════════════════╝
+   |             ║│ STATE   │ │            │ ║       • DEVp2 Peer Discovery
+   |             ║│ ARCHIVE │ │            │ ║         . UDP-based system to discover other nodes
+   |             ║└─────────┘ └────────────┘ ║         . Based on a  well-known set of boot nodes .
+   |             ║┌CONSENSUS┐ ┌ SYNC STATE ┐ ║           . Recursively looks up new peers (neighbors)
+   |             ║└─────────┘ └────────────┘ ║             from known peers.
+   |             ╚═══════════════════════════╝       • DISCOVERY (of (neighbors IP) PACKET EXCHANGE
+   |                                                   Node_A → Node_B: Ping
+   |                                                   Node_A ← Node_B: Pong
+   |                                                   Node_A → Node_B: Find Neighbors
+   |                                                   Node_A ← Node_B: known-neighbors list
+   ```
 [[}]]
 
-  besu  /                                $ bin\besu --config=my.cfg \
-     ├─ bin/ (install)                 $   --data-path=/var/lib/besu/node1 \
-     ├─ lib/ (install)                 $   --genesis=my.genesis \
-     ├─ key  (run─time) eNode Priv.key $   --max-peers=5 \
-     │  (--data-path)                  $   --rpc-enabled
-     └─ ddbb (run─time) RocksDB data   ( LOGS go to STDOUT )
-        (--data-path)
+   ```
+   | besu  /                                $ bin\besu --config=my.cfg \
+   |   ├─ bin/ (install)                     --data-path=/var/lib/besu/node1 \
+   |   ├─ lib/ (install)                     --genesis=my.genesis \
+   |   ├─ key  (runtime) eNode Priv.key      --max-peers=5 \
+   |   │  (--data-path)                       --rpc-enabled
+   |   └─ ddbb (runtime) RocksDB data        ( LOGS go to STDOUT )
+   |      (--data-path)
+   ```
 
 ## QBFT PoA Consensus (Permissioned Networks) [[{consensus.IBFT]]
 * Production ready in Besu 22.1.1+
@@ -72,17 +78,19 @@ https://gitter.im/PegaSysEng/pantheon
 * Official spec: @[https://entethalliance.github.io/client-spec/qbft_spec.html]
 
 * NODE Configuration:  
-https://besu.hyperledger.org/en/stable/private-networks/how-to/configure/consensus/qbft/
+  <https://besu.hyperledger.org/en/stable/private-networks/how-to/configure/consensus/qbft/>
 [[}]]
 
 
 ## IBFT Consensus (Permissioned Networks) [[{consensus.IBFT]]
+
 **WARN:** Replaced by newer QBFT consensus. QBFT is now the recomended consensus for private networks.
+
 - Consensus with TX finality -vs probabilistic-. When the TX is accepted we are sure
   that all nodes will see it and no future reordering will happen (at the cost of
   more centralization in validator nodes).
 
-@[https://github.com/ethereum/EIPs/issues/650]
+<https://github.com/ethereum/EIPs/issues/650>:
 * IBFT: stands for Istambul Bizantine Fault Tolerant
 * Target banks and fin.instutions, replacing PoW
   since validator scalability is not required.
@@ -90,146 +98,154 @@ https://besu.hyperledger.org/en/stable/private-networks/how-to/configure/consens
 * Deeply inspired by Clique PoA @[https://github.com/ethereum/EIPs/issues/225]
 * also inspired by Hyperledger's SBFT, Tendermint, HydraChain, and NCCU BFT.
 
-```
-   ROUND                                        ROUND STATE
-  Consensus round. A round starts with         Consensus messages of a specific
-  the proposer creating a block proposal       sequence and round, including
-  and ends with a block commitment or          pre-prepare message, prepare message,
-  round change.                                and commit message.
-  
-   PROPOSAL                                  SEQUENCE
-  New block generation proposal which is    Sequence number of a proposal. A
-  undergoing consensus processing           sequence number should be greater than
-                                            all previous sequence numbers.
-                                            Currently each proposed block height is
-                                            its associated sequence number.
-  
-   BACKLOG                                   CONSENSUS PROOF:
-  The storage to keep future consensus      The commitment signatures of a block
-  messages due to the async nature of the   that can prove the block has gone
-  network.                                  through the consensus process.
-  
-   SNAPSHOT:
-  The validator voting state from last
-  epoch
-
-  VALIDATION ROUND LOOP
-  [validators] → [validators]:  enter  validator.state NEW-ROUND
-  [validators] → [validators]:  pick one (round-robin by default or sticky) as
-                                the   PROPOSE
-    PROPOSE    →  PROPOSE    :  propose new block proposal
-    PROPOSE    →  network    :  broadast   block-proposal + PRE-PREPARE message
-  [validators] → [validators]:  enter  validator.state PRE-PREPARED
-  [validators] → network     :  broadcast   PREPARE message
-                                (make sure all validators are working on the
-                                 same sequence and the same round)
-  [validators] → [validators]:  wait for (2F + 1) PREPARE messages
-                                then enter  validator.state PREPARED
-  [validators] → network     :  broadcasts   COMMIT message .
-                                (inform peers that validator accepts proposed block
-                                and is going to insert the block to the chain)
-  [validators] → [validators]:  wait for (2F + 1) COMMIT messages
-                                enter  validator.state COMMITTED
-                                insert the block to the chain
-                                enter  validator.state FINAL-COMMITTED
-  [validators] → network     :  broadcasts   ROUND-CHANGE message
-  [validators] → [validators]:  wait for (2F + 1) ROUND-CHANGE messages
-                                then enter  validator.state NEW-ROUND
-```
+  ```
+  |  ROUND                                        ROUND STATE
+  | Consensus round. A round starts with         Consensus messages of a specific
+  | the proposer creating a block proposal       sequence and round, including
+  | and ends with a block commitment or          pre-prepare message, prepare message,
+  | round change.                                and commit message.
+  | 
+  |  PROPOSAL                                  SEQUENCE
+  | New block generation proposal which is    Sequence number of a proposal. A
+  | undergoing consensus processing           sequence number should be greater than
+  |                                           all previous sequence numbers.
+  |                                           Currently each proposed block height is
+  |                                           its associated sequence number.
+  | 
+  |  BACKLOG                                   CONSENSUS PROOF:
+  | The storage to keep future consensus      The commitment signatures of a block
+  | messages due to the async nature of the   that can prove the block has gone
+  | network.                                  through the consensus process.
+  | 
+  |  SNAPSHOT:
+  | The validator voting state from last
+  | epoch
+  | 
+  | VALIDATION ROUND LOOP
+  | [validators] → [validators]:  enter  validator.state NEW-ROUND
+  | [validators] → [validators]:  pick one (round-robin by default or sticky) as
+  |                               the   PROPOSE
+  |   PROPOSE    →  PROPOSE    :  propose new block proposal
+  |   PROPOSE    →  network    :  broadast   block-proposal + PRE-PREPARE message
+  | [validators] → [validators]:  enter  validator.state PRE-PREPARED
+  | [validators] → network     :  broadcast   PREPARE message
+  |                               (make sure all validators are working on the
+  |                                same sequence and the same round)
+  | [validators] → [validators]:  wait for (2F + 1) PREPARE messages
+  |                               then enter  validator.state PREPARED
+  | [validators] → network     :  broadcasts   COMMIT message .
+  |                               (inform peers that validator accepts proposed block
+  |                               and is going to insert the block to the chain)
+  | [validators] → [validators]:  wait for (2F + 1) COMMIT messages
+  |                               enter  validator.state COMMITTED
+  |                               insert the block to the chain
+  |                               enter  validator.state FINAL-COMMITTED
+  | [validators] → network     :  broadcasts   ROUND-CHANGE message
+  | [validators] → [validators]:  wait for (2F + 1) ROUND-CHANGE messages
+  |                               then enter  validator.state NEW-ROUND
+  ```
 [[consensus.IBFT}]]
 
 # Understanding Besu codebase [[{]]
+
 ## STARTUP SEQUENCE
-@[https://github.com/hyperledger/besu]
 
-    Initial                    Create                      Create                    Run Runner
-    Bootstrap             ->   BesuController.java     ->  Runner.java           ->  instance!!
-  ┌──────────────────────┐  ┌─────────────────────────┐   ┌───────────────────────┐
-  - Parse cli flags         It will collect all bck        RunnerBuilder.java
-  - (cli/BesuCommand.java)  related config&services:       -> Runner.java
-  - parse config file,      - chain+world state DBs
-  - load|generate node      - StorageProvider:           - Contains services for:
-    key-pair                  InMemory + RocksDB      ┌··- Network startup
-  - parse genesis file      - Genesis Config File     ·  - Besu COntroller
-                        ┌···- Node keypair            ·  - JSON RPC
-                        ·   - ProtocolSchedule        ·  - WebSocket RPC
-┌···························  + ProtocolSpec          ·  - Plugable Metrics System
-·                       ·   · Synchronizer            ·    (Prometheus, ...)
-· ┌·····················┘   - Transaction Pool        ·  - Data directory
-· ·                         - Miner                   ·
-· ·                                                   ·
-· └ Valid for a "bunch of blocks" in the chain        ·
-·   (validators and proccessor applying to Byzantium, ·
-·   Constantinople,... The ProtocolSchedule "groups   ·
-·   them all" mapping milestone block-ranges to       ·
-·   specific protocol logic                           ·
-·   (ethereum/mainnet/ProtocolSpec.java)              ·
-·                                                     ·
-· ┌···················································┘         [[{02_doc_has.diagram.sequence]]
-· ·                                                    ┌······· (UDP) PEER DISCOVERY
-· └· Runner                                            ·        - Recursive, starting with
-·    └> Network Startup:                               ·          "well-known-set-of-boot-nodes"
-·       └> Discover Neighbords                         ·          NODE -> PEER: "PING"
-·          └> Setup connections                        ·          NODE <- PEER: "PONG"
-·             > DEV-P2P Wire Protocol (RLPx)        ┌··┴····┐     NODE -> PEER: "FIND Neighbors"
-·               . Manages peers [capabilites/status,discovery,    NODE -> PEER: Neighbors list
-·                                reputation("best to talk to")] [[}]]
-·               . Peer Authentication
-·               . Encryption (ECIES based on node Pub/Priv keys)
-·               . Compression
-·               . Keep Alive
-·
-·             > DEV-P2P Subprotocol
-·               - Pluggable subprotocols handling extended consensus
-·                 mechanisms such as Eth, Ibft, Istanbul64Protocol
-·               - Defines the set and appropiate ordering of messages
-·                 on the network.
-·               -  PROTOCOL MANAGE:
-·                 "Acumulates the logic of different subprotocols"
-·                 a) Processes incoming messages for their subprotocol
-·                 b) Sends outbound messages to other nodes using this
-·                    subprotocol
-·
-·               - Example Sample Message Set for EthPV62:  [[{101]]
-·                 [ STATUS , NEW_BLOCK_HASHES , TRANSACTIONS,
-·                   GET_BLOCK_HEADERS, BLOCK_HEADERS, GET_BLOCK_BODIES,
-·                   BLOCK_BODIES , NEW_BLOCK ]  [[}]]
-·
-└> SYNCHRONIZER: Manages the overall sync runtime
-   - ChainDownloader Loop:
-     1) Find best peer to sync from (best new data)
-     2) Pull checkpoint headers (Multithreaded downloading)
-     3) Pipelined blocks Import
-        - Download and validate headers
-        - Download bodies
-        - Extract TX senders (PKI key recovery)
-        - Validate / Persist blocks
-     4) "repeat"
+* <https://github.com/hyperledger/besu>
 
-  - "MUST TO" video explaining the general architecture :
-  @[https://www.youtube.com/watch?v=OJfib9kTK7U]
+  ```
+  |    Initial                    Create                      Create                    Run Runner
+  |    Bootstrap             ->   BesuController.java     ->  Runner.java           ->  instance!!
+  |  ┌──────────────────────┐  ┌─────────────────────────┐   ┌───────────────────────┐
+  |  - Parse cli flags         It will collect all bck        RunnerBuilder.java
+  |  - (cli/BesuCommand.java)  related config&services:       -> Runner.java
+  |  - parse config file,      - chain+world state DBs
+  |  - load|generate node      - StorageProvider:           - Contains services for:
+  |    key-pair                  InMemory + RocksDB      ┌··- Network startup
+  |  - parse genesis file      - Genesis Config File     ·  - Besu COntroller
+  |                        ┌···- Node keypair            ·  - JSON RPC
+  |                        ·   - ProtocolSchedule        ·  - WebSocket RPC
+  |┌···························  + ProtocolSpec          ·  - Plugable Metrics System
+  |·                       ·   · Synchronizer            ·    (Prometheus, ...)
+  |· ┌·····················┘   - Transaction Pool        ·  - Data directory
+  |· ·                         - Miner                   ·
+  |· ·                                                   ·
+  |· └ Valid for a "bunch of blocks" in the chain        ·
+  |·   (validators and proccessor applying to Byzantium, ·
+  |·   Constantinople,... The ProtocolSchedule "groups   ·
+  |·   them all" mapping milestone block-ranges to       ·
+  |·   specific protocol logic                           ·
+  |·   (ethereum/mainnet/ProtocolSpec.java)              ·
+  |·                                                     ·
+  |· ┌···················································┘         [[{doc_has.diagram.sequence]]
+  |· ·                                                    ┌······· (UDP) PEER DISCOVERY
+  |· └· Runner                                            ·        - Recursive, starting with
+  |·    └> Network Startup:                               ·          "well-known-set-of-boot-nodes"
+  |·       └> Discover Neighbords                         ·          NODE -> PEER: "PING"
+  |·          └> Setup connections                        ·          NODE <- PEER: "PONG"
+  |·             > DEV-P2P Wire Protocol (RLPx)        ┌··┴····┐     NODE -> PEER: "FIND Neighbors"
+  |·               . Manages peers [capabilites/status,discovery,    NODE -> PEER: Neighbors list
+  |·                                reputation("best to talk to")] [[}]]
+  |·               . Peer Authentication
+  |·               . Encryption (ECIES based on node Pub/Priv keys)
+  |·               . Compression
+  |·               . Keep Alive
+  |·
+  |·             > DEV-P2P Subprotocol
+  |·               - Pluggable subprotocols handling extended consensus
+  |·                 mechanisms such as Eth, Ibft, Istanbul64Protocol
+  |·               - Defines the set and appropiate ordering of messages
+  |·                 on the network.
+  |·               -  PROTOCOL MANAGE:
+  |·                 "Acumulates the logic of different subprotocols"
+  |·                 a) Processes incoming messages for their subprotocol
+  |·                 b) Sends outbound messages to other nodes using this
+  |·                    subprotocol
+  |·
+  |·               - Example Sample Message Set for EthPV62:  [[{101]]
+  |·                 [ STATUS , NEW_BLOCK_HASHES , TRANSACTIONS,
+  |·                   GET_BLOCK_HEADERS, BLOCK_HEADERS, GET_BLOCK_BODIES,
+  |·                   BLOCK_BODIES , NEW_BLOCK ]  [[}]]
+  |·
+  |└> SYNCHRONIZER: Manages the overall sync runtime
+  |   - ChainDownloader Loop:
+  |     1) Find best peer to sync from (best new data)
+  |     2) Pull checkpoint headers (Multithreaded downloading)
+  |     3) Pipelined blocks Import
+  |        - Download and validate headers
+  |        - Download bodies
+  |        - Extract TX senders (PKI key recovery)
+  |        - Validate / Persist blocks
+  |     4) "repeat"
+  ```
 
- - REF:
-   https://github.com/hyperledger/besu/blob/master/besu/src/main/java/org/hyperledger/besu/cli/BesuCommand.java
-   https://github.com/hyperledger/besu/blob/master/besu/src/main/java/org/hyperledger/besu/controller/BesuController.java]
-   https://github.com/hyperledger/besu/blob/master/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetProtocolSpecs.java
+* "MUST TO" video explaining the general architecture :
+  <https://www.youtube.com/watch?v=OJfib9kTK7U>
+
+* REF:
+  https://github.com/hyperledger/besu/blob/master/besu/src/main/java/org/hyperledger/besu/cli/BesuCommand.java
+  https://github.com/hyperledger/besu/blob/master/besu/src/main/java/org/hyperledger/besu/controller/BesuController.java]
+  https://github.com/hyperledger/besu/blob/master/ethereum/core/src/main/java/org/hyperledger/besu/ethereum/mainnet/MainnetProtocolSpecs.java
 [[}]]
 
-[[{dev_framework.java.web3j]]
+[[{dev_stack.java.web3j]]
 ## Web3J(ava) Private TX Extensions
    https://github.com/web3j/web3j/blob/master/besu/src/test/java/org/web3j/protocol/besu/RequestTest.java
    https://github.com/web3j/web3j/blob/master/besu/src/test/java/org/web3j/protocol/besu/ResponseTest.java
 
    - Extracted from Initial Pull Request:
    @[https://github.com/web3j/web3j/pull/767]
+   ```
    ikirilov : ... propose we reconcile common calls for geth and Besu.
    benesjan : ... There is one issue with creating common Geth and Besu module.
                   Geth's version of minerStart accepts parameter threadCount and
                   Besu's version does not. So unifying those two might be confusing.
    conor10  : ... let’s leave the duplication in for now ...
+   ```
 [[}]]
 
-## CLI Summary [[{devops.besu,13_SLC.monitoring]]
+## CLI Summary [[{devops.besu,SLC.monitoring]]
+
+  ```
   besu  blocks import   imports blocks from file into database.       [[{devops.besu.backups]]
   besu  blocks export   exports a specific block, or list of blocks
                         into file                                     [[}]]
@@ -247,31 +263,39 @@ https://besu.hyperledger.org/en/stable/private-networks/how-to/configure/consens
 
   besu  operator \     <- generates node keypairs+genesis file
    generate-blockchain-config                           (with RLP encoded IBFT 2.0 extra data).
+  ```
 
-  Common CLI Options: (Precedence order: cli flags, ENV.VARs, config file)
-@[https://besu.hyperledger.org/en/stable/Reference/CLI/CLI-Syntax/]
-Updated 2019-10-21
-
+* Common CLI Options: (Precedence order: cli flags, ENV.VARs, config file)
+  <https://besu.hyperledger.org/en/stable/Reference/CLI/CLI-Syntax/>
+  (Updated 2019-10-21)
+  ```
   --banned-node-ids=bannedNodeId1,bannedNodeId2,...              [[{security.aaa.besu}]]
   --bootnodes=enode://id@host1:port1,enode://id@host2:port2,...
   --data-path=dir_path
   --discovery-enabled=false
   --genesis-file=file_path   # --network is enough for public main/test nets.
+  ```
 
- GraphQL
+* GraphQL
+  ```
   --graphql-http-cors-origins="graphQLHttpCorsAllowedOrigins"
   --graphql-http-enabled
   --graphql-http-host="host" # defaults to 127.0.0.1
   --graphql-http-port="port" # defaults to 8547.
+  ```
 
- Host Whitelist
+* Host Whitelist
+  ```
   --host-whitelist=host1,host2,... or "all"  # allowed host list to JSON-RPC
                                            # Defaults to 127.0.0.1, recomended.
   --key-value-storage="keyValueStorageName"# Use only if using a storage system
                                            # provided with a plugin. Default:rocksdb
   --max-peers=N                            # Specifies the maximum P2P connections
                                            # that can be established. The default is 25.
- Metrics
+  ```
+
+* Metrics
+  ```
   --metrics-category="Comma separated list"# BIG_QUEUE, BLOCKCHAIN, EXECUTORS, JVM, NETWORK,
                                            # PEERS, PROCESS, ROCKSDB, RPC, SYNCHRONIZER.
   --metrics-enabled=true                   # Defaults to false
@@ -286,30 +310,41 @@ Updated 2019-10-21
   --metrics-push-interval=number_of_secs   # default is 15.
   --metrics-push-port=tcp_port             # default to 9001.
   --metrics-prometheus-job=prometheus_Job
+  ```
 
- MINING
+* MINING
+  ```
   --miner-coinbase=valid_coinbase          # applies with --miner-enabled (or miner_start JSON-RPC method)
                                            # ignored by Clique, IBFT 2.0 consensus
   --miner-enabled
   --miner-extra-data="32 bytes hex string" # will be include in extra-data-field of mined block
                                            # default to 0x.
   --min-gas-price=minTransactionGasPrice
+  ```
 
- NAT TRAVERSAL
+* NAT TRAVERSAL
+  ```
   --nat-method=UPNP                        # UPNP | NONE(default)
                                            # Can NOT be used with Docker image
+  ```
 
- PUBLIC ETH. NET
+* PUBLIC ETH. NET
+  ```
  --network=$NETWORK                        ropsten (PoW), rinkeby (PoA+Clique),
                                            goerli  (PoA+Clique), dev (very low PoW difficulty)
                                            (Use --genesis-file for non-standard networks)
  --network-id="P2P net. integer ID"        # overrides chain ID in genesis file
+  ```
 
- NODE PRIVATE KEY                          (cloud extensions exists to retrieve from AWS/Azure/...)
+* NODE PRIVATE KEY                          (cloud extensions exists to retrieve from AWS/Azure/...)
+  ```
  --node-private-key-file=file_path         # Defaults to data directory. If NOT found a key file
                                            # containing the generated private key is created;
                                            #  WARN: The private key is not encrypted!!!
- GOSSIP PROTOCOL
+  ```
+
+* GOSSIP PROTOCOL
+  ```
  --p2p-enabled=true * |false
  --p2p-host=p2p_listening_host            # default to 127.0.0.1
  --p2p-interface=ip_nterface              # default to 0.0.0.0 (all interfaces).
@@ -332,8 +367,10 @@ Updated 2019-10-21
   --permissions-nodes-config-file-enabled=true|false
   --permissions-nodes-config-file=file     # Default to ${BESU_DATA_PATH}/permissions_config.toml
   --permissions-nodes-contract-enabled=true|false *
+  ```
 
- PRIVACY: ("Tessera configuration")
+* PRIVACY: ("Tessera configuration")
+  ```
   --privacy-enabled=true|false
   --privacy-marker-transaction-signing-key-file=file  # priv.key used to sign Privacy Marker Transactions.
                                                       # If not set, each TX is signed with a different
@@ -341,12 +378,17 @@ Updated 2019-10-21
   --privacy-precompiled-address=priv.Precomp.Address  # default to 126
   --privacy-public-key-file=privacyPublicKeyFile      # pub.key of the Tessera node.
   --privacy-url=privacyUrl                            # URL on which Tessera node is running.
+  ```
 
-  DEBUG
+* DEBUG
+  ```
   --revert-reason-enabled=true|false *                # Why default to false?
                                                       # Enabling it use a significant amount of memory.
                                                       # Not recommended for public Ethereum networks.
- HTTP APIs
+  ```
+
+* HTTP APIs
+  ```
   --rpc-http-api=csv of enabled APIs through HTTP     # --rpc-http-enabled must also be set to take effect
                                                       #  ADMIN, ETH, NET, WEB3, CLIQUE, IBFT,
                                                       #  PERM, DEBUG, MINER, EEA, PRIV,TXPOOL.
@@ -361,7 +403,10 @@ Updated 2019-10-21
   --rpc-http-enabled=true|false *
   --rpc-http-host=$host                               # default to 127.0.0.1
   --rpc-http-port=$port                               # default to 8545
- Web Socket APIs
+  ```
+
+* Web Socket APIs
+  ```
   --rpc-ws-api=csv of enabled APIs through Web Socket # --rpc-ws-enabled must also be set to take effect
                                                       #  ADMIN, ETH, NET, WEB3, CLIQUE, IBFT,
                                                       #  PERM, DEBUG, MINER, EEA, PRIV,TXPOOL.
@@ -372,9 +417,10 @@ Updated 2019-10-21
   --rpc-ws-enabled=true|false *
   --rpc-ws-host=$host                                 # default to 127.0.0.1
   --rpc-ws-port=$port                                 # default to 8546
+  ```
 
   GAS LIMIT CONFIGURATION:
-  --target-gas-limit=$GAS_LIMIT_INTEGER               [[{10_EVM.gas]]
+  --target-gas-limit=$GAS_LIMIT_INTEGER               [[{EVM.gas]]
     Specifies the block gas limit toward which Besu will gradually move on an existing network,
     if enough miners are in agreement.  Use it to change the block gas limit set in the
     genesis file without creating a new network .
@@ -403,7 +449,7 @@ Updated 2019-10-21
                                                     # Default is 5.
 [[}]]
 
-[[{10_EVM.implementation.besu,integration.graphql]]
+[[{EVM.implementation.besu,integration.graphql]]
 ## GraphQL Schema 
 @[https://github.com/hyperledger/besu/blob/master/ethereum/api/src/main/resources/schema.graphqls]
 
@@ -438,7 +484,7 @@ INPUTS:
   - FilterCriteria : Filter applied from block to block)
 [[}]]
 
-## What's new [[{10_evm.implementation.besu,01_PM]]
+## What's new [[{evm.implementation.besu,PM]]
 ### Besu 22.10.0 (2022-10-02) [[{ $besu22.10 ]]
 * Big Improvements for Performance on Mainnet 
   * For the Stakers: 
@@ -449,7 +495,7 @@ INPUTS:
 [[$besu22.10}]]
 ### Besu 22.4.2 (2022-10-02)
 * Help to test Mainnet PoS ("The Merge").
-### Besu 22.1.2 [[{12_SOLIDITY.TROUBLESHOOTING]]
+### Besu 22.1.2 [[{SOLIDITY.TROUBLESHOOTING]]
 * new API methods: trace_rawTransaction, trace_get, trace_callMany
 * added revertReason to trace APIs including:    
   trace_transaction
@@ -520,8 +566,8 @@ REF:
 [[$besu1.2}]]
 [[}]]
 
-## DevOps [[{standards.eea,10_EVM.implementation.besu,devops.besu]]
-          [[infrastructure.storage.offchain,13_SLC.monitoring]]
+## DevOps [[{standards.eea,EVM.implementation.besu,devops.besu]]
+          [[infrastructure.storage.offchain,SLC.monitoring]]
 
 ### EEA-Besu IBFT 2.0 BOOTSTRAP
 
@@ -664,7 +710,7 @@ print( ( 648 / (1024. * 1024.) ) * 12      * 60       * 24)      ~  10.68 MBytes
 
 [[}]
 
-## EEA-Besu Monitoring [[{10_evm.implementation.besu,13_SLC.profiling]]
+## EEA-Besu Monitoring [[{evm.implementation.besu,SLC.profiling]]
 (with Prometh.+Grafana)
 FROM @[https://gitter.im/PegaSysEng/pantheon] on 2019-05-29 20:01
 - Adrian Sutton@ajsutton
@@ -837,4 +883,4 @@ RocksDB statistics (cache,  compression, ...)
 """ you do not need to be an expert in zero-knowledge technology to use it """
 [[zkEVM}]]
 
-[[10_EVM.implementation.besu}]]
+[[EVM.implementation.besu}]]

@@ -143,7 +143,7 @@
         bytes signature;
     }
   · handleOps          (UserOperation[]       , address payable beneficiary );
-    KEY-POINT: It can map to arbitrarely complex EVM code like            [[{02_doc_has.comparative]]
+    KEY-POINT: It can map to arbitrarely complex EVM code like            [[{doc_has.comparative]]
     multisigs, future signature algorithms, ZK-SNARK verification, ...)
     (vs current monolitic Authorizaton policy: "ECDSA signature from EOA")[[}]]
   · handleAggregatedOps(UserOpsPerAggregator[], address payable beneficiary );

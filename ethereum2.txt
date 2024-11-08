@@ -60,7 +60,7 @@
     to sell your stake once transfers
     between validators become possible
 
-## Casper PoS Consensus [[{scalability.consensus.ethereum2,02_doc_has.comparative]]
+## Casper PoS Consensus [[{scalability.consensus.ethereum2,doc_has.comparative]]
 - PoS stands for Proof-of-Stake.
 @[https://consensys.net/blog/blockchain-explained/what-is-ethereum-2/]
 - Reducing mining hardware requirements and scalates TX/s.

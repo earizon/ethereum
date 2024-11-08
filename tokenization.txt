@@ -105,7 +105,7 @@
 
 [[}]]
 
-# ERC-1155 NFTs,FT,batch [[{tokens.ERC1155,02_use_case.nft_marketplace,12_solidity.tokens]]
+# ERC-1155 NFTs,FT,batch [[{tokens.ERC1155,use_case.nft_marketplace,solidity.tokens]]
 
 - Standard interface for contracts managing multiple token types.
 
@@ -253,8 +253,8 @@
   - <https://rinkeby.rarible.com>
   - <https://testnets.opensea.io/>  (Rinkeby)
 
-[[{02_USE_CASE.finance.liquidity_provision]]
-[[ 02_USE_CASE.finance.trading]]
+[[{USE_CASE.finance.liquidity_provision]]
+[[ USE_CASE.finance.trading]]
 ## ERC-1155 vs MarketPlaces&Exchanges
 
 - ERC-1155 is short of an standard for an accountancy book.
@@ -284,7 +284,7 @@
 [[}]]
 [[tokens.ERC1155}]]
 
-## Universal Token [[{security.aaa,tokens.universal_token,02_use_case.finance,01_PM.WiP]]
+## Universal Token [[{security.aaa,tokens.universal_token,use_case.finance,PM.WiP]]
 <https://github.com/ConsenSys/UniversalToken>
 - "A Unique Standard for Centralized and Decentralized Finance Use Cases"
 - Actively maintained as 2022-03-14
@@ -296,7 +296,7 @@
     to send a TLS CERTIFICATE GENERATED OFF-CHAIN:
     - At (EVM) TX execution, 'ec-recover' is used to recover the signature of the TLS
       certificate signer and then compared to the list of signatures authorized by the contract.
-      (Sort of multi-signature within 1 transaction) !!!          [[{02_QA.UX]]
+      (Sort of multi-signature within 1 transaction) !!!          [[{QA.UX]]
       + signature of the investor (ethereum transaction signature)
       + signature of the issuer   (embedded certificate signature) [[}]]
       NOTE: The 'ec-recover' pattern is the standard way to "zip" many off-chain 
@@ -315,5 +315,5 @@
   ("holder1" and "holder2" in secondary market assets transfers).
 [[}]]
 
-[[02_use_case.finance.universal_token}]]
+[[use_case.finance.universal_token}]]
 [[tokens}]]

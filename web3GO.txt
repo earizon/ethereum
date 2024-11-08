@@ -1,4 +1,4 @@
-# Web3 GO [[{dev_framework.go,10_EVM.events,01_PM.WiP]]
+# Web3 GO [[{dev_stack.go,EVM.events,PM.WiP]]
 
 ## ethclient pkg: [[{]]
 - Library to connect clients to nodes (ws/http/ipc)
@@ -193,6 +193,6 @@
   - Rollback() can abort all pending (not commited) transaction
     (simulate TXs dropped from TX pool).                              [[}]]
 [[}]]
-[[dev_framework.go}]]
+[[dev_stack.go}]]
 
 
