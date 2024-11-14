@@ -15,7 +15,6 @@
 # ethereum2.txt
 # ethers_js.txt
 # geth.txt
-# graphql.txt
 # hardhat.txt
 # kaleido.txt
 # marketplaces.txt
@@ -41,4 +40,5 @@
 notes.txt
 solidity.txt
 tokenization.txt
+graphql.txt
 TODO.txt

@@ -684,8 +684,9 @@ mecanismos de protección".
     $ pip install legions
   [[}]]
 
-[[{integration.data,dev_stack.python,EVM.events,PM.low_code]]
+[[{integration.data,architecture.batch,dev_stack.python,EVM.events,PM.low_code,]]
 ## ethereum-etl
+   ```
    WARN: See limitation in Github Project page.
    Export blocks and transactions (Schema, Reference):
    $ python export_blocks_and_transactions.py \
@@ -715,7 +716,8 @@ mecanismos de protección".
    $ python export_traces.py --start-block 0 --end-block 500000 \
    $   --provider-uri file://$HOME/Library/Ethereum/parity.ipc \
    $   --output traces.csv
-   [[}]]
+   ```
+[[integration.data}]]
 
 [[{use_case.finance.stablecoins,doc_has.comparative]]
 ## Algorithmic stablecoins

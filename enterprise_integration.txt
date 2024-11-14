@@ -11,9 +11,9 @@
 
 ### workflow:
 
-```
-   Solidity SC ··> |solc| ··> ABI ··> |Web3j-OpenAPI| ··> REST server
-```
+ ```
+ | Solidity SC ··> |solc| ··> ABI ··> |Web3j-OpenAPI| ··> REST server
+ ```
 
 ### How-to:
 

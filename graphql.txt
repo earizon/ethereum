@@ -1,15 +1,18 @@
 ## GraphQL 
+
 - Extracted from @[https://graphql.org/]
   """GraphQL is a  query language  for APIs and a runtime
      for fulfilling those queries with your existing data.
      ... simplifies API evolution, and enable powerful dev
      tools."""
 
-  Example GraphQL Queries
-@[https://github.com/ConsenSys/ethql/wiki/Example-Use-Cases]
-   Query a single block (5000000)
-<a TODO href="https://ethql-alpha.infura.io/graphql?query=%7B%0A%20%20block(number%3A%205000000)%20%7B%0A%20%20%20%20hash%0A%20%20%20%20transactions(filter%3A%20%7B%20withInput%3A%20true%20%7D)%20%7B%0A%20%20%20%20%20%20index%0A%20%20%20%20%20%20hash%0A%20%20%20%20%20%20from%20%7B%0A%20%20%20%20%20%20%20%20address%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20to%20%7B%0A%20%20%20%20%20%20%20%20address%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20decoded%20%7B%0A%20%20%20%20%20%20%20%20...%20on%20ERC20Transfer%20%7B%0A%20%20%20%20%20%20%20%20%20%20tokenContract%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20symbol%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20from%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20account%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%09address%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20tokenBalance%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20to%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20account%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20address%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20value%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A">[fiddle]</a>
+###  Example GraphQL Queries
+<https://github.com/ConsenSys/ethql/wiki/Example-Use-Cases>
+
+ Query a single block (5000000)
+
   Example Query
+  ```
   {                                                   QUERY:
     block(number:   5000000 ) {                     ← SELECT ... FROM block 5000 ...
       hash                                                    ^                   ^
@@ -37,8 +40,10 @@
       }
     }
   }
+  ```
 
-  Information on specific blocks
+* Information on specific blocks
+  ```
   {
     blocks(numbers: [1000, 1001,])   {        ← SELECT ... FROM BLOCK in (1000,1001)
                                                        ^
@@ -47,8 +52,10 @@
       }
     }
   }
+  ```
 
-  Information on a range of blocks
+* Information on a range of blocks
+  ```
   {
     blocksRange(numberRange: [54000, 54005])   ← SELECT ... FROM BLOCK in numberRanger
     {                                                   ^
@@ -64,9 +71,11 @@
       }
     }
   }
+  ```
 
-  Information on an account
+* Information on an account
   for account "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d".
+  ```
   {                                 ← SELECT ... FROM BLOCKCHAIN   ...
                                               ^                     ^
                                               ·    ┌────────────────┴──────┐
@@ -76,8 +85,9 @@
      }
    }
   }
-
-  Information on a TX
+  ```
+* Information on a TX
+  ```
   {
     transaction(hash: "0x7cc...") {   ← For TX with hash 0x7cc... return:
       logs {                          ← fetch the log topics
@@ -90,75 +100,82 @@
       }
     }
   }
+  ```
+
 ### GraphQL over HTTP
-@[https://besu.hyperledger.org/en/stable/HowTo/Interact/APIs/GraphQL/]
 
-  - Reduce overhead for common queries.
-    Ex:
-    Non-GraphQL                 GraphQL:
-    ----------------------      ------------------
-    - query   each receipt      - single query 
-      in a block
+* <https://besu.hyperledger.org/en/stable/HowTo/Interact/APIs/GraphQL/>
 
+- Reduce overhead for common queries.  Ex:
+  ```
+  Non-GraphQL                 GraphQL:
+  ----------------------      ------------------
+  - query   each receipt      - single query 
+    in a block
+  ```
 
 - The Besu GraphQL schema describes the GraphQL implementation for
   Ethereum. Enable the GraphQL service using command line options.
 
-Note
+Note: GraphQL is not supported over WebSockets.
 
-GraphQL is not supported over WebSockets.
-
-Access the GraphQL endpoint at http://<HOST>:<PORT>/graphql.
-Configure <HOST> and <PORT> using graphql-http-host and
-graphql-http-port. The default endpoint is
-http://127.0.0.1:8547/graphql.
-GraphQL requests with cURL
+* Access the GraphQL endpoint at http://<HOST>:<PORT>/graphql.
+* Configure <HOST> and <PORT> using graphql-http-host and
+  graphql-http-port. The default endpoint is
+  <http://127.0.0.1:8547/graphql.>
+GraphQL requests with cURL.
 
 Hyperledger Besu JSON-RPC API methods with an equivalent GraphQL
 query include a GraphQL request and result in the method example.
 
-Example
+## Example
 
-The following syncing request returns data about the synchronization
-status.
+The following syncing request returns data about the synchronization status.
 
+```
 curl -X POST -H "Content-Type: application/json" \
  --data '{ "query": "{syncing{startingBlock currentBlock highestBlock}}"}'
  http://localhost:8547/graphql
+```
 
-GraphQL requests with GraphiQL App
+* GraphQL requests with GraphiQL App
 
-The third-party tool, GraphiQL, provides a tabbed interface for
-editing and testing GraphQL queries and mutations. GraphiQL also
-provides access to the Besu GraphQL schema from within the app.
+* The third-party tool, GraphiQL, provides a tabbed interface for
+  editing and testing GraphQL queries and mutations. GraphiQL also
+  provides access to the Besu GraphQL schema from within the app.
 
-Besu does not execute pending transactions so results from account,
-call, and estimateGas for Pending do not reflect pending transactions.
+* Besu does not execute pending transactions so results from account,
+  call, and estimateGas for Pending do not reflect pending transactions.
 
-Example
-Pending Transaction Count
+* Example: Pending Transaction Count
 
-curl -X POST -H "Content-Type: application/json" \
-  --data '{ "query": "{pending {transactionCount}}"}' \
-  http://localhost:8547/graphql
+  ```
+  $ curl -X POST -H "Content-Type: application/json" \
+    --data '{ "query": "{pending {transactionCount}}"}' \
+    http://localhost:8547/graphql
+  ```
 
 Pending Transactions
 
-curl -X POST -H "Content-Type: application/json" \
- --data '{ "query": "{pending {transactions{hash}}}"}' \
- http://localhost:8547/graphql
+  ```
+  $ curl -X POST -H "Content-Type: application/json" \
+     --data '{ "query": "{pending {transactions{hash}}}"}' \
+     http://localhost:8547/graphql
+  ```
 [[}]]
 
 [[{integration.protocol.thegraph,integration.graphql,scalability.graph,EVM.events]]
 [[PM.low_code,dev_stack.the_graph,QA.UX,PM.TODO]]
+
 ## TheGraph Protocol
-- "Before The Graph, teams had to develop and operate proprietary
+
+  "Before The Graph, teams had to develop and operate proprietary
   indexing servers. This required significant engineering and hardware
   resources and broke the important security properties required for
   decentralization."
 
-- TheGraph can be part of Sharding scalability future:
-@[https://money.yahoo.com/graph-positioned-unshackle-ethereum-2-180403603.html]
+  TheGraph can be part of Sharding scalability future:
+  <https://money.yahoo.com/graph-positioned-unshackle-ethereum-2-180403603.html>
   "...  Vitalik’s idea is effectively ‘rollups on top of
    sharding’, but this creates its own issue – where will the
    historical data from all these shards be stored?
@@ -167,6 +184,7 @@ curl -X POST -H "Content-Type: application/json" \
    Vitalik suggested institutional volunteers, DAOs, block
    explorers, and torrents as theoretical solutions – but only
   one project was name-dropped:
+
    Protocols like The Graph can create incentivised marketplaces
   where clients pay servers for historical data with Merkle proofs of
   its correctness.  This creates an incentive for people and
@@ -174,29 +192,28 @@ curl -X POST -H "Content-Type: application/json" \
   provide it on demand.
 
 - popular services already using TheGraph protocol:
-  Uniswap:
-  Sintetics:
-  Decentraland:
-  Aragon:
+  - Uniswap
+  - Sintetics
+  - Decentraland
+  - Aragon
 
 - TODO:
-@[https://thegraph.com/docs/developer/create-subgraph-hosted]
-@[https://medium.com/intech-conseil-expertise/create-your-graph-node-to-query-complex-data-from-blockchain-via-graphql-6f08fbd494c5]
+  - <https://thegraph.com/docs/developer/create-subgraph-hosted>
+  - <https://medium.com/intech-conseil-expertise/create-your-graph-node-to-query-complex-data-from-blockchain-via-graphql-6f08fbd494c5>
+     By [Kebin Thizy](https://medium.com/@thizy.kevin)
+  - GitHub repo: @[https://github.com/investorid/subgraph-experiment]
 
-By Kebin Thizy @[https://medium.com/@thizy.kevin]
-- GitHub repo: @[https://github.com/investorid/subgraph-experiment]
-
--  "The Graph protocol is a decentralized protocol for
-    indexing and querying data from blockchains, starting
-    with Ethereum. It makes it possible to query data that is
-    difficult to query directly.”
-
-- it knows about the entities it indexes.
-  composed of subgraphs, carefully developed by the community.
+- "The Graph protocol is a decentralized protocol for
+   indexing and querying data from blockchains, starting
+   with Ethereum. It makes it possible to query data that is
+   difficult to query directly.”
+   It knows about the entities it indexes composed of subgraphs,
+   carefully developed by the community.
 - There is a global instance of TheGraph that accepts subgraph definition.
 
-  Example reference Smart Contract storing Identity claims
-   Ex:
+### Example reference Smart Contract storing Identity claims
+
+  ```
    claim type 1: id-holder is French   , attested/signed by issuer_i1
    claim type 2: holder is over 18     , attested/signed by issuer_i1
    claim type 3: has not bank debts    , attested/signed by issuer_i2
@@ -205,98 +222,103 @@ By Kebin Thizy @[https://medium.com/@thizy.kevin]
    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    For each contract instance, for each claim type,
    fetch all claims attested/signed by same issuer_iN
+  ```
 
-  └ Without Graphs:
+Without Graphs:
+  ```
     for contract in identityContractInstances:     ←   A loop for each instance
        for claim_type in type1 type2 ...:          ←   A loop for each type
            fetch claims where issuer = issuer_iN
-  └ With GraphQL and the Graph protocol:
-  -  A single GraphQL query suffices .
+  ```
+With GraphQL and the Graph protocol: A single GraphQL query suffices.
 
-- PRE-SETUP (opinionated, using docker, and NodeJS)
-  - $ git clone https://github.com/graphprotocol/graph-node.git
-    $ cd graph-node
-    $ sudo docker-compose up # ← Start up Graph instance/PostgreSQL/IPFS
+### PRE-SETUP (opinionated, using docker, and NodeJS)
+
+ ```
+ $ git clone https://github.com/graphprotocol/graph-node.git
+ $ cd graph-node
+ $ sudo docker-compose up # ← Start up Graph instance/PostgreSQL/IPFS
                                  needs ports 4001, 5001, 8000, 8001, 8020,
                                              8080 and 5432
 
-  - $ yarn init                      # ← Init NodeJS project (create 'package.json')
-    $ yarn add --dev \               # ← Install graph... NodeJS package dependencies
-           @graphprotocol/graph-cli
-           @graphprotocol/graph-ts
-    $ vim package.json
-    {
-      "scripts" : {
-        "codegen"      : "graph codegen",
-        "create-local" : "graph create domain/graph-name --node http://127.0.0.1:8020",
-        "build"        : "graph build",
-        "deploy-local" : "graph deploy domain/graph-name --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020/",
-        "watch-local"  : "graph deploy domain/graph-name --watch --debug --node http://127.0.0.1:8020/ --ipfs http://localhost:5001"
-      }
+  $ yarn init                      # ← Init NodeJS project (create 'package.json')
+  $ yarn add --dev \               # ← Install graph... NodeJS package dependencies
+         @graphprotocol/graph-cli
+         @graphprotocol/graph-ts
+  $ vim package.json
+  {
+    "scripts" : {
+      "codegen"      : "graph codegen",
+      "create-local" : "graph create domain/graph-name --node http://127.0.0.1:8020",
+      "build"        : "graph build",
+      "deploy-local" : "graph deploy domain/graph-name --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020/",
+      "watch-local"  : "graph deploy domain/graph-name --watch --debug --node http://127.0.0.1:8020/ --ipfs http://localhost:5001"
     }
-                                       ^^^^^^^^^^^^^^^^^
-                              - Replace domain/graph-name to mirror
-                                the SubGraph. Ex: investorid/id
+  }
+                                     ^^^^^^^^^^^^^^^^^
+                            - Replace domain/graph-name to mirror
+                              the SubGraph. Ex: investorid/id
 
-     $ cp ${ContractABI_json} ./abis        # ← alt 1: Copy ABIs
-     $ yarn add --dev @investorid/solidity  # ← alt 2: use a package (prefered)
-  Creating the Graph:
+  $ cp ${ContractABI_json} ./abis        # ← alt 1: Copy ABIs
+  $ yarn add --dev @investorid/solidity  # ← alt 2: use a package (prefered)
+ ```
 
-   subgraph.yaml : meta-data describing the SubGraph:
-                   Declares ABI to be used and scanned
-                   by the graph node.
-   | specVersion: 0.0.3
-   | description: Decentralized IDs over Ethereum
-   | repository: https://github.com/investorid/investorid-subgraph
-   | schema:
-┌→ |   file: ./schema.graphql    ← entities used by the SubGraph and exposed via GraphQL.
-·  | dataSources:
-·  |   - kind: ethereum/contract
-·  |     name: Identity
-·  |     network: http://localhost:8545
-·  |     source:
-·  |       abi: Identity
-·  |     mapping:
-·  |       kind: ethereum/events
-·  |       apiVersion: 0.0.3
-·  |       language: wasm/assemblyscript
-·  |       file: ./src/handler/identity.ts
-·  |       entities:   ←················· Any entity used by event handlers
-·  |         - Identity                   must be declared in here
-·  |         - Key
-·  |       abis:
-·  |         - name: Identity
-·  |           file: ./node_modules/@investorid/solidity/build/contracts/Identity.json
-·  |       eventHandlers: ←·············· all event to be scanned/handled must
-·  |                                      be declared here
-·  |         - event: KeyAdded(indexed bytes32,indexed uint256,indexed uint256)
-·  |           handler:  handleKeyAdded
-·  |         - event: KeyRemoved(indexed bytes32,indexed uint256,indexed uint256)
-·  |           handler:  handleKeyRemoved
-·                                  ·
-└  schema.graphql
-   | type Identity @entity {
-   |   id: ID!
-   |   address: Bytes!
-   |   keys: [Key!]! @derivedFrom(field: "identity")  ← reverse property
-   | }                                                  more info at:
-   |                                                  @[https://thegraph.com/docs/graphql-api]
-   | type Key @entity {
-   |   id: ID!
-   |   keyType: BigInt!    ← BigInt, Bytesis a custom type
-   |   key: Bytes!
-   |   purposes: [Int!]!
-   |   identity: Identity!
-   | }
+### Creating the Graph:
 
-   .src/handlers/identity.ts  ← Event handlers:
-                                To generated the referenced typings and
-                                automated code parts referenced run
-                                $ yarn run codegen
-                                ouput:
-                                → ../../generated/Identity/Identity
-                                → ../../generated/schema
-
+* subgraph.yaml : meta-data describing the SubGraph.
+  * Declares ABI to be used and scanned by the graph node.
+  ```
+  | specVersion: 0.0.3
+  | description: Decentralized IDs over Ethereum
+  | repository: https://github.com/investorid/investorid-subgraph
+  | schema:
+  |   file: ./schema.graphql    ← ¹ 
+  | dataSources:
+  |   - kind: ethereum/contract
+  |     name: Identity
+  |     network: http://localhost:8545
+  |     source:
+  |       abi: Identity
+  |     mapping:
+  |       kind: ethereum/events
+  |       apiVersion: 0.0.3
+  |       language: wasm/assemblyscript
+  |       file: ./src/handler/identity.ts ²
+  |       entities:   ←················· Any entity used by event handlers
+  |         - Identity                   must be declared in here
+  |         - Key
+  |       abis:
+  |         - name: Identity
+  |           file: ./node_modules/@investorid/solidity/build/contracts/Identity.json
+  |       eventHandlers: ←·············· all event to be scanned/handled must
+  |                                      be declared here
+  |         - event: KeyAdded(indexed bytes32,indexed uint256,indexed uint256)
+  |           handler:  handleKeyAdded
+  |         - event: KeyRemoved(indexed bytes32,indexed uint256,indexed uint256)
+  |           handler:  handleKeyRemoved
+  |                               ·
+  |  ¹ schema.graphql: entities used by the SubGraph and exposed via GraphQL.
+  |    type Identity @entity {
+  |      id: ID!
+  |      address: Bytes!
+  |      keys: [Key!]! @derivedFrom(field: "identity")  ← reverse property
+  |    }                                                  more info at:
+  |                                                     @[https://thegraph.com/docs/graphql-api]
+  |    type Key @entity {
+  |      id: ID!
+  |      keyType: BigInt!    ← BigInt, Bytesis a custom type
+  |      key: Bytes!
+  |      purposes: [Int!]!
+  |      identity: Identity!
+  |    }
+  |
+  |  ² .src/handlers/identity.ts  ← Event handlers:
+  |     To generate the referenced typings and automated code parts referenced run
+  |     $ yarn run codegen
+  |     ouput:
+  |     → ../../generated/Identity/Identity
+  |     → ../../generated/schema
+  |
   | import { log, store, Address, Bytes }
   |   from "@graphprotocol/graph-ts";
   |
@@ -373,43 +395,43 @@ By Kebin Thizy @[https://medium.com/@thizy.kevin]
   |   return identity.toHexString().
   |       concat('-').concat(key.toHexString());
   | }
+  ```
 
-  Implementation of event handlers
-  Refer to The Graph documentation, to learn how to write mappings.
+###  Implementation of event handlers
 
-  - basics about mappings:
-    - To create a new entity instance, call:
-      <Entity>#create(<id>)  ← <id> is a string that must be generated.
-    - To be able to retrieve instances from blockchain data,
-      the IDs should be composed of addresses, hashes, etc...
-    - To load an existing entity, call:
-      <Entity>#load(<id>)
-    - To save new entity|update existing one, call:
-      <entity>.save()
-    - To destroy and remove an entity from the store, call
-      store.remove('EntityName', id)
+* Refer to The Graph documentation, to learn how to write mappings.
 
-  Running the subgraph
+- basics about mappings:
+  - To create a new entity instance, call:
+    <Entity>#create(<id>)  ← <id> is a string that must be generated.
+  - To be able to retrieve instances from blockchain data,
+    the IDs should be composed of addresses, hashes, etc...
+  - To load an existing entity, call:
+    <Entity>#load(<id>)
+  - To save new entity|update existing one, call:
+    <entity>.save()
+  - To destroy and remove an entity from the store, call
+    store.remove('EntityName', id)
 
-  $ yarn run build        ←·· Build SubGraph
-  $ yarn run create-local ←·· Declare it  on local Graph node
-  $ yarn run deploy-local ←·· Deploy  to the local Graph node
-  $ yarn run watch-local  ←·· Optional: Watch deployig after
-                                      each code update
+###  Running the subgraph
 
+  ```
+  | $ yarn run build        ←·· Build SubGraph
+  | $ yarn run create-local ←·· Declare it  on local Graph node
+  | $ yarn run deploy-local ←·· Deploy  to the local Graph node
+  | $ yarn run watch-local  ←·· Optional: Watch deployig after
+  |                                     each code update
+  ```
 
-  GraphQL UI for queries available at:
+* GraphQL UI for queries available at:
+  ```
   http://127.0.0.1:8000/subgraphs/name/domain/graph-name/graphql
                                        └──────┬────────┘
-                                       replace with name
-                                       of the subgraph
+                                replace with subgraph name 
+  ```
 
-Note: Whenever the Ethereum network has been reseted
-      (Ganache restarted,...), the ./docker/data must
-      be deleted:
-      - required to clean the existing database
-        that checks the genesis block for the
-        current ethereum network.
+Note: Whenever the Ethereum network has been reseted (Ganache restarted,...), 
+      the ./docker/data must be deleted:
+- required to clean the existing database that checks the genesis block for the
+   current ethereum network.
 [[integration.protocol.thegraph}]]
-
-

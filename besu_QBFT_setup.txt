@@ -1,5 +1,7 @@
-https://besu.hyperledger.org/en/stable/private-networks/how-to/configure/consensus/qbft/#configure-the-mining-beneficiary-on-an-existing-network-deployment
+[[{consensus.qbft]]
 ## Configure QBFT consensus
+
+* <https://besu.hyperledger.org/en/stable/private-networks/how-to/configure/consensus/qbft/#configure-the-mining-beneficiary-on-an-existing-network-deployment>
 
 * validators == approved accounts validating transactions and blocks.
 
@@ -219,3 +221,4 @@ KEY-POINT: To generate thte extraData RLP:
 
 * NOTE: Check oficial document to see how to create transitions to 
   update block rewards and switch validator method.
+[[consensus.qbft}]]
